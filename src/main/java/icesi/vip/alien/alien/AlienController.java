@@ -42,7 +42,7 @@ public class AlienController {
 			double[]c=new double[varcount];
 			String[]cons2=cons[i].split(",");
 			for (int j = 0; j < c.length; j++) {
-				c[j]=Double.parseDouble(cons[j]);
+				c[j]=Double.parseDouble(cons2[j]);
 			}
 			m.addConstraint(c, cons2[cons2.length-2], Double.parseDouble(cons2[cons2.length-1]), "C"+i);
 		}
