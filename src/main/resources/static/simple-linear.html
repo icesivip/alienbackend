@@ -35,6 +35,27 @@
         td {
             border: 1px solid black;
         }
+
+        .image{
+            display: inline;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: auto;
+            vertical-align: center;
+        }
+
+        .cover{
+            opacity:0.8;
+    background-color:#ccc;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:1000;
+    background:url(img/loading.gif) center center no-repeat;
+    display: none;
+        }
     </style>
 
 </head>
@@ -166,7 +187,9 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div class="cover">
+<!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
+                    </div>
                     <!-- Page Heading -->
                     <div class="text-center">
                         <h1>SIMPLE LINEAR PROGRAMMING SOLVER </h1>
@@ -332,10 +355,12 @@
                             return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
                         }
                         function solveModel() {
+                            $(".cover").toggle(400);
                             var string = constructRequestString();
                             $.ajax({
                                 url: "https://viptest1.herokuapp.com/test" + string
                             }).then(function (data) {
+                                $(".cover").toggle(400);
                                 console.log(data);
                                 $("#valX1").text(data.variables.X1);
                                 $("#valX2").text(data.variables.X2);
@@ -343,6 +368,7 @@
                                 $("#valZ").text(data.z);
                             }, function (error) {
                                 alert("Failed to process request, model may be unsolvable.")
+                                $(".cover").toggle(400);
                                 console.log(error);
                             });
                         }
