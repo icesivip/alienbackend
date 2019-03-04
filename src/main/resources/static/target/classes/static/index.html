@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LINEAR OPTIMIZATION</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <h1>SIMPLE LINEAR PROGRAMMING SOLVER <span class="label label-default"></span></h1>
+    
+    <div class="container">
+        <h2>Type <span class="label label-default"></span></h2>
+            <form>
+              <div class="form-group">
+                <select class="form-control" id="type">
+                    <option>MAXIMIZE</option>
+                    <option>MINIMIZE</option>
+                </select>
+                <br>
+              </div>
+            </form>
+    </div>
+    <h2>Objective Function</h2>
+    <input type="number" id="cX1">
+    <label for="cX1">X1 + </label>
+    <input type="number" id="cX2">
+    <label for="cX2">X2 + </label>
+    <input type="number" id="cX3">
+    <label for="cX3">X3</label>
+    <h2>Constraints</h2>
+    <div id="constraintPanel">
+        <!--         <div class="constraint">
+            <input type="number" id="X1">
+            <label>X1 + </label>
+            <input type="number" id="X2">
+            <label>X2 + </label>
+            <input type="number" id="X3">
+            <label>X3</label>
+            <select id="r1">
+                <option>&lt=</option>
+                <option>&gt=</option>
+                <option>=</option>
+            </select>
+            <input type="number" id="rv">
+        </div> -->
+        <div class='constraint'><input type='number' id='X1'><label>X1 + </label><input type='number' id='X2'><label>X2
+                + </label><input type='number' id='X3'><label>X3</label><select id='r1'>
+                <option>&lt=</option>
+                <option>&gt=</option>
+                <option>=</option>
+            </select><input type='number' id='rv'></div>
+
+
+
+
+
+    </div>
+    <br>
+    <button onclick="addConstraint()">Add Constraint</button>
+    <button onclick="removeConstraint()">Remove Constraint</button>
+    <br>
+    <br>
+    <button onclick="solveModel()">SOLVE MODEL</button>
+
+    <div>
+        <h2>Result Panel</h2>
+        <table>
+            <thead>
+                <th>X1</th>
+                <th>X2</th>
+                <th>X3</th>
+                <th>Z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="valX1">
+
+                    </td>
+                    <td id="valX2">
+
+                    </td>
+                    <td id="valX3">
+
+                    </td>
+                    <td id="valZ">
+
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+    <script>
+
+        function addConstraint() {
+
+            console.log("Added contraint");
+
+            $("#constraintPanel").append("<div class='constraint'><input type='number' id='X1'><label>X1 + </label><input type='number' id='X2'><label>X2 + </label><input type='number' id='X3'><label>X3</label><select id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select><input type='number' id='rv'></div>");
+
+
+
+
+
+        }
+
+
+        function removeConstraint() {
+            var n = $('.constraint').length;
+            console.log(n);
+            if (n > 1) {
+
+                console.log("Removed contraint");
+                $('.constraint').last().remove();
+            }
+        }
+
+
+        function constructRequestString() {
+            type = $("#type").val();
+            obfun = $("#cX1").val() + "," + $("#cX2").val() + "," + $("#cX3").val();
+            vars = "X1:C,X2:C,X3:C";
+            constraints = "";
+            $(".constraint").each(function (index) {
+
+                constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#X3").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
+
+
+
+            });
+            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+        }
+
+
+        function solveModel() {
+            var string = constructRequestString();
+            $.ajax({
+
+                url: "https://viptest1.herokuapp.com/test" + string
+            }).then(function (data) {
+                console.log(data);
+                $("#valX1").text(data.variables.X1);
+                $("#valX2").text(data.variables.X2);
+                $("#valX3").text(data.variables.X3);
+                $("#valZ").text(data.z);
+
+
+            },function(error){
+                alert("Failed to process request, model may be unsolvable.")
+                console.log(error);
+
+
+            });
+
+
+        }
+
+
+
+    </script>
+</body>
+
+</html>
