@@ -36,7 +36,7 @@
             border: 1px solid black;
         }
 
-        .image{
+        .image {
             display: inline;
             margin-left: auto;
             margin-right: auto;
@@ -44,17 +44,17 @@
             vertical-align: center;
         }
 
-        .cover{
-            opacity:0.8;
-    background-color:#ccc;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    z-index:1000;
-    background:url(img/loading.gif) center center no-repeat;
-    display: none;
+        .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
         }
     </style>
 
@@ -188,7 +188,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="cover">
-<!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
+                        <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
                     </div>
                     <!-- Page Heading -->
                     <div class="text-center">
@@ -198,7 +198,7 @@
                         <div class="col-lg">
                             <!-- Nested Row within Card Body -->
                             <div class="p-5">
-                                <form class="user">
+                                <form class="user" id="user">
                                     <h2>Type <span class="label label-default"></span></h2>
 
                                     <div class="form-group">
@@ -213,47 +213,53 @@
 
 
                                     <h2>Objective Function</h2>
-                                    <form>
+                                    
                                         <div class="form-group row">
                                             <div class="col-sm-2 ">
-                                                <input type="number" class="form-control form-control-user" id="cX1">
+                                                <input type="number" class="form-control form-control-user" id="cX1"
+                                                    required>
                                             </div>
                                             <div class="col-sm-0.1">
                                                 <h4> X1 + </h4>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="number" class="form-control form-control-user" id="cX2">
+                                                <input type="number" class="form-control form-control-user" id="cX2"
+                                                    required>
                                             </div>
                                             <div class="col-sm-0.1">
                                                 <h4> X2 + </h4>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="number" class="form-control form-control-user" id="cX3">
+                                                <input type="number" class="form-control form-control-user" id="cX3"
+                                                    required>
                                             </div>
                                             <div class="col-sm-0.1">
                                                 <h4> X3</h4>
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                     <hr>
                                     <h2>Constraints</h2>
                                     <div id="constraintPanel">
                                         <div class='constraint'>
                                             <div class="form-group row">
                                                 <div class="col-sm-2 ">
-                                                    <input type="number" class="form-control form-control-user" id="X1">
+                                                    <input type="number" class="form-control form-control-user" id="X1"
+                                                        required>
                                                 </div>
                                                 <div class=" col-sm-0.1">
                                                     <h4> X1 + </h4>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="X2">
+                                                    <input type="number" class="form-control form-control-user" id="X2"
+                                                        required>
                                                 </div>
                                                 <div class="col-sm-0.1">
                                                     <h4> X2 + </h4>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="X3">
+                                                    <input type="number" class="form-control form-control-user" id="X3"
+                                                        required>
                                                 </div>
                                                 <div class="col-sm-1 ">
                                                     <h4> X3</h4>
@@ -266,7 +272,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="rv">
+                                                    <input type="number" class="form-control form-control-user" id="rv"
+                                                        required>
                                                 </div>
                                             </div>
                                         </div>
@@ -288,9 +295,11 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <a onclick="solveModel()" class="btn btn-primary btn-user btn-block">
-                                            <i class="fab fa-fw"></i> SOLVE MODEL
-                                        </a>
+
+                                        <input type="submit" class="btn btn-primary btn-user btn-block"
+                                            value="SOLVE MODEL">
+
+
                                     </div>
                                     <br>
 
@@ -331,9 +340,14 @@
 
                     <script>
 
+                        document.getElementById("user").addEventListener("submit",function(e){
+                            e.preventDefault();
+                            solveModel();
+                        });
+
                         function addConstraint() {
                             console.log("Added contraint");
-                            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1'></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2'></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3'></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv'></div></div></div>");
+                            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
                         }
                         function removeConstraint() {
                             var n = $('.constraint').length;
