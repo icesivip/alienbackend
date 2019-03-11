@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
-
 <!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-
-    <title>LINEAR - OPTIMIZATION</title>
-
-    <!-- Custom fonts for this template-->
+    <title>Graphical Method Solver</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -28,7 +22,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <style>
         table,
         th,
@@ -57,15 +55,12 @@
             display: none;
         }
     </style>
-
 </head>
 
 <body id="page-top">
     <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Page Wrapper -->
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -83,11 +78,11 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard >
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li-->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Dashboard</span></a>
+                    </li-->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -204,13 +199,13 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+
                 <div class="container-fluid">
                     <div class="cover">
                         <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
                     </div>
-                    <!-- Page Heading -->
                     <div class="text-center">
-                        <h1>SIMPLE LINEAR PROGRAMMING SOLVER </h1>
+                        <h1>GRAPHICAL METHOD LINEAR PROGRAMMING SOLVER </h1>
                     </div>
                     <div class="row">
                         <div class="col-lg">
@@ -234,26 +229,20 @@
 
                                     <div class="form-group row">
                                         <div class="col-sm-2 ">
-                                            <input type="number" class="form-control form-control-user" id="cX1"
-                                                required>
+                                            <input type="number" step="any" class="form-control form-control-user"
+                                                id="cX1" required>
                                         </div>
                                         <div class="col-sm-0.1">
                                             <h4> X1 + </h4>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control form-control-user" id="cX2"
-                                                required>
+                                            <input type="number" step="any" class="form-control form-control-user"
+                                                id="cX2" required>
                                         </div>
                                         <div class="col-sm-0.1">
-                                            <h4> X2 + </h4>
+                                            <h4> X2 </h4>
                                         </div>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control form-control-user" id="cX3"
-                                                required>
-                                        </div>
-                                        <div class="col-sm-0.1">
-                                            <h4> X3</h4>
-                                        </div>
+
                                     </div>
 
                                     <hr>
@@ -262,26 +251,20 @@
                                         <div class='constraint'>
                                             <div class="form-group row">
                                                 <div class="col-sm-2 ">
-                                                    <input type="number" class="form-control form-control-user" id="X1"
-                                                        required>
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="X1" required>
                                                 </div>
                                                 <div class=" col-sm-0.1">
                                                     <h4> X1 + </h4>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="X2"
-                                                        required>
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="X2" required>
                                                 </div>
                                                 <div class="col-sm-0.1">
-                                                    <h4> X2 + </h4>
+                                                    <h4> X2 </h4>
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="X3"
-                                                        required>
-                                                </div>
-                                                <div class="col-sm-1 ">
-                                                    <h4> X3</h4>
-                                                </div>
+
                                                 <div class="centered col-sm-1.5 mb-4 mb-sm-0">
                                                     <select class="form-control" id='r1'>
                                                         <option>&lt=</option>
@@ -290,8 +273,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control form-control-user" id="rv"
-                                                        required>
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="rv" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,45 +302,63 @@
 
 
                                     </div>
+                                    <hr>
+                                    <h2>Solution Space Chart</h2>
+                                    <canvas id="chart-area" width="400" height="device-height"></canvas>
                                     <br>
-
-                                    <h2>Result Panel</h2>
+                                    <hr>
+                                    <h2> Basic Feasible Solutions</h2>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
                                             <thead>
                                                 <th>X1</th>
                                                 <th>X2</th>
-                                                <th>X3</th>
+
                                                 <th>Z</th>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td id="valX1">
+                                            <tbody id="table-body">
 
-                                                    </td>
-                                                    <td id="valX2">
-
-                                                    </td>
-                                                    <td id="valX3">
-
-                                                    </td>
-                                                    <td id="valZ">
-
-                                                    </td>
-                                                </tr>
                                             </tbody>
 
 
                                         </table>
                                     </div>
+
+
                                 </form>
 
                             </div>
                         </div>
                     </div>
 
-                   
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -404,58 +405,311 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
+        $(document).ready(function () {
+            $('#result').DataTable();
+        });
 
-            document.getElementById("user").addEventListener("submit", function (e) {
-                e.preventDefault();
-                solveModel();
+        document.getElementById("user").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function addConstraint() {
+            console.log("Added contraint");
+            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
+        }
+        function removeConstraint() {
+            var n = $('.constraint').length;
+            console.log(n);
+            if (n > 1) {
+                console.log("Removed contraint");
+                $('.constraint').last().remove();
+            }
+        }
+        function constructRequestString() {
+            type = $("#type").val();
+            obfun = $("#cX1").val() + "," + $("#cX2").val();
+            vars = "X1:C,X2:C";
+            constraints = "";
+            $(".constraint").each(function (index) {
+                constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
             });
-
-            function addConstraint() {
-                console.log("Added contraint");
-                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
-            }
-            function removeConstraint() {
-                var n = $('.constraint').length;
-                console.log(n);
-                if (n > 1) {
-                    console.log("Removed contraint");
-                    $('.constraint').last().remove();
-                }
-            }
-            function constructRequestString() {
-                type = $("#type").val();
-                obfun = $("#cX1").val() + "," + $("#cX2").val() + "," + $("#cX3").val();
-                vars = "X1:C,X2:C,X3:C";
-                constraints = "";
-                $(".constraint").each(function (index) {
-                    constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#X3").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
-                });
-                console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
-                return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
-            }
-            function solveModel() {
+            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+        }
+        var myChart = null;
+        function solveModel() {
+            $(".cover").toggle(400);
+            var string = constructRequestString();
+            $.ajax({
+                url: "https://viptest1.herokuapp.com/graphicalMethod" + string
+            }).then(function (data) {
                 $(".cover").toggle(400);
-                var string = constructRequestString();
-                $.ajax({
-                    url: "https://viptest1.herokuapp.com/test" + string
-                }).then(function (data) {
-                    $(".cover").toggle(400);
-                    console.log(data);
-                    $("#valX1").text(data.variables.X1);
-                    $("#valX2").text(data.variables.X2);
-                    $("#valX3").text(data.variables.X3);
-                    $("#valZ").text(data.z);
-                }, function (error) {
-                    alert("Failed to process request, model may be unsolvable.")
-                    $(".cover").toggle(400);
-                    console.log(error);
+                console.log(data);
+                var constraints = data.constraints;
+                var optimal = data.optimalSolution;
+                var solList = data.solutionList;
+                var solX = [];
+                var solY = [];
+                $("#result").DataTable().clear();
+                solList.forEach(element => {
+                    $("#result").DataTable().row.add(
+                        [element.variables.X1, element.variables.X2, element.z]
+                    ).draw();
+
+
                 });
-            }
-        </script>
+                type = $("#type").val();
+                if (type == "MAXIMIZE") {
+                    $("#result").DataTable().order([2, 'desc']).draw();
+                } else {
+                    $("#result").DataTable().order([2, 'asc']).draw();
+                }
+
+                constraints.forEach(element => {
+                    cx = element.rightValue / element.xValue;
+                    cy = element.rightValue / element.yValue;
+                    if (cx != Infinity && cx != -Infinity) {
+                        solX.push(cx);
+                    }
+                    if (cy != Infinity && cy != -Infinity) {
+                        solY.push(cy);
+                    }
+                });
+                solList.forEach(element => {
+                    solX.push(element.variables.X1);
+                    solY.push(element.variables.X2);
+                });
 
 
-    <!-- Bootstrap core JavaScript-->
+
+
+                minX = Math.min.apply(Math, solX);
+
+                maxX = Math.max.apply(Math, solX);
+                constraints.forEach(element => {
+                    if (element.xValue != 0 && element.yValue != 0) {
+                        solY.push((element.rightValue - (element.xValue * minX)) / element.yValue);
+                        solY.push((element.rightValue - (element.xValue * maxX)) / element.yValue);
+                    }
+                });
+                minY = Math.min.apply(Math, solY);
+                maxY = Math.max.apply(Math, solY);
+                if (minX == 0 && maxX == 0) {
+                    maxX = 1;
+                }
+                if (minY == 0 && maxY == 0) {
+                    maxY = 1;
+                }
+                console.log(minX, maxX, minY, maxY);
+                constCount = constraints.length;
+                dataframe = [];
+                dataAux = [];
+                solList.forEach(element => {
+                    dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
+                });
+                dataframe.push({
+                    label: ' Basic Feasible Solutions',
+                    data: dataAux,
+                    backgroundColor: [
+                        'rgba(255, 255, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(100,100,0,1)'
+                    ],
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 5,
+                    showLine: false,
+                    steppedLine: false,
+                    lineTension: 0,
+
+
+
+
+
+                });
+                count = 1;
+                constraints.forEach(element => {
+                    dataAux = [];
+                    area = "start";
+                    if (element.xValue == 0 || element.yValue == 0) {
+                        if (element.xValue == 0) {
+                            dataAux.push({ x: minX, y: (element.rightValue) / element.yValue });
+                            dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
+                            if (element.type == "<=") {
+                                if (element.yValue < 0) {
+                                    area = "end";
+                                } else {
+                                    area = "start";
+                                }
+                            } else if (element.type == ">=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                } else {
+                                    area = "end";
+                                }
+                            } else {
+                                area = false;
+                            }
+                        } else {
+                            dataAux.push({ x: (element.rightValue) / element.xValue, y: minY });
+                            dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
+                            if (element.type == "<=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                    dataAux.push({ x: maxX, y: maxY });
+                                } else {
+                                    area = "start";
+                                    dataAux.push({ x: minX, y: maxY });
+                                }
+                            } else if (element.type == ">=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                    dataAux.push({ x: minX, y: maxY });
+                                } else {
+                                    area = "start";
+                                    dataAux.push({ x: maxX, y: maxY });
+                                }
+                            } else {
+                                area = false;
+                            }
+                        }
+                    } else {
+                        if (element.type == "<=") {
+                            if (element.yValue < 0) {
+                                area = "end";
+                            } else {
+                                area = "start";
+                            }
+                        } else if (element.type == ">=") {
+                            if (element.yValue < 0) {
+                                area = "start";
+                            } else {
+                                area = "end";
+                            }
+                        } else {
+                            area = false;
+                        }
+                        dataAux.push({ x: minX, y: (element.rightValue - (element.xValue * minX)) / element.yValue });
+                        dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
+                    }
+                    //console.log(dataframe);
+                    dataframe.push({
+                        label: 'C' + count,
+                        data: dataAux,
+                        pointRadius: 0,
+                        borderDash: [10, 5],
+                        backgroundColor: [
+                            'rgba(0, 255, 0, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(0,100,0,1)'
+                        ],
+                        borderWidth: 1,
+                        fill: area,
+                        steppedLine: false,
+                        lineTension: 0,
+
+
+
+
+
+                    });
+
+                    count++;
+                });
+
+                var ctx = document.getElementById("chart-area");
+                if (myChart != null) { myChart.destroy() }
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+
+                        datasets: dataframe
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false,
+                                    min: minY,
+                                    max: maxY
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'X2',
+
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: false,
+                                    min: minX,
+                                    max: maxX
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'X1'
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
+
+                                }
+                            }]
+                        },
+
+                    }
+                });
+            }, function (error) {
+                alert("Failed to process request, model may be unsolvable.")
+                $(".cover").toggle(400);
+                console.log(error);
+            });
+        }
+
+
+
+
+
+
+    </script>
+
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -471,7 +725,6 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>
