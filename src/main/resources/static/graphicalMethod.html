@@ -61,6 +61,9 @@
         <div class="cover">
             <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
         </div>
+        <div class="text-center">
+            <h1>GRAPHICAL METHOD LINEAR PROGRAMMING SOLVER </h1>
+        </div>
         <div class="row">
             <div class="col-lg">
                 <!-- Nested Row within Card Body -->
@@ -83,13 +86,15 @@
 
                         <div class="form-group row">
                             <div class="col-sm-2 ">
-                                <input type="number" class="form-control form-control-user" id="cX1" required>
+                                <input type="number" step="any" class="form-control form-control-user" id="cX1"
+                                    required>
                             </div>
                             <div class="col-sm-0.1">
                                 <h4> X1 + </h4>
                             </div>
                             <div class="col-sm-2">
-                                <input type="number" class="form-control form-control-user" id="cX2" required>
+                                <input type="number" step="any" class="form-control form-control-user" id="cX2"
+                                    required>
                             </div>
                             <div class="col-sm-0.1">
                                 <h4> X2 </h4>
@@ -103,13 +108,15 @@
                             <div class='constraint'>
                                 <div class="form-group row">
                                     <div class="col-sm-2 ">
-                                        <input type="number" class="form-control form-control-user" id="X1" required>
+                                        <input type="number" step="any" class="form-control form-control-user" id="X1"
+                                            required>
                                     </div>
                                     <div class=" col-sm-0.1">
                                         <h4> X1 + </h4>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="number" class="form-control form-control-user" id="X2" required>
+                                        <input type="number" step="any" class="form-control form-control-user" id="X2"
+                                            required>
                                     </div>
                                     <div class="col-sm-0.1">
                                         <h4> X2 </h4>
@@ -123,7 +130,8 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input type="number" class="form-control form-control-user" id="rv" required>
+                                        <input type="number" step="any" class="form-control form-control-user" id="rv"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +158,7 @@
 
                         </div>
                         <hr>
-                        <h2>Solution Space Graph</h2>
+                        <h2>Solution Space Chart</h2>
                         <canvas id="chart-area" width="400" height="device-height"></canvas>
                         <br>
 
@@ -173,7 +181,7 @@
 
         function addConstraint() {
             console.log("Added contraint");
-            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
         }
         function removeConstraint() {
             var n = $('.constraint').length;
@@ -211,10 +219,10 @@
                 constraints.forEach(element => {
                     cx = element.rightValue / element.xValue;
                     cy = element.rightValue / element.yValue;
-                    if (cx != Infinity) {
+                    if (cx != Infinity && cx != -Infinity) {
                         solX.push(cx);
                     }
-                    if (cy != Infinity) {
+                    if (cy != Infinity && cy != -Infinity) {
                         solY.push(cy);
                     }
                 });
@@ -223,43 +231,53 @@
                     solY.push(element.variables.X2);
                 });
 
+
+
+
                 minX = Math.min.apply(Math, solX);
 
                 maxX = Math.max.apply(Math, solX);
+                constraints.forEach(element => {
+                    if (element.xValue != 0 && element.yValue != 0) {
+                        solY.push((element.rightValue - (element.xValue * minX)) / element.yValue);
+                        solY.push((element.rightValue - (element.xValue * maxX)) / element.yValue);
+                    }
+                });
                 minY = Math.min.apply(Math, solY);
                 maxY = Math.max.apply(Math, solY);
-                if(minX==0 && maxX==0){
-                    maxX=1;
+                if (minX == 0 && maxX == 0) {
+                    maxX = 1;
                 }
-                if(minY==0 && maxY==0){
-                    maxY=1;
+                if (minY == 0 && maxY == 0) {
+                    maxY = 1;
                 }
+                console.log(minX, maxX, minY, maxY);
                 constCount = constraints.length;
                 dataframe = [];
-                dataAux=[];
+                dataAux = [];
                 solList.forEach(element => {
-                    dataAux.push({ x: element.variables.X1, y: element.variables.X2});
+                    dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
                 });
                 dataframe.push({
-                        label: 'Feasible Solutions',
-                        data: dataAux,
-                        backgroundColor: [
-                            'rgba(255, 255, 0, 1)'
-                        ],
-                        borderColor: [
-                            'rgba(100,100,0,1)'
-                        ],
-                        borderWidth: 1,
-                        fill: false,
-                        showLine: false,
-                        steppedLine: false,
-                        lineTension: 0,
+                    label: 'Feasible Solutions',
+                    data: dataAux,
+                    backgroundColor: [
+                        'rgba(255, 255, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(100,100,0,1)'
+                    ],
+                    borderWidth: 1,
+                    fill: false,
+                    showLine: false,
+                    steppedLine: false,
+                    lineTension: 0,
 
 
 
 
 
-                    });
+                });
                 count = 1;
                 constraints.forEach(element => {
                     dataAux = [];
@@ -325,7 +343,7 @@
                         dataAux.push({ x: minX, y: (element.rightValue - (element.xValue * minX)) / element.yValue });
                         dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
                     }
-                    console.log(dataframe);
+                    //console.log(dataframe);
                     dataframe.push({
                         label: 'C' + count,
                         data: dataAux,
@@ -350,7 +368,7 @@
 
                     count++;
                 });
-                
+
                 var ctx = document.getElementById("chart-area");
                 if (myChart != null) { myChart.destroy() }
                 myChart = new Chart(ctx, {
@@ -363,11 +381,19 @@
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: false
+                                    beginAtZero: false,
+                                    min: minY,
+                                    max: maxY
                                 },
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'X2'
+                                    labelString: 'X2',
+
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
                                 }
                             }],
                             xAxes: [{
@@ -381,6 +407,12 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: 'X1'
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
+                                    
                                 }
                             }]
                         },
