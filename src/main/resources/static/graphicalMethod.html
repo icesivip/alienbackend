@@ -306,7 +306,7 @@
                                     <h2>Solution Space Chart</h2>
                                     <canvas id="chart-area" width="400" height="device-height"></canvas>
                                     <br>
-                                    <h2>Feasible Solutions</h2>
+                                    <h2> Basic Feasible Solutions</h2>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
                                             <thead>
@@ -534,7 +534,7 @@
                     dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
                 });
                 dataframe.push({
-                    label: 'Feasible Solutions',
+                    label: ' Basic Feasible Solutions',
                     data: dataAux,
                     backgroundColor: [
                         'rgba(255, 255, 0, 1)'
@@ -544,6 +544,7 @@
                     ],
                     borderWidth: 1,
                     fill: false,
+                    pointRadius: 5,
                     showLine: false,
                     steppedLine: false,
                     lineTension: 0,
