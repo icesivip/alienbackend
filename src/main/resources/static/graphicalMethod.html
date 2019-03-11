@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Graphical Method Solver</title>
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+        <style>
+            table,
+            th,
+            td {
+                border: 1px solid black;
+            }
+    
+            .image {
+                display: inline;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: auto;
+                vertical-align: center;
+            }
+    
+            .cover {
+                opacity: 0.8;
+                background-color: #ccc;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+                z-index: 1000;
+                background: url(img/loading.gif) center center no-repeat;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="cover">
+            <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
+        </div>
+        <div class="row">
+            <div class="col-lg">
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                    <form class="user" id="user">
+                        <h2>Type <span class="label label-default"></span></h2>
+
+                        <div class="form-group">
+
+                            <select class="form-control" id="type">
+                                <option>MAXIMIZE</option>
+                                <option>MINIMIZE</option>
+                            </select>
+                            <hr>
+
+                        </div>
+
+
+                        <h2>Objective Function</h2>
+
+                        <div class="form-group row">
+                            <div class="col-sm-2 ">
+                                <input type="number" class="form-control form-control-user" id="cX1"
+                                    required>
+                            </div>
+                            <div class="col-sm-0.1">
+                                <h4> X1 + </h4>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="number" class="form-control form-control-user" id="cX2"
+                                    required>
+                            </div>
+                            <div class="col-sm-0.1">
+                                <h4> X2 </h4>
+                            </div>
+                            
+                        </div>
+
+                        <hr>
+                        <h2>Constraints</h2>
+                        <div id="constraintPanel">
+                            <div class='constraint'>
+                                <div class="form-group row">
+                                    <div class="col-sm-2 ">
+                                        <input type="number" class="form-control form-control-user" id="X1"
+                                            required>
+                                    </div>
+                                    <div class=" col-sm-0.1">
+                                        <h4> X1 + </h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="number" class="form-control form-control-user" id="X2"
+                                            required>
+                                    </div>
+                                    <div class="col-sm-0.1">
+                                        <h4> X2 </h4>
+                                    </div>
+                                    
+                                    <div class="centered col-sm-1.5 mb-4 mb-sm-0">
+                                        <select class="form-control" id='r1'>
+                                            <option>&lt=</option>
+                                            <option>&gt=</option>
+                                            <option>=</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="number" class="form-control form-control-user" id="rv"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-white" class="form-control form-control-user">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
+                                        Add Constraint
+
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a onclick="removeConstraint()"
+                                        class="btn btn-danger btn-user btn-block">
+                                        <i class="fab fa-fw"></i> Remove Constraint
+                                    </a>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <input type="submit" class="btn btn-primary btn-user btn-block"
+                                value="SOLVE MODEL">
+
+
+                        </div>
+                        <br>
+
+                       
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        
+        <script>
+
+            document.getElementById("user").addEventListener("submit", function (e) {
+                e.preventDefault();
+                solveModel();
+            });
+
+            function addConstraint() {
+                console.log("Added contraint");
+                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+            }
+            function removeConstraint() {
+                var n = $('.constraint').length;
+                console.log(n);
+                if (n > 1) {
+                    console.log("Removed contraint");
+                    $('.constraint').last().remove();
+                }
+            }
+            function constructRequestString() {
+                type = $("#type").val();
+                obfun = $("#cX1").val() + "," + $("#cX2").val();
+                vars = "X1:C,X2:C";
+                constraints = "";
+                $(".constraint").each(function (index) {
+                    constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
+                });
+                console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+                return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+            }
+            function solveModel() {
+                $(".cover").toggle(400);
+                var string = constructRequestString();
+                $.ajax({
+                    url: "https://viptest1.herokuapp.com/graphicalMethod" + string
+                }).then(function (data) {
+                    $(".cover").toggle(400);
+                    console.log(data);
+
+                }, function (error) {
+                    alert("Failed to process request, model may be unsolvable.")
+                    $(".cover").toggle(400);
+                    console.log(error);
+                });
+            }
+        </script>
+    </body>
+</html>
