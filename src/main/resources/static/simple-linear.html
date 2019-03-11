@@ -108,6 +108,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
                         <a class="collapse-item" href="SimplexMethod/homeSimplex.html">SIMPLEX METHOD </a>
                     </div>
                 </div>
@@ -355,55 +356,7 @@
                         </div>
                     </div>
 
-                    <script>
-
-                        document.getElementById("user").addEventListener("submit", function (e) {
-                            e.preventDefault();
-                            solveModel();
-                        });
-
-                        function addConstraint() {
-                            console.log("Added contraint");
-                            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
-                        }
-                        function removeConstraint() {
-                            var n = $('.constraint').length;
-                            console.log(n);
-                            if (n > 1) {
-                                console.log("Removed contraint");
-                                $('.constraint').last().remove();
-                            }
-                        }
-                        function constructRequestString() {
-                            type = $("#type").val();
-                            obfun = $("#cX1").val() + "," + $("#cX2").val() + "," + $("#cX3").val();
-                            vars = "X1:C,X2:C,X3:C";
-                            constraints = "";
-                            $(".constraint").each(function (index) {
-                                constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#X3").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
-                            });
-                            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
-                            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
-                        }
-                        function solveModel() {
-                            $(".cover").toggle(400);
-                            var string = constructRequestString();
-                            $.ajax({
-                                url: "https://viptest1.herokuapp.com/test" + string
-                            }).then(function (data) {
-                                $(".cover").toggle(400);
-                                console.log(data);
-                                $("#valX1").text(data.variables.X1);
-                                $("#valX2").text(data.variables.X2);
-                                $("#valX3").text(data.variables.X3);
-                                $("#valZ").text(data.z);
-                            }, function (error) {
-                                alert("Failed to process request, model may be unsolvable.")
-                                $(".cover").toggle(400);
-                                console.log(error);
-                            });
-                        }
-                    </script>
+                   
                 </div>
             </div>
         </div>
@@ -450,6 +403,57 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+            document.getElementById("user").addEventListener("submit", function (e) {
+                e.preventDefault();
+                solveModel();
+            });
+
+            function addConstraint() {
+                console.log("Added contraint");
+                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+            }
+            function removeConstraint() {
+                var n = $('.constraint').length;
+                console.log(n);
+                if (n > 1) {
+                    console.log("Removed contraint");
+                    $('.constraint').last().remove();
+                }
+            }
+            function constructRequestString() {
+                type = $("#type").val();
+                obfun = $("#cX1").val() + "," + $("#cX2").val() + "," + $("#cX3").val();
+                vars = "X1:C,X2:C,X3:C";
+                constraints = "";
+                $(".constraint").each(function (index) {
+                    constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#X3").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
+                });
+                console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+                return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+            }
+            function solveModel() {
+                $(".cover").toggle(400);
+                var string = constructRequestString();
+                $.ajax({
+                    url: "https://viptest1.herokuapp.com/test" + string
+                }).then(function (data) {
+                    $(".cover").toggle(400);
+                    console.log(data);
+                    $("#valX1").text(data.variables.X1);
+                    $("#valX2").text(data.variables.X2);
+                    $("#valX3").text(data.variables.X3);
+                    $("#valZ").text(data.z);
+                }, function (error) {
+                    alert("Failed to process request, model may be unsolvable.")
+                    $(".cover").toggle(400);
+                    console.log(error);
+                });
+            }
+        </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
