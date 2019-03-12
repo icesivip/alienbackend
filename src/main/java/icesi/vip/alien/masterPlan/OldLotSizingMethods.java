@@ -257,44 +257,44 @@ public class OldLotSizingMethods {
 		return retorno;
 	}
 
-	public static void main(String[] arg0) {
-		// SE DEBE CONSIDERAR FORMATOS
-		ArrayList<Integer> pedidos = new ArrayList<>();
-//		pedidos.add(50);
-//		pedidos.add(60);
-//		pedidos.add(70);
-//		pedidos.add(60);
-//		pedidos.add(95);
-//		pedidos.add(75);
-//		pedidos.add(60);
-//		pedidos.add(55);
-//		LotSizingMethods l = new LotSizingMethods(10.0, 47.0, 0.005, pedidos, SEMANAL);
-		
-		pedidos.add(160);
-		pedidos.add(166);
-		pedidos.add(220);
-		pedidos.add(271);
-		pedidos.add(210);
-		pedidos.add(188);
-		pedidos.add(161);
-		pedidos.add(170);
-		OldLotSizingMethods l = new OldLotSizingMethods(10.0, 250.0, 0.5, pedidos, SEMANAL);
-		
-//		pedidos.add(50);
-//		pedidos.add(60);
-//		pedidos.add(70);
-//		pedidos.add(60);
-//		pedidos.add(95);
-//		pedidos.add(75);
-//		pedidos.add(60);
-//		pedidos.add(55);
-//		SistemaLoteo l = new SistemaLoteo(10.0, 47.0, 0.05, pedidos, SEMANAL);
+//	public static void main(String[] arg0) {
+//		// SE DEBE CONSIDERAR FORMATOS
+//		ArrayList<Integer> pedidos = new ArrayList<>();
+////		pedidos.add(50);
+////		pedidos.add(60);
+////		pedidos.add(70);
+////		pedidos.add(60);
+////		pedidos.add(95);
+////		pedidos.add(75);
+////		pedidos.add(60);
+////		pedidos.add(55);
+////		LotSizingMethods l = new LotSizingMethods(10.0, 47.0, 0.005, pedidos, SEMANAL);
 //		
-		System.out.println(l.sistemaPorCostoTotalMinimo());
-		// LUC TRAE PROBLEMAS...
-		// ArrayList<Integer>POS = l.LUC();
-		// for (int i = 0; i < POS.size(); i++) {
-		// System.out.println(POS.get(i));
-		// }
-	}
+//		pedidos.add(160);
+//		pedidos.add(166);
+//		pedidos.add(220);
+//		pedidos.add(271);
+//		pedidos.add(210);
+//		pedidos.add(188);
+//		pedidos.add(161);
+//		pedidos.add(170);
+//		OldLotSizingMethods l = new OldLotSizingMethods(10.0, 250.0, 0.5, pedidos, SEMANAL);
+//		
+////		pedidos.add(50);
+////		pedidos.add(60);
+////		pedidos.add(70);
+////		pedidos.add(60);
+////		pedidos.add(95);
+////		pedidos.add(75);
+////		pedidos.add(60);
+////		pedidos.add(55);
+////		SistemaLoteo l = new SistemaLoteo(10.0, 47.0, 0.05, pedidos, SEMANAL);
+////		
+//		System.out.println(l.sistemaPorCostoTotalMinimo());
+//		// LUC TRAE PROBLEMAS...
+//		// ArrayList<Integer>POS = l.LUC();
+//		// for (int i = 0; i < POS.size(); i++) {
+//		// System.out.println(POS.get(i));
+//		// }
+//	}
 }

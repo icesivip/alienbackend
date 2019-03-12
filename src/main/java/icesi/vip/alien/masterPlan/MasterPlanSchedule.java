@@ -154,6 +154,113 @@ public class MasterPlanSchedule {
 	public void setPlanOrders(ArrayList<Integer> planOrders) {
 		this.planOrders = planOrders;
 	}
+
+	public String getLotSizingMethod() {
+		return lotSizingMethod;
+	}
+
+	public void setLotSizingMethod(String lotSizingMethod) {
+		this.lotSizingMethod = lotSizingMethod;
+	}
+
+	public int getLeadTime() {
+		return leadTime;
+	}
+
+	public void setLeadTime(int leadTime) {
+		this.leadTime = leadTime;
+	}
+
+	public int getInitialStock() {
+		return initialStock;
+	}
+
+	public void setInitialStock(int initialStock) {
+		this.initialStock = initialStock;
+	}
+
+	public int getSecurityStock() {
+		return securityStock;
+	}
+
+	public void setSecurityStock(int securityStock) {
+		this.securityStock = securityStock;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public double getCostArticle() {
+		return costArticle;
+	}
+
+	public void setCostArticle(double costArticle) {
+		this.costArticle = costArticle;
+	}
+
+	public double getPreparationCost() {
+		return preparationCost;
+	}
+
+	public void setPreparationCost(double preparationCost) {
+		this.preparationCost = preparationCost;
+	}
+
+	public double getMaintenanceCost() {
+		return maintenanceCost;
+	}
+
+	public void setMaintenanceCost(double maintenanceCost) {
+		this.maintenanceCost = maintenanceCost;
+	}
+
+	public String getPeriodicity() {
+		return periodicity;
+	}
+
+	public void setPeriodicity(String periodicity) {
+		this.periodicity = periodicity;
+	}
+
+	public ArrayList<Integer> getBruteRequirements() {
+		return bruteRequirements;
+	}
+
+	public void setBruteRequirements(ArrayList<Integer> bruteRequirements) {
+		this.bruteRequirements = bruteRequirements;
+	}
+
+	public ArrayList<Integer> getScheduledReceptions() {
+		return scheduledReceptions;
+	}
+
+	public void setScheduledReceptions(ArrayList<Integer> scheduledReceptions) {
+		this.scheduledReceptions = scheduledReceptions;
+	}
+
+	public ArrayList<Integer> getReleasedPlanOrders() {
+		return releasedPlanOrders;
+	}
+
+	public void setReleasedPlanOrders(ArrayList<Integer> releasedPlanOrders) {
+		this.releasedPlanOrders = releasedPlanOrders;
+	}
+	
+	
+	
 	
 	
 }
