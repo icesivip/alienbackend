@@ -1,10 +1,5 @@
 package icesi.vip.alien.alien;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -99,25 +94,30 @@ public class AlienController {
 	
 	@CrossOrigin
 	@RequestMapping("/master")
-	public MasterPlanSchedule solucion( @RequestParam(value = "name", required = true) String name,
+	public MasterPlanSchedule solucion(
+									@RequestParam(value = "name", required = true) String name,
 										@RequestParam(value = "levelCode", required = true) String levelCode,
 										@RequestParam(value = "initialInventory", required = true) String initialInventory,
-										@RequestParam(value = "leadTime", defaultValue = "") String leadTime,
-										@RequestParam(value = "maintenanceCost", defaultValue = "") String maintenanceCost,
-										@RequestParam(value = "orderingCost", defaultValue = "") String orderingCost,
-										@RequestParam(value = "lotSizingRule", defaultValue = "") String lotSizingRule
-										) throws Exception {
-		File file = new File("test/ggg.txt");
-		FileWriter f = new FileWriter(file);
-		BufferedWriter in = new  BufferedWriter(f);
+										@RequestParam(value = "leadTime", defaultValue = "1") String leadTime,
+										@RequestParam(value = "maintenanceCost", defaultValue = "1") String maintenanceCost,
+										@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
+										@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule
+			         )throws Exception {
+		log.info("funciona");
+
+
+		try {
+			
+			MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, 
+					Integer.parseInt(leadTime), 
+					Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, 
+					Double.parseDouble(orderingCost),
+					Double.parseDouble(maintenanceCost), ""+1);
+			return m;
+		} catch (Exception e) {
+			throw new Exception(e.getStackTrace().toString());
+		}
 		
-		in.append("funciona");
-		in.append("name"+name);
-
-				in.close();
-
-		MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, Integer.parseInt( leadTime),  Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), ""+1);
-		return m;
 	}
 
 

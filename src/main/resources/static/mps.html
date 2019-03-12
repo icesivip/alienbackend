@@ -344,13 +344,14 @@
             var request = constructRequestString();
 
             $.ajax({
-                        url: "https://viptest1.herokuapp.com/master" + request
+                        url: "http://localhost:8080/master" + request
                     }).then(function (data) {
-                     //  $(".cover").toggle(400);
+                     $(".cover").toggle(400);
                         console.log("Funciona");
+                        console.log(data);
 
                     }, function (error) {
-                        alert("Failed to process request, model may be unsolvable.")
+                        alert(error)
                         $(".cover").toggle(400);
                         console.log(error);
                         console.log("no funciona");
