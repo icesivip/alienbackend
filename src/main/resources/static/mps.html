@@ -167,6 +167,7 @@
                 <!-- Begin page content -->
 
                 <div class="container-fluid">
+                    <form class="user" id="user">
                     <div class="row">
                         <table class="table text-dark">
                             <thead>
@@ -272,6 +273,7 @@
                             </div>
                         </div>
                     </div>
+                </form>
                 </div>
 
                 <!-- End of page content -->
@@ -318,6 +320,43 @@
         <!-- Begin Page Content -->
 
     </div>
+
+    <script>
+
+        document.getElementById("user").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function constructRequestString() {
+            name = $("#itemName").val();
+            levelCode = $("#levelCode").val();
+            initialInventory = $("#initialInventory").val();
+            leadTime = $("#leadTime").val();
+            maintenanceCost = $("#maintenanceCost").val();
+            orderingCost = $("#orderingCost").val();
+            console.log("?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
+            return "?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
+        }
+
+        function solveModel(){
+            $(".cover").toggle(400);
+            var request = constructRequestString();
+
+            $.ajax({
+                        url: "https://viptest1.herokuapp.com/master" + request
+                    }).then(function (data) {
+                       $(".cover").toggle(400);
+                        console.log("Funciona"+ data.leadTime);
+
+                    }, function (error) {
+                        alert("Failed to process request, model may be unsolvable.")
+                        $(".cover").toggle(400);
+                        console.log(error);
+                    })
+        }
+    </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

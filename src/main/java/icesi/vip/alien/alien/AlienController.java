@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
+import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import model.Constraint;
 import model.Model;
 import model.Solution;
@@ -85,5 +86,22 @@ public class AlienController {
 		return new GraphicalMethodContainer(m);
 
 	}
+	
+	
+	@CrossOrigin
+	@RequestMapping("/master")
+	public MasterPlanSchedule solucion( @RequestParam(value = "name", required = true) String name,
+										@RequestParam(value = "levelCode", required = true) String levelCode,
+										@RequestParam(value = "initialInventory", required = true) String initialInventory,
+										@RequestParam(value = "leadTime", defaultValue = "") String leadTime,
+										@RequestParam(value = "maintenanceCost", defaultValue = "") String maintenanceCost,
+										@RequestParam(value = "orderingCost", defaultValue = "") String orderingCost,
+										@RequestParam(value = "lotSizingRule", defaultValue = "") String lotSizingRule
+										) throws Exception {
+	
+		MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, Integer.parseInt( leadTime),  Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), ""+1);
+		return m;
+	}
+
 
 }
