@@ -1,6 +1,12 @@
 package icesi.vip.alien.alien;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.concurrent.atomic.AtomicLong;
+
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
+import lombok.extern.log4j.Log4j2;
 import model.Constraint;
 import model.Model;
 import model.Solution;
@@ -16,6 +23,7 @@ import model.Variable;
 import solver.interior_point.BarrierMethod;
 
 @RestController
+@Log4j2
 public class AlienController {
 
 	private static final String template = "Hello, %s! Welcome to ICESI's VIP program app.";
@@ -83,6 +91,7 @@ public class AlienController {
 			}
 			m.addConstraint(c, cons2[cons2.length - 2], Double.parseDouble(cons2[cons2.length - 1]), "C" + i);
 		}
+		
 		return new GraphicalMethodContainer(m);
 
 	}
@@ -98,7 +107,15 @@ public class AlienController {
 										@RequestParam(value = "orderingCost", defaultValue = "") String orderingCost,
 										@RequestParam(value = "lotSizingRule", defaultValue = "") String lotSizingRule
 										) throws Exception {
-	
+		File file = new File("test/ggg.txt");
+		FileWriter f = new FileWriter(file);
+		BufferedWriter in = new  BufferedWriter(f);
+		
+		in.append("funciona");
+		in.append("name"+name);
+
+				in.close();
+
 		MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, Integer.parseInt( leadTime),  Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), ""+1);
 		return m;
 	}

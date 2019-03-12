@@ -346,13 +346,14 @@
             $.ajax({
                         url: "https://viptest1.herokuapp.com/master" + request
                     }).then(function (data) {
-                       $(".cover").toggle(400);
-                        console.log("Funciona"+ data.leadTime);
+                     //  $(".cover").toggle(400);
+                        console.log("Funciona");
 
                     }, function (error) {
                         alert("Failed to process request, model may be unsolvable.")
                         $(".cover").toggle(400);
                         console.log(error);
+                        console.log("no funciona");
                     })
         }
     </script>
