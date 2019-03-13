@@ -63,7 +63,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Programs</h6>
                 <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+<<<<<<< HEAD
+=======
                 <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+>>>>>>> a6326826133c95c0f564448f16ce81bf0f32a83b
                 <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
             </div>
         </div>
@@ -213,11 +216,15 @@ align-content: center;
             <!-- Nested Row within Card Body -->
             <div class="p-5">
                 <form class="user" id="user">
-                    <div class="col-sm-2">
-                        <a href="homeSimplex.html" class="btn btn-secondary ">
-                            <i class="fab fa-fw"></i> Back
-                        </a>
-                    </div>
+                  <div class="col-sm-6">
+                    <a href="startSimplex.html" class="btn btn-secondary btn-icon-split" >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                      </span>
+                      <span class="text">Back</span>
+                    </a>
+                  </div>
+
                     <hr>
                     <h2>Problem Title</h2>
                     <div class="form-group2">
@@ -258,7 +265,9 @@ align-content: center;
 
 
                     <h2>Objective Function</h2>
-
+                    <div id="variablePanel">
+                        <div class="variable">
+          
                     <div class="form-group row">
                         <div class="col-sm-0.1">
                             <h4> Z = </h4>
@@ -282,6 +291,8 @@ align-content: center;
                             <h4> X3</h4>
                         </div>
                     </div>
+                    </div>
+                  </div>
                     <div class="text-white">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -384,11 +395,11 @@ align-content: center;
                         <div class="text-white">
                             <div class="botonsitos">
                                
-                                    <a onclick="addConstraint()" class="btn btn-primary btn-user btn-block">
+                                    <a href="beginner1.html" class="btn btn-primary btn-user btn-block">
                                         Step by step
     
                                     </a>
-                                    <a onclick="removeConstraint()" class="btn btn-info btn-user btn-block">
+                                    <a href="beginner2.html" class="btn btn-info btn-user btn-block">
                                         <i class="fab fa-fw"></i> Final solution
                                     </a>
                               
@@ -443,6 +454,33 @@ align-content: center;
       </div>
     </div>
   </div>
+  <script>
+     function addConstraint() {
+                console.log("Added contraint");
+                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+            }
+            function removeConstraint() {
+                var n = $('.constraint').length;
+                console.log(n);
+                if (n > 1) {
+                    console.log("Removed contraint");
+                    $('.constraint').last().remove();
+                }
+            }
+
+         function addVariable() {
+                console.log("Added variable");
+                $("#variablePanel").append("<div class='variable'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+            }
+            function removeConstraint() {
+                var n = $('.constraint').length;
+                console.log(n);
+                if (n > 1) {
+                    console.log("Removed contraint");
+                    $('.constraint').last().remove();
+                }
+            }   
+  </script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
