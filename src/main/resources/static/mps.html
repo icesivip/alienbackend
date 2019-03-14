@@ -169,32 +169,34 @@
                 <div class="container-fluid">
                     <form class="user" id="user">
                     <div class="row">
-                        <table class="table text-dark">
+                        <table id="tableData" class="table-responsive table text-dark">
                             <thead>
                                 <tr class="bg-success">
-                                    <th colspan="12" scope="col" class="text-center">MPS</th>
+                                    <th colspan="16" scope="col" class="text-center">MPS</th>
                                 </tr>
                                 <tr class="bg-success">
                                     <th scope="col">Period</th>
-                                    <th scope="col">1</th>
-                                    <th scope="col">2</th>
-                                    <th scope="col">3</th>
-                                    <th scope="col">4</th>
-                                    <th scope="col">5</th>
-                                    <th scope="col">6</th>
-                                    <th scope="col">7</th>
-                                    <th scope="col">8</th>
-                                    <th scope="col">9</th>
-                                    <th scope="col">10</th>
-                                    <th scope="col">...</th>
+                                    <th class="text-center" scope="col">1</th>
+                                    <th class="text-center" scope="col">2</th>
+                                    <th class="text-center" scope="col">3</th>
+                                    <th class="text-center" scope="col">4</th>
+                                    <th class="text-center" scope="col">...</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th class="bg-success" scope="row">Gross Requeriments</th>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
                                 <tr>
                                     <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
                                 <tr>
                                     <th class="bg-success" scope="row">Available Inventory Programmed</th>
@@ -220,10 +222,10 @@
                                 <input class="form-control" id="levelCode" type="text" name="levelCode" placeholder="Level code" required>
                             </div>
                             <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="initialInventory" type="text" name="initialInventory" placeholder="Initial inventory" required>
+                                <input class="form-control" id="initialInventory" type="number" min="0" name="initialInventory" placeholder="Initial inventory" required>
                             </div>
                             <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="leadTime" type="text" name="leadTime" placeholder="Lead time" required>
+                                <input class="form-control" id="leadTime" type="number" min="0" name="leadTime" placeholder="Lead time" required>
                             </div>
                         </div>
                         <div class="col">
@@ -321,12 +323,59 @@
 
     </div>
 
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
     <script>
 
         document.getElementById("user").addEventListener("submit", function (e) {
             e.preventDefault();
             solveModel();
         });
+
+        function getBruteRequirements(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[0].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
+
+        function getScheduledReceptions(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[1].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
 
         function constructRequestString() {
             name = $("#itemName").val();
@@ -335,6 +384,7 @@
             leadTime = $("#leadTime").val();
             maintenanceCost = $("#maintenanceCost").val();
             orderingCost = $("#orderingCost").val();
+            //Se debería llamar las dos funciones de arriba para las listas de parámetros de las tablas (¡it's already done!)
             console.log("?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
             return "?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
         }
@@ -358,25 +408,6 @@
                     })
         }
     </script>
-
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-
 </body>
 
 </html>
