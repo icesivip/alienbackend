@@ -29,6 +29,15 @@ public class AlienController {
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
+	
+	
+	@CrossOrigin
+	@RequestMapping("/tutorial")
+	public Tutorial tutorial(@RequestParam(value = "nombre", defaultValue = "Tutorial") String nombre,
+			@RequestParam(value = "fecha", defaultValue = "18/03/2019") String fecha
+			) {
+		return new Tutorial(fecha, nombre);
+	}
 
 	@CrossOrigin
 	@RequestMapping("/test")
@@ -103,7 +112,7 @@ public class AlienController {
 										@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
 										@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule
 			         )throws Exception {
-		log.info("funciona");
+		//log.info("funciona");
 
 
 		try {
