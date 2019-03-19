@@ -315,16 +315,18 @@ align-content: center;
 
                     <div class="form-group row">
                         <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cNumber" required="">
+                            <input type="number" class="form-control form-control-user" id="goConstraint" required="">
                         </div>
+                        <div class="text-white">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Go!</span>
-                            </a>
+                            <a onclick="goConstraint()" class="btn btn-success btn-icon-split" >
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-check"></i>
+                                </span>
+                                <span class="text">Go!</span>
+                              </a>
                         </div>
+                      </div>
                     </div>
 
                     <hr>
@@ -452,6 +454,19 @@ align-content: center;
     </div>
   </div>
   <script>
+     var contador = 3;
+     var contador2;
+     function goConstraint() {
+       
+       contador2 = parseInt(document.getElementById("goConstraint").value)-1;
+    
+       for (let index = 0; index < contador2; index++) {
+        $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+          
+      
+       }
+                console.log("Go contraint");
+                       }
      function addConstraint() {
                 console.log("Added contraint");
                 $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
@@ -464,7 +479,7 @@ align-content: center;
                     $('.constraint').last().remove();
                 }
             }
-            var contador = 3;
+           
          function addVariable() {
          contador += 1;
            
