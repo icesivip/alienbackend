@@ -184,30 +184,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th class="bg-success" scope="row">Gross Requeriments</th>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                <tr id="grossRequeriment">
+                                    <th id="levelOfDetail" class="bg-success" scope="row">Gross Requeriments</th>
+                                    <td style="width: 8%; height: 100%;"><input id="gross1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
-                                <tr>
+                                <tr id="scheduledReceptions">
                                     <th class="bg-success" scope="row">Scheduled Receptions</th>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
-                                <tr>
+                                <tr id="AvailableInventoryProgrammed">
                                     <th class="bg-success" scope="row">Available Inventory Programmed</th>
+
                                 </tr>
-                                <tr>
+                                <tr id ="Netrequirements">
                                     <th class="bg-success" scope="row">Net requirements</th>
                                 </tr>
-                                <tr>
+                                <tr id="ReceptionsOfPlannedOrders">
                                     <th class="bg-success" scope="row">Receptions of planned orders</th>
                                 </tr>
-                                <tr>
+                                <tr id="releasedPlanOrders">
                                     <th class="bg-success" scope="row">Release of planned orders</th>
                                 </tr>
                             </tbody>
@@ -384,9 +385,19 @@
             leadTime = $("#leadTime").val();
             maintenanceCost = $("#maintenanceCost").val();
             orderingCost = $("#orderingCost").val();
-            //Se debería llamar las dos funciones de arriba para las listas de parámetros de las tablas (¡it's already done!)
-            console.log("?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
-            return "?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
+            scheduledReceptions="";
+            grossRequeriment="";
+            for(var i =1; i<document.getElementById('grossRequeriment').childElementCount;i++){
+                grossRequeriment = grossRequeriment+$('#gross'+i).val()+"-";
+                scheduledReceptions = scheduledReceptions+$('#sr'+i).val()+"-";
+                 
+             
+            }
+            
+            //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
+            //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
+            console.log("?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
         }
 
         function solveModel(){
@@ -399,7 +410,18 @@
                      $(".cover").toggle(400);
                         console.log("Funciona");
                         console.log(data);
-
+                        AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                        Netrequirements=data.netRequirements;
+                        ReceptionsOfPlannedOrders=data.planOrders;
+                        ReleaseOfPlannedOrders=data.releasedPlanOrders;
+                      
+                        for( var i =0;+i<AvailableInventoryProgrammed.length;i++){
+                        $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[i]+"</td>");
+                        $("#Netrequirements").append("<td style='width: 8%; height: 100%';>"+Netrequirements[i]+"</td>");
+                        $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>"+ReceptionsOfPlannedOrders[i]+"</td>");
+                        $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>"+releasedPlanOrders[i]+"</td>");
+                        }
+                     //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
                     }, function (error) {
                         alert(error)
                         $(".cover").toggle(400);
@@ -411,3 +433,4 @@
 </body>
 
 </html>
+
