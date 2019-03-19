@@ -2,7 +2,6 @@ package icesi.vip.alien.alien;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,39 +85,52 @@ public class AlienController {
 			}
 			m.addConstraint(c, cons2[cons2.length - 2], Double.parseDouble(cons2[cons2.length - 1]), "C" + i);
 		}
-		
+
 		return new GraphicalMethodContainer(m);
 
 	}
-	
-	
+
 	@CrossOrigin
 	@RequestMapping("/master")
 	public MasterPlanSchedule solucion(
-									@RequestParam(value = "name", required = true) String name,
-										@RequestParam(value = "levelCode", required = true) String levelCode,
-										@RequestParam(value = "initialInventory", required = true) String initialInventory,
-										@RequestParam(value = "leadTime", defaultValue = "1") String leadTime,
-										@RequestParam(value = "maintenanceCost", defaultValue = "1") String maintenanceCost,
-										@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
-										@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule
-			         )throws Exception {
-		log.info("funciona");
-
+			@RequestParam(value = "scheduledReceptions", defaultValue = "1") String scheduledReceptions,
+			@RequestParam(value = "grossRequeriment", defaultValue = "1") String grossRequeriment,
+			@RequestParam(value = "name", required = true) String name,
+			@RequestParam(value = "levelCode", required = true) String levelCode,
+			@RequestParam(value = "initialInventory", required = true) String initialInventory,
+			@RequestParam(value = "leadTime", defaultValue = "1") String leadTime,
+			@RequestParam(value = "maintenanceCost", defaultValue = "1") String maintenanceCost,
+			@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
+			@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule) throws Exception {
 
 		try {
+			switch(lotSizingRule){
+			case("1"):
+				lotSizingRule = MasterPlanSchedule.LOTXLOT;
+				break;
+				}
+		
+			MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime),
+					Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, Double.parseDouble(orderingCost),
+					Double.parseDouble(maintenanceCost), "" + 1);
+
+
+			scheduledReceptions = scheduledReceptions.substring(0, scheduledReceptions.length() - 1);
+			grossRequeriment = grossRequeriment.substring(0, grossRequeriment.length() - 1);
 			
-			MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, 
-					Integer.parseInt(leadTime), 
-					Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, 
-					Double.parseDouble(orderingCost),
-					Double.parseDouble(maintenanceCost), ""+1);
+			String[] gross = grossRequeriment.split("-");
+			String[] schedules = scheduledReceptions.split("-");
+			for (int i = 0; i < gross.length; i++) {
+				m.addBruteRequirement(Integer.parseInt(gross[i]));
+				m.addScheduleReception(Integer.parseInt(schedules[i]));
+			}
+			//m.calculatePlanOrders();
+			m.hopeThisWorks();
 			return m;
 		} catch (Exception e) {
 			throw new Exception(e.getStackTrace().toString());
 		}
-		
-	}
 
+	}
 
 }
