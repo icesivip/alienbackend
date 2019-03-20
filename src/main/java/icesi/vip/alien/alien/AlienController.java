@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
+import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import model.Constraint;
 import model.Model;
@@ -91,7 +92,6 @@ public class AlienController {
 
 	}
 	
-	
 	@CrossOrigin
 	@RequestMapping("/master")
 	public MasterPlanSchedule solucion(
@@ -103,7 +103,7 @@ public class AlienController {
 										@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
 										@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule
 			         )throws Exception {
-		log.info("funciona");
+		
 
 
 		try {
