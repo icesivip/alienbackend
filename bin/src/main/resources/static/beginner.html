@@ -455,9 +455,7 @@ align-content: center;
   </div>
   <script>
      var contador = 3;
-     var contador2; 
-     
-
+     var contador2;
      function goConstraint() {
        
        contador2 = parseInt(document.getElementById("goConstraint").value)-1;
@@ -499,16 +497,6 @@ align-content: center;
                     contador--;
                 }
             }   
-      function constructRequestString() {
-        type = $("#type").val();
-        obfun = 1+" Z " +(-$("#cX1").val() )+ " X1 " + (-$("#cX2").val()) + " X2 " + (-$("#cX3").val())+" , 0 \n";
-    
-                constraints = "";
-                $(".constraint").each(function (index) {
-                    constraints += $(this).find("#X1").val() + " X1 " + $(this).find("#X2").val() + " X2 " + $(this).find("#X3").val() + " X3 " + $(this).find("#r1").val() + " " + $(this).find("#rv").val() +" , 0" +" \n";
-                });
-                return "type,"+type+" & "+"equations,"+obfun+" "+constraints;
-     }
   </script>
 
   <!-- Bootstrap core JavaScript-->
