@@ -168,115 +168,162 @@
 
                 <div class="container-fluid">
                     <form class="user" id="user">
-                    <div class="row">
-                        <table id="tableData" class="table-responsive table text-dark">
-                            <thead>
-                                <tr class="bg-success">
-                                    <th colspan="16" scope="col" class="text-center">MPS</th>
-                                </tr>
-                                <tr class="bg-success">
-                                    <th scope="col">Period</th>
-                                    <th class="text-center" scope="col">1</th>
-                                    <th class="text-center" scope="col">2</th>
-                                    <th class="text-center" scope="col">3</th>
-                                    <th class="text-center" scope="col">4</th>
-                                    <th class="text-center" scope="col">...</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr id="grossRequeriment">
-                                    <th id="levelOfDetail" class="bg-success" scope="row">Gross Requeriments</th>
-                                    <td style="width: 8%; height: 100%;"><input id="gross1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="gross2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="gross3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="gross4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                </tr>
-                                <tr id="scheduledReceptions">
-                                    <th class="bg-success" scope="row">Scheduled Receptions</th>
-                                    <td style="width: 8%; height: 100%;"><input id="sr1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="sr2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="sr3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                    <td style="width: 8%; height: 100%;"><input id="sr4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
-                                </tr>
-                                <tr id="AvailableInventoryProgrammed">
-                                    <th class="bg-success" scope="row">Available Inventory Programmed</th>
-
-                                </tr>
-                                <tr id ="Netrequirements">
-                                    <th class="bg-success" scope="row">Net requirements</th>
-                                </tr>
-                                <tr id="ReceptionsOfPlannedOrders">
-                                    <th class="bg-success" scope="row">Receptions of planned orders</th>
-                                </tr>
-                                <tr id="releasedPlanOrders">
-                                    <th class="bg-success" scope="row">Release of planned orders</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="itemName" type="text" name="itemName" placeholder="Name of the item" required>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="levelCode" type="text" name="levelCode" placeholder="Level code" required>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="initialInventory" type="number" min="0" name="initialInventory" placeholder="Initial inventory" required>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="leadTime" type="number" min="0" name="leadTime" placeholder="Lead time" required>
-                            </div>
+                        <div class="row">
+                            <table id="tableData" class="table-responsive table text-dark">
+                                <thead>
+                                    <tr class="bg-success">
+                                        <th colspan="6" scope="col" class="text-center">MPS</th>
+                                    </tr>
+                                    <tr id="periodsHeader" class="bg-success">
+                                        <th scope="col">Period</th>
+                                        <th class="text-center" scope="col">1</th>
+                                        <th class="text-center" scope="col">2</th>
+                                        <th class="text-center" scope="col">3</th>
+                                        <th class="text-center" scope="col">4</th>
+                                        <th id="colMaker" class="text-center nav-item dropdown no-arrow"
+                                            style="width: 8%; height: 100%;" scope="col">
+                                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="text-center">...</span>
+                                            </a>
+                                            <!-- Dropdown - User Information -->
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                                <h6 class="dropdown-header">
+                                                    Number of periods:
+                                                </h6>
+                                                <input class="form-control border-0 dropdown-item" id="tamPeriods"
+                                                    min="4" type="number" placeholder="# Periods">
+                                                <div class="dropdown-divider"></div>
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriods" type="button" name="resizePeriods" value="Resize"
+                                                    onclick="resize()">
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="grossRequeriment">
+                                        <th class="bg-success" scope="row">Gross Requeriments</th>
+                                        <td style="width: 8%; height: 100%;"><input id="gross1"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="gross2"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="gross3"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="gross4"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                    </tr>
+                                    <tr id="scheduledReceptions">
+                                        <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                        <td style="width: 8%; height: 100%;"><input id="sr1"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="sr2"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="sr3"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                        <td style="width: 8%; height: 100%;"><input id="sr4"
+                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                        </td>
+                                    </tr>
+                                    <tr id="AvailableInventoryProgrammed">
+                                        <th class="bg-success" scope="row">Available Inventory Programmed</th>
+                                    </tr>
+                                    <tr id="Netrequirements">
+                                        <th class="bg-success" scope="row">Net requirements</th>
+                                    </tr>
+                                    <tr id="ReceptionsOfPlannedOrders">
+                                        <th class="bg-success" scope="row">Receptions of planned orders</th>
+                                    </tr>
+                                    <tr id="releasedPlanOrders">
+                                        <th class="bg-success" scope="row">Release of planned orders</th>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col">
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost" placeholder="Maintenance cost" required>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="orderingCost" type="text" name="orderingCost" placeholder="Cost of ordering" required>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
-                                    <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
-                                    <option name="lotxlot">LotxLot</option>
-                                    <option name="another">Another</option>
-                                </select>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <select class="custom-select bg-success" id="levelOfDetail" required>
-                                    <option value="" name="levelOfDetail" disabled selected hidden>Level of detail</option>
-                                    <option name="High">High</option>
-                                    <option name="Low">Low</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mb-3 flex-nowrap">
-                                <label >Others options:</label>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input id="makeTotalCosts" name="otherOptions" type="checkbox" value="makeTotalCosts">
-                                    </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="itemName" type="text" name="itemName"
+                                        placeholder="Name of the item" required>
                                 </div>
-                                <input type="text" class="text-dark form-control bg-success" value="Total costs" readonly>
-                            </div>
-                            <div class="input-group mb-3 flex-nowrap">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input id="makePerformanceIndicators" name="otherOptions" type="checkbox" value="makePerformanceIndicators">
-                                    </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="levelCode" type="text" name="levelCode"
+                                        placeholder="Level code" required>
                                 </div>
-                                <input type="text" class="text-dark form-control bg-success" value="Indicators of performance" readonly>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="initialInventory" type="number" min="0"
+                                        name="initialInventory" placeholder="Initial inventory" required>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="leadTime" type="number" min="0" name="leadTime"
+                                        placeholder="Lead time" required>
+                                </div>
                             </div>
-                            <div class="input-group-append mb-3 flex-nowrap justify-content-end">
-                                <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate" value="Calculate">
+                            <div class="col">
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost"
+                                        placeholder="Maintenance cost" required>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="orderingCost" type="text" name="orderingCost"
+                                        placeholder="Cost of ordering" required>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
+                                        <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule
+                                        </option>
+                                        <option name="lotxlot">LotxLot</option>
+                                        <option name="another">Another</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <select class="custom-select bg-success" id="levelOfDetail" required>
+                                        <option value="" name="levelOfDetail" disabled selected hidden>Level of detail
+                                        </option>
+                                        <option name="High">High</option>
+                                        <option name="Low">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <label>Others options:</label>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input id="makeTotalCosts" name="otherOptions" type="checkbox"
+                                                value="makeTotalCosts">
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text-dark form-control bg-success" value="Total costs"
+                                        readonly>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input id="makePerformanceIndicators" name="otherOptions" type="checkbox"
+                                                value="makePerformanceIndicators">
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text-dark form-control bg-success"
+                                        value="Indicators of performance" readonly>
+                                </div>
+                                <div class="input-group-append mb-3 flex-nowrap justify-content-end">
+                                    <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate"
+                                        value="Calculate">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
 
                 <!-- End of page content -->
@@ -350,28 +397,54 @@
             solveModel();
         });
 
-        function getBruteRequirements(){
-            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+        //$(".tamPeriods").on("keyup", function (e) {
+        //    if (e.keyCode == 13) {
+        //        console.log("The demencia");
+        //    }
+        //});
+
+        function resize() {
+            if ($('#tamPeriods').val() > 4) {
+                var totalPeriods = $('#tamPeriods').val();
+                var toBeAdded = totalPeriods - 4;
+                //Span del mps mayor (value + 2)
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + 6;
+                //Recorrer cada fila y add una td
+                var resizeCommand = document.getElementById("colMaker");
+                var pHeader = document.getElementById("periodsHeader");
+                resizeCommand.parentNode.removeChild(resizeCommand);
+                for(var i = 0; i < toBeAdded; i++){
+                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (4+i+1) + "</th>")
+                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (4+i+1) + "' class='form-control border-0' type='number' min='0' style='width: 100%''></td>");
+                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (4+i+1) + "' class='form-control border-0' type='number' min='0' style='width: 100%'></td>");
+                }
+                pHeader.appendChild(resizeCommand);
+                console.log("THIS")
+            }
+        }
+
+        function getBruteRequirements() {
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";
             var dataOfTable = [];
             console.log("llega");
             cellsOfRow = tableDat.getElementsByTagName('tr');
             cells = cellsOfRow[0].getElementsByTagName('td');
-            for(var j = 0; j < cells.length; j++){
+            for (var j = 0; j < cells.length; j++) {
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
 
         }
 
-        function getScheduledReceptions(){
-            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+        function getScheduledReceptions() {
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";
             var dataOfTable = [];
             console.log("llega");
             cellsOfRow = tableDat.getElementsByTagName('tr');
             cells = cellsOfRow[1].getElementsByTagName('td');
-            for(var j = 0; j < cells.length; j++){
+            for (var j = 0; j < cells.length; j++) {
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
@@ -385,52 +458,48 @@
             leadTime = $("#leadTime").val();
             maintenanceCost = $("#maintenanceCost").val();
             orderingCost = $("#orderingCost").val();
-            scheduledReceptions="";
-            grossRequeriment="";
-            for(var i =1; i<document.getElementById('grossRequeriment').childElementCount;i++){
-                grossRequeriment = grossRequeriment+$('#gross'+i).val()+"-";
-                scheduledReceptions = scheduledReceptions+$('#sr'+i).val()+"-";
-                 
-             
+            scheduledReceptions = "";
+            grossRequeriment = "";
+            for (var i = 1; i < document.getElementById('grossRequeriment').childElementCount; i++) {
+                grossRequeriment = grossRequeriment + $('#gross' + i).val() + "-";
+                scheduledReceptions = scheduledReceptions + $('#sr' + i).val() + "-";
             }
-            
             //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
             //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
-            console.log("?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
-            return "?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
+            console.log("?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime + "&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime + "&maintenanceCost=" + maintenanceCost;
         }
 
-        function solveModel(){
+        function solveModel() {
             $(".cover").toggle(400);
             var request = constructRequestString();
 
             $.ajax({
-                        url: "https://viptest1.herokuapp.com/master" + request
-                    }).then(function (data) {
-                     $(".cover").toggle(400);
-                        console.log("Funciona");
-                        console.log(data);
-                        AvailableInventoryProgrammed = data.scheduledAvailableStock;
-                        Netrequirements=data.netRequirements;
-                        ReceptionsOfPlannedOrders=data.planOrders;
-                        ReleaseOfPlannedOrders=data.releasedPlanOrders;
-                      
-                        for( var i =0;+i<AvailableInventoryProgrammed.length;i++){
-                        $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[i]+"</td>");
-                        $("#Netrequirements").append("<td style='width: 8%; height: 100%';>"+Netrequirements[i]+"</td>");
-                        $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>"+ReceptionsOfPlannedOrders[i]+"</td>");
-                        $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>"+releasedPlanOrders[i]+"</td>");
-                        }
-                     //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
-                    }, function (error) {
-                        alert(error)
-                        $(".cover").toggle(400);
-                        console.log(error);
-                        console.log("no funciona");
-                    })
+                url: "http://localhost:8080/master" + request
+            }).then(function (data) {
+                $(".cover").toggle(400);
+                console.log("Funciona");
+                console.log(data);
+                AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                Netrequirements = data.netRequirements;
+                ReceptionsOfPlannedOrders = data.planOrders;
+                ReleaseOfPlannedOrders = data.releasedPlanOrders;
+
+                for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                    $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>" + AvailableInventoryProgrammed[i] + "</td>");
+                    $("#Netrequirements").append("<td style='width: 8%; height: 100%';>" + Netrequirements[i] + "</td>");
+                    $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>" + ReceptionsOfPlannedOrders[i] + "</td>");
+                    $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>" + releasedPlanOrders[i] + "</td>");
+                }
+                //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
+            }, function (error) {
+                alert(error)
+                $(".cover").toggle(400);
+                console.log(error);
+                console.log("no funciona");
+            })
         }
     </script>
 </body>
 
 </html>
-
