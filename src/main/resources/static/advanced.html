@@ -438,27 +438,9 @@
     </div>
   </div>
   <script>
-    var nVar
-    var nConst
-    function createTable(){
-      var nVar = parseInt(document.getElementById("nVariable").value)-1;
-      var nConst = parseInt(document.getElementById("nConstraints").value)-1;
-  
-      for (i = 0; i < nConst; i++) {
-        addCons();
-      }
-      for (i = 0; j < nVar; i++) {
-        addVar();
-      }
-      
-    }
-    function saveConstant(){
-
-      
-      
-     
-
-    }
+    
+    
+    
     var varCount = 3;
         var consCount = 1;
         function addCons() {
@@ -467,14 +449,26 @@
         }
 
         function removeVar() {
-            if (varCount > 2) {
+            if (varCount > 1) {
                 $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
                 $("#table-body tr td:nth-child(1)").remove();
                 varCount--;
             }
 
         }
-
+        function createTable(){
+      var nVar = parseInt(document.getElementById("nVariable").value)-varCount;
+      var nConst = parseInt(document.getElementById("nConstraints").value)-consCount;
+     
+      for (var j = 0; j < nVar; j++) {
+        addVar();
+      }
+      for (var i = 0; i < nConst; i++) {
+        addCons();
+      }
+      
+      
+    }
         function generateNewConsRow(count) {
             var st = "<tr>";
             for (let index = 0; index < count; index++) {
