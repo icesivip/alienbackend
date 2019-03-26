@@ -459,14 +459,36 @@
         function createTable(){
       var nVar = parseInt(document.getElementById("nVariable").value)-varCount;
       var nConst = parseInt(document.getElementById("nConstraints").value)-consCount;
-     
+     if(nVar >0 && nConst>0){
       for (var j = 0; j < nVar; j++) {
         addVar();
       }
       for (var i = 0; i < nConst; i++) {
         addCons();
       }
-      
+     }else if(nVar<0 ||nConst<0){
+       if(nVar>0){
+        for (var j = 0; j < nVar; j++) {
+        addVar();
+        }
+       }else if(nVar<0){
+        var rem = Math.abs(nVar);
+        for (var j = 0; j < rem; j++) {
+          removeVar();
+        }
+       }
+       if(nConst>=0){
+        for (var i = 0; i < nConst; i++) {
+        addCons();
+        }
+       }else if(nConst<0){
+        var rem = Math.abs(nConst);
+        for (var j = 0; j < rem; j++) {
+          removeCons();
+        }
+       }
+
+     }
       
     }
         function generateNewConsRow(count) {
