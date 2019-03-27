@@ -394,7 +394,7 @@
 
                       <h2>Data Table</h2>
                       <div class="table-responsive ">
-                        <table class="table table-responsive-xl">
+                        <table id = "result" class="table table-responsive-xl">
                             
                           <thead class="bg-gradient-primary">
                               
@@ -454,12 +454,8 @@
                           <div class="col"></div>
                           <div class="col"></div>
                           <div class="col">
-                              <a href="" class="btn btn-secondary btn-icon-split" >
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-arrow-right"></i>
-                                  </span>
-                                  <span class="text" id "next">Next</span>
-                                </a>
+                            <input type="submit" onclick="next()" class="btn btn-primary btn-user btn-block"
+                            value="NEXT">
                           </div>
                       </div>
                 </form>
@@ -513,11 +509,6 @@
   <script>
      var contador = 3;
      var contador2; 
-     
-     document.getElementById("next").addEventListener("submit", function (e) {
-           e.preventDefault();
-            next();
-        });
 
      function goConstraint() {
        
@@ -567,13 +558,14 @@
             }   
       function constructRequestString() {
         type = $("#type").val();
-        obfun = 1+" Z " +(-$("#cX1").val() )+ " X1 " + (-$("#cX2").val()) + " X2 " + (-$("#cX3").val())+" , 0n";
+        obfun = 1+" Z " +(-$("#cX1").val() )+ " X1 " + (-$("#cX2").val()) + " X2 " + (-$("#cX3").val())+" = 0n";
     
                 constraints = "";
                 $(".constraint").each(function (index) {
-                    constraints += $(this).find("#X1").val() + " X1 " + $(this).find("#X2").val() + " X2 " + $(this).find("#X3").val() + " X3 " + $(this).find("#r1").val() + " " + $(this).find("#rv").val() +" , 0" +"n";
+                    constraints += "0 Z " + $(this).find("#X1").val() + " X1 " + $(this).find("#X2").val() + " X2 " + $(this).find("#X3").val() + " X3 " + $(this).find("#r1").val() + " " + $(this).find("#rv").val()  +"n";
                 });
-                return "type,"+type+" & "+"equations,"+obfun+" "+constraints;
+                console.log("?type="+type+"&"+"equations="+obfun+" "+constraints);
+                return "?type="+type+"&"+"equations="+obfun+constraints;
      }
      function  next() {
             var string = constructRequestString();
@@ -585,17 +577,13 @@
                 var opDone = data.operationsDone;
                 actualMatrix.forEach(element => {
                   element.forEach(value => {
-                    $("#result").DataTable().row.add(
+                    $("#result").row.add(
                         value
                     ).draw();
                   });
                 });
             });
      }
-             $(document).ready(function () {
-            $('#result').DataTable();
-        });
-      
   </script>
 
   <!-- Bootstrap core JavaScript-->
