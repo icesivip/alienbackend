@@ -447,7 +447,7 @@
                               <span class="icon text-white-50">
                                 <i class="fas fa-arrow-right"></i>
                               </span>
-                              <span class="text">Final Solution</span>
+                              <span class="text" id = "finalS">Final Solution</span>
                             </a>
                           </div>
                           
@@ -458,7 +458,7 @@
                                   <span class="icon text-white-50">
                                     <i class="fas fa-arrow-right"></i>
                                   </span>
-                                  <span class="text">Next</span>
+                                  <span class="text" id "next">Next</span>
                                 </a>
                           </div>
                       </div>
@@ -514,6 +514,10 @@
      var contador = 3;
      var contador2; 
      
+     document.getElementById("next").addEventListener("submit", function (e) {
+           e.preventDefault();
+            next();
+        });
 
      function goConstraint() {
        
@@ -571,6 +575,27 @@
                 });
                 return "type,"+type+" & "+"equations,"+obfun+" "+constraints;
      }
+     function  next() {
+            var string = constructRequestString();
+            $.ajax({
+                url: "http://localhost:8080/simplexMethod" + string
+            }).then(function (data) {
+                console.log(data);
+                var actualMatrix = data.actualMatrix;
+                var opDone = data.operationsDone;
+                actualMatrix.forEach(element => {
+                  element.forEach(value => {
+                    $("#result").DataTable().row.add(
+                        value
+                    ).draw();
+                  });
+                });
+            });
+     }
+             $(document).ready(function () {
+            $('#result').DataTable();
+        });
+      
   </script>
 
   <!-- Bootstrap core JavaScript-->
