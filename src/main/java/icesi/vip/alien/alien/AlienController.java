@@ -98,6 +98,107 @@ public class AlienController {
 		return new GraphicalMethodContainer(m);
 
 	}
+	
+	@CrossOrigin
+	@RequestMapping("/mrp")
+	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName, @RequestParam(value = "id") String paramId,
+			@RequestParam(value = "name") String paramName, @RequestParam(value = "leadTime") String paramLeadTime,
+			@RequestParam(value = "amount") String paramAmount, @RequestParam(value = "timeUnit") String paramTimeUnit,
+			@RequestParam(value = "initialInv") String paramInitialInv, @RequestParam(value = "securiInv") String paramSecuriInv,
+			@RequestParam(value = "date") String paramDate,
+			@RequestParam(value = "programDelivery") String paramProgramDelivery, @RequestParam(value = "rqB") String paramRqB, 
+			@RequestParam(value = "rqBDates") String paramRqBDates) {
+
+		MRP m = new MRP();
+		
+		
+		String [] id = paramId.split(";");
+		
+		String [] fatherName = paramFatherName.split(";");
+		String [] name = paramName.split(";");
+		String [] leadTime = paramLeadTime.split(";");
+		String [] timeUnit = paramTimeUnit.split(";");
+		String [] initialInv = paramInitialInv.split(";");
+		String [] securiInv = paramSecuriInv.split(";");
+		String [] amount = paramAmount.split(";");
+		
+		
+		String [] dates = paramDate.split("-");
+		String [] programDelivery = paramProgramDelivery.split("-");
+		
+		
+		String [] reqBrutos = paramRqB.split("-");
+		String [] reqBrutosDates = paramRqBDates.split("-");
+		
+		ArrayList<String> datesAr = new ArrayList<String>();
+		ArrayList<Integer> programDeliveryAr = new ArrayList<Integer>();
+		
+		ArrayList<Integer> rqBAr = new ArrayList<Integer>();
+		ArrayList<String> rqBDatesAr = new ArrayList<String>();
+		
+		for (int i = 0; i < programDelivery.length; i++) {
+			
+			String [] tempDates = dates[i].split(";");
+			
+			for (int j = 0; j < tempDates.length; j++) {
+				datesAr.add(tempDates[j]);				
+			}
+			
+			String [] tempDelivery = programDelivery[i].split(";");
+			
+			for (int j = 0; j < tempDelivery.length; j++) {
+				
+				int temp = Integer.parseInt(tempDelivery[i]);
+				programDeliveryAr.add(temp);
+			}
+			
+		}
+		
+		for (int i = 0; i < reqBrutos.length; i++) {
+			
+			String [] tempRqDates = reqBrutosDates[i].split(";");
+			
+			for (int j = 0; j < tempRqDates.length; j++) {
+				rqBDatesAr.add(tempRqDates[j]);				
+			}
+			
+			String [] tempRqB = reqBrutos[i].split(";");
+			
+			for (int j = 0; j < tempRqB.length; j++) {
+				
+				int temp = Integer.parseInt(tempRqB[i]);
+				rqBAr.add(temp);
+			}
+			
+		}
+		
+		int [] leadTimeInteger = new int [fatherName.length];
+		int [] amountInteger = new int [fatherName.length];
+		int [] initialInvInteger = new int [fatherName.length];
+		int [] securyInvInteger = new int [fatherName.length];
+		
+		for (int i = 0; i < securiInv.length; i++) {
+			amountInteger[i] = Integer.parseInt(amount[i]);
+			initialInvInteger[i] = Integer.parseInt(initialInv[i]);
+			leadTimeInteger[i] = Integer.parseInt(leadTime[i]);
+			securyInvInteger[i] = Integer.parseInt(securiInv[i]);
+		}
+		
+		
+		for (int i = 0; i < programDelivery.length; i++) {
+
+			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), Integer.parseInt(amount[i]), timeUnit[i], 
+					Integer.parseInt(initialInv[i]),
+					Integer.parseInt(securiInv[i]),
+					datesAr, programDeliveryAr);
+			
+		}
+		m.allProductsMRP(m.getN_Ary_Tree(),rqBAr,rqBDatesAr);
+		
+		return m;
+
+	}
+	
 
 	@CrossOrigin
 	@RequestMapping("/master")
