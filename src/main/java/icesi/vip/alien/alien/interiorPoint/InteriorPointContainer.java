@@ -1,8 +1,6 @@
 package icesi.vip.alien.alien.interiorPoint;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import icesi.vip.alien.alien.graphicalMethod.SimpleConstraint;
 import model.*;
 import model.Solution;
@@ -53,6 +51,30 @@ public class InteriorPointContainer {
 		}
 		
 		
+	}
+
+
+
+	public Solution.ExportSolution[] getSolutionPath() {
+		return solutionPath;
+	}
+
+
+
+	public double getMaxX() {
+		return maxX;
+	}
+
+
+
+	public double getMaxY() {
+		return maxY;
+	}
+
+
+
+	public SimpleConstraint[] getConstraints() {
+		return constraints;
 	}
 	
 	

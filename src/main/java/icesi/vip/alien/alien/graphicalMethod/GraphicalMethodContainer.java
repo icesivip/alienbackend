@@ -8,10 +8,13 @@ import solver.graphical_method.GraphicalMethod;
 
 public class GraphicalMethodContainer {
 
-	private SimpleConstraint[] constraints;
-	private Solution.ExportSolution[] solutionList;
-	private Solution.ExportSolution optimalSolution;
+	public SimpleConstraint[] constraints;
+	public Solution.ExportSolution[] solutionList;
+	public Solution.ExportSolution optimalSolution;
 
+	
+	
+	
 	public GraphicalMethodContainer(Model m) {
 		GraphicalMethod solver = new GraphicalMethod();
 		ArrayList<Solution> sol = solver.listAllCandidateSolutions(m);
