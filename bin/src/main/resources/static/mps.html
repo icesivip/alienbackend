@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--html class="no-js"-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title>Master Plan Schedule</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- inútil por ahora -->
+            <!-- Nav Item - Dashboard -->
+            <!--li class="nav-item active">
+          <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </li-->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Modules
+            </div>
+            <!-- PL -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Linear Programming </span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                    </div>
+                </div>
+            </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
+                    aria-expanded="true" aria-controls="collapseMPS">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Master Plan Schedule </span>
+                </a>
+                <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <!-- cambiar href -->
+                        <a class="collapse-item" href="mps.html">MPS</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin page content -->
+
+                <div class="container-fluid">
+                    <form class="user" id="user">
+                    <div class="row">
+                        <table id="tableData" class="table-responsive table text-dark">
+                            <thead>
+                                <tr class="bg-success">
+                                    <th colspan="16" scope="col" class="text-center">MPS</th>
+                                </tr>
+                                <tr class="bg-success">
+                                    <th scope="col">Period</th>
+                                    <th class="text-center" scope="col">1</th>
+                                    <th class="text-center" scope="col">2</th>
+                                    <th class="text-center" scope="col">3</th>
+                                    <th class="text-center" scope="col">4</th>
+                                    <th class="text-center" scope="col">...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="grossRequeriment">
+                                    <th id="levelOfDetail" class="bg-success" scope="row">Gross Requeriments</th>
+                                    <td style="width: 8%; height: 100%;"><input id="gross1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                </tr>
+                                <tr id="scheduledReceptions">
+                                    <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                    <td style="width: 8%; height: 100%;"><input id="sr1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                </tr>
+                                <tr id="AvailableInventoryProgrammed">
+                                    <th class="bg-success" scope="row">Available Inventory Programmed</th>
+
+                                </tr>
+                                <tr id ="Netrequirements">
+                                    <th class="bg-success" scope="row">Net requirements</th>
+                                </tr>
+                                <tr id="ReceptionsOfPlannedOrders">
+                                    <th class="bg-success" scope="row">Receptions of planned orders</th>
+                                </tr>
+                                <tr id="releasedPlanOrders">
+                                    <th class="bg-success" scope="row">Release of planned orders</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="itemName" type="text" name="itemName" placeholder="Name of the item" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="levelCode" type="text" name="levelCode" placeholder="Level code" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="initialInventory" type="number" min="0" name="initialInventory" placeholder="Initial inventory" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="leadTime" type="number" min="0" name="leadTime" placeholder="Lead time" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost" placeholder="Maintenance cost" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="orderingCost" type="text" name="orderingCost" placeholder="Cost of ordering" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
+                                    <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
+                                    <option name="lotxlot">LotxLot</option>
+                                    <option name="another">Another</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <select class="custom-select bg-success" id="levelOfDetail" required>
+                                    <option value="" name="levelOfDetail" disabled selected hidden>Level of detail</option>
+                                    <option name="High">High</option>
+                                    <option name="Low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <label >Others options:</label>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input id="makeTotalCosts" name="otherOptions" type="checkbox" value="makeTotalCosts">
+                                    </div>
+                                </div>
+                                <input type="text" class="text-dark form-control bg-success" value="Total costs" readonly>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input id="makePerformanceIndicators" name="otherOptions" type="checkbox" value="makePerformanceIndicators">
+                                    </div>
+                                </div>
+                                <input type="text" class="text-dark form-control bg-success" value="Indicators of performance" readonly>
+                            </div>
+                            <div class="input-group-append mb-3 flex-nowrap justify-content-end">
+                                <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate" value="Calculate">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+
+                <!-- End of page content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; 2019</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Begin Page Content -->
+
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+    <script>
+
+        document.getElementById("user").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function getBruteRequirements(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[0].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
+
+        function getScheduledReceptions(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[1].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
+
+        function constructRequestString() {
+            name = $("#itemName").val();
+            levelCode = $("#levelCode").val();
+            initialInventory = $("#initialInventory").val();
+            leadTime = $("#leadTime").val();
+            maintenanceCost = $("#maintenanceCost").val();
+            orderingCost = $("#orderingCost").val();
+            scheduledReceptions="";
+            grossRequeriment="";
+            for(var i =1; i<document.getElementById('grossRequeriment').childElementCount;i++){
+                grossRequeriment = grossRequeriment+$('#gross'+i).val()+"-";
+                scheduledReceptions = scheduledReceptions+$('#sr'+i).val()+"-";
+                 
+             
+            }
+            
+            //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
+            //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
+            console.log("?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
+        }
+
+        function solveModel(){
+            $(".cover").toggle(400);
+            var request = constructRequestString();
+
+            $.ajax({
+                        url: "https://viptest1.herokuapp.com/master" + request
+                    }).then(function (data) {
+                     $(".cover").toggle(400);
+                        console.log("Funciona");
+                        console.log(data);
+                        AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                        Netrequirements=data.netRequirements;
+                        ReceptionsOfPlannedOrders=data.planOrders;
+                        ReleaseOfPlannedOrders=data.releasedPlanOrders;
+                      
+                        for( var i =0;+i<AvailableInventoryProgrammed.length;i++){
+                        $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[i]+"</td>");
+                        $("#Netrequirements").append("<td style='width: 8%; height: 100%';>"+Netrequirements[i]+"</td>");
+                        $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>"+ReceptionsOfPlannedOrders[i]+"</td>");
+                        $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>"+releasedPlanOrders[i]+"</td>");
+                        }
+                     //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
+                    }, function (error) {
+                        alert(error)
+                        $(".cover").toggle(400);
+                        console.log(error);
+                        console.log("no funciona");
+                    })
+        }
+    </script>
+</body>
+
+</html>
+
