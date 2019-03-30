@@ -397,6 +397,9 @@
                               
                               <tr id="thead-tr">
                                   <th>
+                                      Z
+                                  </th>
+                                  <th>
                                       X1
                                   </th>
                                   <th>
@@ -406,10 +409,10 @@
                                       X3
                                   </th>
                                   <th>
-                                      Type
+                                      RHS
                                   </th>
                                   <th>
-                                      RHS
+                                      Theta
                                   </th>
                               </tr>
                               
@@ -419,12 +422,8 @@
                                   <td><input type="number" step="0.01" required></td>
                                   <td><input type="number" step="0.01" required></td>
                                   <td><input type="number" step="0.01" required></td>
-                                  <td> <select>
-                                          <option>&#8804</option>
-                                          <option>&#8805</option>
-                                          <option>=</option>
-                                      </select>
-                                  </td>
+                                  <td><input type="number" step="0.01" required></td>
+                                  <td><input type="number" step="0.01" required></td>
                                   <td><input type="number" step="0.01" required></td>
                               </tr>
           
@@ -568,7 +567,7 @@
         if(nVar>0){
           for (var j = 0; j < nVar; j++) {
         addVariable();
-       
+      
         }
 
         }else if(nVar<0){
@@ -585,7 +584,24 @@
           
       }
                 
+       function removeVarInConstraint(){
+  
+  var parentDiv = 'Constraints'
+  var childDiv = 'qX'+varCount
+  var childDiv2 = 'wX'+varCount
+  var childDiv3 = 'eX'+varCount
             
+       if(varCount>1){
+          var child = document.getElementById(childDiv);
+          var child2 = document.getElementById(childDiv2);
+          var child3 = document.getElementById(childDiv3);
+          var parent = document.getElementById(parentDiv);
+          parent.removeChild(child);
+          parent.removeChild(child2);
+          parent.removeChild(child3);
+         
+       }
+       }
             function removeVariable() {
             
               var parentDiv = 'variable'
@@ -615,6 +631,7 @@
           parent.removeChild(child3);
           }
           varCount--;
+          
        }
          
          
