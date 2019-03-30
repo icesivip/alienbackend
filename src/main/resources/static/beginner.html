@@ -284,15 +284,6 @@
                         <div class="col-sm-0.1" id="dX2">
                             <h4> X2  </h4>
                         </div>
-                        <div class="col-sm-0.1" id="aX3">
-                          <h4>   +  </h4>
-                      </div>
-                        <div class="col-sm-2" id="bX3">
-                            <input type="number" class="form-control form-control-user" id="cX3" required="">
-                        </div>
-                        <div class="col-sm-0.1" id="dX3">
-                            <h4> X3</h4>
-                        </div>
                         
                     </div>
                     </div>
@@ -339,44 +330,39 @@
                     <hr>
                     <h2>Constraints</h2>
                     <div id="constraintPanel">
-                        <div class="constraint">
-                            <div class="form-group row">
+                      <div class="form-group row"name="constraint">
+                        <div class="form-group row" id="cons1"style="width:1240px">
                                 <div class="col-sm-2 ">
                                     <input type="number" class="form-control form-control-user" id="X1" required="">
                                 </div>
-                                <div class=" col-sm-0.1">
+                                <div class=" col-sm-0.1"id=eX1>
                                     <h4> X1 </h4>
                                 </div>
-                                <div class="col-sm-0.1"id="qX2" >
+                                <div class="col-sm-0.1"id="aX2" >
                                     <h4>   +  </h4>
                                 </div>
-                                <div class="col-sm-2"id="wX2">
+                                <div class="col-sm-2"id="bX2">
                                     <input type="number" class="form-control form-control-user" id="X2" required="">
                                 </div>
                                 <div class="col-sm-0.1"id="eX2">
                                     <h4> X2  </h4>
                                 </div>
-                                <div class="col-sm-0.1" id="qX3">
-                                    <h4>   +  </h4>
-                                </div>
-                                <div class="col-sm-2"id="wX3">
-                                    <input type="number" class="form-control form-control-user" id="X3" required="">
-                                </div>
-                                <div class="col-sm-1 "id="eX3">
-                                    <h4> X3</h4>
-                                </div>
-                                <div class="centered col-sm-1.5 mb-4 mb-sm-0" id="op">
-                                    <select class="form-control" id="r1">
-                                        <option>&lt;=</option>
-                                        <option>&gt;=</option>
-                                        <option>=</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="rv" required="">
-                                </div>
-                            </div>
+                              </div>
+                                  
+                                  <div class="form-group row" id="RHS1">
+                                      <div class="col-sm-1.5 mb-4 mb-sm-0" id="op">
+                                          <select class="form-control" id="r1">
+                                              <option>&lt;=</option>
+                                              <option>&gt;=</option>
+                                              <option>=</option>
+                                          </select>
+                                      </div>
+                                      <div>
+                                          <input type="number" class="form-control form-control-user" id="rv" required="">
+                                      </div>
+                                  </div>
                         </div>
+              
                     </div>
                     <br>
                     <div class="text-white">
@@ -545,29 +531,35 @@
         }
                        }
      function addConstraint() {
-                console.log("Added contraint");
-                
-                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+                console.log("Added constraint");
                 consCount++;
+                $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1240px'>");
+                    $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
+                    
+                  for (let i = 2; i <= varCount; i++) {
+                    $("#cons"+consCount).append("<div class='col-sm-0.1'><h4>   +  </h4></div><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
+                  }
+                  $('[name="constraint"]').last().append("</div></div><div class='form-group row' id='RHS1'><div class='col-sm-1.5 mb-4 mb-sm-0' id='op'><select class='form-control' id='r1'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv' required=''></div>");
+                
             }
             function removeConstraint() {
-                var n = $('.constraint').length;
+                var n = $('[name="constraint"]').length;
                 console.log(n);
                 if (n > 1) {
                     console.log("Removed contraint");
-                    $('.constraint').last().remove();
+                    $('[name="constraint"]').last().remove();
                     consCount--;
                 }
             }
-            var varCount=3;
+            var varCount=2;
 
             var divNum = 6; 
 
          function addVariable() {
       
           varCount ++;
-   $("#variable").append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='form-group col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cX"+varCount+"' required=''></div><div class='form-group  col-sm-0.1' id='dX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
-   addVarInConstraint()
+   $("#variable").append("<div class='col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cX"+varCount+"' required=''></div><div class='col-sm-0.1' id='dX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
+   addVarInConstraint();
        
          }
         
@@ -587,11 +579,11 @@
         }
       }
       function addVarInConstraint(){
-  var newVarCount = varCount+1;
-        
-        
+        for (let i = 1; i <= consCount; i++) {       
+          $("#cons"+i).append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='X"+varCount+"' required=''></div><div class='col-sm-0.1' id='eX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
+        }
           
-       }
+      }
                 
             
             function removeVariable() {
@@ -609,6 +601,19 @@
           parent.removeChild(child);
           parent.removeChild(child2);
           parent.removeChild(child3);
+          for (let i = 1; i <= consCount; i++) {
+            var parentDiv = 'cons'+i
+              var childDiv = 'aX'+varCount
+              var childDiv2 = 'bX'+varCount
+              var childDiv3 = 'eX'+varCount
+              var parent = document.getElementById(parentDiv);
+          var child = document.getElementById(childDiv);
+          var child2 = document.getElementById(childDiv2);
+          var child3 = document.getElementById(childDiv3);
+          parent.removeChild(child);
+          parent.removeChild(child2);
+          parent.removeChild(child3);
+          }
           varCount--;
        }
          
@@ -621,7 +626,7 @@
         obfun = 1+" Z " +(-$("#cX1").val() )+ " X1 " + (-$("#cX2").val()) + " X2 " + (-$("#cX3").val())+" X3 "+" = 0n";
     
                 constraints = "";
-                $(".constraint").each(function (index) {
+                $('[name="constraint"]').each(function (index) {
                     constraints += "0 Z " + $(this).find("#X1").val() + " X1 " + $(this).find("#X2").val() + " X2 " + $(this).find("#X3").val() + " X3 " + $(this).find("#r1").val() + " " + $(this).find("#rv").val()  +"n";
                 });
                 console.log("?type="+type+"&"+"equations="+obfun+" "+constraints);
