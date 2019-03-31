@@ -177,46 +177,43 @@
 								<th colspan='16' scope='col' class='text-center'>MRP</th>
 							</tr>
 							<tr class='bg-primary' >
-								<th scope='col'>codigo</th>
-								<th scope='col'>descripcion</th>
-								<th scope='col'>nivel</th>
-								<th scope='col'>inventario disponible</th>
-								<th scope='col'>tamaño del lote</th>
-								<th scope='col'>elemento padre</th>
-								<th scope='col'>cantidad elaborar ant.</th>
-								<th scope='col'>lead time</th>				   
+								<th scope='col'>Codigo</th>
+								<th scope='col'>Nombre</th>
+								<th scope='col'>Nivel</th>
+								<th scope='col'>Inventario Disponible</th>
+								<th scope='col'>Inventario Seguridad</th>
+								<th scope='col'>Elemento Padre</th>
+								<th scope='col'>Cantidad elaborar ant.</th>
+								<th scope='col'>Lead time</th>				   
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td input type='number' class='form-control form-control-user' id='iCodi' required>
-								<td input type='number' class='form-control form-control-user' id='iDesc' required>
-								<td input type='number' class='form-control form-control-user' id='iNive' required>
-								<td input type='number' class='form-control form-control-user' id='iInve' required>
-								<td input type='number' class='form-control form-control-user' id='iTama' required>
-								<td input type='number' class='form-control form-control-user' id='iElem' required>
-								<td input type='number' class='form-control form-control-user' id='iCant' required>
-								<td input type='number' class='form-control form-control-user' id='iLead' required>
+							<tr class = 'inputss'>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td>
+									<td style='width: 9%; height: 100%;'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td>
 							</tr>
                         </tbody>
-                        </table>
+                    </table>
 					</div>
 					<div class='text-white' class='form-control form-control-user'>
 						<div class='form-group row'>
 							<div class='col-sm-6'>
 								<a onclick='addConstraint()' class='btn btn-success btn-user btn-block'>
-									<i class='fab fa-fw'></i> Add Constraint
+									<i class='fab fa-fw'></i> Add Product
 								</a>
 							</div>
 							<div class='col-sm-6'>
 								<a onclick='removeConstraint()' type='submit' class='btn btn-danger btn-user btn-block'>
-									<i class='fab fa-fw'></i> Remove Constraint
+									<i class='fab fa-fw'></i> Remove Product
 								</a>
 							</div>
 						</div>
-						<hr>
-							<input type='submit' class='btn btn-primary btn-user btn-block' value='SOLVE MODEL'>
-						</hr>
 					</div>
 					</div>
 					<div>
@@ -240,38 +237,38 @@
 								<th scope='col'>10</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>
+						<tbody class = 'bodyInformation'>
+							<tr class = 'iGrossRequeriments'>
+								<td class = 'iGross'>
 									<class='bg-primary' scope='row'>Gross Requeriments
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "a"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'a'></td>
 								</td>
 							</tr>
-							<tr>
-								<td>
+							<tr class = 'iSchedule'>
+								<td class = 'iSched'>
 									<class='bg-primary' scope='row'>Scheduled Receptions
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
-									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j"></td>
 								</td>
 							</tr>
-							<tr>
+							<tr class = 'AvailableInv'>
 								<td>
 									<class='bg-primary' scope='row'>Available Inventory Programmed
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
@@ -286,7 +283,7 @@
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
 								</td>
 							</tr>
-							<tr>
+							<tr class = 'i4'>
 								<td>
 									<class='bg-primary' scope='row'>Net requirements 
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
@@ -301,7 +298,7 @@
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
 								</td>
 							</tr>
-							<tr>
+							<tr class = 'i5'>
 								<td>
 									<class='bg-primary' scope='row'>Receptions of planned orders
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
@@ -316,7 +313,7 @@
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
 								</td>
 							</tr>
-							<tr>
+							<tr class= 'i6'>
 								<td>
 									<class='bg-primary' scope='row'>Release of planned orders 
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
@@ -331,9 +328,11 @@
 									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td>
 								</td>
 							</tr>
-							<tr>
 						</tbody>
 					</table>
+						<hr>
+							<input type='submit' class='btn btn-primary btn-user btn-block' value='SOLVE MODEL'>
+						</hr>
 					</div>
 					</form>
                 </div>
@@ -417,18 +416,25 @@
             }
             console.log(dataOfTable);
         }
+		
 		function addConstraint() {
             console.log('Added contraint');
-            $('#tableData').append("<tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width': 100%' id='iCodi'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iDesc'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iNive'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iInve'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iTama'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iElem'></td></tr><tr><td style='width: 13%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id='   iCant'></td></tr>");
+            $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td></tr>");
+			
+			$('#tableInformation').append("<tr class='bg-primary' ><th scope='col'>concepto</th><th scope='col'>1</th><th scope='col'>2</th><th scope='col'>3</th><th scope='col'>4</th><th scope='col'>5</th><th scope='col'>6</th><th scope='col'>7</th><th scope='col'>8</th><th scope='col'>9</th><th scope='col'>10</th></tr>");
+			
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row'>Gross Requeriments<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j'></td></td></tr><tr class = 'AvailableInv'><td><class='bg-primary' scope='row'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td></td></tr><tr class = i'4'><td><class='bg-primary' scope='row'>Net requirements <td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td></td></tr><tr class = 'i5'><td><class='bg-primary' scope='row'>Receptions of planned orders<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td></td></tr><tr class= 'i6'><td><class='bg-primary' scope='row'>Release of planned orders <td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%'></td></td></tr>");	
         }
+		
         function removeConstraint() {
-            var n = $('.inputs').length;
+            var n = $('.inputss').length;
             console.log(n);
             if (n > 1) {
                 console.log('Removed contraint');
-                $('.inputs').last().remove();
+                $('.inputss').last().remove();
             }
         }
+		
         function getScheduledReceptions(){
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
             var cellsOfRow = '';
@@ -441,26 +447,98 @@
             }
             console.log(dataOfTable);
         }
+		
         function constructRequestString() {
-            name = $('#itemName').val();
-            levelCode = $('#levelCode').val();
-            initialInventory = $('#initialInventory').val();
-            leadTime = $('#leadTime').val();
-            maintenanceCost = $('#maintenanceCost').val();
-            orderingCost = $('#orderingCost').val();
-            //Se debería llamar las dos funciones de arriba para las listas de parámetros de las tablas (¡it's already done!)
-            console.log('?name=' + name + '&levelCode=' + levelCode + '&initialInventory=' + initialInventory + '&leadTime=' + leadTime+'&maintenanceCost=' + maintenanceCost);
-            return '?name=' + name + '&levelCode=' + levelCode + '&initialInventory=' + initialInventory + '&leadTime=' + leadTime+'&maintenanceCost=' + maintenanceCost;
+			
+			fatherNames = "";
+			id = "";
+			name = "";
+			amount = "";
+			leadTime = "";
+			initialInv = "";
+			securityInv = "";
+			date = "10";
+			
+			$(".inputss").each(function(index){
+				fatherNames += $(this).find("#iElem").val()+";";
+				id += $(this).find("#iCodi").val()+";";
+				name += $(this).find("#iNomb").val()+";";
+				amount += $(this).find("#iCant").val()+";";
+				leadTime += $(this).find("#iLead").val()+";";
+				initialInv += $(this).find("#iInve").val()+";";
+				securityInv += $(this).find("#iSecu").val()+";";
+			});
+			
+			scheduledReceptions = "";
+						
+			$(".iSchedule").each(function(index) {
+				scheduledReceptions +="-";
+				for (var l = 0; l < 11; l++) {
+					//$("iSched").parent("tr").find("td").each(function() {
+						scheduledReceptions += $(this).find("#j").val()+";";
+					//});
+				}
+			});
+			
+			scheduledReceptions = scheduledReceptions.replace(/undefined/g, "")
+
+			rqb = "";
+			
+			$(".iGrossRequeriments").each(function(index) {
+				rqb +="-";
+				for (var l = 0; l < 11; l++) {
+				//$(".iGrossR").parent("tr").find("td").each(function() {
+					rqb += $(this).find("#a").val()+";";
+				//});
+				}
+			});
+			
+			rqb = rqb.replace(/undefined/g, "");
+			
+			rqbDate = "";
+						
+			$(".iGrossRequeriments").each(function(index) {
+				rqbDate +="-";
+				//$(".iGross").parent("tr").find("td").each(function() {
+					//if($(this).find("#a").val() != " ") {
+					for (var l = 0; l < 11; l++) {
+						rqbDate += l+";";
+					//}
+					}
+				//});
+			});
+			
+			rqbDate = rqbDate.replace(/undefined/g, "");
+			
+			console.log(rqbDate)
+			
+		
+            console.log('?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate);
+			
+            return '?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate;
         }
+		
         function solveModel(){
             $('.cover').toggle(400);
             var request = constructRequestString();
             $.ajax({
-                        url: 'http://localhost:8080/master' + request
+                        url: 'http://localhost:8080/pruebaMRP' + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
                         console.log(data);
+						theMRP = data.mrp;
+						
+						for(var k = 0; k < theMRP.length; k++) {
+							for (var i = 0; i < theMRP[k].length; i++){
+								for (var j = 0; j< theMRP[k][0].length; j++) {
+									
+									
+									
+								}
+							}
+						}						
+					
                     }, function (error) {
                         alert(error)
                         $('.cover').toggle(400);
