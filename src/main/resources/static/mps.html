@@ -22,6 +22,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+        -moz-appearance: textfield;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -186,7 +198,7 @@
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span class="text-center">...</span>
                                             </a>
-                                            <!-- Dropdown - User Information -->
+                                            <!-- Dropdown - Resize Information -->
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                                 aria-labelledby="userDropdown">
                                                 <h6 class="dropdown-header">
@@ -206,31 +218,31 @@
                                     <tr id="grossRequeriment">
                                         <th class="bg-success" scope="row">Gross Requeriments</th>
                                         <td style="width: 8%; height: 100%;"><input id="gross1"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="gross2"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="gross3"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="gross4"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                     </tr>
                                     <tr id="scheduledReceptions">
                                         <th class="bg-success" scope="row">Scheduled Receptions</th>
                                         <td style="width: 8%; height: 100%;"><input id="sr1"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="sr2"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="sr3"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                         <td style="width: 8%; height: 100%;"><input id="sr4"
-                                                class="form-control border-0" type="number" min="0" style="width: 100%">
+                                                class="border-0" type="number" min="0" style="width: 100%">
                                         </td>
                                     </tr>
                                     <tr id="AvailableInventoryProgrammed">
@@ -406,20 +418,22 @@
         function resize() {
             if ($('#tamPeriods').val() > 4) {
                 var totalPeriods = $('#tamPeriods').val();
-                var toBeAdded = totalPeriods - 4;
+                var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+                var actualPeriods = 0;
+                actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
+                var toBeAdded = totalPeriods - actualPeriods;
                 //Span del mps mayor (value + 2)
-                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + 6;
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
                 //Recorrer cada fila y add una td
                 var resizeCommand = document.getElementById("colMaker");
                 var pHeader = document.getElementById("periodsHeader");
                 resizeCommand.parentNode.removeChild(resizeCommand);
                 for(var i = 0; i < toBeAdded; i++){
-                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (4+i+1) + "</th>")
-                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (4+i+1) + "' class='form-control border-0' type='number' min='0' style='width: 100%''></td>");
-                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (4+i+1) + "' class='form-control border-0' type='number' min='0' style='width: 100%'></td>");
+                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods+i+1) + "</th>")
+                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods+i+1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
+                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods+i+1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
                 }
                 pHeader.appendChild(resizeCommand);
-                console.log("THIS")
             }
         }
 
