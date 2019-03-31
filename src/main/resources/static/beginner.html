@@ -532,11 +532,11 @@
      function addConstraint() {
                 console.log("Added constraint");
                 consCount++;
-                $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1240px'>");
+                $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1200px'>");
                     $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
                     
                   for (let i = 2; i <= varCount; i++) {
-                    $("#cons"+consCount).append("<div class='col-sm-0.1'><h4>   +  </h4></div><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
+                    $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
                   }
                   $('[name="constraint"]').last().append("</div></div><div class='form-group row' id='RHS1'><div class='col-sm-1.5 mb-4 mb-sm-0' id='op'><select class='form-control' id='r1'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv' required=''></div>");
                 
@@ -585,22 +585,19 @@
       }
                 
        function removeVarInConstraint(){
-  
-  var parentDiv = 'Constraints'
-  var childDiv = 'qX'+varCount
-  var childDiv2 = 'wX'+varCount
-  var childDiv3 = 'eX'+varCount
-            
-       if(varCount>1){
+        for (let i = 1; i <= consCount; i++) {
+            var parentDiv = 'cons'+i
+              var childDiv = 'aX'+varCount
+              var childDiv2 = 'bX'+varCount
+              var childDiv3 = 'eX'+varCount
+              var parent = document.getElementById(parentDiv);
           var child = document.getElementById(childDiv);
           var child2 = document.getElementById(childDiv2);
           var child3 = document.getElementById(childDiv3);
-          var parent = document.getElementById(parentDiv);
           parent.removeChild(child);
           parent.removeChild(child2);
           parent.removeChild(child3);
-         
-       }
+          }
        }
             function removeVariable() {
             
@@ -617,19 +614,7 @@
           parent.removeChild(child);
           parent.removeChild(child2);
           parent.removeChild(child3);
-          for (let i = 1; i <= consCount; i++) {
-            var parentDiv = 'cons'+i
-              var childDiv = 'aX'+varCount
-              var childDiv2 = 'bX'+varCount
-              var childDiv3 = 'eX'+varCount
-              var parent = document.getElementById(parentDiv);
-          var child = document.getElementById(childDiv);
-          var child2 = document.getElementById(childDiv2);
-          var child3 = document.getElementById(childDiv3);
-          parent.removeChild(child);
-          parent.removeChild(child2);
-          parent.removeChild(child3);
-          }
+          removeVarInConstraint();
           varCount--;
           
        }
