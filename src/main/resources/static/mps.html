@@ -416,11 +416,11 @@
         //});
 
         function resize() {
-            if ($('#tamPeriods').val() > 4) {
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
+            if ($('#tamPeriods').val() > actualPeriods) {
                 var totalPeriods = $('#tamPeriods').val();
-                var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
-                var actualPeriods = 0;
-                actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
                 var toBeAdded = totalPeriods - actualPeriods;
                 //Span del mps mayor (value + 2)
                 document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
@@ -434,6 +434,16 @@
                     $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods+i+1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
                 }
                 pHeader.appendChild(resizeCommand);
+            }else if($('#tamPeriods').val() >= 4/*Valor mímimo de periodos admitidos*/){
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = $('#tamPeriods').val() + 2;
+                while($('#tamPeriods').val() < actualPeriods){
+                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)]);
+                    dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
+                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize-2)]);
+                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize-2)]);
+                }
+                //Work in progress
             }
         }
 
