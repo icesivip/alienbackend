@@ -197,6 +197,9 @@
     color: black;
     
   }
+  .h3, h3 {
+    font-size: 1.75rem;
+    color: black;}
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -418,12 +421,12 @@
                           </thead>
                          
                           <tbody id="table-body">
-                              <tr>
-                                   <td id="valZ"></td>
-                                   <td id="valX1"></td>
-                                   <td id="valX2"></td>
-                                   <td id="valR"></td>
-                                   <td id="valT"></td>
+                              <tr id ="tr0">
+                                   <td id="val00"></td>
+                                   <td id="val01"></td>
+                                   <td id="val02"></td>
+                                   <td id="valR0"></td>
+                                   <td id="valT0"></td>
                               </tr>
           
           
@@ -434,6 +437,9 @@
           
                       </table>
                       <br>
+                      <div id="mensajeS">
+
+                      </div>
                       
                   <hr>
                       
@@ -443,7 +449,7 @@
                 <div class="row">
                   
                   <div class="col">
-                    <a onclick="finalSolution()" class="btn btn-secondary btn-icon-split" >
+                    <a onclick=" finalSolution()" class="btn btn-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
@@ -625,10 +631,13 @@
      }
      
      function addVarTable() {
-      console.log("Valor "+countVar)
+
             $("#thead-tr th:nth-child(" + (countVar+1) + ")").after("<th><font color='#fff'>X"+(countVar+1)+"</font></th>");
-            $("#table-body tr").prepend( "<td id='valX"+varCount+"'></td>")
+            $("#table-body td:nth-child(" + (countVar+1) + ")").after("<td id='val0"+(countVar+1)+"'></td>");
+ 
+            
             countVar++;
+           
         }
 
         function removeVarTable() {
@@ -639,7 +648,21 @@
             }
 
         }
-              
+        var cons=1;
+        function addRow(num) {
+            $("#table-body").append(generateNewConsRow(num));
+           
+        }function generateNewConsRow(count) {
+            var st = "<tr id='td"+cons+"'>";
+            for (let index = 0; index < count; index++) {
+                st += "<td id='val"+cons+""+index+"'></td>";
+
+            }
+            st+="</tr>"
+            cons++
+                return st;
+        }
+    
       function constructRequestString() {
        
       
@@ -675,17 +698,70 @@
                  
                 return "?type="+type+"&"+"equations="+obfun+menObj;
      }
-     
-     
+     cVar = countVar;
+  
+     function addSolTable(n) {
+      cVar=countVar+n;
+      
+            $("#thead-tr th:nth-child(" + (countVar+2) + ")").before("<th><font color='#fff'>S"+(n)+"</font></th>");
+            $("#table-body td:nth-child(" + (countVar+2) + ")").before("<td id='val0"+(cVar)+"'></td>");
+
+           
+        }
      function  finalSolution() {
+       var rest= varCount+1
             var string = constructRequestString();
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
-                $("#valZ").text(1); 
-      
+                var newS=actualMatrix[0].length-rest;
+               
+
+                var theta = data.theta;
+                var sizeT =data.theta.length;
+                var posT = varCount+2+newS;
+
+                var mensajeSol = data.messageSol;
+                var solutionInWords= data.solutionInWords;
+               console.log("CantidadS: "+newS)
+                for (var i = newS; i >0; i--) {
+                  addSolTable(i);
+                }
+                if(actualMatrix.length>1){
+                  for (var i = 0; i < actualMatrix.length; i++) {
+                    addRow(varCount+3+newS);
+                    if(i==0){
+                      $("#val00").text(1.0);
+
+                    }else{ $("#val"+i+""+0+"").text(0,0);  }
+                    for (var j = 1; j <= actualMatrix[0].length; j++){
+                    
+                      var valor=actualMatrix[i][j-1];
+                      $("#val"+i+""+j+"").text(valor);
+                      
+                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
+                        $("#valR0").text(valor);
+                      }
+                     
+                    
+                  }
+                  if(i>0){
+                  var j=0
+                  for (j; j < sizeT; j++){
+                    var valor=theta[j];
+                    $("#val"+(i)+""+posT+"").text(valor);
+                    
+                 
+                  
+                }}
+                  }
+                  
+                  $("#mensajeS").prepend("<h3>Solution:</h3><h5>"+solutionInWords+"</h5>");
+                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
+                 
+                }
                 
      });
      }
