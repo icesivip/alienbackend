@@ -278,6 +278,14 @@
                                     <input class="form-control" id="leadTime" type="number" min="0" name="leadTime"
                                         placeholder="Lead time" required>
                                 </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="securityStock" type="number" min="0" name="securityStock"
+                                        placeholder="Security stock" required>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="costArticle" type="text" name="costArticle"
+                                        placeholder="Cost of the article" required>
+                                </div>
                             </div>
                             <div class="col">
                                 <div class="input-group mb-3 flex-nowrap">
@@ -289,12 +297,30 @@
                                         placeholder="Cost of ordering" required>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
+                                    <select class="text-dark custom-select bg-success" id="periodicity" required>
+                                        <option value="" name="periodicity" disabled selected hidden>Time between periods (periodicity)
+                                        </option>
+                                        <option name="Annual">Annual</option>
+                                        <option name="Monthly">Monthly</option>
+                                        <option name="Weekly">Weekly</option>
+                                        <option name="Daily">Daily</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
                                     <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
                                         <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule
                                         </option>
-                                        <option name="lotxlot">LotxLot</option>
-                                        <option name="another">Another</option>
+                                        <option name="Lot for Lot">Lot for Lot</option>
+                                        <option name="Economic Order Quantity">Economic Order Quantity</option>
+                                        <option name="Periods Of Suply">Periods Of Suply</option>
+                                        <option name="Period Order Quantity">Period Order Quantity</option>
+                                        <option name="Least Unit Cost">Least Unit Cost</option>
+                                        <option name="Least Total Cost">Least Total Cost</option>
                                     </select>
+                                </div>
+                                <div class="input-group mb-3 flex-nowrap">
+                                    <input class="form-control" id="TPeriodOFSupply" type="number" min="0" name="TPeriodOFSupply"
+                                        placeholder="Period of supply">
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
                                     <select class="custom-select bg-success" id="levelOfDetail" required>
@@ -342,12 +368,14 @@
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; 2019</span>
+                        <div class="container my-auto">
+                          <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow" href="https://github.com/icesivip">https://github.com/icesivip</a> - 2019
+                            <br><br>If you want further information feel free to contact us at vip@icesi.edu.co
+                            </span>
+                          </div>
                         </div>
-                    </div>
-                </footer>
+                      </footer>
                 <!-- End of Footer -->
 
             </div>
@@ -360,25 +388,6 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Begin Page Content -->
 
     </div>
@@ -408,12 +417,6 @@
             e.preventDefault();
             solveModel();
         });
-
-        //$(".tamPeriods").on("keyup", function (e) {
-        //    if (e.keyCode == 13) {
-        //        console.log("The demencia");
-        //    }
-        //});
 
         function resize() {
             var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
