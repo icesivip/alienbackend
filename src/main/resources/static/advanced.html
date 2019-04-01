@@ -510,6 +510,7 @@
         }
 
         function addVar() {
+          
             $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
             $("#table-body tr").prepend("<td><input type='number' step='0.01' required></td>");
             varCount++;
