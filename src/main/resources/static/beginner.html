@@ -197,13 +197,25 @@
     color: black;
     
   }
+  .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
   .h3, h3 {
     font-size: 1.75rem;
     color: black;}
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+            <div class="cover"></div>
           <!-- Page Heading -->
           <img src="img/banner.png" class="mx-auto d-block" style="width:100%"> 
 
@@ -709,11 +721,13 @@
            
         }
      function  finalSolution() {
+      $(".cover").toggle(1000);
        var rest= varCount+1
             var string = constructRequestString();
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
+              $(".cover").toggle(1000);
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
                 var newS=actualMatrix[0].length-rest;
@@ -763,8 +777,13 @@
                  
                 }
                 
-     });
-     }
+     }, function (error) {
+                    $(".cover").toggle(900);
+                    alert("Failed to process requests.")
+                   
+                    console.log(error);
+                });
+            }
   </script>
 
   <!-- Bootstrap core JavaScript-->
