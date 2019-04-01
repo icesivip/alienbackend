@@ -17,7 +17,7 @@ public class GraphicalMethodContainer {
 	
 	public GraphicalMethodContainer(Model m) {
 		GraphicalMethod solver = new GraphicalMethod();
-		ArrayList<Solution> sol = solver.listAllCandidateSolutions(m);
+		ArrayList<Solution> sol = solver.listAllPosibleSolutions(m);
 		Solution.ExportSolution[] solEx = new Solution.ExportSolution[sol.size()];
 		for (int i = 0; i < solEx.length; i++) {
 			try {
