@@ -99,7 +99,6 @@ public class AlienController {
 
 	}
 	
-	@JsonIgnore()
 	@CrossOrigin()
 	@RequestMapping("/pruebaMRP")
 	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName, @RequestParam(value = "id") String paramId,
@@ -140,7 +139,7 @@ public class AlienController {
 		String [] programDelivery = paramProgramDelivery.split("-");
 		System.out.println(" Tamaño program " + programDelivery.length);
 		
-		String [] reqBrutos = paramRqB.split("-");
+		String [] reqBrutos = paramRqB.split(";");
 		System.out.println("Tamaño brutos " + reqBrutos.length);
 
 		String [] reqBrutosDates = paramRqBDates.split("-");
@@ -159,14 +158,12 @@ public class AlienController {
 			datesAr.add(dates[j]);		
 		}
 		
-		for (int i = 1; i < programDelivery.length; i++) {			
+		for (int i = 1; i < programDelivery.length; i++) {	
 			
-			String [] tempDelivery = programDelivery[i].split(";");
-			System.out.println(tempDelivery.length + "TAMAÑO");
-			
+			String [] tempDelivery = programDelivery[i].split(";");	
 			programDeliveryAr = new ArrayList<>();
-			for (int j = 0; j < tempDelivery.length-1; j++) {
-				if (!tempDelivery[i].equals("")) {		
+			for (int j = 0; j < tempDelivery.length; j++) {
+				if (!tempDelivery[i].equals("")) {
 					int temp = Integer.parseInt(tempDelivery[j]);
 					programDeliveryAr.add(temp);
 				}
@@ -174,23 +171,17 @@ public class AlienController {
 			maestro.add(programDeliveryAr);
 		}
 		
+		for (int j = 0; j < 10; j++) {
+			rqBDatesAr.add((j+1)+"");
+		}
 
-		for (int i = 1; i < reqBrutos.length-1; i++) {
-			String [] tempRqDates = reqBrutosDates[i].split(";");
-			for (int j = 1; j < tempRqDates.length; j++) {
-				rqBDatesAr.add(tempRqDates[j]);				
-			}
-			
-			String [] tempRqB = reqBrutos[i].split(";");
-			
-			for (int j = 1; j < tempRqB.length; j++) {				
-				if (!tempRqB[i].equals("")) {
-					int temp = Integer.parseInt(tempRqB[j]);
-					rqBAr.add(temp);					
-				}
+		for (int j = 0; j < reqBrutos.length; j++) {				
+			if (!reqBrutos[j].equals("")) {
+				int temp = Integer.parseInt(reqBrutos[j]);
+				rqBAr.add(temp);					
 			}
 		}
-		
+
 		int [] leadTimeInteger = new int [fatherName.length];
 		int [] amountInteger = new int [fatherName.length];
 		int [] initialInvInteger = new int [fatherName.length];
@@ -202,8 +193,7 @@ public class AlienController {
 			leadTimeInteger[i] = Integer.parseInt(leadTime[i]);
 			securyInvInteger[i] = Integer.parseInt(securiInv[i]);
 		}
-		
-		
+				
 		for (int i = 0; i < fatherName.length; i++) {
 			System.out.println(maestro.get(i));
 			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), Integer.parseInt(amount[i]), 
