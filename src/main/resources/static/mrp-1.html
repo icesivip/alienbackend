@@ -521,7 +521,7 @@
 		
         function solveModel(){
             $('.cover').toggle(400);
-			var a = $('.iAvaila').parent("tr").find("td").find("#b").length;
+			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
                         url: 'http://localhost:8080/pruebaMRP' + request
@@ -530,13 +530,48 @@
                         console.log('Funciona');
                         console.log(data);
 						theMRP = data.mrp;
-						
+						console.log(theMRP.length);
+						console.log(theMRP[0].length);
+						console.log(theMRP[0][0].length);
+						var auxiliar1 = 0;
 						for(var k = 0; k < theMRP.length; k++) {
-							for (var i = 0; i < theMRP[k].length; i++){
-								for (var j = 0; j< theMRP[k][i].length; j++) {
-									$('.iAvaila').parent("tr").find("td").find("#b").text(theMRP[k][i][j]);
+							var i = 0;
+							if(k == 0) {
+								i = 2;
+							}
+							for (; i < theMRP[k].length; i++){
+								
+								if(i == 0) {
+									$('.iGross').parent("tr").find("td").find("#g"+auxiliar1).each(function(indexa) {
+										$(this).text(theMRP[k][i][indexa]);
+									});
+								} 
+								
+								if(i == 2) {
+									$('.iAvaila').parent("tr").find("td").find("#b"+auxiliar1).each(function(indexb) {
+										$(this).text(theMRP[k][i][indexb]);
+									});
+								}
+
+								if(i == 3) {
+									$('.iNetR').parent("tr").find("td").find("#n"+auxiliar1).each(function(indexc) {
+										$(this).text(theMRP[k][i][indexc]);
+									});
+								}
+								
+								if(i == 4) {
+									$('.iReception').parent("tr").find("td").find("#r"+auxiliar1).each(function(indexd) {
+										$(this).text(theMRP[k][i][indexd]);
+									});
+								}
+								
+								if(i == 5) {
+									$('.iRelease').parent("tr").find("td").find("#p"+auxiliar1).each(function(indexe) {
+										$(this).text(theMRP[k][i][indexe]);
+									});
 								}
 							}
+							auxiliar1++;
 						}
 					
                     }, function (error) {
