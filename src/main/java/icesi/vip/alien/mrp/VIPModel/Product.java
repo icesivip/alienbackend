@@ -91,11 +91,11 @@ public class Product {
 	 */
 	public Product search(String id) {
 		
-		if (this.id.equals(id)) {
+		if (this.name.equals(id)) {
 			return this;
 		} else {
 			for (int i = 0; i < subProducts.size(); i++) {
-				Product aux = subProducts.get(i).search(name);
+				Product aux = subProducts.get(i).search(id);
 				if (aux != null) {
 					return aux;
 				}
