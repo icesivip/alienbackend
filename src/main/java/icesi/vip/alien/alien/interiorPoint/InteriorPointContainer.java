@@ -27,19 +27,24 @@ public class InteriorPointContainer {
 		}
 		if(m.getVariableCount()==2) {
 			GraphicalMethod gm=new GraphicalMethod();
-			ArrayList<Solution>sol=gm.listAllCandidateSolutions(m);
+			ArrayList<Solution>sol=gm.listAllPosibleSolutions(m);
+			System.out.println(sol);
 			for (int i = 0; i < sol.size(); i++) {
 				if(sol.get(i).getVariableValue(m.getVariableAt(0))<0 || sol.get(i).getVariableValue(m.getVariableAt(1))<0) {
+					System.out.println("Removing solution:"+sol.get(i));
 					sol.remove(i);
-					
+					i--;
 				}
 			}
-			
+			System.out.println(sol);
 			for (int i = 0; i < sol.size(); i++) {
+				System.out.println(i);
 				if(sol.get(i).getVariableValue(m.getVariableAt(0))>maxX ) {
+					System.out.println(maxX+"<"+sol.get(i).getVariableValue(m.getVariableAt(0)));
 					maxX=sol.get(i).getVariableValue(m.getVariableAt(0));
 				}
 				if(sol.get(i).getVariableValue(m.getVariableAt(1))>maxY ) {
+					System.out.println(maxY+"<"+sol.get(i).getVariableValue(m.getVariableAt(1)));
 					maxY=sol.get(i).getVariableValue(m.getVariableAt(1));
 				}
 			}
