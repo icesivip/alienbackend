@@ -212,6 +212,11 @@
   .h3, h3 {
     font-size: 1.75rem;
     color: black;}
+    #menIteration {
+    color: black;
+    
+    font-size: larger;
+}
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -406,6 +411,7 @@
                     <div class="Table-container">
 
                       <h2>Data Table</h2>
+                      <div id="menIteration"> </div>
                       <div class="table-responsive ">
                         <table class="table table-responsive-xl">
                             
@@ -448,6 +454,7 @@
           
           
                       </table>
+                    
                       <br>
                       <div id="mensajeS">
 
@@ -472,7 +479,7 @@
                   <div class="col"></div>
                   <div class="col"></div>
                   <div class="col">
-                    <a onclick="next()" class="btn btn-secondary btn-icon-split" >
+                    <a onclick="nextSolution()" class="btn btn-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
@@ -784,6 +791,120 @@
                     console.log(error);
                 });
             }
+            function constructRequestString2(numero) {
+       
+      var iteration=numero;
+       type = $("#type").val();
+        
+        var menFun = "";
+
+        for (var i = 1; i <=  varCount; i++) {
+       
+          menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
+          
+        }
+        obfun = 1+" Z " +menFun+"= 0n";
+               
+                menObj = "";
+               
+                for (var i = 1; i <=  consCount; i++) {
+                  menConst="0 Z ";
+                for (var j = 1; j <=  varCount; j++) {
+                  
+                  menConst+= $("#X"+j+"").val() + " X"+j+" ";
+                
+                }
+                menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
+              
+                menConst+="n";
+                menObj+=menConst;
+                }
+                console.log("?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj);
+        
+            
+                 
+                return "?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj;
+     }
+     veces =0;
+     termino =false;
+     function  nextSolution() {
+ 
+    $("#menIteration").text("Iteration: "+veces);
+       var rest= varCount+1
+      var string = constructRequestString2(veces);
+
+      
+      $.ajax({
+                url: "http://localhost:8080/simplexMethod" + string
+            }).then(function (data) {
+             if(termino==false){
+                console.log("entro:"+data.messageSol)
+              
+                 
+                  console.log(data);
+                var actualMatrix = data.actualMatrix;
+                var newS=actualMatrix[0].length-rest;
+               
+              if(data.theta!=null){
+                var theta = data.theta;
+                var sizeT =data.theta.length;
+                var posT = varCount+2+newS;
+                }
+                var mensajeSol = data.messageSol;
+                var solutionInWords= data.solutionInWords;
+               console.log("CantidadS: "+newS)
+              if(veces==0){
+                for (var i = newS; i >0; i--) {
+                  addSolTable(i);
+                }
+              }
+                if(actualMatrix.length>1){
+                  
+                  for (var i = 0; i < actualMatrix.length; i++) {
+                    if(veces==0){
+                    addRow(varCount+3+newS);
+                    }
+                    if(i==0){
+                      $("#val00").text(1.0);
+
+                    }else{ $("#val"+i+""+0+"").text(0,0);  }
+                    for (var j = 1; j <= actualMatrix[0].length; j++){
+                    
+                      var valor=actualMatrix[i][j-1];
+                      $("#val"+i+""+j+"").text(valor);
+                      
+                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
+                        $("#valR0").text(valor);
+                      }
+                     
+                    
+                  }
+                  if(i>0){
+                  var j=0
+                  for (j; j < sizeT; j++){
+                    var valor=theta[j];
+                    $("#val"+(i)+""+posT+"").text(valor);
+                    
+                 
+                  
+                }}}}
+                veces++;
+              }
+               if(mensajeSol!=null){
+                 termino=true;
+
+                 $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
+                 
+               }
+                  
+            },function (error) {
+                    $(".cover").toggle(900);
+                    alert("Failed to process requests.")
+                   
+                    console.log(error);
+                });
+     }
   </script>
 
   <!-- Bootstrap core JavaScript-->
