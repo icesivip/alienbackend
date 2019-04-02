@@ -169,43 +169,46 @@
                 <div class="container-fluid">
                     <form class="user" id="user">
                     <div class="row">
-                        <table class="table text-dark">
+                        <table id="tableData" class="table-responsive table text-dark">
                             <thead>
                                 <tr class="bg-success">
-                                    <th colspan="12" scope="col" class="text-center">MPS</th>
+                                    <th colspan="16" scope="col" class="text-center">MPS</th>
                                 </tr>
                                 <tr class="bg-success">
                                     <th scope="col">Period</th>
-                                    <th scope="col">1</th>
-                                    <th scope="col">2</th>
-                                    <th scope="col">3</th>
-                                    <th scope="col">4</th>
-                                    <th scope="col">5</th>
-                                    <th scope="col">6</th>
-                                    <th scope="col">7</th>
-                                    <th scope="col">8</th>
-                                    <th scope="col">9</th>
-                                    <th scope="col">10</th>
-                                    <th scope="col">...</th>
+                                    <th class="text-center" scope="col">1</th>
+                                    <th class="text-center" scope="col">2</th>
+                                    <th class="text-center" scope="col">3</th>
+                                    <th class="text-center" scope="col">4</th>
+                                    <th class="text-center" scope="col">...</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th class="bg-success" scope="row">Gross Requeriments</th>
+                                <tr id="grossRequeriment">
+                                    <th id="levelOfDetail" class="bg-success" scope="row">Gross Requeriments</th>
+                                    <td style="width: 8%; height: 100%;"><input id="gross1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
-                                <tr>
+                                <tr id="scheduledReceptions">
                                     <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                    <td style="width: 8%; height: 100%;"><input id="sr1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
                                 </tr>
-                                <tr>
+                                <tr id="AvailableInventoryProgrammed">
                                     <th class="bg-success" scope="row">Available Inventory Programmed</th>
+
                                 </tr>
-                                <tr>
+                                <tr id ="Netrequirements">
                                     <th class="bg-success" scope="row">Net requirements</th>
                                 </tr>
-                                <tr>
+                                <tr id="ReceptionsOfPlannedOrders">
                                     <th class="bg-success" scope="row">Receptions of planned orders</th>
                                 </tr>
-                                <tr>
+                                <tr id="releasedPlanOrders">
                                     <th class="bg-success" scope="row">Release of planned orders</th>
                                 </tr>
                             </tbody>
@@ -220,10 +223,10 @@
                                 <input class="form-control" id="levelCode" type="text" name="levelCode" placeholder="Level code" required>
                             </div>
                             <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="initialInventory" type="text" name="initialInventory" placeholder="Initial inventory" required>
+                                <input class="form-control" id="initialInventory" type="number" min="0" name="initialInventory" placeholder="Initial inventory" required>
                             </div>
                             <div class="input-group mb-3 flex-nowrap">
-                                <input class="form-control" id="leadTime" type="text" name="leadTime" placeholder="Lead time" required>
+                                <input class="form-control" id="leadTime" type="number" min="0" name="leadTime" placeholder="Lead time" required>
                             </div>
                         </div>
                         <div class="col">
@@ -321,43 +324,6 @@
 
     </div>
 
-    <script>
-
-        document.getElementById("user").addEventListener("submit", function (e) {
-            e.preventDefault();
-            solveModel();
-        });
-
-        function constructRequestString() {
-            name = $("#itemName").val();
-            levelCode = $("#levelCode").val();
-            initialInventory = $("#initialInventory").val();
-            leadTime = $("#leadTime").val();
-            maintenanceCost = $("#maintenanceCost").val();
-            orderingCost = $("#orderingCost").val();
-            console.log("?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
-            return "?name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
-        }
-
-        function solveModel(){
-            $(".cover").toggle(400);
-            var request = constructRequestString();
-
-            $.ajax({
-                        url: "http://localhost:8080/master" + request
-                    }).then(function (data) {
-                     $(".cover").toggle(400);
-                        console.log("Funciona");
-                        console.log(data);
-
-                    }, function (error) {
-                        alert(error)
-                        $(".cover").toggle(400);
-                        console.log(error);
-                        console.log("no funciona");
-                    })
-        }
-    </script>
 
 
     <!-- Bootstrap core JavaScript-->
@@ -377,6 +343,94 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+    <script>
+
+        document.getElementById("user").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function getBruteRequirements(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[0].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
+
+        function getScheduledReceptions(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = "";
+            var dataOfTable = [];
+            console.log("llega");
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[1].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+
+        }
+
+        function constructRequestString() {
+            name = $("#itemName").val();
+            levelCode = $("#levelCode").val();
+            initialInventory = $("#initialInventory").val();
+            leadTime = $("#leadTime").val();
+            maintenanceCost = $("#maintenanceCost").val();
+            orderingCost = $("#orderingCost").val();
+            scheduledReceptions="";
+            grossRequeriment="";
+            for(var i =1; i<document.getElementById('grossRequeriment').childElementCount;i++){
+                grossRequeriment = grossRequeriment+$('#gross'+i).val()+"-";
+                scheduledReceptions = scheduledReceptions+$('#sr'+i).val()+"-";
+                 
+             
+            }
+            
+            //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
+            //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
+            console.log("?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
+        }
+
+        function solveModel(){
+            $(".cover").toggle(400);
+            var request = constructRequestString();
+
+            $.ajax({
+                        url: "https://viptest1.herokuapp.com/master" + request
+                    }).then(function (data) {
+                     $(".cover").toggle(400);
+                        console.log("Funciona");
+                        console.log(data);
+                        AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                        Netrequirements=data.netRequirements;
+                        ReceptionsOfPlannedOrders=data.planOrders;
+                        ReleaseOfPlannedOrders=data.releasedPlanOrders;
+                      
+                        for( var i =0;+i<AvailableInventoryProgrammed.length;i++){
+                        $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[i]+"</td>");
+                        $("#Netrequirements").append("<td style='width: 8%; height: 100%';>"+Netrequirements[i]+"</td>");
+                        $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>"+ReceptionsOfPlannedOrders[i]+"</td>");
+                        $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>"+releasedPlanOrders[i]+"</td>");
+                        }
+                     //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
+                    }, function (error) {
+                        alert(error)
+                        $(".cover").toggle(400);
+                        console.log(error);
+                        console.log("no funciona");
+                    })
+        }
+    </script>
 </body>
 
 </html>
+
