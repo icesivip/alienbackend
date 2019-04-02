@@ -284,9 +284,11 @@
                     
 
                     <div id="variablePanel">
+                       
                         <div class="variable">
-          
+                           
                     <div id="variable" class="form-group row">
+                       
                         <div class="col-sm-0.1">
                             <h4> Z = </h4>
                         </div>
@@ -307,7 +309,8 @@
                         </div>
                         
                     </div>
-                    </div>
+                  
+                  </div>
                   </div>
                     <div class="text-white">
                         <div class="form-group row">
@@ -369,15 +372,17 @@
                                     <h4> X2  </h4>
                                 </div>
                               </div>
-                                  
-                                  <div class="form-group row" id="RHS1">
-                                      <div class="col-sm-1.5 mb-4 mb-sm-0" id="op">
+                              
+                                  <div class="form-inline" id="RHS1" style="width:1240px">
+                                    
+                                      <div class="col-xl-1 mb-4 mb-sm-0" id="op">
                                           <select class="form-control" id="r1">
                                               <option>&lt;=</option>
                                               <option>&gt;=</option>
                                               <option>=</option>
                                           </select>
                                       </div>
+                                      
                                       <div>
                                           <input type="number" class="form-control form-control-user" id="rv1" required="">
                                       </div>
@@ -553,16 +558,18 @@
         }
         }
                        }
+
+
      function addConstraint() {
                 console.log("Added constraint");
                 consCount++;
                 $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1200px'>");
                     $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
-                    
+                   
                   for (let i = 2; i <= varCount; i++) {
                     $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
                   }
-                  $('[name="constraint"]').last().append("</div></div><div class='form-group row' id='RHS'><div class='col-sm-1.5 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv"+consCount+"' required=''></div>");
+                  $('[name="constraint"]').last().append( "<div class='form-inline' id='RHS1' style='width:1240px'> <div class='col-xl-1 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option> <option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv"+consCount+"' required=''></div></div>");
                 
             }
             function removeConstraint() {
