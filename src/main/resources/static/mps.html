@@ -29,8 +29,9 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
         input[type="number"] {
-        -moz-appearance: textfield;
+            -moz-appearance: textfield;
         }
     </style>
 
@@ -217,32 +218,32 @@
                                 <tbody>
                                     <tr id="grossRequeriment">
                                         <th class="bg-success" scope="row">Gross Requeriments</th>
-                                        <td style="width: 8%; height: 100%;"><input id="gross1"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="gross1" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross2"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="gross2" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross3"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="gross3" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross4"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="gross4" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
                                     </tr>
                                     <tr id="scheduledReceptions">
                                         <th class="bg-success" scope="row">Scheduled Receptions</th>
-                                        <td style="width: 8%; height: 100%;"><input id="sr1"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="sr1" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr2"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="sr2" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr3"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="sr3" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr4"
-                                                class="border-0" type="number" min="0" style="width: 100%">
+                                        <td style="width: 8%; height: 100%;"><input id="sr4" class="border-0"
+                                                type="number" min="0" style="width: 100%">
                                         </td>
                                     </tr>
                                     <tr id="AvailableInventoryProgrammed">
@@ -279,8 +280,8 @@
                                         placeholder="Lead time" required>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="securityStock" type="number" min="0" name="securityStock"
-                                        placeholder="Security stock" required>
+                                    <input class="form-control" id="securityStock" type="number" min="0"
+                                        name="securityStock" placeholder="Security stock" required>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
                                     <input class="form-control" id="costArticle" type="text" name="costArticle"
@@ -298,7 +299,8 @@
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
                                     <select class="text-dark custom-select bg-success" id="periodicity" required>
-                                        <option value="" name="periodicity" disabled selected hidden>Time between periods (periodicity)
+                                        <option value="" name="periodicity" disabled selected hidden>Time between
+                                            periods (periodicity)
                                         </option>
                                         <option name="Annual">Annual</option>
                                         <option name="Monthly">Monthly</option>
@@ -319,8 +321,8 @@
                                     </select>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="TPeriodOFSupply" type="number" min="0" name="TPeriodOFSupply"
-                                        placeholder="Period of supply">
+                                    <input class="form-control" id="TPeriodOFSupply" type="number" min="0"
+                                        name="TPeriodOFSupply" placeholder="Period of supply">
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
                                     <select class="custom-select bg-success" id="levelOfDetail" required>
@@ -368,14 +370,15 @@
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                          <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow" href="https://github.com/icesivip">https://github.com/icesivip</a> - 2019
-                            <br><br>If you want further information feel free to contact us at vip@icesi.edu.co
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow"
+                                    href="https://github.com/icesivip">https://github.com/icesivip</a> - 2019
+                                <br><br>If you want further information feel free to contact us at vip@icesi.edu.co
                             </span>
-                          </div>
                         </div>
-                      </footer>
+                    </div>
+                </footer>
                 <!-- End of Footer -->
 
             </div>
@@ -421,7 +424,7 @@
         function resize() {
             var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
             var actualPeriods = 0;
-            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
             if ($('#tamPeriods').val() > actualPeriods) {
                 var totalPeriods = $('#tamPeriods').val();
                 var toBeAdded = totalPeriods - actualPeriods;
@@ -431,20 +434,20 @@
                 var resizeCommand = document.getElementById("colMaker");
                 var pHeader = document.getElementById("periodsHeader");
                 resizeCommand.parentNode.removeChild(resizeCommand);
-                for(var i = 0; i < toBeAdded; i++){
-                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods+i+1) + "</th>")
-                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods+i+1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
-                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods+i+1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
+                for (var i = 0; i < toBeAdded; i++) {
+                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + i + 1) + "</th>")
+                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
+                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
                 }
                 pHeader.appendChild(resizeCommand);
-            }else if($('#tamPeriods').val() >= 4/*Valor mímimo de periodos admitidos*/){
+            } else if ($('#tamPeriods').val() >= 4/*Valor mímimo de periodos admitidos*/) {
                 document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = $('#tamPeriods').val() + 2;
-                while($('#tamPeriods').val() < actualPeriods){
-                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)]);
+                while ($('#tamPeriods').val() < actualPeriods) {
+                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)]);
                     dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
-                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize-2)].innerHTML);
-                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize-2)]);
-                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize-2)]);
+                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
                 }
                 //Work in progress
             }
