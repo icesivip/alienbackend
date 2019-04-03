@@ -194,12 +194,33 @@
    
   }
   .table{
-    color: #ffffff;
+    color: black;
+    
   }
+  .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
+  .h3, h3 {
+    font-size: 1.75rem;
+    color: black;}
+    #menIteration {
+    color: black;
+    
+    font-size: larger;
+}
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+            <div class="cover"></div>
           <!-- Page Heading -->
           <img src="img/banner.png" class="mx-auto d-block" style="width:100%"> 
 
@@ -263,9 +284,11 @@
                     
 
                     <div id="variablePanel">
+                       
                         <div class="variable">
-          
+                           
                     <div id="variable" class="form-group row">
+                       
                         <div class="col-sm-0.1">
                             <h4> Z = </h4>
                         </div>
@@ -284,18 +307,10 @@
                         <div class="col-sm-0.1" id="dX2">
                             <h4> X2  </h4>
                         </div>
-                        <div class="col-sm-0.1" id="aX3">
-                          <h4>   +  </h4>
-                      </div>
-                        <div class="col-sm-2" id="bX3">
-                            <input type="number" class="form-control form-control-user" id="cX3" required="">
-                        </div>
-                        <div class="col-sm-0.1" id="dX3">
-                            <h4> X3</h4>
-                        </div>
                         
                     </div>
-                    </div>
+                  
+                  </div>
                   </div>
                     <div class="text-white">
                         <div class="form-group row">
@@ -339,44 +354,41 @@
                     <hr>
                     <h2>Constraints</h2>
                     <div id="constraintPanel">
-                        <div class="constraint">
-                            <div class="form-group row">
+                      <div class="form-group row"name="constraint">
+                        <div class="form-group row" id="cons1"style="width:1240px">
                                 <div class="col-sm-2 ">
                                     <input type="number" class="form-control form-control-user" id="X1" required="">
                                 </div>
-                                <div class=" col-sm-0.1">
+                                <div class=" col-sm-0.1"id=eX1>
                                     <h4> X1 </h4>
                                 </div>
-                                <div class="col-sm-0.1"id="qX2" >
+                                <div class="col-sm-0.1"id="aX2" >
                                     <h4>   +  </h4>
                                 </div>
-                                <div class="col-sm-2"id="wX2">
+                                <div class="col-sm-2"id="bX2">
                                     <input type="number" class="form-control form-control-user" id="X2" required="">
                                 </div>
                                 <div class="col-sm-0.1"id="eX2">
                                     <h4> X2  </h4>
                                 </div>
-                                <div class="col-sm-0.1" id="qX3">
-                                    <h4>   +  </h4>
-                                </div>
-                                <div class="col-sm-2"id="wX3">
-                                    <input type="number" class="form-control form-control-user" id="X3" required="">
-                                </div>
-                                <div class="col-sm-1 "id="eX3">
-                                    <h4> X3</h4>
-                                </div>
-                                <div class="centered col-sm-1.5 mb-4 mb-sm-0" id="op">
-                                    <select class="form-control" id="r1">
-                                        <option>&lt;=</option>
-                                        <option>&gt;=</option>
-                                        <option>=</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="rv" required="">
-                                </div>
-                            </div>
+                              </div>
+                              
+                                  <div class="form-inline" id="RHS1" style="width:1240px">
+                                    
+                                      <div class="col-xl-1 mb-4 mb-sm-0" id="op">
+                                          <select class="form-control" id="r1">
+                                              <option>&lt;=</option>
+                                              <option>&gt;=</option>
+                                              <option>=</option>
+                                          </select>
+                                      </div>
+                                      
+                                      <div>
+                                          <input type="number" class="form-control form-control-user" id="rv1" required="">
+                                      </div>
+                                  </div>
                         </div>
+              
                     </div>
                     <br>
                     <div class="text-white">
@@ -404,52 +416,54 @@
                     <div class="Table-container">
 
                       <h2>Data Table</h2>
+                      <div id="menIteration"> </div>
                       <div class="table-responsive ">
-                        <table id = "result" class="table table-responsive-xl">
+                        <table class="table table-responsive-xl">
                             
                           <thead class="bg-gradient-primary">
                               
                               <tr id="thead-tr">
                                   <th>
-                                      X1
+                                      <font color="#fff">Z</font>
                                   </th>
                                   <th>
-                                      X2
+                                      <font color="#fff">X1</font>
                                   </th>
                                   <th>
-                                      X3
+                                      <font color="#fff">X2</font>
+                                  </th>
+                                  
+                                  <th>
+                                      <font color="#fff">RHS</font>
                                   </th>
                                   <th>
-                                      Type
-                                  </th>
-                                  <th>
-                                      RHS
+                                      <font color="#fff">Theta</font>
                                   </th>
                               </tr>
                               
                           </thead>
+                         
                           <tbody id="table-body">
-                              <tr>
-                                  <td><input type="number" step="0.01" required></td>
-                                  <td><input type="number" step="0.01" required></td>
-                                  <td><input type="number" step="0.01" required></td>
-                                  <td> <select>
-                                          <option>&#8804</option>
-                                          <option>&#8805</option>
-                                          <option>=</option>
-                                      </select>
-                                  </td>
-                                  <td><input type="number" step="0.01" required></td>
+                              <tr id ="tr0">
+                                   <td id="val00"></td>
+                                   <td id="val01"></td>
+                                   <td id="val02"></td>
+                                   <td id="valR0"></td>
+                                   <td id="valT0"></td>
                               </tr>
           
           
                           </tbody>
           
-          
+                       
           
           
                       </table>
+                    
                       <br>
+                      <div id="mensajeS">
+
+                      </div>
                       
                   <hr>
                       
@@ -459,7 +473,7 @@
                 <div class="row">
                   
                   <div class="col">
-                    <a onclick="" class="btn btn-secondary btn-icon-split" >
+                    <a onclick=" finalSolution()" class="btn btn-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
@@ -470,7 +484,7 @@
                   <div class="col"></div>
                   <div class="col"></div>
                   <div class="col">
-                    <a onclick="next()" class="btn btn-secondary btn-icon-split" >
+                    <a onclick="nextSolution()" class="btn btn-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
@@ -544,30 +558,40 @@
         }
         }
                        }
+
+
      function addConstraint() {
-                console.log("Added contraint");
-                
-                $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
+                console.log("Added constraint");
                 consCount++;
+                $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1200px'>");
+                    $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
+                   
+                  for (let i = 2; i <= varCount; i++) {
+                    $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
+                  }
+                  $('[name="constraint"]').last().append( "<div class='form-inline' id='RHS1' style='width:1240px'> <div class='col-xl-1 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option> <option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv"+consCount+"' required=''></div></div>");
+                
             }
             function removeConstraint() {
-                var n = $('.constraint').length;
+                var n = $('[name="constraint"]').length;
                 console.log(n);
                 if (n > 1) {
                     console.log("Removed contraint");
-                    $('.constraint').last().remove();
+                    $('[name="constraint"]').last().remove();
                     consCount--;
                 }
             }
-            var varCount=3;
+            var varCount=2;
+            var countVar = 2;
 
             var divNum = 6; 
 
          function addVariable() {
       
           varCount ++;
-   $("#variable").append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='form-group col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cX"+varCount+"' required=''></div><div class='form-group  col-sm-0.1' id='dX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
-   addVarInConstraint()
+   $("#variable").append("<div class='col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cX"+varCount+"' required=''></div><div class='col-sm-0.1' id='dX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
+   addVarInConstraint();
+   addVarTable()
        
          }
         
@@ -576,7 +600,7 @@
         if(nVar>0){
           for (var j = 0; j < nVar; j++) {
         addVariable();
-       
+      
         }
 
         }else if(nVar<0){
@@ -587,13 +611,27 @@
         }
       }
       function addVarInConstraint(){
-  var newVarCount = varCount+1;
-        
-        
+        for (let i = 1; i <= consCount; i++) {       
+          $("#cons"+i).append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='X"+varCount+"' required=''></div><div class='col-sm-0.1' id='eX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
+        }
           
-       }
+      }
                 
-            
+       function removeVarInConstraint(){
+        for (let i = 1; i <= consCount; i++) {
+            var parentDiv = 'cons'+i
+              var childDiv = 'aX'+varCount
+              var childDiv2 = 'bX'+varCount
+              var childDiv3 = 'eX'+varCount
+              var parent = document.getElementById(parentDiv);
+          var child = document.getElementById(childDiv);
+          var child2 = document.getElementById(childDiv2);
+          var child3 = document.getElementById(childDiv3);
+          parent.removeChild(child);
+          parent.removeChild(child2);
+          parent.removeChild(child3);
+          }
+       }
             function removeVariable() {
             
               var parentDiv = 'variable'
@@ -609,41 +647,270 @@
           parent.removeChild(child);
           parent.removeChild(child2);
           parent.removeChild(child3);
+          removeVarInConstraint();
+          removeVarTable();
           varCount--;
+          
        }
          
          
      }
-                
-              
-      function constructRequestString() {
-        type = $("#type").val();
-        obfun = 1+" Z " +(-$("#cX1").val() )+ " X1 " + (-$("#cX2").val()) + " X2 " + (-$("#cX3").val())+" X3 "+" = 0n";
+     
+     function addVarTable() {
+
+            $("#thead-tr th:nth-child(" + (countVar+1) + ")").after("<th><font color='#fff'>X"+(countVar+1)+"</font></th>");
+            $("#table-body td:nth-child(" + (countVar+1) + ")").after("<td id='val0"+(countVar+1)+"'></td>");
+ 
+            
+            countVar++;
+           
+        }
+
+        function removeVarTable() {
+            if (countVar > 1) {
+                $("#thead-tr th:nth-child(" + (countVar+1) + ")").remove();
+                $("#table-body tr td:nth-child(1)").remove();
+                countVar--;
+            }
+
+        }
+        var cons=1;
+        function addRow(num) {
+            $("#table-body").append(generateNewConsRow(num));
+           
+        }function generateNewConsRow(count) {
+            var st = "<tr id='td"+cons+"'>";
+            for (let index = 0; index < count; index++) {
+                st += "<td id='val"+cons+""+index+"'></td>";
+
+            }
+            st+="</tr>"
+            cons++
+                return st;
+        }
     
-                constraints = "";
-                $(".constraint").each(function (index) {
-                    constraints += "0 Z " + $(this).find("#X1").val() + " X1 " + $(this).find("#X2").val() + " X2 " + $(this).find("#X3").val() + " X3 " + $(this).find("#r1").val() + " " + $(this).find("#rv").val()  +"n";
-                });
-                console.log("?type="+type+"&"+"equations="+obfun+" "+constraints);
+      function constructRequestString() {
+       
+      
+       type = $("#type").val();
+        
+        var menFun = "";
+
+        for (var i = 1; i <=  varCount; i++) {
+       
+          menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
+          
+        }
+        obfun = 1+" Z " +menFun+"= 0n";
+               
+                menObj = "";
+               
+                for (var i = 1; i <=  consCount; i++) {
+                  menConst="0 Z ";
+                for (var j = 1; j <=  varCount; j++) {
+                  
+                  menConst+= $("#X"+j+"").val() + " X"+j+" ";
                 
-                return "?type="+type+"&"+"equations="+obfun+constraints;
+                }
+                menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
+              
+                menConst+="n";
+                menObj+=menConst;
+                }
+
+                console.log("?type="+type+"&"+"equations="+obfun+menObj);
+        
+            
+                 
+                return "?type="+type+"&"+"equations="+obfun+menObj;
      }
-     function  next() {
+     cVar = countVar;
+  
+     function addSolTable(n) {
+      cVar=countVar+n;
+      
+            $("#thead-tr th:nth-child(" + (countVar+2) + ")").before("<th><font color='#fff'>S"+(n)+"</font></th>");
+            $("#table-body td:nth-child(" + (countVar+2) + ")").before("<td id='val0"+(cVar)+"'></td>");
+
+           
+        }
+     function  finalSolution() {
+      $(".cover").toggle(1000);
+       var rest= varCount+1
             var string = constructRequestString();
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
+              $(".cover").toggle(1000);
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
-                var opDone = data.operationsDone;
-                actualMatrix.forEach(element => {
-                  element.forEach(value => {
-                    $("#result").row.add(
-                        value
-                    ).draw();
-                  });
+                var newS=actualMatrix[0].length-rest;
+               
+
+                var theta = data.theta;
+                var sizeT =data.theta.length;
+                var posT = varCount+2+newS;
+
+                var mensajeSol = data.messageSol;
+                var solutionInWords= data.solutionInWords;
+               console.log("CantidadS: "+newS)
+                for (var i = newS; i >0; i--) {
+                  addSolTable(i);
+                }
+                if(actualMatrix.length>1){
+                  for (var i = 0; i < actualMatrix.length; i++) {
+                    addRow(varCount+3+newS);
+                    if(i==0){
+                      $("#val00").text(1.0);
+
+                    }else{ $("#val"+i+""+0+"").text(0,0);  }
+                    for (var j = 1; j <= actualMatrix[0].length; j++){
+                    
+                      var valor=actualMatrix[i][j-1];
+                      $("#val"+i+""+j+"").text(valor);
+                      
+                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
+                        $("#valR0").text(valor);
+                      }
+                     
+                    
+                  }
+                  if(i>0){
+                  var j=0
+                  for (j; j < sizeT; j++){
+                    var valor=theta[j];
+                    $("#val"+(i)+""+posT+"").text(valor);
+                    
+                 
+                  
+                }}
+                  }
+              
+                  $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
+                 
+                }
+                
+     }, function (error) {
+                    $(".cover").toggle(900);
+                    alert("Failed to process requests.")
+                   
+                    console.log(error);
                 });
-            });
+            }
+            function constructRequestString2(numero) {
+       
+      var iteration=numero;
+       type = $("#type").val();
+        
+        var menFun = "";
+
+        for (var i = 1; i <=  varCount; i++) {
+       
+          menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
+          
+        }
+        obfun = 1+" Z " +menFun+"= 0n";
+               
+                menObj = "";
+               
+                for (var i = 1; i <=  consCount; i++) {
+                  menConst="0 Z ";
+                for (var j = 1; j <=  varCount; j++) {
+                  
+                  menConst+= $("#X"+j+"").val() + " X"+j+" ";
+                
+                }
+                menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
+              
+                menConst+="n";
+                menObj+=menConst;
+                }
+                console.log("?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj);
+        
+            
+                 
+                return "?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj;
+     }
+     veces =0;
+     termino =false;
+     function  nextSolution() {
+ 
+    $("#menIteration").text("Iteration: "+veces);
+       var rest= varCount+1
+      var string = constructRequestString2(veces);
+
+      
+      $.ajax({
+                url: "http://localhost:8080/simplexMethod" + string
+            }).then(function (data) {
+             if(termino==false){
+                console.log("entro:"+data.messageSol)
+              
+                 
+                  console.log(data);
+                var actualMatrix = data.actualMatrix;
+                var newS=actualMatrix[0].length-rest;
+               
+              if(data.theta!=null){
+                var theta = data.theta;
+                var sizeT =data.theta.length;
+                var posT = varCount+2+newS;
+                }
+                var mensajeSol = data.messageSol;
+                var solutionInWords= data.solutionInWords;
+               console.log("CantidadS: "+newS)
+              if(veces==0){
+                for (var i = newS; i >0; i--) {
+                  addSolTable(i);
+                }
+              }
+                if(actualMatrix.length>1){
+                  
+                  for (var i = 0; i < actualMatrix.length; i++) {
+                    if(veces==0){
+                    addRow(varCount+3+newS);
+                    }
+                    if(i==0){
+                      $("#val00").text(1.0);
+
+                    }else{ $("#val"+i+""+0+"").text(0,0);  }
+                    for (var j = 1; j <= actualMatrix[0].length; j++){
+                    
+                      var valor=actualMatrix[i][j-1];
+                      $("#val"+i+""+j+"").text(valor);
+                      
+                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
+                        $("#valR0").text(valor);
+                      }
+                     
+                    
+                  }
+                  if(i>0){
+                  var j=0
+                  for (j; j < sizeT; j++){
+                    var valor=theta[j];
+                    $("#val"+(i)+""+posT+"").text(valor);
+                    
+                 
+                  
+                }}}}
+                veces++;
+              }
+               if(mensajeSol!=null){
+                 termino=true;
+
+                 $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
+                 
+               }
+                  
+            },function (error) {
+                    $(".cover").toggle(900);
+                    alert("Failed to process requests.")
+                   
+                    console.log(error);
+                });
      }
   </script>
 
