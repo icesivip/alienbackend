@@ -359,7 +359,7 @@
                       <div class="form-group row"name="constraint">
                         <div class="form-group row" id="cons1"style="width:1240px">
                                 <div class="col-sm-2 ">
-                                    <input type="number" class="form-control form-control-user" id="X1" required="">
+                                    <input type="number" class="form-control form-control-user" id="cons1X1" required="">
                                 </div>
                                 <div class=" col-sm-0.1"id=eX1>
                                     <h4> X1 </h4>
@@ -368,7 +368,7 @@
                                     <h4>   +  </h4>
                                 </div>
                                 <div class="col-sm-2"id="bX2">
-                                    <input type="number" class="form-control form-control-user" id="X2" required="">
+                                    <input type="number" class="form-control form-control-user" id="cons1X2" required="">
                                 </div>
                                 <div class="col-sm-0.1"id="eX2">
                                     <h4> X2  </h4>
@@ -386,7 +386,7 @@
                                       </div>
                                       
                                       <div>
-                                          <input type="number" class="form-control form-control-user" id="rv1" required="">
+                                          <input type="number" class="form-control form-control-user" id="cons1rv1" required="">
                                       </div>
                                   </div>
                         </div>
@@ -566,12 +566,12 @@
                 console.log("Added constraint");
                 consCount++;
                 $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1200px'>");
-                    $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
+                    $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='cons"+consCount+"X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
                    
                   for (let i = 2; i <= varCount; i++) {
-                    $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
+                    $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='cons"+consCount+"X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
                   }
-                  $('[name="constraint"]').last().append( "<div class='form-inline' id='RHS1' style='width:1240px'> <div class='col-xl-1 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option> <option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='rv"+consCount+"' required=''></div></div>");
+                  $('[name="constraint"]').last().append( "<div class='form-inline' id='RHS1' style='width:1240px'> <div class='col-xl-1 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option> <option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='cons"+consCount+"rv"+consCount+"' required=''></div></div>");
                 
             }
             function removeConstraint() {
@@ -711,10 +711,10 @@
                   menConst="n0 Z ";
                 for (var j = 1; j <=  varCount; j++) {
                   
-                  menConst+= $("#X"+j+"").val() + " X"+j+" ";
+                  menConst+= $("#cons"+i+"X"+j+"").val()+ " X"+j+" ";
                 
                 }
-                menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
+                menConst+=$("#r"+i+"").val() +" "+ $("#cons"+i+"rv"+i+"").val() ;
                 menObj+=menConst;
                 }
 
@@ -801,7 +801,7 @@
             function constructRequestString2(numero) {
        
       var iteration=numero;
-       type = $("#type").val();
+      type = $("#type").val();
         
         var menFun = "";
 
@@ -810,22 +810,21 @@
           menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
           
         }
-        obfun = 1+" Z " +menFun+"= 0n";
+        obfun = 1+" Z " +menFun+"= 0";
                
                 menObj = "";
                
                 for (var i = 1; i <=  consCount; i++) {
-                  menConst="0 Z ";
+                  menConst="n0 Z ";
                 for (var j = 1; j <=  varCount; j++) {
                   
-                  menConst+= $("#X"+j+"").val() + " X"+j+" ";
+                  menConst+= $("#cons"+i+"X"+j+"").val()+ " X"+j+" ";
                 
                 }
-                menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
-              
-                menConst+="n";
+                menConst+=$("#r"+i+"").val() +" "+ $("#cons"+i+"rv"+i+"").val() ;
                 menObj+=menConst;
                 }
+
                 console.log("?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj);
         
             
