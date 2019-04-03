@@ -488,6 +488,11 @@
             leadTime = $("#leadTime").val();
             maintenanceCost = $("#maintenanceCost").val();
             orderingCost = $("#orderingCost").val();
+            securityStock = $('#securityStock').val();
+            costArticle = $('#costArticle').val();
+            lotSizingRule = $('#lotSizingRule').val();
+            periodicity = $('#periodicity').val();
+            TPeriodOFSupply = $('#TPeriodOFSupply').val();
             scheduledReceptions = "";
             grossRequeriment = "";
             for (var i = 1; i < document.getElementById('grossRequeriment').childElementCount; i++) {
@@ -496,8 +501,10 @@
             }
             //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
             //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
-            console.log("?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime + "&maintenanceCost=" + maintenanceCost);
-            return "?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime + "&maintenanceCost=" + maintenanceCost;
+            console.log("?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime 
+            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&lotSizingRule=" + lotSizingRule + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime 
+            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&lotSizingRule=" + lotSizingRule + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost;
         }
 
         function solveModel() {
