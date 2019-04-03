@@ -51,6 +51,7 @@ public class LotSizingMethods {
 		if (EOQDoub > EOQ) {
 			EOQ += 1;
 		}
+		System.out.println(EOQ);
 		ArrayList<Integer> result = new ArrayList<>();
 		int quantity = 0;
 		result.add(EOQ);
@@ -137,6 +138,7 @@ public class LotSizingMethods {
 			// found the anuual maintenance cost
 			H = maintenanceCost * itemCost * WEEKS_IN_YEAR;
 			EOQ = Math.sqrt((2 * D * preparationCost) / H);
+			System.out.println(D + " - " + totalItems + " - " + H);
 
 			return EOQ;
 		}

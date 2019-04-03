@@ -52,7 +52,7 @@ public class MasterPlanSchedule {
 		this.periodicity = periodicity;
 		this.TPeriodOFSupply = TPeriodOFSupply;
 		
-//		lotSizingMethods = new LotSizingMethods();
+		lotSizingMethods = new LotSizingMethods();
 		
 		bruteRequirements = new ArrayList<Integer>();
 		scheduledReceptions = new ArrayList<Integer>();
