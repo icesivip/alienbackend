@@ -176,6 +176,30 @@
   font-family:'Times New Roman', Times, serif;
 
 }
+.table{
+    color: black;
+    
+  }
+  .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
+  .h3, h3 {
+    font-size: 1.75rem;
+    color: black;}
+    #menIteration {
+    color: black;
+    
+    font-size: larger;
+}
 .container1-1{
   position: absolute;
  text-anchor: middle;
@@ -193,13 +217,10 @@
     
    
   }
-  .table{
-    color: #ffffff;
-  }
 </style>
         <!-- Begin Page Content --->
         <div class="container-fluid">
-
+            <div class="cover"></div>
           <!-- Page Heading -->
           <div class="text-center">
             <h1><u>SIMPLEX METHOD</u> </h1>
@@ -281,7 +302,7 @@
                     <br>
                     <div class="Table-container">
 
-                        <h2>Data Table</h2>
+                        <h2>Inputs</h2>
                         <div class="table-responsive ">
                           <table class="table table-responsive-xl">
                               
@@ -306,7 +327,7 @@
                                 </tr>
                                 
                             </thead>
-                            <tbody id="table-body">
+                            <tbody id="table-entries">
                                 <tr>
                                     <td><font color="#000000">1</font></td>
                                     <td><input type="number" step="0.01" id="cX1" required></td>
@@ -395,7 +416,60 @@
                             </div>
                     </div>
                     <br>
-                  
+                    <div class="Table-container">
+
+                        <h2>Outputs</h2>
+                        <div id="menIteration"> </div>
+                        <div class="table-responsive ">
+                          <table class="table table-responsive-xl">
+                              
+                            <thead class="bg-gradient-primary">
+                                
+                                <tr id="thead-ans">
+                                    <th>
+                                        <font color="#fff">Z</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    
+                                    <th>
+                                        <font color="#fff">RHS</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Theta</font>
+                                    </th>
+                                </tr>
+                                
+                            </thead>
+                           
+                            <tbody id="table-body">
+                                <tr id ="tr0">
+                                     <td id="val00"></td>
+                                     <td id="val01"></td>
+                                     <td id="val02"></td>
+                                     <td id="valR0"></td>
+                                     <td id="valT0"></td>
+                                </tr>
+            
+            
+                            </tbody>
+            
+                         
+            
+            
+                        </table>
+                        <br>
+                        <div id="mensajeS">
+  
+                        </div>
+                        
+                    <hr>
+                        
+                        </div>
                 </form>
 
             </div>
@@ -447,16 +521,19 @@
   <script>
     
     var varCount = 2;
+    var countVar = 2;
+
+            var divNum = 6; 
         var consCount = 1;
         function addCons() {
             consCount++;
-            $("#table-body").append(generateNewConsRow(varCount));
+            $("#table-entries").append(generateNewConsRow(varCount));
         }
 
         function removeVar() {
             if (varCount > 1) {
                 $("#thead-tr th:nth-child(" + (varCount+1) + ")").remove();
-                $("#table-body tr td:nth-child("+(varCount+1)+")").remove();
+                $("#table-entries tr td:nth-child("+(varCount+1)+")").remove();
                 varCount--;
             }
 
@@ -502,13 +579,12 @@
                 st += "<td><input type='number' step='0.01' id='X"+consCount+index+"'required></td>";
 
             }
-            st += "<td> <select id='r"+consCount+"'><option>&lt;=</option><option>&Gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv"+consCount+"'required></td></tr>"
+            st += "<td> <select id='r"+consCount+"'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv"+consCount+"'required></td></tr>"
             return st;
         }
-
         function removeCons() {
             if (consCount > 1) {
-                $("#table-body tr").last().remove();
+                $("#table-entries tr").last().remove();
                 consCount--;
             }
 
@@ -518,24 +594,46 @@
           
             varCount++;
             $("#thead-tr th:nth-child(" + varCount + ")").after("<th>X" + varCount + "</th>");
-            $("#table-body tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
+            $("#table-entries tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
             for (let i = 1; i <= consCount; i++) {
               
-            $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
+            $("#table-entries tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
               
             }
+            addVarTable();
         }
+function addVarTable() {
 
-        function insertAtIndex(i) {
-            if (i === 0) {
-                $("#controller").prepend("<div>okay things</div>");
-                return;
+            $("#thead-ans th:nth-child(" + (countVar+1) + ")").after("<th><font color='#fff'>X"+(countVar+1)+"</font></th>");
+            $("#table-body td:nth-child(" + (countVar+1) + ")").after("<td id='val0"+(countVar+1)+"'></td>");
+ 
+            
+            countVar++;
+           
+        }
+        function addSolTable(n) {
+      cVar=countVar+n;
+      
+            $("#thead-ans th:nth-child(" + (countVar+2) + ")").before("<th><font color='#fff'>S"+(n)+"</font></th>");
+            $("#table-body td:nth-child(" + (countVar+2) + ")").before("<td id='val0"+(cVar)+"'></td>");
+
+           
+        }
+        function addRow(num) {
+            $("#table-body").append(generateSolRow(num));
+           
+        }
+        function generateSolRow(count) {
+            var st = "<tr id='td"+cons+"'>";
+            for (let index = 0; index < count; index++) {
+                st += "<td id='val"+cons+""+index+"'></td>";
+
             }
-
-
-            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+            st+="</tr>"
+            cons++
+                return st;
         }
-
+        var cons=1;
         function  finalSolution() {
       $(".cover").toggle(1000);
        var rest= varCount+1
@@ -600,6 +698,7 @@
                     console.log(error);
                 });
             }
+
             function constructRequestString2(numero) {
        
       var iteration=numero;
