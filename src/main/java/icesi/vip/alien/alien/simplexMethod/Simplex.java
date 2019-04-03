@@ -80,19 +80,10 @@ public class Simplex implements Solver{
             else {
            double[][] array = Final.getMatrix(0, Final.getRowDimension()-1, 0, Final.getColumnDimension()-2).getArray();
            double[] valuesSolution = new double[array[0].length];
-           for (int i = 0; i < array.length; i++) {
+           for (int i = 1; i < array.length; i++) {
                for (int j = 0; j < array[0].length; j++) {
-                   if(array[i][j] == 1) {
-                       boolean isBasic = true;
-                       for (int k = 0; k < array.length; k++) {
-                           if(array[k][j] != 0 && k != i){
-                               isBasic = false;
-                               break;
-                           }
-                       }
-                       if(isBasic)
+                  if(Base[i-1] == j)
                            valuesSolution[j] = Final.getArray()[i][Final.getColumnDimension()-1];
-                   }
                }
            }
            System.out.print("solución valores ");

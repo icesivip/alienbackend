@@ -701,20 +701,18 @@
           menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
           
         }
-        obfun = 1+" Z " +menFun+"= 0n";
+        obfun = 1+" Z " +menFun+"= 0";
                
                 menObj = "";
                
                 for (var i = 1; i <=  consCount; i++) {
-                  menConst="0 Z ";
+                  menConst="n0 Z ";
                 for (var j = 1; j <=  varCount; j++) {
                   
                   menConst+= $("#X"+j+"").val() + " X"+j+" ";
                 
                 }
                 menConst+=$("#r"+consCount+"").val() +" "+ $("#rv"+consCount+"").val() ;
-              
-                menConst+="n";
                 menObj+=menConst;
                 }
 
