@@ -234,12 +234,12 @@
             <div class="p-5">
                 <form class="user" id="user">
                   <div class="col-sm-6">
-                    <a href="startSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
+                    <button href="startSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-left"></i>
                       </span>
                       <span class="text">Back</span>
-                    </a>
+                    </button>
                   </div>
 
                     <hr>
@@ -269,12 +269,12 @@
                             <input type="number" class="form-control form-control-user" id="cVariable" required="">
                         </div>
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a onclick="addVar()" class="btn btn-outline-success btn-icon-split" >
+                            <button onclick="addVar()" class="btn btn-outline-success btn-icon-split" >
                               <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                               </span> 
                               <span class="text">Go!</span>
-                            </a>
+                            </button>
                         </div>
                       </div>
 
@@ -317,15 +317,15 @@
                     <div class="text-black">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addVariable()" class="btn btn-outline-success btn-user btn-block">
+                                <button onclick="addVariable()" class="btn btn-outline-success btn-user btn-block">
                                     Add Variable
 
-                                </a>
+                                </button>
                             </div>
                             <div class="col-sm-6">
-                                <a onclick="removeVariable()" class="btn btn-outline-danger btn-user btn-block">
+                                <button onclick="removeVariable()" class="btn btn-outline-danger btn-user btn-block">
                                     <i class="fab fa-fw"></i> Remove Variable
-                                </a>
+                                </button>
                             </div>
                         </div>
                       
@@ -343,12 +343,12 @@
                         </div>
                         <div class="text-black-50">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
+                            <button onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
                                 <span class="icon text-white-50">
                                   <i class="fas fa-check"></i>
                                 </span>
                                 <span class="text">Go!</span>
-                              </a>
+                              </button>
                         </div>
                       </div>
                     </div>
@@ -396,15 +396,15 @@
                     <div class="text-black">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addConstraint()" class="btn btn-outline-success btn-user btn-block">
+                                <button onclick="addConstraint()" class="btn btn-outline-success btn-user btn-block">
                                     Add Constraint
 
-                                </a>
+                                </button>
                             </div>
                             <div class="col-sm-6">
-                                <a onclick="removeConstraint()" class="btn btn-outline-danger btn-user btn-block">
+                                <button onclick="removeConstraint()" class="btn btn-outline-danger btn-user btn-block">
                                     <i class="fab fa-fw"></i> Remove Constraint
-                                </a>
+                                </button>
                             </div>
                         </div>
                         <hr>
@@ -422,7 +422,7 @@
                       <div class="table-responsive ">
                         <table class="table table-responsive-xl">
                             
-                          <thead class="bg-gradient-primary">
+                          <thead class="bg-primary">
                               
                               <tr id="thead-tr">
                                   <th>
@@ -475,23 +475,23 @@
                 <div class="row">
                   
                   <div class="col">
-                    <a onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                    <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
                       <span class="text" id = "finalS">Final Solution</span>
-                    </a>
+                    </button>
                   
                 </div>
                   <div class="col"></div>
                   <div class="col"></div>
                   <div class="col">
-                    <a onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                    <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-right"></i>
                       </span>
                       <span class="text" id = "StepB">Step by Step</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
             </div>
