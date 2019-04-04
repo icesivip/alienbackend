@@ -614,7 +614,7 @@
       }
       function addVarInConstraint(){
         for (let i = 1; i <= consCount; i++) {       
-          $("#cons"+i).append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='X"+varCount+"' required=''></div><div class='col-sm-0.1' id='eX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
+          $("#cons"+i).append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cons"+consCount+"X"+varCount+"' required=''></div><div class='col-sm-0.1' id='eX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
         }
           
       }
