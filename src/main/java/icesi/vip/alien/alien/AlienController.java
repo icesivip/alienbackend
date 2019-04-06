@@ -144,14 +144,8 @@ public class AlienController {
 			@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
 			@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
 
-		// log.info("funciona");
 
 		try {
-//			switch (lotSizingRule) {
-//			case ("1"):
-//				lotSizingRule = MasterPlanSchedule.LOTXLOT;
-//				break;
-//			}
 
 			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime), Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name, 
 					Double.parseDouble(articleCost), Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), periodicity, Integer.parseInt(TPeriodOFSupply));
@@ -165,7 +159,7 @@ public class AlienController {
 				MPS.addBruteRequirement(Integer.parseInt(gross[i]));
 				MPS.addScheduleReception(Integer.parseInt(schedules[i]));
 			}
-			// m.calculatePlanOrders();
+
 			MPS.createMPS();
 			return MPS;
 		} catch (Exception e) {
