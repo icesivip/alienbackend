@@ -144,7 +144,7 @@ public class AlienController {
 			@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
 			@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
 
-
+		//Si no agrego algun cambio en el backend no me deja hacer pull, maldita sea
 		try {
 
 			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime), Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name, 
