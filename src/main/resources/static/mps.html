@@ -361,6 +361,8 @@
                                         value="Calculate">
                                         <input class="btn btn-outline-primary" id="calculateAll" type="button" name="calculateAll"
                                         value="CalculateAll"   onclick="solveModel(true)">
+                                        <input class="btn btn-outline-primary" id="compareResults" type="button" name="compareResults"
+                                        value="Compare Results" onclick="addTableComparison()">
                                 </div>
                             </div>
                         </div>
@@ -420,9 +422,40 @@
 
         document.getElementById("user").addEventListener("submit", function (e) {
             e.preventDefault();
-            solveModel(false);
+            solveModel();
         });
-
+        function addTableComparison(){
+            $("#content-wrapper").append("<table id=\"comparisonTable\" class=\"table-responsive table text-dark\">\r\n" + 
+			"                        <thead>\r\n" + 
+			"                            <tr id=\"comparisonHeader\" class=\"bg-success\">\r\n" + 
+			"                                <th scope=\"col\">Indicators</th>\r\n" + 
+			"                                <th scope=\"col\">Lot for Lot</th>\r\n" + 
+			"                                <th scope=\"col\">Economic Order Quantity</th>\r\n" + 
+			"                                <th scope=\"col\">Periods Of Supply</th>\r\n" + 
+			"                                <th scope=\"col\">Period Order Quantity</th>\r\n" + 
+			"                                <th scope=\"col\">Least Unit Cost</th>\r\n" + 
+			"                                <th scope=\"col\">Least Total Cost</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                        </thead>\r\n" + 
+			"                        <tbody>\r\n" + 
+			"                            <tr id=\"maintainCost\">\r\n" + 
+			"                                <th class=\"bg-success\" scope=\"row\">Maintainance Cost</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"organizeCost\">\r\n" + 
+			"                                <th class=\"bg-success\" scope=\"row\">Sorting Cost</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"averageInventory\">\r\n" + 
+			"                                <th class=\"bg-success\" scope=\"row\">Average Inventory</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"inventoryRot\">\r\n" + 
+			"                               <th class=\"bg-success\" scope=\"row\">Inventory Rotation</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                        </tbody>\r\n" + 
+			"                    </table>");
+            for(var i=0;i<5;i++){
+                solveModelC(i);
+            }
+        }
         function resize() {
             var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
             var actualPeriods = 0;
@@ -640,9 +673,23 @@
                     tblHead.appendChild(headTr2);
         }
 
-        function constructRequestString() {
-
-            lotSizingRule = $('#lotSizingRule').val();
+        function constructRequestString(compareRequest,index) {
+            if(compareRequest==false){
+                lotSizingRule = $('#lotSizingRule').val();
+            }else{
+                if(index==0)
+                    lotSizingRule="Lot for Lot";
+                if(index==1)
+                    lotSizingRule="Economic Order Quantity";
+                if(index==2)
+                    lotSizingRule="Periods Of Suply";
+                if(index==3)
+                    lotSizingRule="Period Order Quantity";
+                if(index==4)
+                    lotSizingRule="Least Unit Cost";
+                if(index==5)
+                    lotSizingRule="Least Total Cost";
+            }
             var result = new Array(1);
             result[0]=construcRequestCommon()+ "&lotSizingRule=" + lotSizingRule;
             return result
@@ -684,7 +731,7 @@
 
 
         function addData(lotSizingRule,data){    
-                       // console.log("All: "+datas[i].scheduledAvailableStock)
+                        //console.log("All: "+data[i].scheduledAvailableStock)
                         $(".AvailableInventoryProgrammed"+lotSizingRule.replace(/ /g, "")).remove();
                         $(".Netrequirements"+lotSizingRule.replace(/ /g, "")).remove();
                         $(".ReceptionsOfPlannedOrders"+lotSizingRule.replace(/ /g, "")).remove();
@@ -703,7 +750,7 @@
             var request = new Array(1);
             var url="";
             if(!all){
-                request =constructRequestString();
+                request =constructRequestString(false,0);
                 url ="http://localhost:8080/master";
         
             }else{
@@ -744,6 +791,44 @@
             }
 
 
+        }
+        function solveModelC(index) {
+            $(".cover").toggle(400);
+            var request = constructRequestString(true,index);
+            $.ajax({
+                url: "http://localhost:8080/master" + request
+            }).then(function (data) {
+                $(".cover").toggle(400);
+                console.log("Funciona");
+                console.log(data);
+                AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                ReceptionsOfPlannedOrders = data.planOrders;
+                maintainCost=0;
+                orderCost=0;
+                avgInventory=0;
+                rotInventory=0;
+                for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                    maintainCost+=AvailableInventoryProgrammed[i];
+                    if(ReceptionsOfPlannedOrders[i]!=(null|0))
+                        orderCost++;
+                    avgInventory+=AvailableInventoryProgrammed[i];
+                    rotInventory+=data.getBruteRequirements[i];
+                }
+                maintainCost=maintainCost*data.maintenanceCost;
+                orderCost=orderCost*data.orderingCost;
+                avgInventory=avgInventory/data.TPeriodOFSupply;
+                rotInventory=rotInventory/avgInventory;
+                $("#maintainCost").append("<td style='width: 15%; height: 100%';>" + maintainCost + "</td>");
+                $("#organizeCost").append("<td style='width: 15%; height: 100%';>" + orderCost + "</td>");
+                $("#averageInventory").append("<td style='width: 15%; height: 100%';>" + avgInventory + "</td>");
+                $("#inventoryRot").append("<td style='width: 15%; height: 100%';>" + rotInventory + "</td>");
+                //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
+            }, function (error) {
+                alert(error)
+                $(".cover").toggle(400);
+                console.log(error);
+                console.log("no funciona");
+            })
         }
     </script>
 </body>
