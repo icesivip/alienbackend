@@ -538,15 +538,10 @@
         function createTable(){
       var nVar = parseInt(document.getElementById("nVariable").value)-varCount;
       var nConst = parseInt(document.getElementById("nConstraints").value)-consCount;
-     if(nVar >0 && nConst>0){
-      for (var j = 0; j < nVar; j++) {
-        addVar();
-      }
-      for (var i = 0; i < nConst; i++) {
-        addCons();
-      }
-     }else if(nVar<0 ||nConst<0){
-       if(nVar>0){
+      console.log("variables: "+nVar);
+      console.log("variables: "+nConst);
+     
+     if(nVar>0){
         for (var j = 0; j < nVar; j++) {
         addVar();
         }
@@ -556,7 +551,7 @@
           removeVar();
         }
        }
-       if(nConst>=0){
+       if(nConst>0){
         for (var i = 0; i < nConst; i++) {
         addCons();
         }
@@ -565,7 +560,6 @@
         for (var j = 0; j < rem; j++) {
           removeCons();
         }
-       }
 
      }
       
@@ -607,7 +601,7 @@ function addVarSolution() {
         }
         function addSlackInSol(n, varName) {
       cVar=varCount+n;
-            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th id = 'head"+ cVar + "'><font color='#fff'>"+varName+"</font></th>");
+            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
             $("#table-body td:nth-child(" + (varCount +1) + ")").after("<td id='val0"+(cVar)+"'></td>");
          
         }
@@ -618,8 +612,8 @@ function addVarSolution() {
         function removeOldSlacksInSol() {
           for (let i = 1; i <= slackCount; i++) {
             console.log("entra a eliminar slacks");
-            $("#head"+(varCount+i)).remove();
-            $("#table-body td:nth-child(" + (varCount+i) + ")").remove();
+            $("#head"+(i)).remove();
+            $("#table-body td:nth-child(" + (varCount+2) + ")").remove();
           }
         }
         function removeOldRowSolution() {
