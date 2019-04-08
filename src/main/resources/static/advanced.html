@@ -267,12 +267,6 @@
                         <div class="col-sm-2 ">
                             <input type="number" class="form-control form-control-user" id="nVariable" required="">
                         </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <button href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              
-                              
-                            </button>
-                        </div>
                     </div>
 
                   
@@ -523,8 +517,7 @@
   <script>
     
     var varCount = 2;
-    var countVar = 2;
-
+    var slackCount = 0;
             var divNum = 6; 
         var consCount = 1;
         function addCons() {
@@ -536,6 +529,8 @@
             if (varCount > 1) {
                 $("#thead-tr th:nth-child(" + (varCount+1) + ")").remove();
                 $("#table-entries tr td:nth-child("+(varCount+1)+")").remove();
+                $("#thead-ans th:nth-child(" + (varCount+1) + ")").remove();
+                $("#table-body td:nth-child(" + (varCount+1) + ")").remove();
                 varCount--;
             }
 
@@ -602,34 +597,41 @@
             $("#table-entries tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
               
             }
-            addVarTable();
+            addVarSolution();
         }
-function addVarTable() {
+function addVarSolution() {
 
-            $("#thead-ans th:nth-child(" + (countVar+1) + ")").after("<th><font color='#fff'>X"+(countVar+1)+"</font></th>");
-            $("#table-body td:nth-child(" + (countVar+1) + ")").after("<td id='val0"+(countVar+1)+"'></td>");
- 
-            
-            countVar++;
+            $("#thead-ans th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X"+(varCount)+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount) + ")").after("<td id='val0"+(varCount)+"'></td>");
            
         }
-        function addSolTable(n) {
-      cVar=countVar+n;
-      
-            $("#thead-ans th:nth-child(" + (countVar+2) + ")").before("<th><font color='#fff'>S"+(n)+"</font></th>");
-            $("#table-body td:nth-child(" + (countVar+2) + ")").before("<td id='val0"+(cVar)+"'></td>");
-
-           
+        function addSlackInSol(n, varName) {
+      cVar=varCount+n;
+            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th id = 'head"+ cVar + "'><font color='#fff'>"+varName+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount +1) + ")").after("<td id='val0"+(cVar)+"'></td>");
+         
         }
-        function addRow(num) {
+        function addRowSolution(num) {
             $("#table-body").append(generateSolRow(num));
            
+        }
+        function removeOldSlacksInSol() {
+          for (let i = 1; i <= slackCount; i++) {
+            console.log("entra a eliminar slacks");
+            $("#head"+(varCount+i)).remove();
+            $("#table-body td:nth-child(" + (varCount+i) + ")").remove();
+          }
+        }
+        function removeOldRowSolution() {
+          while(cons >1){
+          $("#table-body tr").last().remove();
+            cons--;
+          }
         }
         function generateSolRow(count) {
             var st = "<tr id='td"+cons+"'>";
             for (let index = 0; index < count; index++) {
                 st += "<td id='val"+cons+""+index+"'></td>";
-
             }
             st+="</tr>"
             cons++
@@ -638,7 +640,7 @@ function addVarTable() {
         var cons=1;
         function  finalSolution() {
       $(".cover").toggle(1000);
-       var rest= varCount+1
+       var otherVars= varCount+1
             var string = constructRequestString();
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
@@ -646,8 +648,8 @@ function addVarTable() {
               $(".cover").toggle(1000);
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
-                var newS=actualMatrix[0].length-rest;
-               
+                var newS=actualMatrix[0].length-otherVars;
+                var variableNames = data.everyVariableName;
 
                 var theta = data.theta;
                 var sizeT =data.theta.length;
@@ -655,13 +657,16 @@ function addVarTable() {
 
                 var mensajeSol = data.messageSol;
                 var solutionInWords= data.solutionInWords;
-               console.log("CantidadS: "+newS)
+               console.log("CantidadS: "+newS);
+                  removeOldSlacksInSol();
+                  slackCount = newS;
                 for (var i = newS; i >0; i--) {
-                  addSolTable(i);
+                  addSlackInSol(i, variableNames[i+varCount-1]);
                 }
                 if(actualMatrix.length>1){
+                  removeOldRowSolution();
                   for (var i = 0; i < actualMatrix.length; i++) {
-                    addRow(varCount+3+newS);
+                    addRowSolution(varCount+3+newS);
                     if(i==0){
                       $("#val00").text(1.0);
 
@@ -687,9 +692,8 @@ function addVarTable() {
                   
                 }}
                   }
-              
-                  $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
+                  $("#solution").remove();
+                  $("#mensajeS").prepend("<div id='solution'><h3>"+mensajeSol+"</h3><h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5></div>");
                  
                 }
                 
