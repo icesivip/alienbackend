@@ -406,7 +406,7 @@
                             </div>
                     </div>
                     <br>
-                    <div class="Table-container">
+                    <div class="Table-container" id = "tableSolution">
 
                         <h2>Outputs</h2>
                         <div id="menIteration"> </div>
@@ -416,7 +416,10 @@
                             <thead class="bg-gradient-primary">
                                 
                                 <tr id="thead-ans">
-                                    <th>
+                                  <th>
+                                    <font color="#fff">BV</font>
+                                </th>  
+                                  <th>
                                         <font color="#fff">Z</font>
                                     </th>
                                     <th>
@@ -425,7 +428,6 @@
                                     <th>
                                         <font color="#fff">X2</font>
                                     </th>
-                                    
                                     <th>
                                         <font color="#fff">RHS</font>
                                     </th>
@@ -438,6 +440,7 @@
                            
                             <tbody id="table-body">
                                 <tr id ="tr0">
+                                    <th><font>Z</font></th>
                                      <td id="val00"></td>
                                      <td id="val01"></td>
                                      <td id="val02"></td>
@@ -599,8 +602,8 @@ function addVarSolution() {
             $("#table-body td:nth-child(" + (varCount +1) + ")").after("<td id='val0"+(cVar)+"'></td>");
          
         }
-        function addRowSolution(num) {
-            $("#table-body").append(generateSolRow(num));
+        function addRowSolution(num, base) {
+            $("#table-body").append(generateSolRow(num, base));
            
         }
         function removeOldSlacksInSol() {
@@ -616,8 +619,9 @@ function addVarSolution() {
             cons--;
           }
         }
-        function generateSolRow(count) {
+        function generateSolRow(count, base) {
             var st = "<tr id='td"+cons+"'>";
+                st +="<th><font>"+base+"</font></th>";
             for (let index = 0; index < count; index++) {
                 st += "<td id='val"+cons+""+index+"'></td>";
             }
@@ -645,6 +649,7 @@ function addVarSolution() {
 
                 var mensajeSol = data.messageSol;
                 var solutionInWords= data.solutionInWords;
+                var baseCol = data.varsBase;
                console.log("CantidadS: "+newS);
                   removeOldSlacksInSol();
                   slackCount = newS;
@@ -654,7 +659,7 @@ function addVarSolution() {
                 if(actualMatrix.length>1){
                   removeOldRowSolution();
                   for (var i = 0; i < actualMatrix.length; i++) {
-                    addRowSolution(varCount+3+newS);
+                    addRowSolution(varCount+3+newS, baseCol[i]);
                     if(i==0){
                       $("#val00").text(1.0);
 
