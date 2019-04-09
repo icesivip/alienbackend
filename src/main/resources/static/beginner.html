@@ -667,7 +667,7 @@
               menObj += " "+$(this).find('input').val();
             } else {
 
-              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
+              menObj += (-+$(this).find('input').val() ) + " X"+(j+1)+" ";
               }
             } else {
               menObj += $(this).find('select').val() ;
@@ -786,7 +786,7 @@
               menObj += " "+$(this).find('input').val();
             } else {
 
-              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
+              menObj += (-+$(this).find('input').val() )+ " X"+(j+1)+" ";
               }
             } else {
               menObj += $(this).find('select').val() ;
