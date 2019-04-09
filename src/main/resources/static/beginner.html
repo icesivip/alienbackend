@@ -650,7 +650,7 @@
                     type = ($(this).find('select').val());
 
                 }else {
-                  menFun += ($(this).find('input').val()) + " X"+index+" ";
+                  menFun += (-($(this).find('input').val()) )+ " X"+index+" ";
                 }
                 });
       
@@ -667,7 +667,7 @@
               menObj += " "+$(this).find('input').val();
             } else {
 
-              menObj += (-+$(this).find('input').val() ) + " X"+(j+1)+" ";
+              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
               }
             } else {
               menObj += $(this).find('select').val() ;
@@ -769,7 +769,7 @@
                     type = ($(this).find('select').val());
 
                 }else {
-                  menFun += ($(this).find('input').val()) + " X"+index+" ";
+                  menFun +=  (-($(this).find('input').val()) ) + " X"+index+" ";
                 }
                 });
       
@@ -786,7 +786,7 @@
               menObj += " "+$(this).find('input').val();
             } else {
 
-              menObj += (-+$(this).find('input').val() )+ " X"+(j+1)+" ";
+              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
               }
             } else {
               menObj += $(this).find('select').val() ;
