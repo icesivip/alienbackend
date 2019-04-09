@@ -804,6 +804,7 @@
      termino =false;
      function  nextSolution() {
       $("#menIteration").empty();
+
     $("#menIteration").text("Iteration: "+veces);
     console.log(veces)
        var rest= varCount+1
@@ -822,6 +823,7 @@
                 var varsBase = data.varsBase;
 
              if(messageSol==null){
+              $("#mensajeS").empty();
                 console.log("entro:"+data.messageSol)
               
                 $("#resultTable thead").empty();
