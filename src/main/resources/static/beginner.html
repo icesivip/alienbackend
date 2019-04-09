@@ -682,7 +682,7 @@
      }
    
      function  finalSolution() {
-      
+      $("#menIteration").empty();
        var rest= varCount+1
             var string = constructRequestString();
             $.ajax({
@@ -820,15 +820,8 @@
                 var solutionInWords = data.solutionInWords;
                 var theta = data.theta;
                 var varsBase = data.varsBase;
-                if(messageSol!=null){
-                 termino=true;
 
-                 $("#mensajeS").empty();
-                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
-                 
-               }
-             if(termino==false){
+             if(messageSol==null){
                 console.log("entro:"+data.messageSol)
               
                 $("#resultTable thead").empty();
@@ -879,7 +872,14 @@
                 veces++;
                 
               }
-             
+              if(messageSol!=null){
+                 termino=true;
+
+                 $("#mensajeS").empty();
+                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
+                
+               }
              
                   
             },function (error) {
