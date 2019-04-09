@@ -250,161 +250,182 @@
                         </div>
                       </div>
                       <hr>
-                    <h2>Type <span class="label label-default"></span></h2>
+                      <div class="row">
+                          <div class="col">  
+                            <h2>Number of Variables</h2>
 
-                    <div class="form-group">
-
-                        <select class="form-control" id="type">
-                            <option>MAXIMIZE</option>
-                            <option>MINIMIZE</option>
-                        </select>
-                        <hr>
-
-                    </div>
-                    
-                    <h2>Number of Variables</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cVariable" required="">
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <button onclick="addVar()" class="btn btn-outline-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span> 
-                              <span class="text">Go!</span>
-                            </button>
-                        </div>
-                      </div>
-
-
-                    <hr>
-
-
-                    <h2>Objective Function</h2>
-                    
-
-                    <div id="variablePanel">
-                       
-                        <div class="variable">
-                           
-                    <div id="variable" class="form-group row">
-                       
-                        <div class="col-sm-0.1">
-                            <h4> Z = </h4>
-                        </div>
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cX1" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X1  </h4>
-                        </div>
-                        <div class="col-sm-0.1"id="aX2">
-                          <h4>   +  </h4>
-                      </div>
-                        <div class="col-sm-2" id="bX2">
-                            <input type="number" class="form-control form-control-user" id="cX2" required="">
-                        </div>
-                        <div class="col-sm-0.1" id="dX2">
-                            <h4> X2  </h4>
-                        </div>
-                        
-                    </div>
-                  
-                  </div>
-                  </div>
-                    <div class="text-black">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <button onclick="addVariable()" class="btn btn-outline-success btn-user btn-block">
-                                    Add Variable
-
-                                </button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button onclick="removeVariable()" class="btn btn-outline-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Variable
-                                </button>
-                            </div>
-                        </div>
-                      
-
-                        
-
-
-                    </div>
-                      <hr>
-                    <h2>Number of Constraints</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="goConstraint" required="">
-                        </div>
-                        <div class="text-black-50">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-check"></i>
-                                </span>
-                                <span class="text">Go!</span>
-                              </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <hr>
-                    <h2>Constraints</h2>
-                    <div id="constraintPanel">
-                      <div class="form-group row"name="constraint">
-                        <div class="form-group row" id="cons1"style="width:1240px">
-                                <div class="col-sm-2 ">
-                                    <input type="number" class="form-control form-control-user" id="cons1X1" required="">
+                            <div class="form-group row">
+                                <div class="col-sm-4 ">
+                                    <input type="number" class="form-control form-control-user" id="cVariable" required="">
                                 </div>
-                                <div class=" col-sm-0.1"id=eX1>
-                                    <h4> X1 </h4>
-                                </div>
-                                <div class="col-sm-0.1"id="aX2" >
-                                    <h4>   +  </h4>
-                                </div>
-                                <div class="col-sm-2"id="bX2">
-                                    <input type="number" class="form-control form-control-user" id="cons1X2" required="">
-                                </div>
-                                <div class="col-sm-0.1"id="eX2">
-                                    <h4> X2  </h4>
+                                <div class="text-black-50">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
+                                          <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                          </span>
+                                          <span class="text">Go!</span>
+                                        </a>
+        
+                                  </div>
+                                   </div>
+                                  </div></div>
+                          <div class="col">
+                              <h2>Number of Constraints</h2>
+
+                              <div class="form-group row">
+                                  <div class="col-sm-4 ">
+                                      <input type="number" class="form-control form-control-user" id="goConstraint" required="">
+                                  </div>
+                                  <div class="text-black-50">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
+                                          <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                          </span>
+                                          <span class="text">Go!</span>
+                                        </a>
+                                  </div>
                                 </div>
                               </div>
-                              
-                                  <div class="form-inline" id="RHS1" style="width:1240px">
-                                    
-                                      <div class="col-xl-1 mb-4 mb-sm-0" id="op">
-                                          <select class="form-control" id="r1">
-                                              <option>&lt;=</option>
-                                              <option>&gt;=</option>
-                                              <option>=</option>
-                                          </select>
-                                      </div>
-                                      
-                                      <div>
-                                          <input type="number" class="form-control form-control-user" id="cons1rv1" required="">
-                                      </div>
-                                  </div>
+
+                          </div>
+                          
+                         
                         </div>
-              
+                        <hr>
+                    
+                   
+                          
+                        
+                    <hr>
+
+
+                    <div class="table-responsive">
+                        <h2 >Objective Function</h2>
+                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+                            <thead class="bg-gradient-primary">
+                                <tr id="of-head">
+                                    <th>
+                                        <font color="#fff">Type</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X3</font>
+                                    </th>
+            
+            
+                                </tr>
+                            </thead>
+                            <tbody id="of-body">
+                                <tr>
+                                    <td>
+                                        <select>
+                                            <option>MAXIMIZE</option>
+                                            <option>MINIMIZE</option>
+            
+                                        </select>
+                                    </td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+            
+            
+                                </tr>
+            
+            
+                            </tbody>
+            
+            
+            
+            
+                        </table>
+            
+                    </div>
+                    
+                     
+                    
+
+                    <hr>
+                   
+                    <div class="table-responsive">
+                        <h2 >Constraint Table</h2>
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead class="bg-gradient-primary">
+                                <tr id="thead-tr">
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X3</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Type</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Value</font>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td> <select>
+                                            <option>&lt=</option>
+                                            <option>&gt=</option>
+                                            <option>=</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" step="0.01" required></td>
+                                </tr>
+            
+            
+                            </tbody>
+            
+            
+            
+            
+                        </table>
+            
+            
                     </div>
                     <br>
+                    <hr>
                     <div class="text-black">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <button onclick="addConstraint()" class="btn btn-outline-success btn-user btn-block">
+                        <div class="form-group form-row">
+                            
+                                <div class="col-sm-6 mb-3 mb-sm-1">
+                                    <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                                        Add Variable
+    
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
+                                        <i class="fab fa-fw"></i> Remove Variable
+                                    </a>
+                                </div>
+                           
+                            <div class="col-sm-6 mb-3 mb-sm-1">
+                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
                                     Add Constraint
 
-                                </button>
+                                </a>
                             </div>
                             <div class="col-sm-6">
-                                <button onclick="removeConstraint()" class="btn btn-outline-danger btn-user btn-block">
+                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
                                     <i class="fab fa-fw"></i> Remove Constraint
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <hr>
@@ -415,61 +436,33 @@
                     </div>
                     <br>
 
-                    <div class="Table-container">
-
-                      <h2>Data Table</h2>
-                      <div id="menIteration"> </div>
-                      <div class="table-responsive ">
-                        <table class="table table-responsive-xl">
-                            
-                          <thead class="bg-primary">
-                              
-                              <tr id="thead-tr">
-                                  <th>
-                                      <font color="#fff">Z</font>
-                                  </th>
-                                  <th>
-                                      <font color="#fff">X1</font>
-                                  </th>
-                                  <th>
-                                      <font color="#fff">X2</font>
-                                  </th>
-                                  
-                                  <th>
-                                      <font color="#fff">RHS</font>
-                                  </th>
-                                  <th>
-                                      <font color="#fff">Theta</font>
-                                  </th>
-                              </tr>
-                              
-                          </thead>
-                         
-                          <tbody id="table-body">
-                              <tr id ="tr0">
-                                   <td id="val00"></td>
-                                   <td id="val01"></td>
-                                   <td id="val02"></td>
-                                   <td id="valR0"></td>
-                                   <td id="valT0"></td>
-                              </tr>
-          
-          
-                          </tbody>
-          
-                       
-          
-          
-                      </table>
+                   
+                
+                      
+                      <div id="resultTable-cont" class="table-responsive">
+                          <h2>Data Table</h2> <div id="menIteration"> </div>
+                          <table class="table table-bordered"  width="100%" cellspacing="0" id="resultTable">
+                              <thead class="bg-gradient-primary">
+                                
+                                 
+                              </thead>
+                              <tbody>
+              
+                              </tbody>
+              
+              
+              
+              
+                          </table>
                     
                       <br>
                       <div id="mensajeS">
 
                       </div>
-                      
+                      </div>
                   <hr>
                       
-                      </div>
+                      
                 </form>
                 <div class="text-black">
                 <div class="row">
@@ -541,255 +534,217 @@
     </div>
   </div>
   <script>
-     var consCount = 1;
-      
+   
+     var varCount = 3;
+    var consCount = 1;
 
+
+
+    
+
+
+        function addCons() {
+            $("#table-body").append(generateNewConsRow(varCount));
+            consCount++;
+        }
+
+        function removeVar() {
+            if (varCount > 1) {
+              
+                $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
+                $("#table-body tr td:nth-child(1)").remove();
+
+                $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
+                $("#of-body tr td:nth-child(2)").remove();
+                varCount--;
+            }
+
+        }
+
+        function generateNewConsRow(count) {
+            var st = "<tr>";
+            for (let index = 0; index < count; index++) {
+                st += "<td><input type='number' step='0.01' required></td>";
+
+            }
+            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required></td></tr>"
+            return st;
+        }
+
+        function removeCons() {
+          
+            if (consCount > 1) {
+              
+                $("#table-body tr").last().remove();
+                consCount--;
+            }
+
+        }
+
+        function addVar() {
+            $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
+            $("#table-body tr").prepend("<td><input type='number' step='0.01' required></td>");
+
+            $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
+            $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
+
+           
+            varCount++;
+           
+        }
+
+        function insertAtIndex(i) {
+            if (i === 0) {
+                $("#controller").prepend("<div>okay things</div>");
+                return;
+            }
+
+
+            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+        }
+      
+//-----------------------------------
      function goConstraint() {
        
       var nConst = parseInt(document.getElementById("goConstraint").value)-consCount;
     
       if(nConst>0){
           for (var j = 0; j < nConst; j++) {
-        addConstraint();
+            addCons();
         }
 
         }else if(nConst<0){
           var rem = Math.abs(nConst);
         for (var j = 0; j < rem; j++) {
-          removeConstraint();
+          removeCons();
         }
         }
                        }
-
-
-     function addConstraint() {
-                console.log("Added constraint");
-                consCount++;
-                $("#constraintPanel").append("<div class='form-group row'name='constraint'><div class='form-group row' id='cons"+consCount+"'style='width:1200px'>");
-                    $("#cons"+consCount).append("<div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='cons"+consCount+"X1' required=''></div><div class=' col-sm-0.1'id='eX1'><h4> X1 </h4></div>");
-                   
-                  for (let i = 2; i <= varCount; i++) {
-                    $("#cons"+consCount).append("<div class='col-sm-0.1'id='aX"+i+"'><h4>   +  </h4></div><div class='col-sm-2 'id='bX"+i+"'><input type='number' class='form-control form-control-user' id='cons"+consCount+"X"+i+"' required=''></div><div class=' col-sm-0.1'id='eX"+i+"'><h4> X"+i+ "</h4></div>");
-                  }
-                  $('[name="constraint"]').last().append( "<div class='form-inline' id='RHS1' style='width:1240px'> <div class='col-xl-1 mb-4 mb-sm-0' id='op'><select class='form-control' id='r"+consCount+"'><option>&lt;=</option> <option>&gt;=</option><option>=</option></select></div><div><input type='number' class='form-control form-control-user' id='cons"+consCount+"rv"+consCount+"' required=''></div></div>");
-                
-            }
-            function removeConstraint() {
-                var n = $('[name="constraint"]').length;
-                console.log(n);
-                if (n > 1) {
-                    console.log("Removed contraint");
-                    $('[name="constraint"]').last().remove();
-                    consCount--;
-                }
-            }
-            var varCount=2;
-            var countVar = 2;
-
-            var divNum = 6; 
-
-         function addVariable() {
-      
-          varCount ++;
-   $("#variable").append("<div class='col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cX"+varCount+"' required=''></div><div class='col-sm-0.1' id='dX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
-   addVarInConstraint();
-   addVarTable()
-       
-         }
-        
-      function addVar(){
+      function goVar(){
         var nVar = parseInt(document.getElementById("cVariable").value)-varCount;
         if(nVar>0){
           for (var j = 0; j < nVar; j++) {
-        addVariable();
+            addVar();
       
         }
 
         }else if(nVar<0){
           var rem = Math.abs(nVar);
         for (var j = 0; j < rem; j++) {
-          removeVariable();
+          removeVar();
         }
         }
       }
-      function addVarInConstraint(){
-        for (let i = 1; i <= consCount; i++) {       
-          $("#cons"+i).append("<div class='form-group col-sm-0.1' id='aX"+varCount+"'><h4>   +  </h4></div><div class='col-sm-2'id='bX"+varCount+"'><input type='number' class='form-control form-control-user' id='cons"+consCount+"X"+varCount+"' required=''></div><div class='col-sm-0.1' id='eX"+varCount+"'> <h4> X"+varCount+"</h4> </div>");
-        }
-          
-      }
+      //-----------------------------------
                 
-       function removeVarInConstraint(){
-        for (let i = 1; i <= consCount; i++) {
-            var parentDiv = 'cons'+i
-              var childDiv = 'aX'+varCount
-              var childDiv2 = 'bX'+varCount
-              var childDiv3 = 'eX'+varCount
-              var parent = document.getElementById(parentDiv);
-          var child = document.getElementById(childDiv);
-          var child2 = document.getElementById(childDiv2);
-          var child3 = document.getElementById(childDiv3);
-          parent.removeChild(child);
-          parent.removeChild(child2);
-          parent.removeChild(child3);
-          }
-       }
-            function removeVariable() {
-            
-              var parentDiv = 'variable'
-              var childDiv = 'aX'+varCount
-              var childDiv2 = 'bX'+varCount
-              var childDiv3 = 'dX'+varCount
-            
-       if(varCount>1){
-          var child = document.getElementById(childDiv);
-          var child2 = document.getElementById(childDiv2);
-          var child3 = document.getElementById(childDiv3);
-          var parent = document.getElementById(parentDiv);
-          parent.removeChild(child);
-          parent.removeChild(child2);
-          parent.removeChild(child3);
-          removeVarInConstraint();
-          removeVarTable();
-          varCount--;
-          
-       }
-         
-         
-     }
-     
-     function addVarTable() {
-
-            $("#thead-tr th:nth-child(" + (countVar+1) + ")").after("<th><font color='#fff'>X"+(countVar+1)+"</font></th>");
-            $("#table-body td:nth-child(" + (countVar+1) + ")").after("<td id='val0"+(countVar+1)+"'></td>");
- 
-            
-            countVar++;
-           
-        }
-
-        function removeVarTable() {
-            if (countVar > 1) {
-                $("#thead-tr th:nth-child(" + (countVar+1) + ")").remove();
-                $("#table-body tr td:nth-child(1)").remove();
-                countVar--;
-            }
-
-        }
-        var cons=1;
-        function addRow(num) {
-            $("#table-body").append(generateNewConsRow(num));
-           
-        }function generateNewConsRow(count) {
-            var st = "<tr id='td"+cons+"'>";
-            for (let index = 0; index < count; index++) {
-                st += "<td id='val"+cons+""+index+"'></td>";
-
-            }
-            st+="</tr>"
-            cons++
-                return st;
-        }
+       
     
       function constructRequestString() {
        
       
-       type = $("#type").val();
+       type = "";
         
         var menFun = "";
+        $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
 
-        for (var i = 1; i <=  varCount; i++) {
-       
-          menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
-          
-        }
+                }else {
+                  menFun += ($(this).find('input').val()) + " X"+index+" ";
+                }
+                });
+      
         obfun = 1+" Z " +menFun+"= 0";
                
-                menObj = "";
-               
-                for (var i = 1; i <=  consCount; i++) {
-                  menConst="n0 Z ";
-                for (var j = 1; j <=  varCount; j++) {
-                  
-                  menConst+= $("#cons"+i+"X"+j+"").val()+ " X"+j+" ";
-                
-                }
-                menConst+=$("#r"+i+"").val() +" "+ $("#cons"+i+"rv"+i+"").val() ;
-                menObj+=menConst;
-                }
+        var menObj = "";
+        $('#table-body tr').each(function (i) {
+          menObj+="n0 Z ";
+          $(this).find('td').each(function (j) {
+            
+            if (j < varCount || j == varCount + 1) {
 
+            if (j == varCount + 1) {
+              menObj += " "+$(this).find('input').val();
+            } else {
+
+              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
+              }
+            } else {
+              menObj += $(this).find('select').val() ;
+              }
+          });
+        });  
                 console.log("?type="+type+"&"+"equations="+obfun+menObj);
         
             
                  
                 return "?type="+type+"&"+"equations="+obfun+menObj;
      }
-     cVar = countVar;
-  
-     function addSolTable(n) {
-      cVar=countVar+n;
-      
-            $("#thead-tr th:nth-child(" + (countVar+2) + ")").before("<th><font color='#fff'>S"+(n)+"</font></th>");
-            $("#table-body td:nth-child(" + (countVar+2) + ")").before("<td id='val0"+(cVar)+"'></td>");
-
-           
-        }
+   
      function  finalSolution() {
-      $(".cover").toggle(1000);
+      
        var rest= varCount+1
             var string = constructRequestString();
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
-              $(".cover").toggle(1000);
-                console.log(data);
+             
+                $("#resultTable thead").empty();
+                $("#resultTable tbody").empty();
+              console.log(data)
+
+                var variables = data.everyVariableName;
                 var actualMatrix = data.actualMatrix;
-                var newS=actualMatrix[0].length-rest;
-               
-
+                var messageSol = data.messageSol;
+                var operationsDone = data.operationsDone;
+                var solutionInWords = data.solutionInWords;
                 var theta = data.theta;
-                var sizeT =data.theta.length;
-                var posT = varCount+2+newS;
+                var varsBase = data.varsBase;
 
-                var mensajeSol = data.messageSol;
-                var solutionInWords= data.solutionInWords;
-               console.log("CantidadS: "+newS)
-                for (var i = newS; i >0; i--) {
-                  addSolTable(i);
-                }
-                if(actualMatrix.length>1){
-                  for (var i = 0; i < actualMatrix.length; i++) {
-                    addRow(varCount+3+newS);
-                    if(i==0){
-                      $("#val00").text(1.0);
 
-                    }else{ $("#val"+i+""+0+"").text(0,0);  }
-                    for (var j = 1; j <= actualMatrix[0].length; j++){
-                    
-                      var valor=actualMatrix[i][j-1];
-                      $("#val"+i+""+j+"").text(valor);
-                      
-                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
-                        $("#valR0").text(valor);
-                      }
-                     
-                    
-                  }
-                  if(i>0){
-                  var j=0
-                  for (j; j < sizeT; j++){
-                    var valor=theta[j];
-                    $("#val"+(i)+""+posT+"").text(valor);
-                    
+                var p1 = new Promise((resolve, reject) => {
+                  $("#resultTable thead").append("<tr></tr>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
+                    for (index = 0; index < variables.length; index++) {
+                        $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
+
+                    }
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
+
+                    resolve();
+                });
+               
+                 for (let index = 0; index < actualMatrix.length; index++) {
                  
-                  
-                }}
-                  }
-              
-                  $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
-                 
-                }
+                  if(index==0){
+                    $("#resultTable tbody").append("<tr></tr>");
+                    $("#resultTable tbody").find("tr").append("<td>Z</td>");
+                    $("#resultTable tbody").find("tr").append("<td>1</td>");
+                    for (let j = 0; j < actualMatrix[0].length; j++) {
+                      $("#resultTable tbody").find("tr").append("<td>"+actualMatrix[0][j]+"</td>");
+                    }
+                    $("#resultTable tbody").find("tr").append("<td></td>");
+                  }else if(index>0){
+                    console.log("index:"+index+" valor:"+varsBase[index-1])
+                    $("#resultTable tbody").append("<tr id='row"+index+"'></tr>");
+                  $("#resultTable tbody").find("#row"+index).append("<td>"+varsBase[index-1]+"</td>");
+                  $("#resultTable tbody").find("#row"+index).append("<td>0</td>");
+                  for (let j = 0; j < actualMatrix[0].length; j++) {
+                      $("#resultTable tbody").find("#row"+index).append("<td>"+actualMatrix[index][j]+"</td>");
+                    }
+                    $("#resultTable tbody").find("#row"+index).append("<td>"+theta[index-1]+"</td>");
+                   
+                 }
+                 }
+                 $("#mensajeS").empty();
+                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
+
+                   
+
+                
                 
      }, function (error) {
                     $(".cover").toggle(900);
@@ -798,32 +753,46 @@
                     console.log(error);
                 });
             }
+
+
+
+
+
             function constructRequestString2(numero) {
        
       var iteration=numero;
-      type = $("#type").val();
+      type = "";
         
         var menFun = "";
+        $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
 
-        for (var i = 1; i <=  varCount; i++) {
-       
-          menFun+= (-$("#cX"+i+"").val() )+ " X"+i+" ";
-          
-        }
+                }else {
+                  menFun += ($(this).find('input').val()) + " X"+index+" ";
+                }
+                });
+      
         obfun = 1+" Z " +menFun+"= 0";
                
-                menObj = "";
-               
-                for (var i = 1; i <=  consCount; i++) {
-                  menConst="n0 Z ";
-                for (var j = 1; j <=  varCount; j++) {
-                  
-                  menConst+= $("#cons"+i+"X"+j+"").val()+ " X"+j+" ";
-                
-                }
-                menConst+=$("#r"+i+"").val() +" "+ $("#cons"+i+"rv"+i+"").val() ;
-                menObj+=menConst;
-                }
+        var menObj = "";
+        $('#table-body tr').each(function (i) {
+          menObj+="n0 Z ";
+          $(this).find('td').each(function (j) {
+            
+            if (j < varCount || j == varCount + 1) {
+
+            if (j == varCount + 1) {
+              menObj += " "+$(this).find('input').val();
+            } else {
+
+              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
+              }
+            } else {
+              menObj += $(this).find('select').val() ;
+              }
+          });
+        });  
 
                 console.log("?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj);
         
@@ -834,8 +803,9 @@
      veces =0;
      termino =false;
      function  nextSolution() {
- 
+      $("#menIteration").empty();
     $("#menIteration").text("Iteration: "+veces);
+    console.log(veces)
        var rest= varCount+1
       var string = constructRequestString2(veces);
 
@@ -843,66 +813,74 @@
       $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
+              var variables = data.everyVariableName;
+                var actualMatrix = data.actualMatrix;
+                var messageSol = data.messageSol;
+                var operationsDone = data.operationsDone;
+                var solutionInWords = data.solutionInWords;
+                var theta = data.theta;
+                var varsBase = data.varsBase;
+                if(messageSol!=null){
+                 termino=true;
+
+                 $("#mensajeS").empty();
+                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
+                 
+               }
              if(termino==false){
                 console.log("entro:"+data.messageSol)
               
-                 
-                  console.log(data);
-                var actualMatrix = data.actualMatrix;
-                var newS=actualMatrix[0].length-rest;
+                $("#resultTable thead").empty();
+                $("#resultTable tbody").empty();
+              console.log(data)
+
                
-              if(data.theta!=null){
-                var theta = data.theta;
-                var sizeT =data.theta.length;
-                var posT = varCount+2+newS;
-                }
-                var mensajeSol = data.messageSol;
-                var solutionInWords= data.solutionInWords;
-               console.log("CantidadS: "+newS)
-              if(veces==0){
-                for (var i = newS; i >0; i--) {
-                  addSolTable(i);
-                }
-              }
-                if(actualMatrix.length>1){
-                  
-                  for (var i = 0; i < actualMatrix.length; i++) {
-                    if(veces==0){
-                    addRow(varCount+3+newS);
+                
+                var p1 = new Promise((resolve, reject) => {
+                  $("#resultTable thead").append("<tr></tr>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
+                    for (index = 0; index < variables.length; index++) {
+                        $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
+
                     }
-                    if(i==0){
-                      $("#val00").text(1.0);
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
+                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
 
-                    }else{ $("#val"+i+""+0+"").text(0,0);  }
-                    for (var j = 1; j <= actualMatrix[0].length; j++){
-                    
-                      var valor=actualMatrix[i][j-1];
-                      $("#val"+i+""+j+"").text(valor);
-                      
-                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
-                        $("#valR0").text(valor);
-                      }
-                     
-                    
-                  }
-                  if(i>0){
-                  var j=0
-                  for (j; j < sizeT; j++){
-                    var valor=theta[j];
-                    $("#val"+(i)+""+posT+"").text(valor);
-                    
+                    resolve();
+                });
+               
+                 for (let index = 0; index < actualMatrix.length; index++) {
                  
-                  
-                }}}}
+                  if(index==0){
+                    $("#resultTable tbody").append("<tr></tr>");
+                    $("#resultTable tbody").find("tr").append("<td>Z</td>");
+                    $("#resultTable tbody").find("tr").append("<td>1</td>");
+                    for (let j = 0; j < actualMatrix[0].length; j++) {
+                      $("#resultTable tbody").find("tr").append("<td>"+actualMatrix[0][j]+"</td>");
+                    }
+                    $("#resultTable tbody").find("tr").append("<td></td>");
+                  }else if(index>0){
+                    
+                    console.log("index:"+index+" valor:"+varsBase[index-1])
+                    $("#resultTable tbody").append("<tr id='row"+index+"'></tr>");
+                  $("#resultTable tbody").find("#row"+index).append("<td>"+varsBase[index-1]+"</td>");
+                  $("#resultTable tbody").find("#row"+index).append("<td>0</td>");
+                  for (let j = 0; j < actualMatrix[0].length; j++) {
+                      $("#resultTable tbody").find("#row"+index).append("<td>"+actualMatrix[index][j]+"</td>");
+                    }
+                    if(theta!=null){
+                    $("#resultTable tbody").find("#row"+index).append("<td>"+theta[index-1]+"</td>");}
+                   
+                 }
+
+                 }
                 veces++;
+                
               }
-               if(mensajeSol!=null){
-                 termino=true;
-
-                 $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+mensajeSol+"</h3>")
-                 
-               }
+             
+             
                   
             },function (error) {
                     $(".cover").toggle(900);
