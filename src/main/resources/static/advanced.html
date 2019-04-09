@@ -355,15 +355,15 @@
                     <div class="text-black">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
                                     Add Constraint
 
-                                </button>
+                                </a>
                             </div>
                             <div class="col-sm-6">
-                                <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Constraint
-                                </button>
+                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
+                                    Remove Constraint
+                                </a>
                             </div>
                         </div>
                         
@@ -375,15 +375,15 @@
                     <div class="text-black">
                       <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
-                              <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                              <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
                                   Add Variable
 
-                              </button>
+                              </a>
                           </div>
                           <div class="col-sm-6">
-                              <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
+                              <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
                                   <i class="fab fa-fw"></i> Remove Variable
-                              </button>
+                              </a>
                           </div>
                       </div>
                     
@@ -396,17 +396,11 @@
 
                     
                     <div class="solution">
-                        <h2>Solve Problem</h2>
                         <div class="text-black">
                             <div class="botonsitos">
-                               
-                                    <button onclick="nextSolution()" class="btn btn-outline-primary btn-user btn-block">
-                                        Step by step
-    
-                                    </button>
-                                    <button onClick="finalSolution()" class="btn btn-outline-info btn-user btn-block">
-                                        <i class="fab fa-fw"></i> Final solution
-                                    </button>
+                                    <a onClick="finalSolution()" class="btn btn-outline-info btn-user btn-block">
+                                        Solve
+                                    </a>
                               
                                
                             </div>
