@@ -626,7 +626,7 @@ function addVarSolution() {
        var otherVars= varCount+1
             var string = constructRequestString();
             $.ajax({
-                url: "http://localhost:8080/simplexMethod" + string
+                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
             }).then(function (data) {
              $("#tableSolution").show();
               $(".cover").toggle(1000);
