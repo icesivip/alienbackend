@@ -286,7 +286,7 @@
                                 <span class="icon text-white-50">
                                   <i class="fas fa-check"></i>
                                 </span>
-                                <span class="text">Go!</span>
+                                <span class="text" href="#thead-tr">Go!</span>
                               </button>
                             
                         </div>
@@ -398,7 +398,7 @@
                     <div class="solution">
                         <div class="text-black">
                             <div class="botonsitos">
-                                    <a onClick="finalSolution()" class="btn btn-outline-info btn-user btn-block">
+                                    <a onClick="finalSolution()" href="#mensajeS" class="btn btn-outline-info btn-user btn-block">
                                         Solve
                                     </a>
                               
@@ -416,9 +416,9 @@
                             <thead class="bg-gradient-primary">
                                 
                                 <tr id="thead-ans">
-                                  <th>
-                                    <font color="#fff">BV</font>
-                                </th>  
+                                    <th>
+                                      <font color='#fff'>BV</font>
+                                    </th>
                                   <th>
                                         <font color="#fff">Z</font>
                                     </th>
@@ -526,8 +526,8 @@
             if (varCount > 1) {
                 $("#thead-tr th:nth-child(" + (varCount+1) + ")").remove();
                 $("#table-entries tr td:nth-child("+(varCount+1)+")").remove();
-                $("#thead-ans th:nth-child(" + (varCount+1) + ")").remove();
-                $("#table-body td:nth-child(" + (varCount+1) + ")").remove();
+                $("#thead-ans th:nth-child(" + (varCount+2) + ")").remove();
+                $("#table-body td:nth-child(" + (varCount+2) + ")").remove();
                 varCount--;
             }
 
@@ -592,14 +592,14 @@
         }
 function addVarSolution() {
 
-            $("#thead-ans th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X"+(varCount)+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount) + ")").after("<td id='val0"+(varCount)+"'></td>");
+            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th><font color='#fff'>X"+(varCount)+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount+1) + ")").after("<td id='val0"+(varCount)+"'></td>");
            
         }
         function addSlackInSol(n, varName) {
       cVar=varCount+n;
-            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount +1) + ")").after("<td id='val0"+(cVar)+"'></td>");
+            $("#thead-ans th:nth-child(" + (varCount+2) + ")").after("<th id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount +2) + ")").after("<td id='val0"+(cVar)+"'></td>");
          
         }
         function addRowSolution(num, base) {
@@ -610,7 +610,7 @@ function addVarSolution() {
           for (let i = 1; i <= slackCount; i++) {
             console.log("entra a eliminar slacks");
             $("#head"+(i)).remove();
-            $("#table-body td:nth-child(" + (varCount+2) + ")").remove();
+            $("#table-body td:nth-child(" + (varCount+3) + ")").remove();
           }
         }
         function removeOldRowSolution() {
@@ -637,6 +637,7 @@ function addVarSolution() {
             $.ajax({
                 url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
+             $("#tableSolution").show();
               $(".cover").toggle(1000);
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
@@ -659,11 +660,13 @@ function addVarSolution() {
                 if(actualMatrix.length>1){
                   removeOldRowSolution();
                   for (var i = 0; i < actualMatrix.length; i++) {
-                    addRowSolution(varCount+3+newS, baseCol[i]);
                     if(i==0){
                       $("#val00").text(1.0);
 
-                    }else{ $("#val"+i+""+0+"").text(0,0);  }
+                    }else{
+                    addRowSolution(varCount+3+newS, baseCol[i-1]);
+                      $("#val"+i+""+0+"").text(0,0); 
+                  }
                     for (var j = 1; j <= actualMatrix[0].length; j++){
                     
                       var valor=actualMatrix[i][j-1];
@@ -681,7 +684,6 @@ function addVarSolution() {
                     var valor=theta[j];
                     $("#val"+(i)+""+posT+"").text(valor);
                     
-                 
                   
                 }}
                   }
