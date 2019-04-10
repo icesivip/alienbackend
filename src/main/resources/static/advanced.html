@@ -10,7 +10,6 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-
   <title>LINEAR - OPTIMIZATION</title>
 
   <!-- Custom fonts for this template-->
@@ -58,7 +57,7 @@
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span> Linear Programming </span>
-        </a>
+      </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Programs</h6>
@@ -75,7 +74,7 @@
             aria-expanded="true" aria-controls="collapseMPS">
             <i class="fas fa-fw fa-folder"></i>
             <span> Master Plan Schedule </span>
-        </a>
+      </a>
         <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Programs</h6>
@@ -223,8 +222,8 @@
             <div class="cover"></div>
           <!-- Page Heading -->
           <div class="text-center">
-            <h1><u>SIMPLEX METHOD</u> </h1>
-            <h2><u> Fast-track mode</u> </h2>
+            <h1>Simplex Method </h1>
+            <h2> Fast-track mode</h2>
 
         </div>
         <!-- /.container-fluid -->
@@ -233,8 +232,8 @@
             <div class="p-5">
                 <form class="user" id="user">
                   <div class="col-sm-6">
-                    <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
+                    <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split">
+                      <span class="icon text-white-60">
                         <i class="fas fa-arrow-left"></i>
                       </span>
                       <span class="text">Back</span>
@@ -242,55 +241,46 @@
                   </div>
 
                     <hr>
+                    <div class="row">
+                      <div class="col-sm-8" >
                     <h2>Problem Title</h2>
-                    <div class="form-group2">
-                        <div class="col-sm-14 " >
                             <input type="text" class="form-control form-control-user" id="cTitle" required="">
                         </div>
-                      </div>
-                      <hr>
-                    <h2>Type <span class="label label-default"></span></h2>
-
-                    <div class="form-group">
-
-                        <select class="form-control" id="type">
+                        <div class="col-sm-2 " >
+                          <h2>Type <span class="label label-default"></span></h2>
+                          <select class="form-control sm-1" id="type">
                             <option>MAXIMIZE</option>
                             <option>MINIMIZE</option>
-                        </select>
+                          </select>
+                        </div>
+                        </div>
                         <hr>
 
-                    </div>
                     
-                    <h2>Number of Variables</h2>
-
                     <div class="form-group row">
-                        <div class="col-sm-2 ">
+                      <div class="col-sm-4 ">
+                    <h2>Number of Variables</h2>
                             <input type="number" class="form-control form-control-user" id="nVariable" required="">
                         </div>
-                    </div>
-
-                  
-                    <h2>Number of Constraints</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="nConstraints" required="">
-                        </div>
                         
-                    </div>
-
-                    <div class="text-black">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
+                        <div class="col-sm-4 ">
+                        
+                          <h2>Number of Constraints</h2>
                           
-                            <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" >
-                                <span class="icon text-white-50">
+                          <input type="number" class="form-control form-control-user" id="nConstraints" required="">
+                        </div>
+                      </div>
+                        
+                        <div class="col-sm-6">
+                            
+                            <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" type='button'>
+                                <span class="icon text-white-60">
                                   <i class="fas fa-check"></i>
                                 </span>
                                 <span class="text" href="#thead-tr">Go!</span>
                               </button>
-                            
-                        </div>
-                      </div>
+                              
+                            </div>
                   <br>
                   <hr>
                   
@@ -305,19 +295,19 @@
                             <thead class="bg-primary">
                                 
                                 <tr id="thead-tr">
-                                  <th>
+                                  <th style="text-align: center">
                                        Z
                                    </th>  
-                                  <th>
+                                  <th style="text-align: center">
                                         X1
                                     </th>
-                                    <th>
+                                    <th style="text-align: center">
                                         X2
                                     </th>
-                                    <th>
+                                    <th style="text-align: center">
                                         Type
                                     </th>
-                                    <th>
+                                    <th style="text-align: center">
                                         Value
                                     </th>
                                 </tr>
@@ -325,22 +315,22 @@
                             </thead>
                             <tbody id="table-entries">
                                 <tr>
-                                    <td><font color="#000000">1</font></td>
-                                    <td><input type="number" step="0.01" id="cX1" required></td>
-                                    <td><input type="number" step="0.01" id = "cX2" required></td>
-                                    <td><font color="#000000">=</font></td>
-                                    <td><font color="#000000">0</font></td>
+                                    <td style="text-align: center"><font color="#000000">1</font></td>
+                                    <td style="text-align: center"><input type="number" step="0.01" id="cX1" required></td>
+                                    <td style="text-align: center"><input type="number" step="0.01" id = "cX2" required></td>
+                                    <td style="text-align: center"><font color="#000000">=</font></td>
+                                    <td style="text-align: center"><font color="#000000">0</font></td>
                                 </tr>
                                 <tr>
-                                  <td><font color="#000000">0</font></td>
-                                  <td><input type="number" step="0.01" id="X11" required></td>
-                                  <td><input type="number" step="0.01" id = "X12" required></td>
-                                  <td> <select id="r1">
+                                  <td style="text-align: center"><font color="#000000">0</font></td>
+                                  <td style="text-align: center"><input type="number" step="0.01" id="X11" required></td>
+                                  <td style="text-align: center"><input type="number" step="0.01" id = "X12" required></td>
+                                  <td style="text-align: center"> <select id="r1">
                                     <option>&lt;=</option>
                                     <option>&gt;=</option>
                                     <option>=</option>
                                   </select></td>
-                                  <td><input type='number' step='0.01' id="rv1" required></td></tr>
+                                  <td style="text-align: center"><input type='number' step='0.01' id="rv1" required></td></tr>
                               </tr>
             
                             </tbody>
@@ -349,21 +339,22 @@
             
             
                         </table>
+                        </div>
                         <br>
                         
                     <hr>
                     <div class="text-black">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                                <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                     Add Constraint
 
-                                </a>
+                                </button>
                             </div>
                             <div class="col-sm-6">
-                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
+                                <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
                                     Remove Constraint
-                                </a>
+                                </button>
                             </div>
                         </div>
                         
@@ -375,15 +366,15 @@
                     <div class="text-black">
                       <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
-                              <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                              <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                   Add Variable
 
-                              </a>
+                              </button>
                           </div>
                           <div class="col-sm-6">
-                              <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
+                              <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
                                   <i class="fab fa-fw"></i> Remove Variable
-                              </a>
+                              </button>
                           </div>
                       </div>
                     
@@ -398,15 +389,15 @@
                     <div class="solution">
                         <div class="text-black">
                             <div class="botonsitos">
-                                    <a onClick="finalSolution()" href="#mensajeS" class="btn btn-outline-info btn-user btn-block">
+                                    <button onClick="finalSolution()" href="#mensajeS" type='button' class="btn btn-outline-info btn-user btn-block">
                                         Solve
-                                    </a>
+                                    </button>
                               
                                
                             </div>
                     </div>
                     <br>
-                    <div class="Table-container" id = "tableSolution">
+                    <div class="Table-container" id = "tableSolution" style="display: none">
 
                         <h2>Outputs</h2>
                         <div id="menIteration"> </div>
@@ -489,9 +480,9 @@
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
+  <button class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
-  </a>
+  </button>
 
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -506,7 +497,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-primary" href="login.html">Logout</button>
         </div>
       </div>
     </div>
@@ -562,12 +553,12 @@
       
     }
         function  generateNewConsRow(count) {
-            var st = "<tr><td><font color='#000000'>0</font></td>";
+            var st = "<tr><td style='text-align: center'><font color='#000000'>0</font></td>";
             for (let index = 1; index <= count; index++) {
-                st += "<td><input type='number' step='0.01' id='X"+consCount+index+"'required></td>";
+                st += "<td style='text-align: center'><input type='number' step='0.01' id='X"+consCount+index+"'required></td>";
 
             }
-            st += "<td> <select id='r"+consCount+"'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv"+consCount+"'required></td></tr>"
+            st += "<td style='text-align: center'> <select id='r"+consCount+"'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td style='text-align: center'><input type='number' step='0.01'id='rv"+consCount+"'required></td></tr>"
             return st;
         }
         function removeCons() {
@@ -581,25 +572,25 @@
         function addVar() {
           
             varCount++;
-            $("#thead-tr th:nth-child(" + varCount + ")").after("<th>X" + varCount + "</th>");
-            $("#table-entries tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
+            $("#thead-tr th:nth-child(" + varCount + ")").after("<th style='text-align: center'>X" + varCount + "</th>");
+            $("#table-entries tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td style='text-align: center'><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
             for (let i = 1; i <= consCount; i++) {
               
-            $("#table-entries tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
+            $("#table-entries tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td style='text-align: center'><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
               
             }
             addVarSolution();
         }
 function addVarSolution() {
 
-            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th><font color='#fff'>X"+(varCount)+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount+1) + ")").after("<td id='val0"+(varCount)+"'></td>");
+            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th style='text-align: center'><font color='#fff'>X"+(varCount)+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount+1) + ")").after("<td style='text-align: center' id='val0"+(varCount)+"'></td>");
            
         }
         function addSlackInSol(n, varName) {
       cVar=varCount+n;
-            $("#thead-ans th:nth-child(" + (varCount+2) + ")").after("<th id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount +2) + ")").after("<td id='val0"+(cVar)+"'></td>");
+            $("#thead-ans th:nth-child(" + (varCount+2) + ")").after("<th style='text-align: center' id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
+            $("#table-body td:nth-child(" + (varCount +2) + ")").after("<td style='text-align: center' id='val0"+(cVar)+"'></td>");
          
         }
         function addRowSolution(num, base) {
@@ -621,9 +612,9 @@ function addVarSolution() {
         }
         function generateSolRow(count, base) {
             var st = "<tr id='td"+cons+"'>";
-                st +="<th><font>"+base+"</font></th>";
+                st +="<th style='text-align: center'><font>"+base+"</font></th>";
             for (let index = 0; index < count; index++) {
-                st += "<td id='val"+cons+""+index+"'></td>";
+                st += "<td style='text-align: center' id='val"+cons+""+index+"'></td>";
             }
             st+="</tr>"
             cons++
