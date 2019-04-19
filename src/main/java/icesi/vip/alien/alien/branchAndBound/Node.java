@@ -23,9 +23,17 @@ public class Node {
 		try {
 
 			if (copy != null) {
-				children = new ArrayList<Node>();
 
-				text = new NodeText("Solution at Level " + copy.level, copy.model.toString(), copy.solution.toString());
+				children = new ArrayList<Node>();
+				if (copy.solution != null) {
+					text = new NodeText("Solution at Level " + copy.level, 
+							copy.model.toString(),
+							copy.solution.toString());
+				} else {
+					text = new NodeText("Solution at Level " + copy.level,
+							copy.model.toString(),
+							"UNFEASIBLE BRANCH");
+				}
 
 				if (copy.left != null) {
 					children.add(new Node(copy.left));
@@ -38,16 +46,8 @@ public class Node {
 			} else {
 				children = new ArrayList<Node>();
 
-				text = new NodeText("UNFEASIBLE BRANCH","", "");
+				text = new NodeText("UNFEASIBLE BRANCH", "", "");
 
-				if (copy.left != null) {
-					children.add(new Node(copy.left));
-
-				}
-
-				if (copy.right != null) {
-					children.add(new Node(copy.right));
-				}
 			}
 
 		} catch (Exception e) {
