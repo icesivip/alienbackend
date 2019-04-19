@@ -49,7 +49,7 @@ public class Node {
 			
 			children=new ArrayList<Node>();
 			
-			text=new NodeText(copy.model.toString(), copy.solution.exportFormat().toString());
+			text=new NodeText("Solution at Level "+copy.level, copy.model.toString(),copy.solution.toString());
 
 
 			

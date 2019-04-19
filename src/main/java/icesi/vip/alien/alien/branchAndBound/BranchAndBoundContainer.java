@@ -22,6 +22,7 @@ public class BranchAndBoundContainer {
 			System.out.println(st.left);
 			System.out.println(st.right);
 			solutionTree=new Node(st);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
