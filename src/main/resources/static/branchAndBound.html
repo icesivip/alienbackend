@@ -53,7 +53,7 @@
         }
 
 
-        
+
 
 
 
@@ -62,7 +62,7 @@
 
         .tree-canvas {
             overflow-x: auto;
-  white-space: nowrap;
+            white-space: nowrap;
         }
 
         .expand {
@@ -82,11 +82,16 @@
             width: 100%;
         }
 
+
+        .nav-button {
+            margin-right: 3px;
+        }
+
         .nodo {
             border: 3px solid black;
             border-radius: 5px;
             margin: 1px;
-            width: 40%;
+            width: 400px;
             background-color: cornflowerblue;
             color: white;
             white-space: pre-line;
@@ -160,6 +165,7 @@
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
                         <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
                     </div>
                 </div>
@@ -212,16 +218,57 @@
                     <!-- Topbar Search -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
+
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                            <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                                data-target="#uploadModal">
+                                Upload Problem
+                                <i class="fas fa-upload"></i>
+                            </button>
+                            <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
+                                Save Problem
+                                <i class="far fa-save"></i>
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="upload-form">
+                                    <div class="modal-body">
+                                        <p>
+                                            Here you have to select a previously saved problem in .json format. Make
+                                            sure the file has not
+                                            been modified or there are going to be problems in the upload process.
+                                        </p>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Choose File</label>
+                                            <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                                required>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="input" class="btn btn-primary">Upload</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -477,10 +524,13 @@
 
                     <div id="tree" class="text-center">
                         <h2>Solution Tree Chart</h2>
-                        <div id="tree-canvas" class="tree-canvas container-fluid">
+                        <div id="tree-container">
+                            <div id="tree-canvas" class="tree-canvas container-fluid">
 
+                            </div>
+                            <button class="btn btn-outline-primary expand" onclick="saveDiagram()">Save Diagram</button>
                         </div>
-                        <button class="btn btn-outline-primary expand" onclick="saveDiagram()">Save Diagram</button>
+
 
 
                     </div>
@@ -569,13 +619,44 @@
         $(document).ready(function () {
             $("#resultTable-cont").hide();
             $("#chart").hide();
-            $("#tree-canvas").hide();
+            $("#tree-container").hide();
+
+
+
+
+            var file = document.getElementById('fileUpload');
+
+            file.onchange = function (e) {
+                var ext = this.value.match(/\.([^\.]+)$/)[1];
+                switch (ext) {
+                    case 'json':
+
+
+                        break;
+                    default:
+                        alert('Selected file type is not allowed. Select a .json file.');
+                        this.value = '';
+                }
+            };
         });
 
 
         document.getElementById("submit-form").addEventListener("submit", function (e) {
             e.preventDefault();
             solveModel();
+        });
+
+
+        document.getElementById("upload-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            $('#uploadModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+            alert("Esta funcion aun no esta implementada.");
+
+
         });
 
         function addCons() {
@@ -630,12 +711,14 @@
             varCount++;
         }
 
-        function saveDiagram(){
-            var element=document.querySelector("#tree-canvas");
+        function saveDiagram() {
+            var element = document.querySelector("#tree-canvas");
 
-            html2canvas(element,{  width: element.scrollWidth,
-    height: element.scrollHeight}).then(canvas => {
-               // console.log(canvas.toDataURL());
+            html2canvas(element, {
+                width: element.scrollWidth,
+                height: element.scrollHeight
+            }).then(canvas => {
+                // console.log(canvas.toDataURL());
 
                 var win = window.open("", "Branch&Bound Tree");
                 win.document.write("<img src='" + canvas.toDataURL() + "'/>");
@@ -721,46 +804,46 @@
             }).then(function (data) {
                 $(".cover").toggle(400);
                 $(".tree-canvas").empty();
-                $(".tree-canvas").show(400);
+                $("#tree-container").show(400);
                 console.log(data);
-                  $('#resultTable').DataTable().destroy();
-                  $("#resultTable thead").empty();
-                  $("#resultTable tbody").empty();
-                  var p1 = new Promise((resolve, reject) => {
-  
-                      $("#resultTable thead").append("<tr></tr>");
-                     
-                      for (index = 0; index < varCount; index++) {
-                          $("#resultTable thead").find("tr").append("<th>" + "X" + (index + 1) + "</th>");
-  
-                      }
-                      $("#resultTable thead").find("tr").append("<th>Z</th>");
-                      $("#resultTable thead").find("tr").append("<th>Is Feasible</th>");
-                      $("#resultTable-cont").show();
-  
-  
-                      resolve();
-  
-                  });
-                  p1.then(() => {
-                      $('#resultTable').DataTable();
-  
-                      var element=data.optimalSolution;
-                          arr = [];
-                          
-                          for (var key in element.variables) {
-                              arr.push(element.variables[key].toFixed(5));
-                          }
-                          arr.push(element.z.toFixed(5));
-                          arr.push(element.feasible);
-                          $('#resultTable').DataTable().row.add(arr).draw();
-  
-                      
-                      $('#resultTable').DataTable().data().reverse();
-                  }).catch((error) => { console.log(error) });
-  
+                $('#resultTable').DataTable().destroy();
+                $("#resultTable thead").empty();
+                $("#resultTable tbody").empty();
+                var p1 = new Promise((resolve, reject) => {
 
-  
+                    $("#resultTable thead").append("<tr></tr>");
+
+                    for (index = 0; index < varCount; index++) {
+                        $("#resultTable thead").find("tr").append("<th>" + "X" + (index + 1) + "</th>");
+
+                    }
+                    $("#resultTable thead").find("tr").append("<th>Z</th>");
+                    $("#resultTable thead").find("tr").append("<th>Is Feasible</th>");
+                    $("#resultTable-cont").show();
+
+
+                    resolve();
+
+                });
+                p1.then(() => {
+                    $('#resultTable').DataTable();
+
+                    var element = data.optimalSolution;
+                    arr = [];
+
+                    for (var key in element.variables) {
+                        arr.push(element.variables[key].toFixed(5));
+                    }
+                    arr.push(element.z.toFixed(5));
+                    arr.push(element.feasible);
+                    $('#resultTable').DataTable().row.add(arr).draw();
+
+
+                    $('#resultTable').DataTable().data().reverse();
+                }).catch((error) => { console.log(error) });
+
+
+
 
 
                 chart_config = {
@@ -796,6 +879,32 @@
             });
 
         }
+
+        function exportToJson(objectData) {
+            let filename = "saved_problem.json";
+            let contentType = "application/json;charset=utf-8;";
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                var a = document.createElement('a');
+                a.download = filename;
+                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+
+        function saveProblem() {
+            object = { data: constructQueryString() };
+            exportToJson(object);
+        }
+
+
+
 
 
 
