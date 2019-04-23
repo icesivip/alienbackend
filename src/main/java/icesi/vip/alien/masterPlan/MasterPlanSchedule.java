@@ -1,24 +1,24 @@
 package icesi.vip.alien.masterPlan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MasterPlanSchedule {
-
+	
 	public static final String LOTXLOT = "Lot for Lot";
-	public static final String ECONOMIC_ORDER_QUANTITY = "Economic Order Quantity";
+	public static final String ECONOMIC_ORDER_QUANTITY= "Economic Order Quantity";
 	public static final String PERIODS_OF_SUPPLY = "Periods Of Suply";
 	public static final String PERIOD_ORDER_QUANTITY = "Period Order Quantity";
 	public static final String LEAST_UNIT_COST = "Least Unit Cost";
 	public static final String LEAST_TOTAL_COST = "Least Total Cost";
-
-	public static final String ANNUAL = "Anual";
-	public static final String SOMETHING = "";
-	public static final String MONTHLY = "Mensual";
-	public static final String WEEKLY = "Semanal";
-	public static final String DAILY = "Diario";
-
-	public static final String UNKNOWN = "Unknown";
-
+	
+	public static final String ANNUAL = "Annual"; 
+	public static final String MONTHLY = "Monthly";
+	public static final String WEEKLY = "Weekly";
+	public static final String DAILY = "Daily";
+		
 	private String lotSizingMethod;
 	private int leadTime;
 	private int initialStock;
@@ -29,7 +29,8 @@ public class MasterPlanSchedule {
 	private double preparationCost;
 	private double maintenanceCost;
 	private String periodicity;
-
+	private int TPeriodOFSupply;
+	
 	public static LotSizingMethods lotSizingMethods;
 
 	private ArrayList<Integer> bruteRequirements;
@@ -37,102 +38,146 @@ public class MasterPlanSchedule {
 	private ArrayList<Integer> scheduledAvailableStock;
 	private ArrayList<Integer> netRequirements;
 	private ArrayList<Integer> planOrders;
+	private ArrayList<Integer> planOrdersLxL;
 	private ArrayList<Integer> releasedPlanOrders;
-
+	
 	public MasterPlanSchedule(String lotSizingMethod, int leadTime, int initialStock, int securityStock,
 			String productCode, String productName, double costArticle, double preparationCost, double maintenanceCost,
-			String periodicity) {
+			String periodicity, int TPeriodOFSupply) {
 		this.lotSizingMethod = lotSizingMethod;
 		this.leadTime = leadTime;
 		this.initialStock = initialStock;
 		this.securityStock = securityStock;
 		this.productCode = productCode;
-		this.productName = productName;
+		this.setProductName(productName);
 		this.costArticle = costArticle;
 		this.preparationCost = preparationCost;
 		this.maintenanceCost = maintenanceCost;
 		this.periodicity = periodicity;
-
+		this.TPeriodOFSupply = TPeriodOFSupply;
+		
 		lotSizingMethods = new LotSizingMethods();
-
+		
 		bruteRequirements = new ArrayList<Integer>();
 		scheduledReceptions = new ArrayList<Integer>();
 		scheduledAvailableStock = new ArrayList<Integer>();
 		netRequirements = new ArrayList<Integer>();
 		planOrders = new ArrayList<Integer>();
+		planOrdersLxL = new ArrayList<>();
 		releasedPlanOrders = new ArrayList<Integer>();
 	}
-
+	
+	public void reset() {
+		scheduledAvailableStock = new ArrayList<Integer>();
+		netRequirements = new ArrayList<Integer>();
+		releasedPlanOrders = new ArrayList<Integer>();
+	}
+	
 	public void addBruteRequirement(int toBeAdded) {
 		bruteRequirements.add(toBeAdded);
 	}
-
+	
 	public void addScheduleReception(int toBeAdded) {
 		scheduledReceptions.add(toBeAdded);
 	}
-
+	
 	public void calculatePlanOrders() {
-		switch (lotSizingMethod) {
-		case (ECONOMIC_ORDER_QUANTITY):
-			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(bruteRequirements, costArticle, preparationCost,
-					maintenanceCost);
+		switch(lotSizingMethod){
+		case(ECONOMIC_ORDER_QUANTITY):/*No*/
+			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(periodicity, bruteRequirements, costArticle, preparationCost, maintenanceCost);
 			break;
-		case (PERIODS_OF_SUPPLY):
-			planOrders = lotSizingMethods.systemPeriodsOfSupply(1, bruteRequirements);
+		case(PERIODS_OF_SUPPLY):/*No*/
+			planOrders = lotSizingMethods.systemPeriodsOfSupply(TPeriodOFSupply, bruteRequirements);
 			break;
-		case (PERIOD_ORDER_QUANTITY):
-			planOrders = lotSizingMethods.systemPeriodOrderQuantity(bruteRequirements, costArticle, preparationCost,
-					maintenanceCost);
+		case(PERIOD_ORDER_QUANTITY):/*Sí*/
+			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
-		case (LEAST_UNIT_COST):
-			planOrders = lotSizingMethods.systemLeastUnitCost(bruteRequirements, preparationCost, maintenanceCost);
+		case(LEAST_UNIT_COST):/*Sí*/
+			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost);
 			break;
-		case (LEAST_TOTAL_COST):
-			planOrders = lotSizingMethods.systemLeastTotalCost(bruteRequirements, preparationCost, maintenanceCost);
+		case(LEAST_TOTAL_COST):/*Sí*/
+			planOrders = lotSizingMethods.systemLeastTotalCost(planOrdersLxL, preparationCost, maintenanceCost);
 			break;
 		}
 	}
-
-	public void hopeThisWorks() {
-		boolean lotxlot = false;
-		if (!lotSizingMethod.equals(LOTXLOT)) {
+	
+	//Ordenar inventario de seguridad si quedó menor
+	
+	//Quiza cambiar nombre de planOrder por lxl y usar un nuevo plan orders
+	public void makeLXLMPS() {
+		int actualNetReq = bruteRequirements.get(0) + securityStock - initialStock - scheduledReceptions.get(0);
+		int actualStockAvailable = 0;
+		if(actualNetReq > 0) {
+			netRequirements.add(actualNetReq);
+			planOrdersLxL.add(netRequirements.get(0));
+		}else {
+			planOrdersLxL.add(0);
+			netRequirements.add(0);
+		}
+		actualStockAvailable = planOrdersLxL.get(0) + initialStock + scheduledReceptions.get(0) - bruteRequirements.get(0);
+		scheduledAvailableStock.add(actualStockAvailable);
+		for(int i = 1; i < bruteRequirements.size(); i++) {
+			actualNetReq = bruteRequirements.get(i) + securityStock - scheduledAvailableStock.get(i-1) - scheduledReceptions.get(i);
+			if(actualNetReq > 0) {
+				netRequirements.add(actualNetReq);
+				planOrdersLxL.add(netRequirements.get(i));
+			}else {
+				planOrdersLxL.add(0);
+				netRequirements.add(0);
+			}
+			actualStockAvailable = planOrdersLxL.get(i) + 
+					scheduledAvailableStock.get(i-1) + 
+					scheduledReceptions.get(i) - 
+					bruteRequirements.get(i);
+			scheduledAvailableStock.add(actualStockAvailable);
+		}
+	}
+	
+	public void calculateReleasedPlanOrders() {
+		for(int i = leadTime; i < planOrders.size(); i++) {
+			releasedPlanOrders.add(planOrders.get(i));
+		}
+		for(int i = 0; i < leadTime; i++) {
+			releasedPlanOrders.add(0);
+		}
+	}
+	
+	public void createMPS() {
+		if(!lotSizingMethod.equals(LOTXLOT)) {
+			if(!lotSizingMethod.equals(ECONOMIC_ORDER_QUANTITY) && !lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
+				makeLXLMPS();
+			}
 			calculatePlanOrders();
-		} else {
-			lotxlot = true;
+		}else {
+			makeLXLMPS();
+			planOrders = planOrdersLxL;
+			calculateReleasedPlanOrders();
+			return;
 		}
 		int actualNetReq = bruteRequirements.get(0) + securityStock - initialStock - scheduledReceptions.get(0);
 		int actualStockAvailable = 0;
-		if (actualNetReq > 0) {
+		if(actualNetReq > 0) {
 			netRequirements.add(actualNetReq);
-			if (lotxlot) {
-				planOrders.add(netRequirements.get(0));
-			}
-		} else {
-			if (lotxlot) {
-				planOrders.add(0);
-			}
+		}else {
 			netRequirements.add(0);
 		}
 		actualStockAvailable = planOrders.get(0) + initialStock + scheduledReceptions.get(0) - bruteRequirements.get(0);
 		scheduledAvailableStock.add(actualStockAvailable);
-		for (int i = 1; i < bruteRequirements.size(); i++) {
-			actualNetReq = bruteRequirements.get(i) + securityStock - scheduledAvailableStock.get(i - 1)
-					- scheduledReceptions.get(i);
-			if (actualNetReq > 0) {
+		for(int i = 1; i < bruteRequirements.size(); i++) {
+			actualNetReq = bruteRequirements.get(i) + securityStock - scheduledAvailableStock.get(i-1) - scheduledReceptions.get(i);
+			if(actualNetReq > 0) {
 				netRequirements.add(actualNetReq);
-				if (lotxlot) {
-					planOrders.add(netRequirements.get(i));
-				}
-			} else {
-				if (lotxlot) {
-					planOrders.add(0);
-				}
+			}else {
 				netRequirements.add(0);
 			}
-			actualStockAvailable = planOrders.get(i) + scheduledAvailableStock.get(i - 1) + scheduledReceptions.get(i)
-					- bruteRequirements.get(i);
+			actualStockAvailable = planOrders.get(i) + 
+					scheduledAvailableStock.get(i-1) + 
+					scheduledReceptions.get(i) - 
+					bruteRequirements.get(i);
 			scheduledAvailableStock.add(actualStockAvailable);
 		}
+		calculateReleasedPlanOrders();
+		
 	}
 
 	public ArrayList<Integer> getScheduledAvailableStock() {
@@ -157,6 +202,22 @@ public class MasterPlanSchedule {
 
 	public void setPlanOrders(ArrayList<Integer> planOrders) {
 		this.planOrders = planOrders;
+	}
+
+	public int getTPeriodOFSupply() {
+		return TPeriodOFSupply;
+	}
+
+	public void setTPeriodOFSupply(int tPeriodOFSupply) {
+		TPeriodOFSupply = tPeriodOFSupply;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public String getLotSizingMethod() {
@@ -197,14 +258,6 @@ public class MasterPlanSchedule {
 
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	public double getCostArticle() {
@@ -263,4 +316,13 @@ public class MasterPlanSchedule {
 		this.releasedPlanOrders = releasedPlanOrders;
 	}
 
+	public ArrayList<Integer> getPlanOrdersLxL() {
+		return planOrdersLxL;
+	}
+
+	public void setPlanOrdersLxL(ArrayList<Integer> planOrdersLxL) {
+		this.planOrdersLxL = planOrdersLxL;
+	}
+	
+	
 }
