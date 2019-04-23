@@ -1,6 +1,9 @@
 package icesi.vip.alien.masterPlan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MasterPlanSchedule {
 	
@@ -35,6 +38,7 @@ public class MasterPlanSchedule {
 	private ArrayList<Integer> scheduledAvailableStock;
 	private ArrayList<Integer> netRequirements;
 	private ArrayList<Integer> planOrders;
+	private ArrayList<Integer> planOrdersLxL;
 	private ArrayList<Integer> releasedPlanOrders;
 	
 	public MasterPlanSchedule(String lotSizingMethod, int leadTime, int initialStock, int securityStock,
@@ -59,6 +63,7 @@ public class MasterPlanSchedule {
 		scheduledAvailableStock = new ArrayList<Integer>();
 		netRequirements = new ArrayList<Integer>();
 		planOrders = new ArrayList<Integer>();
+		planOrdersLxL = new ArrayList<>();
 		releasedPlanOrders = new ArrayList<Integer>();
 	}
 	
@@ -85,40 +90,42 @@ public class MasterPlanSchedule {
 			planOrders = lotSizingMethods.systemPeriodsOfSupply(TPeriodOFSupply, bruteRequirements);
 			break;
 		case(PERIOD_ORDER_QUANTITY):/*Sí*/
-			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, bruteRequirements, costArticle, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(LEAST_UNIT_COST):/*Sí*/
-			planOrders = lotSizingMethods.systemLeastUnitCost(bruteRequirements, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost);
 			break;
 		case(LEAST_TOTAL_COST):/*Sí*/
-			planOrders = lotSizingMethods.systemLeastTotalCost(bruteRequirements, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemLeastTotalCost(planOrdersLxL, preparationCost, maintenanceCost);
 			break;
 		}
 	}
 	
 	//Ordenar inventario de seguridad si quedó menor
+	
+	//Quiza cambiar nombre de planOrder por lxl y usar un nuevo plan orders
 	public void makeLXLMPS() {
 		int actualNetReq = bruteRequirements.get(0) + securityStock - initialStock - scheduledReceptions.get(0);
 		int actualStockAvailable = 0;
 		if(actualNetReq > 0) {
 			netRequirements.add(actualNetReq);
-			planOrders.add(netRequirements.get(0));
+			planOrdersLxL.add(netRequirements.get(0));
 		}else {
-			planOrders.add(0);
+			planOrdersLxL.add(0);
 			netRequirements.add(0);
 		}
-		actualStockAvailable = planOrders.get(0) + initialStock + scheduledReceptions.get(0) - bruteRequirements.get(0);
+		actualStockAvailable = planOrdersLxL.get(0) + initialStock + scheduledReceptions.get(0) - bruteRequirements.get(0);
 		scheduledAvailableStock.add(actualStockAvailable);
 		for(int i = 1; i < bruteRequirements.size(); i++) {
 			actualNetReq = bruteRequirements.get(i) + securityStock - scheduledAvailableStock.get(i-1) - scheduledReceptions.get(i);
 			if(actualNetReq > 0) {
 				netRequirements.add(actualNetReq);
-				planOrders.add(netRequirements.get(i));
+				planOrdersLxL.add(netRequirements.get(i));
 			}else {
-				planOrders.add(0);
+				planOrdersLxL.add(0);
 				netRequirements.add(0);
 			}
-			actualStockAvailable = planOrders.get(i) + 
+			actualStockAvailable = planOrdersLxL.get(i) + 
 					scheduledAvailableStock.get(i-1) + 
 					scheduledReceptions.get(i) - 
 					bruteRequirements.get(i);
@@ -126,11 +133,25 @@ public class MasterPlanSchedule {
 		}
 	}
 	
+	public void calculateReleasedPlanOrders() {
+		for(int i = leadTime; i < planOrders.size(); i++) {
+			releasedPlanOrders.add(planOrders.get(i));
+		}
+		for(int i = 0; i < leadTime; i++) {
+			releasedPlanOrders.add(0);
+		}
+	}
+	
 	public void createMPS() {
 		if(!lotSizingMethod.equals(LOTXLOT)) {
+			if(!lotSizingMethod.equals(ECONOMIC_ORDER_QUANTITY) && !lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
+				makeLXLMPS();
+			}
 			calculatePlanOrders();
 		}else {
 			makeLXLMPS();
+			planOrders = planOrdersLxL;
+			calculateReleasedPlanOrders();
 			return;
 		}
 		int actualNetReq = bruteRequirements.get(0) + securityStock - initialStock - scheduledReceptions.get(0);
@@ -155,6 +176,8 @@ public class MasterPlanSchedule {
 					bruteRequirements.get(i);
 			scheduledAvailableStock.add(actualStockAvailable);
 		}
+		calculateReleasedPlanOrders();
+		
 	}
 
 	public ArrayList<Integer> getScheduledAvailableStock() {
@@ -291,6 +314,14 @@ public class MasterPlanSchedule {
 
 	public void setReleasedPlanOrders(ArrayList<Integer> releasedPlanOrders) {
 		this.releasedPlanOrders = releasedPlanOrders;
+	}
+
+	public ArrayList<Integer> getPlanOrdersLxL() {
+		return planOrdersLxL;
+	}
+
+	public void setPlanOrdersLxL(ArrayList<Integer> planOrdersLxL) {
+		this.planOrdersLxL = planOrdersLxL;
 	}
 	
 	
