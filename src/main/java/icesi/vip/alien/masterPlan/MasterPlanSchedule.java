@@ -70,7 +70,6 @@ public class MasterPlanSchedule {
 	public void reset() {
 		scheduledAvailableStock = new ArrayList<Integer>();
 		netRequirements = new ArrayList<Integer>();
-		releasedPlanOrders = new ArrayList<Integer>();
 	}
 	
 	public void addBruteRequirement(int toBeAdded) {
@@ -84,13 +83,13 @@ public class MasterPlanSchedule {
 	public void calculatePlanOrders() {
 		switch(lotSizingMethod){
 		case(ECONOMIC_ORDER_QUANTITY):/*No*/
-			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(periodicity, bruteRequirements, costArticle, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(periodicity, bruteRequirements, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(PERIODS_OF_SUPPLY):/*No*/
 			planOrders = lotSizingMethods.systemPeriodsOfSupply(TPeriodOFSupply, bruteRequirements);
 			break;
 		case(PERIOD_ORDER_QUANTITY):/*Sí*/
-			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, bruteRequirements, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(LEAST_UNIT_COST):/*Sí*/
 			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost);
@@ -144,8 +143,9 @@ public class MasterPlanSchedule {
 	
 	public void createMPS() {
 		if(!lotSizingMethod.equals(LOTXLOT)) {
-			if(!lotSizingMethod.equals(ECONOMIC_ORDER_QUANTITY) && !lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
+			if(!lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
 				makeLXLMPS();
+				reset();
 			}
 			calculatePlanOrders();
 		}else {

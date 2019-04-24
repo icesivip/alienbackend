@@ -512,8 +512,8 @@
             var request = constructRequestString();
 
             $.ajax({
-                //http://localhost:8080
-                url: "https://icesiviptest.herokuapp.com/master" + request
+                //https://icesiviptest.herokuapp.com
+                url: "http://localhost:8080/master" + request
             }).then(function (data) {
                 $(".cover").toggle(400);
                 console.log("Funciona");
