@@ -230,7 +230,7 @@ align-content: center;
 
 
                     <hr>
-                    <h2>Problem Title</h2>
+                    <h2 class="text-center">Problem Title</h2>
                     <div class="form-group2">
                         <div class="col-sm-14 " >
                             <input type="text" class="form-control form-control-user" id="cTitle" required="">
@@ -238,11 +238,12 @@ align-content: center;
                       </div>
                       <hr>
                       <div class="row">
-                          <div class="col">  
-                            <h2>Number of Variables</h2>
+                          <div class="col"></div>
+                          <div class="col-sm-4 ">  
+                            <h2 >Number of Variables</h2>
 
                             <div class="form-group row">
-                                <div class="col-sm-4 ">
+                                <div class="col-sm-6 ">
                                     <input type="number" class="form-control form-control-user" id="cVariable" required="">
                                 </div>
                                 <div class="text-black-50">
@@ -257,11 +258,11 @@ align-content: center;
                                   </div>
                                    </div>
                                   </div></div>
-                          <div class="col">
+                          <div class="col-sm-4 ">
                               <h2>Number of Constraints</h2>
 
                               <div class="form-group row">
-                                  <div class="col-sm-4 ">
+                                  <div class="col-sm-6 ">
                                       <input type="number" class="form-control form-control-user" id="goConstraint" required="">
                                   </div>
                                   <div class="text-black-50">
@@ -277,6 +278,8 @@ align-content: center;
                               </div>
 
                           </div>
+                          <div class="col"></div>
+
                           
                          
                         </div>
@@ -290,10 +293,10 @@ align-content: center;
 
 
                     <div class="table-responsive">
-                        <h2 >Objective Function</h2>
+                        <h2 class="text-center">Objective Function</h2>
                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
                             <thead class="bg-gradient-primary">
-                                <tr id="of-head">
+                                <tr class="text-center"id="of-head">
                                   
                                     <th>
                                         <font color="#fff">Type</font>
@@ -312,7 +315,7 @@ align-content: center;
             
                                 </tr>
                             </thead>
-                            <tbody id="of-body">
+                            <tbody class="text-center" id="of-body">
                                 <tr>
                                     <td>
                                         <select>
@@ -345,10 +348,10 @@ align-content: center;
                     <hr>
                    
                     <div class="table-responsive">
-                        <h2 >Constraint Table</h2>
+                        <h2 class="text-center">Constraint Table</h2>
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead class="bg-gradient-primary">
-                                <tr id="thead-tr">
+                                <tr class="text-center" id="thead-tr">
                                     <th>
                                         <font color="#fff">X1</font>
                                     </th>
@@ -366,7 +369,7 @@ align-content: center;
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="table-body">
+                            <tbody class="text-center" id="table-body">
                                 <tr>
                                     <td><input type="number" step="0.01" required></td>
                                     <td><input type="number" step="0.01" required></td>
@@ -432,10 +435,39 @@ align-content: center;
 
 
                    
-                
+                    <div class="text-black">
+                        <div class="row">
+                          
+                          <div class="col">
+                           
+                          
+                        </div>
+                          <div class="col-sm-2">
+                              <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-arrow-right"></i>
+                                  </span>
+                                  <span class="text" id = "finalS">Final Solution</span>
+                                </button>
+                          </div>
+                          <div class="col-sm-2">
+                              <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-arrow-right"></i>
+                                  </span>
+                                  <span class="text" id = "StepB">Step by Step</span>
+                                </button>
+                          </div>
+                          <div class="col">
+                            
+                          </div>
+                        </div>
+        
+                    </div>
+                    <hr>
                       
                       <div id="resultTable-cont" class="table-responsive">
-                          <h2>Data Table</h2> <div id="menIteration"> </div>
+                          <h2 class="text-center">Data Table and Results</h2> <div id="menIteration"> </div>
                           <table class="table table-bordered"  width="100%" cellspacing="0" id="resultTable">
                               <thead class="bg-gradient-primary">
                                 
@@ -455,35 +487,11 @@ align-content: center;
 
                       </div>
                       </div>
-                  <hr>
+                
                       
                       
                 </form>
-                <div class="text-black">
-                <div class="row">
-                  
-                  <div class="col">
-                    <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-right"></i>
-                      </span>
-                      <span class="text" id = "finalS">Final Solution</span>
-                    </button>
-                  
-                </div>
-                  <div class="col"></div>
-                  <div class="col"></div>
-                  <div class="col">
-                    <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-right"></i>
-                      </span>
-                      <span class="text" id = "StepB">Step by Step</span>
-                    </button>
-                  </div>
-                </div>
-
-            </div>
+                
         </div>
      
 
@@ -529,7 +537,7 @@ align-content: center;
       </div>
     </div>
   </div>
-<<<<<<< HEAD
+
   <script>
    
      var varCount = 3;
