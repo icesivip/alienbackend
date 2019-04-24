@@ -63,7 +63,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Programs</h6>
                 <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                 <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                 <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
             </div>
         </div>
@@ -193,34 +195,17 @@
     
    
   }
-  .table{
-    color: black;
-    
+  .solution{
+    text-align: center;
   }
-  .cover {
-            opacity: 0.8;
-            background-color: #ccc;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            left: 0px;
-            z-index: 1000;
-            background: url(img/loading.gif) center center no-repeat;
-            display: none;
-        }
-  .h3, h3 {
-    font-size: 1.75rem;
-    color: black;}
-    #menIteration {
-    color: black;
-    
-    font-size: larger;
-}
+ .botonsitos{
+  
+align-content: center;
+ }
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <div class="cover"></div>
+
           <!-- Page Heading -->
           <div class="text-center">
           <h1>Simplex Method </h1>
@@ -233,6 +218,7 @@
             <!-- Nested Row within Card Body -->
             <div class="p-5">
                 <form class="user" id="user">
+
                   <div class="col-sm-6">
                     <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
                       <span class="icon text-white-50">
@@ -241,6 +227,7 @@
                       <span class="text">Back</span>
                     </a>
                   </div>
+
 
                     <hr>
                     <h2>Problem Title</h2>
@@ -297,7 +284,8 @@
                     
                    
                           
-                        
+
+
                     <hr>
 
 
@@ -353,6 +341,7 @@
                      
                     
 
+
                     <hr>
                    
                     <div class="table-responsive">
@@ -400,9 +389,11 @@
                         </table>
             
             
+
                     </div>
                     <br>
                     <hr>
+
                     <div class="text-black">
                         <div class="form-group form-row">
                             
@@ -420,6 +411,7 @@
                            
                             <div class="col-sm-6 mb-3 mb-sm-1">
                                 <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+
                                     Add Constraint
 
                                 </a>
@@ -437,6 +429,7 @@
 
                     </div>
                     <br>
+
 
                    
                 
@@ -489,6 +482,7 @@
                     </button>
                   </div>
                 </div>
+
             </div>
         </div>
      
@@ -535,6 +529,7 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
   <script>
    
      var varCount = 3;
@@ -894,6 +889,7 @@
                 });
      }
   </script>
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
