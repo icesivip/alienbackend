@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
+import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import lombok.extern.log4j.Log4j2;
 import model.Constraint;
@@ -24,6 +25,30 @@ public class AlienController {
 
 	private static final String template = "Hello, %s! Welcome to ICESI's VIP program app.";
 	private final AtomicLong counter = new AtomicLong();
+
+	@CrossOrigin
+	@RequestMapping("/simplexMethod")
+	public Simplex simplexMethod(
+			@RequestParam(value = "type", required = true)String opti,
+			@RequestParam(value = "iteration", defaultValue = "F")String iteration,
+			@RequestParam(value = "equations", required = true)String equations) throws Exception {
+		equations.replaceAll("%20", " ");
+		String[] equas = equations.split("n");
+		Simplex alv = new Simplex(opti, equas);
+		double[][] finalFinal = null;
+        double[][] sig = alv.getActualMatrix();
+        if(iteration.equals("F")) {
+        while(finalFinal != sig){
+            finalFinal = sig;
+            sig = alv.nextIteration();
+        } 
+        }else {
+        	for (int i = 0; i < Integer.parseInt(iteration); i++) {
+                alv.nextIteration();
+            }
+        }
+		return alv;
+	}
 
 	@CrossOrigin
 	@RequestMapping("/greeting")
