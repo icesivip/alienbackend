@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-
+ 
   <title>LINEAR - OPTIMIZATION</title>
 
   <!-- Custom fonts for this template-->
@@ -187,7 +187,7 @@
  
  
   }
-
+  
   
   .btn-icon-split{
     
@@ -195,13 +195,7 @@
     
    
   }
-  .solution{
-    text-align: center;
-  }
- .botonsitos{
-  
-align-content: center;
- }
+ 
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -211,196 +205,35 @@ align-content: center;
 
         </div>
         <!-- /.container-fluid -->
-        <div class="col-lg">
-            <!-- Nested Row within Card Body -->
-            <div class="p-5">
-                <form class="user" id="user">
-                    <div class="col-sm-2">
-                        <a href="homeSimplex.html" class="btn btn-secondary ">
-                            <i class="fab fa-fw"></i> Back
+        <div class="container1">
+            <p >Choose your category: </p>
+           
+          <div class="container1-1">
+              <div class="my-3" class="margin-right"></div>
+              
+              <div class="col-sm-6 mb-3 mb-sm-0">
+                        <a href="beginner.html" class="btn btn-secondary btn-icon-split" >
+                          <span class="icon text-white-50">
+                            <i class="fas fa-arrow-right"></i>
+                          </span>
+                          <span class="text">Beginner</span>
                         </a>
-                    </div>
-                    <hr>
-                    <h2>Problem Title</h2>
-                    <div class="form-group2">
-                        <div class="col-sm-14 " >
-                            <input type="text" class="form-control form-control-user" id="cTitle" required="">
-                        </div>
                       </div>
-                      <hr>
-                    <h2>Type <span class="label label-default"></span></h2>
-
-                    <div class="form-group">
-
-                        <select class="form-control" id="type">
-                            <option>MAXIMIZE</option>
-                            <option>MINIMIZE</option>
-                        </select>
-                        <hr>
-
-                    </div>
-                    
-                    <h2>Number of Variables</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cNumber" required="">
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Go!</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <hr>
+                      <div class="my-2" class="margin-right"></div>
+              <div class="col-sm-6 mb-3 mb-sm-0">
+                        <a href="startSimplex.html" class="btn btn-secondary btn-icon-split" >
+                          <span class="icon text-white-50">
+                            <i class="fas fa-arrow-right"></i>
+                          </span>
+                          <span class="text">Advanced</span>
+                        </a>
+                      </div>
+          </div>
 
 
-                    <h2>Objective Function</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-0.1">
-                            <h4> Z = </h4>
-                        </div>
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cX1" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X1 + </h4>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control form-control-user" id="cX2" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X2 + </h4>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control form-control-user" id="cX3" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X3</h4>
-                        </div>
-                    </div>
-                    <div class="text-white">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
-                                    Add Variable
-
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a onclick="removeConstraint()" class="btn btn-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Variable
-                                </a>
-                            </div>
-                        </div>
-                      
-
-                        
-
-
-                    </div>
-                      <hr>
-                    <h2>Number of Constraints</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cNumber" required="">
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Go!</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <h2>Constraints</h2>
-                    <div id="constraintPanel">
-                        <div class="constraint">
-                            <div class="form-group row">
-                                <div class="col-sm-2 ">
-                                    <input type="number" class="form-control form-control-user" id="X1" required="">
-                                </div>
-                                <div class=" col-sm-0.1">
-                                    <h4> X1 + </h4>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="X2" required="">
-                                </div>
-                                <div class="col-sm-0.1">
-                                    <h4> X2 + </h4>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="X3" required="">
-                                </div>
-                                <div class="col-sm-1 ">
-                                    <h4> X3</h4>
-                                </div>
-                                <div class="centered col-sm-1.5 mb-4 mb-sm-0">
-                                    <select class="form-control" id="r1">
-                                        <option>&lt;=</option>
-                                        <option>&gt;=</option>
-                                        <option>=</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="rv" required="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="text-white">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
-                                    Add Constraint
-
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a onclick="removeConstraint()" class="btn btn-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Constraint
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-
-                        
-
-
-                    </div>
-                    <br>
-
-                    
-                    <div class="solution">
-                        <h2>Solve Problem</h2>
-                        <div class="text-white">
-                            <div class="botonsitos">
-                               
-                                    <a onclick="addConstraint()" class="btn btn-primary btn-user btn-block">
-                                        Step by step
-    
-                                    </a>
-                                    <a onclick="removeConstraint()" class="btn btn-info btn-user btn-block">
-                                        <i class="fab fa-fw"></i> Final solution
-                                    </a>
-                              
-                               
-                            </div>
-                    </div>
-                </form>
-
-            </div>
         </div>
+        
+      </div>
      
 
       
