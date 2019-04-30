@@ -63,10 +63,8 @@
                 <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
                 <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                 <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-
                 <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                 <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-
             </div>
         </div>
     </li>
@@ -167,7 +165,56 @@
         </nav>
         <!-- End of Topbar -->
 <style>
+  img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color:black;
+
+  font-family:'Times New Roman', Times, serif;
+
+}
+.centered1{
+  position: absolute;
+ text-anchor: middle;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
  
+ 
+  }
+  .container2 {
+  position: relative;
+  text-align: center;
+  color:black;
+  font-family:'Times New Roman', Times, serif;
+
+}
+  .centered2{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+  .container3{
+  position: relative;
+  text-align: center;
+  color:black;
+  font-family:'Times New Roman', Times, serif;
+
+}
+  .centered3{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ 
+  }
   .solution{
     text-align: center;
   }
@@ -185,86 +232,51 @@ align-content: center;
         <div class="container-fluid">
 
           <!-- Page Heading -->
-  
+          <img src="img/banner.png" class="mx-auto d-block" style="width:100%"> 
+
+        </div>
+        <!-- /.container-fluid -->
+        <div class="container">
+          <img src="img/whatisit.png" alt="imagen1" style="width:58%;">
+          <div class="centered1">
+              <p style="font-size:2vw;">It is an analytic method for solving problems of linear programming using algebraic operations. 
+             method provides a strategy for evaluating the feasible results finding the optimal value of the objective function.</div>
+              </p>
+            </div>
+        <div class="container2">
+            <img src="img/when.png" alt="imagen2" style="width:55%;">
+            <div class="centered2">
+                <p style="font-size:2vw;">This method can be applied for problems of linear programming that uses two or more variables.</div>
+                </p>
+                </div>
+        <div class="container3">
+            <img src="img/instruction.png" alt="imagen3" style="width:60%;">
+            <div class="centered3">
+                <p style="font-size: 2vw;">For using the program you will need an objective function and <br> the respective constraints. As a result, the program is going <br> to show the type and value of the optimal solution (if there is one)<br> and the values of the basic and non basic variables</p>
            
-            <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <style>
-              div {
-                margin-bottom: 15px;
-                padding: 4px 12px;
-              }
+          </div>
+        
+          <div class="solution">
               
-              .success {
-                background-color: #ddffdd;
-                border-left: 6px solid #4CAF50;
-              }
-              
-              .info {
-                background-color: #e7f3fe;
-                border-left: 6px solid #2196F3;
-              }
-              
-              
-              .warning {
-                background-color: #ffffcc;
-                border-left: 6px solid #ffeb3b;
-              }
-              .btn-icon-split{
-                width:100%;
-              }
-              </style>
-              </head>
-              <body>
-              
-            <div class="text-center"> <h1>Simplex Method</h1></div>
-               
-
-              
-              
-              <div class="success">
-                <p><strong>What is it?</strong> <br>It is an analytic method for solving problems of linear programming using algebraic operations. method provides a strategy for evaluating the feasible results finding the optimal value of the objective function.</p>
-              </div>
-              
-              <div class="info">
-                <p><strong>When to use it?</strong> <br>This method can be applied for problems of linear programming that uses two or more variables.</p>
-              </div>
-              
-              <div class="warning">
-                <p><strong>Instructions</strong> <br> For using the program you will need an objective function and the respective constraints. As a result, the program is going 
-              to show the type and value of the optimal solution (if there is one)and the values of the basic and non basic variables.</p>
-              </div>
-              
-              </body>
-
+              <div class="text-black">
+                 
+                     
+                        
+                          <a href ="startSimplex.html" class="btn btn-info btn-user btn-block">
+                              <i class="fab fa-fw"></i> START
+                          </a>
+                    
+                     
+                 
+          </div>
+                        
         </div>
         
-    <hr>
-     <!-- /.container-fluid --->
-     <div class="container text-center">
-      <p >Choose your category: </p>
-      <div class="form-group row">
-                  
-       
-        <div class="col-sm-6 mb-3 mb-sm-0">
-          <a href="beginner.html" class="btn btn-outline-info btn-icon-split" >
-           
-            <span class="text">Step by step mode</span>
-          </a>
-        </div>
-        <div class="col-sm-6 mb-3 mb-sm-0">
-          <a href="advanced.html" class="btn btn-outline-info btn-icon-split" >
-           
-            <span class="text">Fast-track mode</span>
-          </a>
-
-        </div>
-       
-    
-
-
       </div>
-      <!-- End of Main Content --------->
+     
+
+      
+      <!-- End of Main Content -------->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
