@@ -202,6 +202,10 @@
   
 align-content: center;
  }
+ #but2 {
+   
+    width: 100%;
+}
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -239,15 +243,15 @@ align-content: center;
                       <hr>
                       <div class="row">
                           <div class="col"></div>
-                          <div class="col-sm-4 ">  
+                          <div class="col-sm-4 mb-3 mb-sm-0">  
                             <h2 >Number of Variables</h2>
 
-                            <div class="form-group row">
-                                <div class="col-sm-6 ">
+                            <div class="form-group row ">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="number" class="form-control form-control-user" id="cVariable" required="">
                                 </div>
                                 <div class="text-black-50">
-                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                  <div class="col-sm-12 mb-3 mb-sm-0">
                                       <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
@@ -258,15 +262,15 @@ align-content: center;
                                   </div>
                                    </div>
                                   </div></div>
-                          <div class="col-sm-4 ">
+                          <div class="col-sm-4 mb-3 mb-sm-0">
                               <h2>Number of Constraints</h2>
 
                               <div class="form-group row">
-                                  <div class="col-sm-6 ">
+                                  <div class="col-sm-7 mb-3 mb-sm-0">
                                       <input type="number" class="form-control form-control-user" id="goConstraint" required="">
                                   </div>
                                   <div class="text-black-50">
-                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                  <div class="col-sm-12 mb-3 mb-sm-0">
                                       <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
@@ -396,74 +400,76 @@ align-content: center;
                     </div>
                     <br>
                     <hr>
+                    
 
                     <div class="text-black">
-                        <div class="form-group form-row">
-                            
-                                <div class="col-sm-6 mb-3 mb-sm-1">
-                                    <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
-                                        Add Variable
-    
-                                    </a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
-                                        <i class="fab fa-fw"></i> Remove Variable
-                                    </a>
-                                </div>
-                           
-                            <div class="col-sm-6 mb-3 mb-sm-1">
-                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                      <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                              <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                                  Add Constraint
 
-                                    Add Constraint
+                              </button>
+                          </div>
+                          <div class="col-sm-6">
+                              <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                  Remove Constraint
+                              </button>
+                          </div>
+                      </div>
+                      
 
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Constraint
-                                </a>
-                            </div>
+                      
+
+                  </div>
+
+                  <div class="text-black">
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                                Add Variable
+
+                            </button>
                         </div>
+                        <div class="col-sm-6">
+                            <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                <i class="fab fa-fw"></i> Remove Variable
+                            </button>
+                        </div>
+                    </div>
+                  
+
+                    
+
+
+                </div>
                         <hr>
 
                         
 
 
-                    </div>
+                  
                     <br>
 
-
-                   
                     <div class="text-black">
-                        <div class="row">
-                          
-                          <div class="col">
-                           
-                          
-                        </div>
-                          <div class="col-sm-2">
-                              <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-arrow-right"></i>
-                                  </span>
-                                  <span class="text" id = "finalS">Final Solution</span>
-                                </button>
+                      <div class="form-group row">
+                        
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <button onclick=" finalSolution()" id= "but2" class="btn btn-outline-secondary btn-icon-split" >
+                              
+                              <span class="text" id = "finalS">Final Solution</span>
+                            </button>
                           </div>
-                          <div class="col-sm-2">
-                              <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-arrow-right"></i>
-                                  </span>
-                                  <span class="text" id = "StepB">Step by Step</span>
-                                </button>
+                          <div class="col-sm-6" >
+                            <button onclick="nextSolution()" id= "but2" class="btn btn-outline-secondary btn-icon-split" >
+                              
+                              <span class="text" id = "StepB">Step by Step</span>
+                            </button>
                           </div>
-                          <div class="col">
-                            
-                          </div>
-                        </div>
-        
-                    </div>
+                      </div>
+                    
+                    
+                
+                
                     <hr>
                       
                       <div id="resultTable-cont" class="table-responsive">
