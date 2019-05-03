@@ -28,6 +28,7 @@
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <style>
+<<<<<<< HEAD
         td,
         th {
             text-align: center;
@@ -48,19 +49,31 @@
         }
 
 /*         
+=======
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
         table,
         th,
         td {
             border: 1px solid black;
+<<<<<<< HEAD
         } */
 
         /* .image {
+=======
+        }
+
+        .image {
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
             display: inline;
             margin-left: auto;
             margin-right: auto;
             margin-top: auto;
             vertical-align: center;
+<<<<<<< HEAD
         } */
+=======
+        }
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
 
         .cover {
             opacity: 0.8;
@@ -123,9 +136,13 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+<<<<<<< HEAD
                         <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
                         <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+=======
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
                     </div>
                 </div>
@@ -229,6 +246,7 @@
                     <div class="text-center">
                         <h1>GRAPHICAL METHOD LINEAR PROGRAMMING SOLVER </h1>
                     </div>
+<<<<<<< HEAD
                     <br>
                     <form id="submit-form">
                         <h2 class="text-center">Objective Function</h2>
@@ -370,11 +388,163 @@
     
     
                         </div>
+=======
+                    <div class="row">
+                        <div class="col-lg">
+                            <!-- Nested Row within Card Body -->
+                            <div class="p-5">
+                                <form class="user" id="user">
+                                    <h2>Type <span class="label label-default"></span></h2>
+
+                                    <div class="form-group">
+
+                                        <select class="form-control" id="type">
+                                            <option>MAXIMIZE</option>
+                                            <option>MINIMIZE</option>
+                                        </select>
+                                        <hr>
+
+                                    </div>
 
 
+                                    <h2>Objective Function</h2>
 
+                                    <div class="form-group row">
+                                        <div class="col-sm-2 ">
+                                            <input type="number" step="any" class="form-control form-control-user"
+                                                id="cX1" required>
+                                        </div>
+                                        <div class="col-sm-0.1">
+                                            <h4> X1 + </h4>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="number" step="any" class="form-control form-control-user"
+                                                id="cX2" required>
+                                        </div>
+                                        <div class="col-sm-0.1">
+                                            <h4> X2 </h4>
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+                                    <h2>Constraints</h2>
+                                    <div id="constraintPanel">
+                                        <div class='constraint'>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2 ">
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="X1" required>
+                                                </div>
+                                                <div class=" col-sm-0.1">
+                                                    <h4> X1 + </h4>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="X2" required>
+                                                </div>
+                                                <div class="col-sm-0.1">
+                                                    <h4> X2 </h4>
+                                                </div>
+
+                                                <div class="centered col-sm-1.5 mb-4 mb-sm-0">
+                                                    <select class="form-control" id='r1'>
+                                                        <option>&lt=</option>
+                                                        <option>&gt=</option>
+                                                        <option>=</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="number" step="any"
+                                                        class="form-control form-control-user" id="rv" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="text-white" class="form-control form-control-user">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
+                                                    Add Constraint
+
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <a onclick="removeConstraint()"
+                                                    class="btn btn-danger btn-user btn-block">
+                                                    <i class="fab fa-fw"></i> Remove Constraint
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <input type="submit" class="btn btn-primary btn-user btn-block"
+                                            value="SOLVE MODEL">
+
+
+                                    </div>
+                                    <hr>
+                                    <h2>Solution Space Chart</h2>
+                                    <canvas id="chart-area" width="400" height="device-height"></canvas>
+                                    <br>
+                                    <hr>
+                                    <h2> Basic Feasible Solutions</h2>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+                                            <thead>
+                                                <th>X1</th>
+                                                <th>X2</th>
+
+                                                <th>Z</th>
+                                            </thead>
+                                            <tbody id="table-body">
+
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
+
+
+
+
+<<<<<<< HEAD
+                </div>
+=======
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
 
             </div>
         </div>
@@ -448,6 +618,7 @@
 
 
     <script>
+<<<<<<< HEAD
         var varCount = 2;
         var consCount = 1;
 
@@ -458,10 +629,18 @@
         });
 
         document.getElementById("submit-form").addEventListener("submit", function (e) {
+=======
+        $(document).ready(function () {
+            $('#result').DataTable();
+        });
+
+        document.getElementById("user").addEventListener("submit", function (e) {
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
             e.preventDefault();
             solveModel();
         });
 
+<<<<<<< HEAD
         function addCons() {
             $("#table-body").append(generateNewConsRow(varCount));
             consCount++;
@@ -533,11 +712,39 @@
             console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
             return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
 
+=======
+        function addConstraint() {
+            console.log("Added contraint");
+            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
+        }
+        function removeConstraint() {
+            var n = $('.constraint').length;
+            console.log(n);
+            if (n > 1) {
+                console.log("Removed contraint");
+                $('.constraint').last().remove();
+            }
+        }
+        function constructRequestString() {
+            type = $("#type").val();
+            obfun = $("#cX1").val() + "," + $("#cX2").val();
+            vars = "X1:C,X2:C";
+            constraints = "";
+            $(".constraint").each(function (index) {
+                constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
+            });
+            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
         }
         var myChart = null;
         function solveModel() {
             $(".cover").toggle(400);
+<<<<<<< HEAD
             var string = constructQueryString();
+=======
+            var string = constructRequestString();
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
             $.ajax({
                 url: "https://viptest1.herokuapp.com/graphicalMethod" + string
             }).then(function (data) {

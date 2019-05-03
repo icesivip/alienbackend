@@ -260,7 +260,6 @@ public class AlienController {
 			dates[i] = (i+1+"");
 		}
 		
-		
 		System.out.println(paramProgramDelivery);
 		System.out.println(paramRqB);
 		System.out.println(paramRqBDates);
