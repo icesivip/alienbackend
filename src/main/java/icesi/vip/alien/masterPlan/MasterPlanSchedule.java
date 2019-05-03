@@ -70,7 +70,6 @@ public class MasterPlanSchedule {
 	public void reset() {
 		scheduledAvailableStock = new ArrayList<Integer>();
 		netRequirements = new ArrayList<Integer>();
-		releasedPlanOrders = new ArrayList<Integer>();
 	}
 	
 	public void addBruteRequirement(int toBeAdded) {
@@ -151,6 +150,7 @@ public class MasterPlanSchedule {
 				reset();
 			if(!lotSizingMethod.equals(ECONOMIC_ORDER_QUANTITY) && !lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
 				makeLXLMPS();
+				reset();
 			}
 			calculatePlanOrders();
 		}else {

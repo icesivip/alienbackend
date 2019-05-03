@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
-<<<<<<< HEAD
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import lombok.extern.log4j.Log4j2;

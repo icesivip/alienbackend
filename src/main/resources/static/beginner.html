@@ -209,6 +209,7 @@
   .table{
     color: black;
     
+<<<<<<< HEAD
   }
   .cover {
             opacity: 0.8;
@@ -231,6 +232,42 @@
     font-size: larger;
 }
 </style>
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <div class="cover"></div>
+    <!-- Page Heading -->
+      <div class="text-center">
+       <h1>Simplex Method </h1>
+       <h2>Step by step mode </h2>
+      </div>
+      .solution{
+        text-align: center;
+      }
+        
+      .botonsitos{
+        align-content: center;
+      }
+      .cover {
+        opacity: 0.8;
+        background-color: #ccc;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 1000;
+        background: url(img/loading.gif) center center no-repeat;
+        display: none;
+      }
+      .h3, h3 {
+        font-size: 1.75rem;
+        color: black;}
+        #menIteration {
+        color: black;
+        font-size: larger;
+      }
+    </div>
+</style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <div class="cover"></div>
@@ -239,18 +276,6 @@
           <h1>Simplex Method </h1>
           <h2>Step by step mode </h2>
         </div>
-  .solution{
-    text-align: center;
-  }
- .botonsitos{
-    align-content: center;
- }
-</style>
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <img src="img/banner.png" class="mx-auto d-block" style="width:100%"> 
 
         </div>
         <!-- /.container-fluid -->
@@ -283,7 +308,6 @@
                       <div class="row">
                           <div class="col">  
                             <h2>Number of Variables</h2>
-
                             <div class="form-group row">
                                 <div class="col-sm-4 ">
                                     <input type="number" class="form-control form-control-user" id="cVariable" required="">
@@ -449,131 +473,168 @@
                             <div class="col-sm-6 mb-3 mb-sm-1">
                                 <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
                     <h2>Type <span class="label label-default"></span></h2>
+                            <div class="form-group row">
+                                <div class="col-sm-4 ">
+                                    <input type="number" class="form-control form-control-user" id="cVariable" required="">
+                                </div>
+                                <div class="text-black-50">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
+                                          <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                          </span>
+                                          <span class="text">Go!</span>
+                                        </a>
+        
+                                  </div>
+                                   </div>
+                                  </div></div>
+                          <div class="col">
+                              <h2>Number of Constraints</h2>
 
-                    <div class="form-group">
+                              <div class="form-group row">
+                                  <div class="col-sm-4 ">
+                                      <input type="number" class="form-control form-control-user" id="goConstraint" required="">
+                                  </div>
+                                  <div class="text-black-50">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
+                                          <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                          </span>
+                                          <span class="text">Go!</span>
+                                        </a>
+                                  </div>
+                                </div>
+                              </div>
 
-                        <select class="form-control" id="type">
-                            <option>MAXIMIZE</option>
-                            <option>MINIMIZE</option>
-                        </select>
+                          </div>
+                          
+                         
+                        </div>
                         <hr>
+                    
+                   
+                          
+                        
+                    <hr>
 
+
+                    <div class="table-responsive">
+                        <h2 >Objective Function</h2>
+                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+                            <thead class="bg-gradient-primary">
+                                <tr id="of-head">
+                                    <th>
+                                        <font color="#fff">Type</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X3</font>
+                                    </th>
+            
+            
+                                </tr>
+                            </thead>
+                            <tbody id="of-body">
+                                <tr>
+                                    <td>
+                                        <select>
+                                            <option>MAXIMIZE</option>
+                                            <option>MINIMIZE</option>
+            
+                                        </select>
+                                    </td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+            
+            
+                                </tr>
+            
+            
+                            </tbody>
+            
+            
+            
+            
+                        </table>
+            
                     </div>
                     
-                    <h2>Number of Variables</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cNumber" required="">
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Go!</span>
-                            </a>
-                        </div>
-                    </div>
+                     
+                    
 
                     <hr>
-
-
-                    <h2>Objective Function</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-0.1">
-                            <h4> Z = </h4>
-                        </div>
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cX1" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X1 + </h4>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control form-control-user" id="cX2" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X2 + </h4>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control form-control-user" id="cX3" required="">
-                        </div>
-                        <div class="col-sm-0.1">
-                            <h4> X3</h4>
-                        </div>
+                   
+                    <div class="table-responsive">
+                        <h2 >Constraint Table</h2>
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead class="bg-gradient-primary">
+                                <tr id="thead-tr">
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X3</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Type</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Value</font>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td><input type="number" step="0.01" required></td>
+                                    <td> <select>
+                                            <option>&lt=</option>
+                                            <option>&gt=</option>
+                                            <option>=</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" step="0.01" required></td>
+                                </tr>
+            
+            
+                            </tbody>
+            
+            
+            
+            
+                        </table>
+            
+            
                     </div>
-                    <div class="text-white">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
-                                    Add Variable
-
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a onclick="removeConstraint()" class="btn btn-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Variable
-                                </a>
-                            </div>
-                        </div>
-                      
-
-                        
-
-
-                    </div>
-                      <hr>
-                    <h2>Number of Constraints</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="cNumber" required="">
-                        </div>
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <a href="startSimplex.html" class="btn btn-success btn-icon-split" >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Go!</span>
-                            </a>
-                        </div>
-                    </div>
-
+                    <br>
                     <hr>
-                    <h2>Constraints</h2>
-                    <div id="constraintPanel">
-                        <div class="constraint">
-                            <div class="form-group row">
-                                <div class="col-sm-2 ">
-                                    <input type="number" class="form-control form-control-user" id="X1" required="">
+                    <div class="text-black">
+                        <div class="form-group form-row">
+                            
+                                <div class="col-sm-6 mb-3 mb-sm-1">
+                                    <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                                        Add Variable
+    
+                                    </a>
                                 </div>
-                                <div class=" col-sm-0.1">
-                                    <h4> X1 + </h4>
+                                <div class="col-sm-6">
+                                    <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
+                                        <i class="fab fa-fw"></i> Remove Variable
+                                    </a>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="X2" required="">
-                                </div>
-                                <div class="col-sm-0.1">
-                                    <h4> X2 + </h4>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="X3" required="">
-                                </div>
-                                <div class="col-sm-1 ">
-                                    <h4> X3</h4>
-                                </div>
-                                <div class="centered col-sm-1.5 mb-4 mb-sm-0">
-                                    <select class="form-control" id="r1">
-                                        <option>&lt;=</option>
-                                        <option>&gt;=</option>
-                                        <option>=</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" class="form-control form-control-user" id="rv" required="">
-                                </div>
+<<<<<<< HEAD
                             </div>
                         </div>
                     </div>
@@ -582,6 +643,9 @@
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">                                   Add Constraint
+                            <div class="col-sm-6 mb-3 mb-sm-1">
+                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                                    Add Constraint
                                 </a>
                             </div>
                             <div class="col-sm-6">
@@ -598,6 +662,56 @@
 
                     </div>
                     <br>
+                   
+                
+                      
+                      <div id="resultTable-cont" class="table-responsive">
+                          <h2>Data Table</h2> <div id="menIteration"> </div>
+                          <table class="table table-bordered"  width="100%" cellspacing="0" id="resultTable">
+                              <thead class="bg-gradient-primary">
+                                
+                                 
+                              </thead>
+                              <tbody>
+              
+                              </tbody>
+              
+              
+              
+              
+                          </table>
+                    
+                      <br>
+                      <div id="mensajeS">
+                      </div>
+                      </div>
+                  <hr>
+                      
+                      
+                </form>
+                <div class="text-black">
+                <div class="row">
+                  
+                  <div class="col">
+                    <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                      </span>
+                      <span class="text" id = "finalS">Final Solution</span>
+                    </button>
+                  
+                </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col">
+                    <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                      </span>
+                      <span class="text" id = "StepB">Step by Step</span>
+                    </button>
+                  </div>
+                </div>
                    
                 
                       
@@ -649,25 +763,6 @@
                     </button>
                   </div>
                 </div>
-                    
-                    <div class="solution">
-                        <h2>Solve Problem</h2>
-                        <div class="text-white">
-                            <div class="botonsitos">
-                               
-                                    <a onclick="addConstraint()" class="btn btn-primary btn-user btn-block">
-                                        Step by step
-    
-                                    </a>
-                                    <a onclick="removeConstraint()" class="btn btn-info btn-user btn-block">
-                                        <i class="fab fa-fw"></i> Final solution
-                                    </a>
-                              
-                               
-                            </div>
-                    </div>
-                </form>
-
             </div>
         </div>
      
@@ -716,7 +811,6 @@
       </div>
     </div>
   </div>
-<<<<<<< HEAD
   <script>
    
      var varCount = 3;
@@ -1090,3 +1184,4 @@
 </body>
 
 </html>
+s
