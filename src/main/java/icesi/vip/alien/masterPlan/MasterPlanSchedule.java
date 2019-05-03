@@ -84,12 +84,14 @@ public class MasterPlanSchedule {
 		switch(lotSizingMethod){
 		case(ECONOMIC_ORDER_QUANTITY):/*No*/
 			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(periodicity, bruteRequirements, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemEconomicOrderQuantiy(periodicity, bruteRequirements, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(PERIODS_OF_SUPPLY):/*No*/
 			planOrders = lotSizingMethods.systemPeriodsOfSupply(TPeriodOFSupply, bruteRequirements);
 			break;
 		case(PERIOD_ORDER_QUANTITY):/*Sí*/
 			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, bruteRequirements, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(LEAST_UNIT_COST):/*Sí*/
 			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost);
@@ -146,6 +148,9 @@ public class MasterPlanSchedule {
 			if(!lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
 				makeLXLMPS();
 				reset();
+			if(!lotSizingMethod.equals(ECONOMIC_ORDER_QUANTITY) && !lotSizingMethod.equals(PERIODS_OF_SUPPLY)) {
+				makeLXLMPS();
+				reset();
 			}
 			calculatePlanOrders();
 		}else {
@@ -156,7 +161,7 @@ public class MasterPlanSchedule {
 		}
 		int actualNetReq = bruteRequirements.get(0) + securityStock - initialStock - scheduledReceptions.get(0);
 		int actualStockAvailable = 0;
-		if(actualNetReq > 0) {
+	
 			netRequirements.add(actualNetReq);
 		}else {
 			netRequirements.add(0);
