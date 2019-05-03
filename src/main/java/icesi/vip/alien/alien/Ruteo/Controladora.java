@@ -1,4 +1,4 @@
-package tours;
+package icesi.vip.alien.alien.ruteo;
 
 import java.util.ArrayList;
 import java.util.Stack;
