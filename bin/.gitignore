@@ -24,3 +24,7 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+<<<<<<< HEAD
+/bin/
+=======
+>>>>>>> d398f1ca109f9c2e6b7032552e2f7e6a18fc3839
