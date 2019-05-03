@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
+    <style>
+        td,
+        th {
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .expand {
+            width: 100%;
+            height: 100%;
+        }
+
+        .white-text {
+            color: white;
+        }
+
+        /*         body {
+            font-family: 'Bitter', serif;
+        } */
+
+        input[type=number] {
+            width: 100%;
+        }
+
+        .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard >
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                                    <span>Dashboard</span></a>
+                            </li-->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Modules
+            </div>
+
+            <!-- PL -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Linear Programming </span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                    </div>
+                </div>
+            </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
+                    aria-expanded="true" aria-controls="collapseMPS">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Master Plan Schedule </span>
+                </a>
+                <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <!-- cambiar href -->
+                        <a class="collapse-item" href="mps.html">MPS</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+                    <div class="cover">
+                        <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
+                    </div>
+                    <div class="text-center">
+                        <h1>Interior Point Method Solver</h1>
+                    </div>
+                    <br>
+                    <form id="submit-form">
+                        <h2 class="text-center">Objective Function</h2>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped" id="result" width="100%" cellspacing="0">
+                                <thead class="white-text bg-primary">
+                                    <tr id="of-head">
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            X1
+                                        </th>
+                                        <th>
+                                            X2
+                                        </th>
+                                        <th>
+                                            X3
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody id="of-body">
+                                    <tr>
+                                        <td>
+                                            <select>
+                                                <option>MAXIMIZE</option>
+                                                <option>MINIMIZE</option>
+
+                                            </select>
+                                        </td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+
+
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+
+                        </div>
+                        <hr>
+                        <h2 class="text-center">Constraint Table</h2>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                <thead class="white-text bg-primary">
+                                    <tr id="thead-tr">
+                                        <th>
+                                            X1
+                                        </th>
+                                        <th>
+                                            X2
+                                        </th>
+                                        <th>
+                                            X3
+                                        </th>
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            Value
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <tr>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td> <select>
+                                                <option>&lt=</option>
+                                                <option>&gt=</option>
+                                                <option>=</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+
+
+                        </div>
+                        <hr>
+                        <div class="row row-eq-height">
+                            <div class="col text-center"><button type="button" class="btn btn-outline-primary expand"
+                                    onclick="addCons()">Add
+                                    Constraint</button>
+                            </div>
+                            <div class="col text-center"> <button type="button" class="btn btn-outline-primary expand"
+                                    onclick="addVar()">Add
+                                    Variable</button>
+                            </div>
+                            <div class="col text-center"> <button type="button" class="btn btn-outline-danger expand"
+                                    onclick="removeCons()">Remove
+                                    Constraint</button></div>
+                            <div class="col text-center"> <button type="button" class="btn btn-outline-danger expand"
+                                    onclick="removeVar()">Remove
+                                    Variable</button></div>
+                        </div>
+                        <br>
+                        <div class="row text-center">
+                            <div class="col text-center"><button type="submit"
+                                    class="btn btn-outline-success expand">Solve</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+
+                    <hr>
+                    <h2 class="text-center">Results</h2>
+                    <div id="resultTable-cont" class="table-responsive">
+
+                        <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
+                            <thead class="white-text bg-primary">
+                                <td> X1</td>
+                                <td>X2</td>
+                                <td>X3</td>
+                                <td>Z
+                                </td>
+                                <td>Is Feasible
+                                </td>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+
+
+
+
+                        </table>
+
+
+                    </div>
+                    <hr>
+                    <div id="chart" class="text-center">
+                        <h2>Solution Space Chart</h2>
+                        <canvas id="chart-area" width="400" height="device-height"></canvas>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; 2019</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var varCount = 3;
+        var consCount = 1;
+
+        $(document).ready(function () {
+            $("#resultTable-cont").hide();
+            $("#chart").hide();
+        });
+
+
+        document.getElementById("submit-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function addCons() {
+            $("#table-body").append(generateNewConsRow(varCount));
+            consCount++;
+        }
+
+        function removeVar() {
+            if (varCount > 2) {
+                $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
+                $("#table-body tr td:nth-child(1)").remove();
+
+                $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
+                $("#of-body tr td:nth-child(2)").remove();
+                varCount--;
+            }
+
+        }
+
+        function generateNewConsRow(count) {
+            var st = "<tr>";
+            for (let index = 0; index < count; index++) {
+                st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
+
+            }
+            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            return st;
+        }
+
+        function removeCons() {
+            if (consCount > 1) {
+                $("#table-body tr").last().remove();
+                consCount--;
+            }
+
+        }
+
+        function addVar() {
+            $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
+            $("#table-body tr").prepend("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+
+            $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th>X" + (varCount + 1) + "</th>");
+            $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+
+
+            varCount++;
+        }
+
+        function insertAtIndex(i) {
+            if (i === 0) {
+                $("#controller").prepend("<div>okay things</div>");
+                return;
+            }
+
+
+            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+        }
+
+
+        function constructQueryString() {
+            type = "";
+            obfun = "";
+            vars = "";
+            constraints = "";
+            $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
+
+                } else {
+                    obfun += $(this).find('input').val() + ",";
+                }
+            });
+            for (i = 0; i < varCount; i++) {
+                vars += "X" + (i + 1) + ":C" + ",";
+            }
+
+            $('#table-body tr').each(function (i) {
+                $(this).find('td').each(function (j) {
+
+                    if (j < varCount || j == varCount + 1) {
+
+                        if (j == varCount + 1) {
+                            constraints += $(this).find('input').val() + ";";
+                        } else {
+
+                            constraints += $(this).find('input').val() + ",";
+                        }
+                    } else {
+                        constraints += $(this).find('select').val() + ",";
+                    }
+                });
+
+            });
+
+            vars = vars.substring(0, vars.length - 1);
+            obfun = obfun.substring(0, obfun.length - 1);
+            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+
+        }
+        var myChart = null;
+        function solveModel() {
+            $(".cover").toggle(400);
+            var string = constructQueryString();
+            $.ajax({
+                url: "https://icesiviptest.herokuapp.com/interiorPoint" + string
+            }).then(function (data) {
+                $(".cover").toggle(400);
+                console.log(data);
+                $('#resultTable').DataTable().destroy();
+                $("#resultTable thead").empty();
+                $("#resultTable tbody").empty();
+                var p1 = new Promise((resolve, reject) => {
+
+                    $("#resultTable thead").append("<tr></tr>");
+                    $("#resultTable thead").find("tr").append("<th>Step</th>");
+                    for (index = 0; index < varCount; index++) {
+                        $("#resultTable thead").find("tr").append("<th>" + "X" + (index + 1) + "</th>");
+
+                    }
+                    $("#resultTable thead").find("tr").append("<th>Z</th>");
+                    $("#resultTable thead").find("tr").append("<th>Is Feasible</th>");
+                    $("#resultTable-cont").show();
+
+
+                    resolve();
+
+                });
+                p1.then(() => {
+                    $('#resultTable').DataTable();
+
+                    data.solutionPath.forEach((element, index) => {
+                        arr = [];
+                        arr.push(index);
+                        for (var key in element.variables) {
+                            arr.push(element.variables[key].toFixed(5));
+                        }
+                        arr.push(element.z.toFixed(5));
+                        arr.push(element.feasible);
+                        $('#resultTable').DataTable().row.add(arr).draw();
+
+                    });
+                    $('#resultTable').DataTable().data().reverse();
+                }).catch((error) => { console.log(error) });
+
+                if (data.constraints != null) {
+                    $("#chart").show();
+                    maxX = data.maxX;
+                    maxY = data.maxY;
+                    dataframe = [];
+                    var constraints = data.constraints;
+                    dataAux = [];
+                    colors = [];
+                    data.solutionPath.forEach(element => {
+                        if (element.variables.X1 > maxX) {
+                            maxX = element.variables.X1;
+                        }
+                        if (element.variables.X2 > maxY) {
+                            maxY = element.variables.X2;
+                        }
+                        console.log(element.feasible)
+                        if (element.feasible) {
+                            colors.push('rgba(0, 255, 0, 1)');
+                        } else {
+                            colors.push('rgba(255, 0, 0, 1)');
+                        }
+                        dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
+                    });
+                    dataframe.push({
+                        label: ' Solution Path',
+                        data: dataAux,
+                        pointBackgroundColor: colors,
+                        borderColor: [
+                            'rgba(0,0,0,1)'
+                        ],
+                        borderDash: [1, 1],
+                        borderWidth: 1,
+                        fill: false,
+                        pointRadius: 3,
+                        showLine: true,
+                        steppedLine: false,
+                        lineTension: 0,
+
+
+
+
+
+                    });
+
+
+                    count = 1;
+                    constraints.forEach(element => {
+                        dataAux = [];
+                        area = "start";
+                        if (element.xValue == 0 || element.yValue == 0) {
+                            if (element.xValue == 0) {
+                                dataAux.push({ x: 0, y: (element.rightValue) / element.yValue });
+                                dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
+                                if (element.type == "<=") {
+                                    if (element.yValue < 0) {
+                                        area = "end";
+                                    } else {
+                                        area = "start";
+                                    }
+                                } else if (element.type == ">=") {
+                                    if (element.yValue < 0) {
+                                        area = "start";
+                                    } else {
+                                        area = "end";
+                                    }
+                                } else {
+                                    area = false;
+                                }
+                            } else {
+                                dataAux.push({ x: (element.rightValue) / element.xValue, y: 0 });
+                                dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
+                                if (element.type == "<=") {
+                                    if (element.yValue < 0) {
+                                        area = "start";
+                                        dataAux.push({ x: maxX, y: maxY });
+                                    } else {
+                                        area = "start";
+                                        dataAux.push({ x: 0, y: maxY });
+                                    }
+                                } else if (element.type == ">=") {
+                                    if (element.yValue < 0) {
+                                        area = "start";
+                                        dataAux.push({ x: minX, y: maxY });
+                                    } else {
+                                        area = "start";
+                                        dataAux.push({ x: maxX, y: maxY });
+                                    }
+                                } else {
+                                    area = false;
+                                }
+                            }
+                        } else {
+                            if (element.type == "<=") {
+                                if (element.yValue < 0) {
+                                    area = "end";
+                                } else {
+                                    area = "start";
+                                }
+                            } else if (element.type == ">=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                } else {
+                                    area = "end";
+                                }
+                            } else {
+                                area = false;
+                            }
+                            dataAux.push({ x: 0, y: (element.rightValue - (element.xValue * 0)) / element.yValue });
+                            dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
+                        }
+                        //console.log(dataframe);
+                        dataframe.push({
+                            label: 'C' + count,
+                            data: dataAux,
+                            pointRadius: 0,
+                            borderDash: [10, 5],
+                            backgroundColor: [
+                                'rgba(0, 255, 0, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(0,100,0,1)'
+                            ],
+                            borderWidth: 1,
+                            fill: area,
+                            steppedLine: false,
+                            lineTension: 0,
+
+
+
+
+
+                        });
+
+                        count++;
+                    });
+
+
+                    var ctx = document.getElementById("chart-area");
+                    if (myChart != null) { myChart.destroy() }
+                    myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+
+                            datasets: dataframe
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: false,
+                                        min: 0,
+                                        max: maxY
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'X2',
+
+                                    },
+                                    gridLines: {
+                                        // You can change the color, the dash effect, the main axe color, etc.
+                                        borderDash: [1, 2],
+                                        zeroLineColor: 'rgba(0,0,0,1)'
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: false,
+                                        min: 0,
+                                        max: maxX
+                                    },
+                                    type: "linear",
+                                    position: "bottom",
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'X1'
+                                    },
+                                    gridLines: {
+                                        // You can change the color, the dash effect, the main axe color, etc.
+                                        borderDash: [1, 2],
+                                        zeroLineColor: 'rgba(0,0,0,1)'
+
+                                    }
+                                }]
+                            },
+                            plugins: {
+                                zoom: {
+                                    // Container for pan options
+                                    pan: {
+                                        // Boolean to enable panning
+                                        enabled: true,
+
+                                        // Panning directions. Remove the appropriate direction to disable
+                                        // Eg. 'y' would only allow panning in the y direction
+                                        mode: 'xy',
+                                        rangeMin: {
+                                            // Format of min pan range depends on scale type
+                                            x: 0,
+                                            y: 0
+                                        },
+                                        rangeMax: {
+                                            // Format of max pan range depends on scale type
+                                            x: null,
+                                            y: null
+                                        },
+                                        // Function called once panning is completed
+                                        // Useful for dynamic data loading
+                                        onPan: function ({ chart }) { console.log(`I was panned!!!`); }
+                                    },
+
+                                    // Container for zoom options
+                                    zoom: {
+                                        // Boolean to enable zooming
+                                        enabled: true,
+
+                                        // Enable drag-to-zoom behavior
+                                        drag: false,
+
+                                        // Drag-to-zoom rectangle style can be customized
+                                        // drag: {
+                                        // 	 borderColor: 'rgba(225,225,225,0.3)'
+                                        // 	 borderWidth: 5,
+                                        // 	 backgroundColor: 'rgb(225,225,225)'
+                                        // },
+
+                                        // Zooming directions. Remove the appropriate direction to disable
+                                        // Eg. 'y' would only allow zooming in the y direction
+                                        mode: 'xy',
+
+                                        rangeMin: {
+                                            // Format of min zoom range depends on scale type
+                                            x: 0,
+                                            y: 0
+                                        },
+                                        rangeMax: {
+                                            // Format of max zoom range depends on scale type
+                                            x: null,
+                                            y: null
+                                        },
+
+                                        // Speed of zoom via mouse wheel
+                                        // (percentage of zoom on a wheel event)
+                                        speed: 0.1,
+
+                                        // Function called once zooming is completed
+                                        // Useful for dynamic data loading
+                                        onZoom: function ({ chart }) { console.log(`I was zoomed!!!`); }
+                                    }
+                                }
+                            }
+
+                        }
+                    });/*  */
+
+
+
+
+
+                } else {
+                    $("#chart").hide();
+                }
+
+
+            }, function (error) {
+                alert("Failed to process request, model may be unsolvable.")
+                $(".cover").toggle(400);
+                console.log(error);
+            });
+
+        }
+
+
+
+
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+</body>
+
+</html>
