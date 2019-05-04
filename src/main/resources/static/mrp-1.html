@@ -7,7 +7,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     <meta name='description' content=''>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
@@ -15,8 +15,8 @@
 	<title>Ventana Emergente Animada</title>
 	  <script type="text/javascript" src="dist/vis.js"></script>
   <link href="dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-
-    <title>Material Requirements Planning (MRP</title>
+ -->
+    <title>Material Requirements Planning (MRP)</title>
 
     <!-- Custom fonts for this template-->
     <link href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet' type='text/css'>
@@ -76,10 +76,11 @@
                 <div id='collapsePages' class='collapse' aria-labelledby='headingPages' data-parent='#accordionSidebar'>
                     <div class='bg-white py-2 collapse-inner rounded'>
                         <h6 class='collapse-header'>Programs</h6>
-                        <a class='collapse-item' href='simple-linear.html'>SIMPLE LINEAR</a>
-                        <a class='collapse-item' href='graphicalMethod.html'>GRAPHICAL METHOD</a>
-                        <a class='collapse-item' href='homeSimplex.html'>SIMPLEX METHOD </a>
-						
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
                     </div>
                 </div>
             </li>
@@ -95,8 +96,8 @@
                     <div class='bg-white py-2 collapse-inner rounded'>
                         <h6 class='collapse-header'>Programs</h6>
                         <!-- cambiar href -->
-                        <a class='collapse-item' href='mps.html'>MPS</a>
-						<a class='collapse-item' href='mrp.html'>MRP </a>
+                        <a class='collapse-item' href="mps.html">MPS</a>
+						<a class='collapse-item' href="mrp-1.html">MRP</a>
                     </div>
                 </div>
             </li>
@@ -224,7 +225,7 @@
 						</div>
 						<hr>
 							<input type='submit' class='btn btn-primary btn-user btn-block' value='CREATE MRP'>
-								<div class="contenedor">
+<!-- 								<div class="contenedor">
 									<article>
 										<button id="btn-abrir-popup" class="btn btn-success btn-user btn-block">PAINT PRODUCT TREE</button>
 									</article>
@@ -268,7 +269,7 @@
 												</script>
 										</div>
 									</div>
-							</div>
+							</div> -->
 
 					</div>
 					</div>
@@ -589,7 +590,8 @@
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        url: 'http://localhost:8080/pruebaMRP' + request
+                        //url: 'http://localhost:8080/pruebaMRP' + request
+                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
@@ -598,11 +600,12 @@
 						
 						productos = data.n_Ary_Tree.byLevels;
 						
-						var valor = "";															
+						var valor = "";	
+						//var i = 0;
 						$('.contenedor').each(function(index) {
-							
+						console.log(productos[index].name);
 							$(this).text(productos[index].name);
-							
+							//i++;
 						});
 
 						console.log(productos);
