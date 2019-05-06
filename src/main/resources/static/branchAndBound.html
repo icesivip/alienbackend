@@ -32,11 +32,37 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
+
+    <script src="vendor/html2canvas/html2canvas.js"></script>
+
+
+    <script src="vendor/treant-js-master/vendor/raphael.js"></script>
+    <script src="vendor/treant-js-master/Treant.js"></script>
+    <link rel="stylesheet" href="vendor/treant-js-master/Treant.css" type="text/css" />
+
+    <!--     <link href="vendor/treant-js-master/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet"
+        type="text/css" />
+    <script src="vendor/treant-js-master/vendor/jquery.min.js"></script>
+    <script src="vendor/treant-js-master/vendor/jquery.mousewheel.js"></script>
+    <script src="vendor/treant-js-master/vendor/perfect-scrollbar/perfect-scrollbar.js"></script> -->
     <style>
         td,
         th {
             text-align: center;
             min-width: 150px;
+        }
+
+
+
+
+
+
+
+
+
+        .tree-canvas {
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         .expand {
@@ -54,6 +80,26 @@
 
         input[type=number] {
             width: 100%;
+        }
+
+
+        .nav-button {
+            margin-right: 3px;
+        }
+
+        .nodo {
+            border: 3px solid black;
+            border-radius: 5px;
+            margin: 1px;
+            width: 400px;
+            background-color: cornflowerblue;
+            color: white;
+            white-space: pre-line;
+        }
+
+        .node-name {
+            font-weight: bold;
+
         }
 
         .cover {
@@ -224,7 +270,6 @@
                         </div>
                     </div>
 
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -263,7 +308,7 @@
                         <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
                     </div>
                     <div class="text-center">
-                        <h1>Interior Point Method Solver</h1>
+                        <h1>Branch & Bound Method Solver</h1>
                     </div>
                     <br>
                     <form id="submit-form">
@@ -292,18 +337,18 @@
                                 <tbody id="of-body">
                                     <tr>
                                         <td>
-                                            <select>
-                                                <option >MAXIMIZE</option>
-                                                <option >MINIMIZE</option>
+                                            <select id="mySelect">
+                                                <option>MAXIMIZE</option>
+                                                <option>MINIMIZE</option>
 
                                             </select>
                                         </td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar0"></td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar1"></td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar2"></td>
 
 
                                     </tr>
@@ -315,6 +360,59 @@
 
 
                             </table>
+
+                        </div>
+                        <hr>
+                        <h2 class="text-center">Variable Types</h2>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                <thead class="white-text bg-primary">
+                                    <tr id="vartypes-head">
+                                        <th>
+                                            X1
+                                        </th>
+                                        <th>
+                                            X2
+                                        </th>
+                                        <th>
+                                            X3
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vartypes-body">
+                                    <tr>
+                                        <td> <select id="selectVar0">
+                                                <option>CONTINUOUS </option>
+                                                <option>INTEGER</option>
+                                                <option>BINARY</option>
+                                            </select>
+                                        </td>
+
+                                        <td> <select id="selectVar1">
+                                                <option>CONTINUOUS </option>
+                                                <option>INTEGER</option>
+                                                <option>BINARY</option>
+                                            </select>
+                                        </td>
+
+                                        <td> <select id="selectVar2">
+                                                <option>CONTINUOUS </option>
+                                                <option>INTEGER</option>
+                                                <option>BINARY</option>
+                                            </select>
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+
 
                         </div>
                         <hr>
@@ -335,7 +433,9 @@
                                         </th>
                                         <th>
                                             Type
+
                                         </th>
+
                                         <th>
                                             Value
                                         </th>
@@ -349,10 +449,10 @@
                                                 class="form-control form-control-user"></td>
                                         <td><input type="number" step="0.01" required
                                                 class="form-control form-control-user"></td>
-                                        <td> <select>
-                                                <option >&lt=</option>
-                                                <option >&gt=</option>
-                                                <option >=</option>
+                                        <td> <select id="selectTypeTable0">
+                                                <option>&lt=</option>
+                                                <option>&gt=</option>
+                                                <option>=</option>
                                             </select>
                                         </td>
                                         <td><input type="number" step="0.01" required
@@ -398,7 +498,7 @@
                     </form>
 
                     <hr>
-                    <h2 class="text-center">Results</h2>
+                    <h2 class="text-center">Optimal Solution</h2>
                     <div id="resultTable-cont" class="table-responsive">
 
                         <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
@@ -423,10 +523,24 @@
 
                     </div>
                     <hr>
-                    <div id="chart" class="text-center">
-                        <h2>Solution Space Chart</h2>
-                        <canvas id="chart-area" width="400" height="device-height"></canvas>
+
+                    <div id="tree" class="text-center">
+                        <h2>Solution Tree Chart</h2>
+                        <div id="tree-container">
+                            <div id="tree-canvas" class="tree-canvas container-fluid">
+
+                            </div>
+                            <button class="btn btn-outline-primary expand" onclick="saveDiagram()">Save Diagram</button>
+                        </div>
+
+
+
                     </div>
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -476,10 +590,29 @@
     <script>
         var varCount = 3;
         var consCount = 1;
-
+        var consTableVar = 3;
         $(document).ready(function () {
             $("#resultTable-cont").hide();
             $("#chart").hide();
+            $("#tree-container").hide();
+
+
+
+
+            var file = document.getElementById('fileUpload');
+
+            file.onchange = function (e) {
+                var ext = this.value.match(/\.([^\.]+)$/)[1];
+                switch (ext) {
+                    case 'json':
+
+
+                        break;
+                    default:
+                        alert('Selected file type is not allowed. Select a .json file.');
+                        this.value = '';
+                }
+            };
         });
 
 
@@ -488,20 +621,26 @@
             solveModel();
         });
 
+
         document.getElementById("upload-form").addEventListener("submit", function (e) {
             e.preventDefault();
 
             var file = document.getElementById("fileUpload").files[0];
             urlFile = window.URL.createObjectURL(file);
+
+
             $.ajax({
                 url: urlFile
             }).then(function (data) {
-                console.log(data);
                 var split = data.data.split('&');
-                var obj = split[2].split(',');
-
-                var c = 0;
-
+                if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                    document.getElementById("mySelect").selectedIndex = "0";
+                    console.log("Selected index MAXIMIZE in the options.");
+                }
+                else if (split[0].substring(6, 14) == 'MINIMIZE') {
+                    document.getElementById("mySelect").selectedIndex = "1";
+                    console.log("Selected index MINIMIZE in the options.");
+                }
                 var vars = split[1].split(',');
                 console.log(vars.length);
                 if (vars.length > varCount) {
@@ -521,25 +660,42 @@
                     }
                 }
 
-                $('#of-body td').each(function (index) {
-                    if (index == 0) {
-                        if (split[0].substring(6, 14) == 'MAXIMIZE') {
-                            $(this).find('select').val("MAXIMIZE");
+                for (i = 0; i < vars.length; i++) {
+                    if (i == 0) {
+                        if (vars[0].substring(8, 9) == 'C') {
+                            document.getElementById("selectVar" + i).selectedIndex = "0";
+                        }
+                        else if (vars[0].substring(8, 9) == 'I') {
+                            document.getElementById("selectVar" + i).selectedIndex = "1";
                         }
                         else {
-                            $(this).find('select').val("MINIMIZE");
+                            document.getElementById("selectVar" + i).selectedIndex = "2";
                         }
-                    } else {
-                        if (c == 0) {
-                            $(this).find('input').val(obj[0].substring(18, obj[0].length));
-                        }
-                        else {
-                            $(this).find('input').val(obj[c]);
-                        }
-                        c++;
                     }
-                });
+                    else {
+                        if (vars[i].substring(3, 4) == 'C') {
+                            document.getElementById("selectVar" + i).selectedIndex = "0";
+                        }
+                        else if (vars[i].substring(3, 4) == 'I') {
+                            document.getElementById("selectVar" + i).selectedIndex = "1";
+                        }
+                        else {
+                            document.getElementById("selectVar" + i).selectedIndex = "2";
+                        }
+                    }
+                }
+                var obj = split[2].split(',');
 
+                for (i = 0; i < obj.length; i++) {
+                    if (i == 0) {
+                        if (obj[0].substring(18, 19) != '') document.getElementById("objectiveFunctionVar0").value = obj[0].substring(18, 19);
+                        else document.getElementById("objectiveFunctionVar0").value = '';
+                    }
+                    else {
+                        if (obj[i] != '') document.getElementById("objectiveFunctionVar" + i).value = obj[i];
+                        else document.getElementById("objectiveFunctionVar" + i).value = '';
+                    }
+                }
 
                 var cons = split[3].split(';');
 
@@ -560,47 +716,59 @@
                     }
                 }
 
-                var ins = split[3].split(',');
-
                 var countRequest = 0;
-                var aux = 0;
+                var con = 0;
+                var auxCon=0;
+                var constrainCon= 0;
+                var b= false;
 
-                $('#table-body tr').each(function (i) {
-                    $(this).find('td').each(function (j) {
-                        if (i == 0 && j == 0) {
-                            $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
-                            countRequest++;
+
+                var ins= split[3].split(',');
+                $('#table-body td').each(function (index) {
+                    if (con==0) {
+                        if(constrainCon==0){
+                            $(this).find('input').val(ins[0].substring(12, 13));
                         }
                         else {
-                            if (j < varCount || j == varCount + 1) {
-                                if (j == varCount + 1) {
-                                    var nothing = ins[countRequest].split(';');
-                                    $(this).find('input').val(nothing[0]);
-                                } else {
-                                    if (j == 0) {
-                                        var nothing = ins[countRequest].split(';');
-                                        $(this).find('input').val(nothing[1]);
-                                        countRequest++;
-                                    }
-                                    else {
-                                        $(this).find('input').val(ins[countRequest]);
-                                        countRequest++;
-                                    }
-                                }
-                            } else {
-                                  if (ins[countRequest] == '<=') $(this).find('select').val("<=");
-                                  else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
-                                  else $(this).find('select').selectedIndex.val("=");
-                                  countRequest++;
-                            }
+                            var nothing= ins[auxCon].split(';');
+                            $(this).find('input').val(nothing[0]);
+                            b= true;
                         }
-                    });
+                    }
+                    else {
+                        if(con==varCount){
+                            con=-1;
+                            if(ins[auxCon]=='<=')document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "0";
+                            else if(ins[auxCon]=='>=')document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "1";
+                            else document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "2";
+                            constrainCon++;
+                        }
+                        else {
+                            if(b==false){
+                                $(this).find('input').val(ins[auxCon]);
+                            }
+                            else {
+                             var nothing= ins[auxCon-1].split(';');
+                             $(this).find('input').val(nothing[1]);
+                             b= false;
+                             auxCon--;
+                             con--;
+                            }
+                            
+                        }
+                    }
+                    auxCon++;
+                    con++;
                 });
+
 
             }, function (error) {
                 alert("Failed to process request.")
+
                 console.log(error);
             });
+
+
             $('#uploadModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
@@ -613,6 +781,7 @@
         function addCons() {
             $("#table-body").append(generateNewConsRow(varCount));
             consCount++;
+
         }
 
         function removeVar() {
@@ -621,7 +790,10 @@
                 $("#table-body tr td:nth-child(1)").remove();
 
                 $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
-                $("#of-body tr td:nth-child(2)").remove();
+                $("#of-body tr td:nth-child(" + (varCount+1) + ")").remove();
+
+                $("#vartypes-head th:nth-child(" + (varCount) + ")").remove();
+                $("#vartypes-body td:nth-child(" + (varCount) + ")").remove();
                 varCount--;
             }
 
@@ -631,15 +803,16 @@
             var st = "<tr>";
             for (let index = 0; index < count; index++) {
                 st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
-
+                consTableVar++;
             }
-            st += "<td> <select><option >&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            st += "<td> <select id= 'selectTypeTable" + (consCount) + "'><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user' id= 'inputValue" + (consCount) + "'></td></tr>"
             return st;
         }
 
         function removeCons() {
             if (consCount > 1) {
                 $("#table-body tr").last().remove();
+                consTableVar -= varCount;
                 consCount--;
             }
 
@@ -647,13 +820,32 @@
 
         function addVar() {
             $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
-            $("#table-body tr").prepend("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+            //id="objectiveFunctionVar0"
+            $("#table-body tr").prepend("<td><input type='number' step='0.01' required class='form-control form-control-user' ></td>");
 
             $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th>X" + (varCount + 1) + "</th>");
-            $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+            $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user' id='objectiveFunctionVar" + (varCount) + "'></td>");
+
+            $("#vartypes-head th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
+            $("#vartypes-body tr").append("<td><select id='selectVar" + (varCount) + "'><option>CONTINUOUS</option><option>INTEGER</option><option>BINARY</option></select></td>");
 
 
             varCount++;
+        }
+
+        function saveDiagram() {
+            var element = document.querySelector("#tree-canvas");
+
+            html2canvas(element, {
+                width: element.scrollWidth,
+                height: element.scrollHeight
+            }).then(canvas => {
+                // console.log(canvas.toDataURL());
+
+                var win = window.open("", "Branch&Bound Tree");
+                win.document.write("<img src='" + canvas.toDataURL() + "'/>");
+                win.document.location = "#";
+            });
         }
 
         function insertAtIndex(i) {
@@ -672,6 +864,22 @@
             obfun = "";
             vars = "";
             constraints = "";
+            vartypes = [];
+
+            $('#vartypes-body td').each(function (index) {
+                var selectedType = ($(this).find('select').val()).toString();
+
+                if (selectedType == 'CONTINUOUS') {
+                    vartypes.push("C");
+                } else if (selectedType == 'INTEGER') {
+                    vartypes.push("I");
+                } else {
+                    vartypes.push("B");
+                }
+
+            });
+
+
             $('#of-body td').each(function (index) {
                 if (index == 0) {
                     type = ($(this).find('select').val());
@@ -681,7 +889,7 @@
                 }
             });
             for (i = 0; i < varCount; i++) {
-                vars += "X" + (i + 1) + ":C" + ",";
+                vars += "X" + (i + 1) + ":" + vartypes[i] + ",";
             }
 
             $('#table-body tr').each(function (i) {
@@ -711,11 +919,14 @@
         var myChart = null;
         function solveModel() {
             $(".cover").toggle(400);
+
             var string = constructQueryString();
             $.ajax({
-                url: "https://icesiviptest.herokuapp.com/interiorPoint" + string
+                url: "https://icesiviptest.herokuapp.com/branchAndBound" + string
             }).then(function (data) {
                 $(".cover").toggle(400);
+                $(".tree-canvas").empty();
+                $("#tree-container").show(400);
                 console.log(data);
                 $('#resultTable').DataTable().destroy();
                 $("#resultTable thead").empty();
@@ -723,7 +934,7 @@
                 var p1 = new Promise((resolve, reject) => {
 
                     $("#resultTable thead").append("<tr></tr>");
-                    $("#resultTable thead").find("tr").append("<th>Step</th>");
+
                     for (index = 0; index < varCount; index++) {
                         $("#resultTable thead").find("tr").append("<th>" + "X" + (index + 1) + "</th>");
 
@@ -739,280 +950,48 @@
                 p1.then(() => {
                     $('#resultTable').DataTable();
 
-                    data.solutionPath.forEach((element, index) => {
-                        arr = [];
-                        arr.push(index);
-                        for (var key in element.variables) {
-                            arr.push(element.variables[key].toFixed(5));
-                        }
-                        arr.push(element.z.toFixed(5));
-                        arr.push(element.feasible);
-                        $('#resultTable').DataTable().row.add(arr).draw();
+                    var element = data.optimalSolution;
+                    arr = [];
 
-                    });
+                    for (var key in element.variables) {
+                        arr.push(element.variables[key].toFixed(5));
+                    }
+                    arr.push(element.z.toFixed(5));
+                    arr.push(element.feasible);
+                    $('#resultTable').DataTable().row.add(arr).draw();
+
+
                     $('#resultTable').DataTable().data().reverse();
                 }).catch((error) => { console.log(error) });
 
-                if (data.constraints != null) {
-                    $("#chart").show();
-                    maxX = data.maxX;
-                    maxY = data.maxY;
-                    dataframe = [];
-                    var constraints = data.constraints;
-                    dataAux = [];
-                    colors = [];
-                    data.solutionPath.forEach(element => {
-                        if (element.variables.X1 > maxX) {
-                            maxX = element.variables.X1;
-                        }
-                        if (element.variables.X2 > maxY) {
-                            maxY = element.variables.X2;
-                        }
-                        console.log(element.feasible)
-                        if (element.feasible) {
-                            colors.push('rgba(0, 255, 0, 1)');
-                        } else {
-                            colors.push('rgba(255, 0, 0, 1)');
-                        }
-                        dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
-                    });
-                    dataframe.push({
-                        label: ' Solution Path',
-                        data: dataAux,
-                        pointBackgroundColor: colors,
-                        borderColor: [
-                            'rgba(0,0,0,1)'
-                        ],
-                        borderDash: [1, 1],
-                        borderWidth: 1,
-                        fill: false,
-                        pointRadius: 3,
-                        showLine: true,
-                        steppedLine: false,
-                        lineTension: 0,
 
 
 
 
-
-                    });
-
-
-                    count = 1;
-                    constraints.forEach(element => {
-                        dataAux = [];
-                        area = "start";
-                        if (element.xValue == 0 || element.yValue == 0) {
-                            if (element.xValue == 0) {
-                                dataAux.push({ x: 0, y: (element.rightValue) / element.yValue });
-                                dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
-                                if (element.type == "<=") {
-                                    if (element.yValue < 0) {
-                                        area = "end";
-                                    } else {
-                                        area = "start";
-                                    }
-                                } else if (element.type == ">=") {
-                                    if (element.yValue < 0) {
-                                        area = "start";
-                                    } else {
-                                        area = "end";
-                                    }
-                                } else {
-                                    area = false;
-                                }
-                            } else {
-                                dataAux.push({ x: (element.rightValue) / element.xValue, y: 0 });
-                                dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
-                                if (element.type == "<=") {
-                                    if (element.yValue < 0) {
-                                        area = "start";
-                                        dataAux.push({ x: maxX, y: maxY });
-                                    } else {
-                                        area = "start";
-                                        dataAux.push({ x: 0, y: maxY });
-                                    }
-                                } else if (element.type == ">=") {
-                                    if (element.yValue < 0) {
-                                        area = "start";
-                                        dataAux.push({ x: minX, y: maxY });
-                                    } else {
-                                        area = "start";
-                                        dataAux.push({ x: maxX, y: maxY });
-                                    }
-                                } else {
-                                    area = false;
-                                }
-                            }
-                        } else {
-                            if (element.type == "<=") {
-                                if (element.yValue < 0) {
-                                    area = "end";
-                                } else {
-                                    area = "start";
-                                }
-                            } else if (element.type == ">=") {
-                                if (element.yValue < 0) {
-                                    area = "start";
-                                } else {
-                                    area = "end";
-                                }
-                            } else {
-                                area = false;
-                            }
-                            dataAux.push({ x: 0, y: (element.rightValue - (element.xValue * 0)) / element.yValue });
-                            dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
-                        }
-                        //console.log(dataframe);
-                        dataframe.push({
-                            label: 'C' + count,
-                            data: dataAux,
-                            pointRadius: 0,
-                            borderDash: [10, 5],
-                            backgroundColor: [
-                                'rgba(0, 255, 0, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(0,100,0,1)'
-                            ],
-                            borderWidth: 1,
-                            fill: area,
-                            steppedLine: false,
-                            lineTension: 0,
-
-
-
-
-
-                        });
-
-                        count++;
-                    });
-
-
-                    var ctx = document.getElementById("chart-area");
-                    if (myChart != null) { myChart.destroy() }
-                    myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-
-                            datasets: dataframe
+                chart_config = {
+                    chart: {
+                        container: "#tree-canvas",
+                        connectors: {
+                            type: "step",
+                            style: { 'arrow-end': 'classic-wide-long' }
                         },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: false,
-                                        min: 0,
-                                        max: maxY
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'X2',
-
-                                    },
-                                    gridLines: {
-                                        // You can change the color, the dash effect, the main axe color, etc.
-                                        borderDash: [1, 2],
-                                        zeroLineColor: 'rgba(0,0,0,1)'
-                                    }
-                                }],
-                                xAxes: [{
-                                    ticks: {
-                                        beginAtZero: false,
-                                        min: 0,
-                                        max: maxX
-                                    },
-                                    type: "linear",
-                                    position: "bottom",
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'X1'
-                                    },
-                                    gridLines: {
-                                        // You can change the color, the dash effect, the main axe color, etc.
-                                        borderDash: [1, 2],
-                                        zeroLineColor: 'rgba(0,0,0,1)'
-
-                                    }
-                                }]
-                            },
-                            plugins: {
-                                zoom: {
-                                    // Container for pan options
-                                    pan: {
-                                        // Boolean to enable panning
-                                        enabled: true,
-
-                                        // Panning directions. Remove the appropriate direction to disable
-                                        // Eg. 'y' would only allow panning in the y direction
-                                        mode: 'xy',
-                                        rangeMin: {
-                                            // Format of min pan range depends on scale type
-                                            x: 0,
-                                            y: 0
-                                        },
-                                        rangeMax: {
-                                            // Format of max pan range depends on scale type
-                                            x: null,
-                                            y: null
-                                        },
-                                        // Function called once panning is completed
-                                        // Useful for dynamic data loading
-                                        onPan: function ({ chart }) { console.log(`I was panned!!!`); }
-                                    },
-
-                                    // Container for zoom options
-                                    zoom: {
-                                        // Boolean to enable zooming
-                                        enabled: true,
-
-                                        // Enable drag-to-zoom behavior
-                                        drag: false,
-
-                                        // Drag-to-zoom rectangle style can be customized
-                                        // drag: {
-                                        // 	 borderColor: 'rgba(225,225,225,0.3)'
-                                        // 	 borderWidth: 5,
-                                        // 	 backgroundColor: 'rgb(225,225,225)'
-                                        // },
-
-                                        // Zooming directions. Remove the appropriate direction to disable
-                                        // Eg. 'y' would only allow zooming in the y direction
-                                        mode: 'xy',
-
-                                        rangeMin: {
-                                            // Format of min zoom range depends on scale type
-                                            x: 0,
-                                            y: 0
-                                        },
-                                        rangeMax: {
-                                            // Format of max zoom range depends on scale type
-                                            x: null,
-                                            y: null
-                                        },
-
-                                        // Speed of zoom via mouse wheel
-                                        // (percentage of zoom on a wheel event)
-                                        speed: 0.1,
-
-                                        // Function called once zooming is completed
-                                        // Useful for dynamic data loading
-                                        onZoom: function ({ chart }) { console.log(`I was zoomed!!!`); }
-                                    }
-                                }
-                            }
-
-                        }
-                    });/*  */
+                        node: { HTMLclass: "nodo", collapsable: true },
 
 
 
 
 
-                } else {
-                    $("#chart").hide();
-                }
+                    },
+
+                    nodeStructure: data.solutionTree
+                };
+
+                var chart = new Treant(chart_config);
+
+
+
+
+
 
 
             }, function (error) {
@@ -1045,6 +1024,11 @@
             object = { data: constructQueryString() };
             exportToJson(object);
         }
+
+
+
+
+
 
 
     </script>
