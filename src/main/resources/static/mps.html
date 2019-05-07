@@ -812,7 +812,7 @@
                     if(ReceptionsOfPlannedOrders[i]!=(null|0))
                         orderCost++;
                     avgInventory+=AvailableInventoryProgrammed[i];
-                    rotInventory+=data.getBruteRequirements[i];
+                    rotInventory+=data.bruteRequirements[i];
                 }
                 maintainCost=maintainCost*data.maintenanceCost;
                 orderCost=orderCost*data.orderingCost;
