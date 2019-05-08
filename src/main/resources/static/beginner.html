@@ -192,6 +192,7 @@
     
     position: relative;
     
+    
    
   }
   .solution{
@@ -251,7 +252,7 @@ align-content: center;
                                 </div>
                                 <div class="text-black-50">
                                   <div class="col-sm-12 mb-3 mb-sm-0">
-                                      <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
+                                      <button onclick="goVar()" class="btn btn-outline-success btn-icon-split" type="button">
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                           </span>
@@ -270,7 +271,7 @@ align-content: center;
                                   </div>
                                   <div class="text-black-50">
                                   <div class="col-sm-12 mb-3 mb-sm-0">
-                                      <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
+                                      <button onclick="goConst()" class="btn btn-outline-success btn-icon-split" type="button">
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                           </span>
@@ -614,7 +615,7 @@ align-content: center;
         }
       
 //-----------------------------------
-     function goConstraint() {
+     function goConst() {
        
       var nConst = parseInt(document.getElementById("goConstraint").value)-consCount;
     
