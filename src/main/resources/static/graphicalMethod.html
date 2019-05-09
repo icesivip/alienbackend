@@ -178,17 +178,59 @@
 
                     <!-- Topbar Search -->
                     <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
+                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
+
+                    <div class="input-group">
+                        <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                            data-target="#uploadModal">
+                            Upload Problem
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
+                            Save Problem
+                            <i class="far fa-save"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+
+                <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+                            <form id="upload-form">
+                                <div class="modal-body">
+                                    <p>
+                                        Here you have to select a previously saved problem in .json format. Make
+                                        sure the file has not
+                                        been modified or there are going to be problems in the upload process.
+                                    </p>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Choose File</label>
+                                        <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="input" class="btn btn-primary">Upload</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
+                </div>
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -423,32 +465,9 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
+
+
         var varCount = 2;
         var consCount = 1;
 
@@ -457,6 +476,102 @@
           
             $("#chart").hide();
         });
+      document.getElementById("upload-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            var file = document.getElementById("fileUpload").files[0];
+            urlFile = window.URL.createObjectURL(file);
+            $.ajax({
+                url: urlFile
+            }).then(function (data) {
+                console.log(data);
+                var split = data.data.split('&');
+
+                if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                    document.getElementById("type").selectedIndex = "0";
+                    console.log("Selected index MAXIMIZE in the options.");
+                }
+                else if (split[0].substring(6, 14) == 'MINIMIZE') {
+                    document.getElementById("type").selectedIndex = "1";
+                    console.log("Selected index MINIMIZE in the options.");
+                }
+
+                var obj = split[2].split(',');
+
+                for (i = 0; i < obj.length; i++) {
+                    if (i == 0) {
+                        if (obj[0].substring(18, 19) != '') document.getElementById("cX1").value = obj[0].substring(18, obj[0].length);
+                        else document.getElementById("cX1").value = '';
+                    }
+                    else {
+                        if (obj[i] != '') document.getElementById("cX" + (i + 1)).value = obj[i];
+                        else document.getElementById("cX" + (i + 1)).value = '';
+                    }
+                }
+
+                var cons = split[3].split(';');
+
+                if (cons.length - 1 > consCount - 1) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount < cons.length - 1) {
+                            addConstraint();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+                else if (cons.length - 1 < consCount) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount > cons.length - 1) {
+                            removeConstraint();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+
+                var ins = split[3].split(',');
+
+                var countRequest = 0;
+                var aux = 0;
+
+
+                $(".constraint").each(function (index) {
+                    if (aux == 0) {
+                        $(this).find("#X1").val(ins[0].substring(12, (ins[0].length)));
+                        countRequest++;
+                        aux++;
+                    }
+                    else {
+                        var nothing = ins[countRequest].split(';');
+
+                        $(this).find("#X1").val(nothing[1]);
+                        countRequest++;
+                    }
+                    $(this).find("#X2").val(ins[countRequest]);
+                    countRequest++;
+
+                    if (ins[countRequest] == '<=') $(this).find("#r1").val("<=");
+                    else if (ins[countRequest] == '>=') $(this).find("#r1").val(">=");
+                    else $(this).find("#r1").val("=");
+                    countRequest++;
+                    var nothing = ins[countRequest].split(';');
+                    console.log(nothing);
+                    $(this).find("#rv").val(nothing[0]);
+                });
+
+            }, function (error) {
+
+                console.log(error);
+            });
+            $('#uploadModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            // alert("Esta funcion aun no esta implementada.");
+        });
+        function addConstraint() {
+            console.log("Added contraint");
+            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
+            consCount++; 
+        }
 
         document.getElementById("submit-form").addEventListener("submit", function (e) {
             e.preventDefault();
@@ -482,15 +597,13 @@
                 $("#table-body tr").last().remove();
                 consCount--;
             }
-
         }
         function insertAtIndex(i) {
             if (i === 0) {
                 $("#controller").prepend("<div>okay things</div>");
                 return;
             }
-
-
+            consCount--;
             $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
         }
 
@@ -708,11 +821,6 @@
                         fill: area,
                         steppedLine: false,
                         lineTension: 0,
-
-
-
-
-
                     });
 
                     count++;
@@ -774,12 +882,28 @@
                 console.log(error);
             });
         }
+        function exportToJson(objectData) {
+            let filename = "saved_problem.json";
+            let contentType = "application/json;charset=utf-8;";
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                var a = document.createElement('a');
+                a.download = filename;
+                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
 
 
-
-
-
-
+        function saveProblem() {
+            object = { data: constructRequestString() };
+            exportToJson(object);
+        }
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
