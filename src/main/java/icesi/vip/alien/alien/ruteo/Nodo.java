@@ -1,6 +1,5 @@
 package icesi.vip.alien.alien.ruteo;
 
-
 public 	class Nodo{
 	
 	int posX;
@@ -31,7 +30,6 @@ public 	class Nodo{
 	public void setAdded(boolean added) {
 		this.added = added;
 	}
-
 	@Override
 	public String toString() {
 		return getPosX()+","+getPosY();
