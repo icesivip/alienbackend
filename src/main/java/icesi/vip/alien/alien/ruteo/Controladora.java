@@ -372,4 +372,8 @@ public class Controladora {
 //		System.out.println(epa);
 //	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b7a180baa56a2179f9d387cc5d1fb87bfba7b490
