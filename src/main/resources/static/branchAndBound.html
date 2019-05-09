@@ -167,7 +167,6 @@
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
                         <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="homeRouting.html">VEHICLE ROUTING</a>
                     </div>
                 </div>
             </li>
@@ -183,8 +182,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
-                        <a class="collapse-item" href="mps.html">MPS</a>
-                        <a class='collapse-item' href='mrp-1.html'>MRP</a>
+                      <a class='collapse-item' href='mrp-1.html'>MRP</a>
                     </div>
                 </div>
             </li>
@@ -339,18 +337,21 @@
                                 <tbody id="of-body">
                                     <tr>
                                         <td>
-                                            <select>
+
+                                            <select id="mySelect">
+
                                                 <option>MAXIMIZE</option>
                                                 <option>MINIMIZE</option>
 
                                             </select>
                                         </td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar0"></td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar1"></td>
                                         <td><input type="number" step="0.01" required
-                                                class="form-control form-control-user"></td>
+                                                class="form-control form-control-user" id="objectiveFunctionVar2"></td>
+
 
 
                                     </tr>
@@ -384,23 +385,24 @@
                                 </thead>
                                 <tbody id="vartypes-body">
                                     <tr>
-                                        <td> <select>
+                                        <td> <select id="selectVar0">
                                                 <option>CONTINUOUS </option>
-                                                <option>DISCRETE</option>
+                                                <option>INTEGER</option>
+
                                                 <option>BINARY</option>
                                             </select>
                                         </td>
 
-                                        <td> <select>
+                                        <td> <select id="selectVar1">
                                                 <option>CONTINUOUS </option>
-                                                <option>DISCRETE</option>
+                                                <option>INTEGER</option>
                                                 <option>BINARY</option>
                                             </select>
                                         </td>
 
-                                        <td> <select>
+                                        <td> <select id="selectVar2">
                                                 <option>CONTINUOUS </option>
-                                                <option>DISCRETE</option>
+                                                <option>INTEGER</option>
                                                 <option>BINARY</option>
                                             </select>
                                         </td>
@@ -449,7 +451,8 @@
                                                 class="form-control form-control-user"></td>
                                         <td><input type="number" step="0.01" required
                                                 class="form-control form-control-user"></td>
-                                        <td> <select>
+                                        <td> <select id="selectTypeTable0">
+
                                                 <option>&lt=</option>
                                                 <option>&gt=</option>
                                                 <option>=</option>
@@ -542,33 +545,6 @@
 
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -617,7 +593,7 @@
     <script>
         var varCount = 3;
         var consCount = 1;
-
+        var consTableVar = 3;
         $(document).ready(function () {
             $("#resultTable-cont").hide();
             $("#chart").hide();
@@ -652,11 +628,154 @@
         document.getElementById("upload-form").addEventListener("submit", function (e) {
             e.preventDefault();
 
+            var file = document.getElementById("fileUpload").files[0];
+            urlFile = window.URL.createObjectURL(file);
+
+
+            $.ajax({
+                url: urlFile
+            }).then(function (data) {
+                var split = data.data.split('&');
+                if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                    document.getElementById("mySelect").selectedIndex = "0";
+                    console.log("Selected index MAXIMIZE in the options.");
+                }
+                else if (split[0].substring(6, 14) == 'MINIMIZE') {
+                    document.getElementById("mySelect").selectedIndex = "1";
+                    console.log("Selected index MINIMIZE in the options.");
+                }
+                var vars = split[1].split(',');
+                console.log(vars.length);
+                if (vars.length > varCount) {
+                    for (i = 0; i < vars.length; i++) {
+                        if (varCount < vars.length) {
+                            addVar();
+                            if (varCount == vars.length) break;
+                        }
+                    }
+                }
+                else if (vars.length < varCount) {
+                    for (i = 0; i < vars.length; i++) {
+                        if (varCount > vars.length) {
+                            removeVar();
+                            if (varCount == vars.length) break;
+                        }
+                    }
+                }
+
+                for (i = 0; i < vars.length; i++) {
+                    if (i == 0) {
+                        if (vars[0].substring(8, 9) == 'C') {
+                            document.getElementById("selectVar" + i).selectedIndex = "0";
+                        }
+                        else if (vars[0].substring(8, 9) == 'I') {
+                            document.getElementById("selectVar" + i).selectedIndex = "1";
+                        }
+                        else {
+                            document.getElementById("selectVar" + i).selectedIndex = "2";
+                        }
+                    }
+                    else {
+                        if (vars[i].substring(3, 4) == 'C') {
+                            document.getElementById("selectVar" + i).selectedIndex = "0";
+                        }
+                        else if (vars[i].substring(3, 4) == 'I') {
+                            document.getElementById("selectVar" + i).selectedIndex = "1";
+                        }
+                        else {
+                            document.getElementById("selectVar" + i).selectedIndex = "2";
+                        }
+                    }
+                }
+                var obj = split[2].split(',');
+
+                for (i = 0; i < obj.length; i++) {
+                    if (i == 0) {
+                        if (obj[0].substring(18, 19) != '') document.getElementById("objectiveFunctionVar0").value = obj[0].substring(18, 19);
+                        else document.getElementById("objectiveFunctionVar0").value = '';
+                    }
+                    else {
+                        if (obj[i] != '') document.getElementById("objectiveFunctionVar" + i).value = obj[i];
+                        else document.getElementById("objectiveFunctionVar" + i).value = '';
+                    }
+                }
+
+                var cons = split[3].split(';');
+
+                if (cons.length - 1 > consCount - 1) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount < cons.length - 1) {
+                            addCons();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+                else if (cons.length - 1 < consCount) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount > cons.length - 1) {
+                            removeCons();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+
+                var countRequest = 0;
+                var con = 0;
+                var auxCon=0;
+                var constrainCon= 0;
+                var b= false;
+
+
+                var ins= split[3].split(',');
+                $('#table-body td').each(function (index) {
+                    if (con==0) {
+                        if(constrainCon==0){
+                            $(this).find('input').val(ins[0].substring(12, 13));
+                        }
+                        else {
+                            var nothing= ins[auxCon].split(';');
+                            $(this).find('input').val(nothing[0]);
+                            b= true;
+                        }
+                    }
+                    else {
+                        if(con==varCount){
+                            con=-1;
+                            if(ins[auxCon]=='<=')document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "0";
+                            else if(ins[auxCon]=='>=')document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "1";
+                            else document.getElementById('selectTypeTable'+constrainCon).selectedIndex = "2";
+                            constrainCon++;
+                        }
+                        else {
+                            if(b==false){
+                                $(this).find('input').val(ins[auxCon]);
+                            }
+                            else {
+                             var nothing= ins[auxCon-1].split(';');
+                             $(this).find('input').val(nothing[1]);
+                             b= false;
+                             auxCon--;
+                             con--;
+                            }
+                            
+                        }
+                    }
+                    auxCon++;
+                    con++;
+                });
+
+
+            }, function (error) {
+                alert("Failed to process request.")
+
+                console.log(error);
+            });
+
             $('#uploadModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
 
-            alert("Esta funcion aun no esta implementada.");
+            // alert("Esta funcion aun no esta implementada.");
 
 
         });
@@ -672,10 +791,10 @@
                 $("#table-body tr td:nth-child(1)").remove();
 
                 $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
-                $("#of-body tr td:nth-child(2)").remove();
+                $("#of-body tr td:nth-child(" + (varCount+1) + ")").remove();
 
                 $("#vartypes-head th:nth-child(" + (varCount) + ")").remove();
-                $("#vartypes-body td:nth-child(2)").remove();
+                $("#vartypes-body td:nth-child(" + (varCount) + ")").remove();
                 varCount--;
             }
 
@@ -685,15 +804,16 @@
             var st = "<tr>";
             for (let index = 0; index < count; index++) {
                 st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
-
+                consTableVar++;
             }
-            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            st += "<td> <select id= 'selectTypeTable" + (consCount) + "'><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user' id= 'inputValue" + (consCount) + "'></td></tr>"
             return st;
         }
 
         function removeCons() {
             if (consCount > 1) {
                 $("#table-body tr").last().remove();
+                consTableVar -= varCount;
                 consCount--;
             }
 
@@ -701,13 +821,14 @@
 
         function addVar() {
             $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
-            $("#table-body tr").prepend("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+            //id="objectiveFunctionVar0"
+            $("#table-body tr").prepend("<td><input type='number' step='0.01' required class='form-control form-control-user' ></td>");
 
             $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th>X" + (varCount + 1) + "</th>");
-            $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
+            $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user' id='objectiveFunctionVar" + (varCount) + "'></td>");
 
             $("#vartypes-head th:nth-child(" + (varCount) + ")").after("<th>X" + (varCount + 1) + "</th>");
-            $("#vartypes-body tr").append("<td><select><option>CONTINUOUS</option><option>DISCRETE</option><option>BINARY</option></select></td>");
+            $("#vartypes-body tr").append("<td><select id='selectVar" + (varCount) + "'><option>CONTINUOUS</option><option>INTEGER</option><option>BINARY</option></select></td>");
 
 
             varCount++;
@@ -751,7 +872,7 @@
 
                 if (selectedType == 'CONTINUOUS') {
                     vartypes.push("C");
-                } else if (selectedType == 'DISCRETE') {
+                } else if (selectedType == 'INTEGER') {
                     vartypes.push("I");
                 } else {
                     vartypes.push("B");

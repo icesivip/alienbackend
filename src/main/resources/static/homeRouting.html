@@ -35,7 +35,6 @@
         td {
             border: 1px solid black;
         }
-
         .image {
             display: inline;
             margin-left: auto;
@@ -43,7 +42,6 @@
             margin-top: auto;
             vertical-align: center;
         }
-
         .cover {
             opacity: 0.8;
             background-color: #ccc;
@@ -234,7 +232,6 @@
                                     </div>
                                     
                                     <!--<h2>Objective Function</h2>
-
                                     <div class="form-group row">
                                         <div class="col-sm-2 ">
                                             <input type="number" class="form-control form-control-user" id="cX1"
@@ -258,7 +255,6 @@
                                             <h4> X3</h4>
                                         </div>
                                     </div>
-
                                     <hr>
                                     <h2>Constraints</h2>
                                     <div id="constraintPanel">
@@ -408,12 +404,10 @@
     </div>
 
     <script>
-
             document.getElementById("user").addEventListener("submit", function (e) {
                 e.preventDefault();
                 solveModel();
             });
-
             function addConstraint() {
                 console.log("Added contraint");
                 $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 + </h4></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='X3' required></div><div class='col-sm-1 '><h4> X3</h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-user' id='rv' required></div></div></div>");
@@ -455,8 +449,6 @@
                     console.log(error);
                 });
             }
-
-
         </script>
 
 
