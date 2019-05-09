@@ -182,7 +182,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
-                        <a class="collapse-item" href="mps.html">MPS</a>
+                      <a class='collapse-item' href='mrp-1.html'>MRP</a>
                     </div>
                 </div>
             </li>
@@ -337,7 +337,9 @@
                                 <tbody id="of-body">
                                     <tr>
                                         <td>
+
                                             <select id="mySelect">
+
                                                 <option>MAXIMIZE</option>
                                                 <option>MINIMIZE</option>
 
@@ -349,6 +351,7 @@
                                                 class="form-control form-control-user" id="objectiveFunctionVar1"></td>
                                         <td><input type="number" step="0.01" required
                                                 class="form-control form-control-user" id="objectiveFunctionVar2"></td>
+
 
 
                                     </tr>
@@ -385,6 +388,7 @@
                                         <td> <select id="selectVar0">
                                                 <option>CONTINUOUS </option>
                                                 <option>INTEGER</option>
+
                                                 <option>BINARY</option>
                                             </select>
                                         </td>
@@ -433,9 +437,7 @@
                                         </th>
                                         <th>
                                             Type
-
                                         </th>
-
                                         <th>
                                             Value
                                         </th>
@@ -450,6 +452,7 @@
                                         <td><input type="number" step="0.01" required
                                                 class="form-control form-control-user"></td>
                                         <td> <select id="selectTypeTable0">
+
                                                 <option>&lt=</option>
                                                 <option>&gt=</option>
                                                 <option>=</option>
@@ -768,7 +771,6 @@
                 console.log(error);
             });
 
-
             $('#uploadModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
@@ -781,7 +783,6 @@
         function addCons() {
             $("#table-body").append(generateNewConsRow(varCount));
             consCount++;
-
         }
 
         function removeVar() {

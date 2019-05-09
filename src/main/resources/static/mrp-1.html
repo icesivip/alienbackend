@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang='en'>
+<!--html class='no-js'-->
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name='description' content=''>
+<!-- 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+	<link rel="stylesheet" href="estilos.css">
+	<title>Ventana Emergente Animada</title>
+	  <script type="text/javascript" src="dist/vis.js"></script>
+  <link href="dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+ -->
+    <title>Material Requirements Planning (MRP)</title>
+
+    <!-- Custom fonts for this template-->
+    <link href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet' type='text/css'>
+    <link
+        href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i'
+        rel='stylesheet'>
+
+    <!-- Custom styles for this template-->
+    <link href='css/sb-admin-2.min.css' rel='stylesheet'>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+</head>
+
+<body id='page-top'>
+
+    <!-- Page Wrapper -->
+    <div id='wrapper'>
+
+        <!-- Sidebar -->
+        <ul class='navbar-nav bg-gradient-primary sidebar sidebar-dark accordion' id='accordionSidebar'>
+
+            <!-- Sidebar - Brand -->
+            <a class='sidebar-brand d-flex align-items-center justify-content-center' href='index.html'>
+                <div class='sidebar-brand-icon rotate-n-15'>
+                    <i class='fas fa-laugh-wink'></i>
+                </div>
+                <div class='sidebar-brand-text mx-3'>VIP ALIEN <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class='sidebar-divider my-0'>
+
+            <!-- inútil por ahora -->
+            <!-- Nav Item - Dashboard -->
+            <!--li class='nav-item active'>
+          <a class='nav-link' href='index.html'>
+            <i class='fas fa-fw fa-tachometer-alt'></i>
+            <span>Dashboard</span></a>
+        </li-->
+
+            <!-- Divider -->
+            <hr class='sidebar-divider'>
+
+            <!-- Heading -->
+            <div class='sidebar-heading'>
+                Modules
+            </div>
+            <!-- PL -->
+            <li class='nav-item'>
+                <a class='nav-link collapsed' href='#' data-toggle='collapse' data-target='#collapsePages'
+                    aria-expanded='true' aria-controls='collapsePages'>
+                    <i class='fas fa-fw fa-folder'></i>
+                    <span> Linear Programming </span>
+                </a>
+                <div id='collapsePages' class='collapse' aria-labelledby='headingPages' data-parent='#accordionSidebar'>
+                    <div class='bg-white py-2 collapse-inner rounded'>
+                        <h6 class='collapse-header'>Programs</h6>
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                    </div>
+                </div>
+            </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class='nav-item'>
+                <a class='nav-link collapsed' href='#' data-toggle='collapse' data-target='#collapseMPS'
+                    aria-expanded='true' aria-controls='collapseMPS'>
+                    <i class='fas fa-fw fa-folder'></i>
+                    <span> Master Plan Schedule </span>
+                </a>
+                <div id='collapseMPS' class='collapse' aria-labelledby='headingMPS' data-parent='#accordionSidebar'>
+                    <div class='bg-white py-2 collapse-inner rounded'>
+                        <h6 class='collapse-header'>Programs</h6>
+                        <!-- cambiar href -->
+                        <a class='collapse-item' href="mps.html">MPS</a>
+						<a class='collapse-item' href="mrp-1.html">MRP</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class='sidebar-divider'>
+
+            <!-- Divider -->
+            <hr class='sidebar-divider d-none d-md-block'>
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class='text-center d-none d-md-inline'>
+                <button class='rounded-circle border-0' id='sidebarToggle'></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id='content-wrapper' class='d-flex flex-column'>
+
+            <!-- Main Content -->
+            <div id='content'>
+
+                <!-- Topbar -->
+                <nav class='navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow'>
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id='sidebarToggleTop' class='btn btn-link d-md-none rounded-circle mr-3'>
+                        <i class='fa fa-bars'></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class='d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search'>
+                        <div class='input-group'>
+                            <input type='text' class='form-control bg-light border-0 small' placeholder='Search for...'
+                                aria-label='Search' aria-describedby='basic-addon2'>
+                            <div class='input-group-append'>
+                                <button class='btn btn-primary' type='button'>
+                                    <i class='fas fa-search fa-sm'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class='navbar-nav ml-auto'>
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class='nav-item dropdown no-arrow d-sm-none'>
+                            <a class='nav-link dropdown-toggle' href='#' id='searchDropdown' role='button'
+                                data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                <i class='fas fa-search fa-fw'></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class='dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in'
+                                aria-labelledby='searchDropdown'>
+                                <form class='form-inline mr-auto w-100 navbar-search'>
+                                    <div class='input-group'>
+                                        <input type='text' class='form-control bg-light border-0 small'
+                                            placeholder='Search for...' aria-label='Search'
+                                            aria-describedby='basic-addon2'>
+                                        <div class='input-group-append'>
+                                            <button class='btn btn-primary' type='button'>
+                                                <i class='fas fa-search fa-sm'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin page content -->
+
+                <div class='container-fluid'>
+                    <form class='user' id='user'>
+                    <div class='row'>
+					<table id='tableData' class='table-responsive table text-light'>
+						<thead>
+							<tr class='bg-primary'>
+								<th colspan='16' scope='col' class='text-center'>MRP</th>
+							</tr>
+							<tr class='bg-primary' >
+								<th scope='col'>Id</th>
+								<th scope='col'>Product Name</th>
+								<th scope='col'>Level</th>
+								<th scope='col'>Available Inventory</th>
+								<th scope='col'>Security Inventory</th>
+								<th scope='col'>Parent Product Identifier</th>
+								<th scope='col'>Amount to Manufacture Parent</th>
+								<th scope='col'>Lead time</th>				   
+							</tr>
+						</thead>
+						<tbody>
+							<tr class = 'inputss'>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iCodi'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td>
+									<td style='width: 9%; height: 100%;' id = 'iElem'></td>
+									<td style='width: 9%; height: 100%;' id = 'iCant'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td>
+							</tr>
+                        </tbody>
+                    </table>
+					</div>
+					<div class='text-white' class='form-control form-control-user'>
+						<div class='form-group row'>
+							<div class='col-sm-6'>
+								<a onclick='addConstraint()' class='btn btn-success btn-user btn-block'>
+									<i class='fab fa-fw'></i> Add Product
+								</a>
+							</div>
+							<div class='col-sm-6'>
+								<a onclick='removeConstraint()' class='btn btn-danger btn-user btn-block'>
+									<i class='fab fa-fw'></i> Remove Product
+								</a>
+							</div>
+						</div>
+						<hr>
+							<input type='submit' class='btn btn-primary btn-user btn-block' value='CREATE MRP'>
+<!-- 								<div class="contenedor">
+									<article>
+										<button id="btn-abrir-popup" class="btn btn-success btn-user btn-block">PAINT PRODUCT TREE</button>
+									</article>
+									<div class="overlay" id="overlay">
+										<div class="popup" id="popup">
+											<a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i class="fas fa-times"></i></a>
+												<div id="mynetwork" class="mynetwork"></div>
+												<script type="text/javascript">
+													// create an array with nodes
+													var nodes = new vis.DataSet([
+													{id: 1, label: 'Node 1'},
+													{id: 2, label: 'Node 2'},
+													{id: 3, label: 'Node 3'},
+													{id: 4, label: 'Node 4'},
+													{id: 5, label: 'Node 5'}
+													]);
+
+												  // create an array with edges
+												  var edges = new vis.DataSet([
+													{from: 1, to: 3},
+													{from: 1, to: 2},
+													{from: 2, to: 4},
+													{from: 2, to: 5},
+													{from: 3, to: 3}
+												  ]);
+
+												  // create a network
+												  var container = document.getElementById('mynetwork');
+												  var data = {
+													nodes: nodes,
+													edges: edges
+												  };
+												  var options = {
+												  layout: {
+															hierarchical: {
+																direction: "UD",
+																sortMethod: "directed"
+															}
+														}};
+												  var network = new vis.Network(container, data, options);
+												</script>
+										</div>
+									</div>
+							</div> -->
+
+					</div>
+					</div>
+					<div>
+					
+					<table id='tableInformation' class='table-responsive table text-dark'>
+						<thead>
+							<tr class='bg-primary'>
+								<th colspan='12' scope='col' class='text-center'  style = 'color:#FFF'>MRP </th>
+							</tr>
+							<tr class='bg-primary'>
+								<th scope='col' class = 'contenedor' style = 'color:#FFF' id = 'Producto0'></th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>1</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>2</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>3</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>4</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>5</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>6</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>7</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>8</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>9</th>
+								<th scope='col' style = 'color:#FFF' class = 'text-center'>10</th>
+								<th><a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="text-center" style = 'color: #FFF'>...</span>
+                                            </a>
+								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                                <h1 class="dropdown-header">
+                                                    Number of periods:
+                                                </h1>
+                                                <input class="form-control border-0 dropdown-item" id="tamPeriods"
+                                                    min="4" type="number" placeholder="# Periods">
+                                                <div class="dropdown-divider"></div>
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriods" type="button" name="resizePeriods" value="Resize"
+                                                    onclick="resize()">
+                                </div>
+								</th>
+							</tr>
+						</thead>
+						<tbody class = 'bodyInformation'>
+							<tr class = 'iGrossRequeriments'>
+								<td class = 'iGross'>
+									<class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g0'></td>
+								</td>
+							</tr>
+							<tr class = 'iSchedule'>
+								<td class = 'iSched'>
+									<class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+									<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = "j0"></td>
+								</td>
+							</tr>
+							<tr class = 'AvailableInv'>
+								<td class = 'iAvaila'>
+									<class='bg-primary' style = 'color:#000'>Available Inventory Programmed
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+									<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = "b0"></td>
+								</td>
+							</tr>
+							<tr class = 'netRequirements'>
+								<td class = 'iNetR' >
+									<class='bg-primary' scope='row' style = 'color:#000'> Net requirements 
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "n0"></td>
+								</td>
+							</tr>
+							<tr class = 'receptionsPlanned'>
+								<td class = 'iReception'>
+									<class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "r0"></td>
+								</td>
+							</tr>
+							<tr class= 'ReleasePlanned'>
+								<td class = 'iRelease'>
+									<class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders 
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+									<td style='width: 9%; height: 100%;'><type='text' min='0' style='width: 100%' id = "p0"></td>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+					</form>
+                </div>
+            </div>
+        <div>
+    </div>
+  </div>
+</div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+        <a class='scroll-to-top rounded' href='#page-top'>
+            <i class='fas fa-angle-up'></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class='modal fade' id='logoutModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'
+            aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Ready to Leave?</h5>
+                        <button class='close' type='button' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>×</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>Select 'Logout' below if you are ready to end your current session.</div>
+                    <div class='modal-footer'>
+                        <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
+                        <a class='btn btn-primary' href='login.html'>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Begin Page Content -->
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src='vendor/jquery/jquery.min.js'></script>
+    <script src='vendor/bootstrap/js/bootstrap.bundle.min.js'></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src='vendor/jquery-easing/jquery.easing.min.js'></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src='js/sb-admin-2.min.js'></script>
+
+    <!-- Page level plugins -->
+    <script src='vendor/chart.js/Chart.min.js'></script>
+
+    <!-- Page level custom scripts -->
+    <script src='js/demo/chart-area-demo.js'></script>
+    <script src='js/demo/chart-pie-demo.js'></script>
+	<script src="popup.js"></script>
+
+	
+    <script>
+	var globaladd = 1;
+        document.getElementById('user').addEventListener('submit', function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+		
+		function addConstraint() {
+            console.log('Added contraint');
+            $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td></tr>");
+
+			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
+			
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
+			globaladd++;
+        }
+		
+        function removeConstraint() {
+            var n = $('.inputss').length;
+            console.log(n);
+            if (n > 1) {
+                console.log('Removed contraint');
+                $('.inputss').last().remove();
+                $('.contenedor').last().remove();
+                $('.bg-primary').last().remove();
+                $('.iGrossRequeriments').last().remove();
+                $('.iSchedule').last().remove();
+                $('.AvailableInv').last().remove();
+                $('.netRequirements').last().remove();
+                $('.receptionsPlanned').last().remove();
+                $('.ReleasePlanned').last().remove();
+            }
+        }
+		
+        function getScheduledReceptions(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
+            var cellsOfRow = '';
+            var dataOfTable = [];
+            console.log('llega');
+            cellsOfRow = tableDat.getElementsByTagName('tr');
+            cells = cellsOfRow[1].getElementsByTagName('td');
+            for(var j = 0; j < cells.length; j++){
+                dataOfTable.push(cells[j].childNodes[0].value);
+            }
+            console.log(dataOfTable);
+        }
+		
+        function constructRequestString() {
+			
+			fatherNames = "";
+			id = "";
+			name = "";
+			amount = "";
+			leadTime = "";
+			initialInv = "";
+			securityInv = "";
+			date = "10";
+			
+			$(".inputss").each(function(index){
+				fatherNames += $(this).find("#iElem").val()+";";
+				id += $(this).find("#iCodi").val()+";";
+				name += $(this).find("#iNomb").val()+";";
+				amount += $(this).find("#iCant").val()+";";
+				leadTime += $(this).find("#iLead").val()+";";
+				initialInv += $(this).find("#iInve").val()+";";
+				securityInv += $(this).find("#iSecu").val()+";";
+			});
+			
+			scheduledReceptions = "";
+			
+			var aux = 0;
+			$(".iSchedule").each(function() {
+				scheduledReceptions += "-"
+				$(".iSched").parent("tr").find("td").find("#j"+aux).each(function (index) {
+						scheduledReceptions += $(this).val()+";";
+				});
+				aux++;
+			});
+			
+			scheduledReceptions = scheduledReceptions.replace(/undefined/g, "")
+			
+			rqb = "";
+			
+			var aux2 = 0;
+			$(".iGrossRequeriments").each(function(index) {
+				$(".iGross").parent("tr").find("td").find("#g"+aux2).each(function (index) {
+					rqb += $(this).val()+";";
+				})
+				aux2=-1;
+			});
+			
+			rqb = rqb.replace(/undefined/g, "");
+			
+			rqbDate = "";
+			
+			$(".iGrossRequeriments").each(function(index) {
+				rqbDate +="-";
+				//$(".iGross").parent("tr").find("td").each(function() {
+					//if($(this).find("#a").val() != " ") {
+					for (var l = 0; l < 10; l++) {
+						rqbDate += (l+1)+";";
+					//}
+					}
+				//});
+			});
+			
+			rqbDate = rqbDate.replace(/undefined/g, "");
+			
+			console.log(rqbDate);
+		
+            console.log('?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate);
+			
+            return '?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate;
+        }
+		
+        function solveModel(){
+            $('.cover').toggle(400);
+			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
+            var request = constructRequestString();
+            $.ajax({
+                        //url: 'http://localhost:8080/pruebaMRP' + request
+                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                    }).then(function (data) {
+                     $('.cover').toggle(400);
+                        console.log('Funciona');
+                        console.log(data);
+						theMRP = data.mrp;
+						
+						productos = data.n_Ary_Tree.byLevels;
+						
+						var valor = "";	
+						//var i = 0;
+						$('.contenedor').each(function(index) {
+						console.log(productos[index].name);
+							$(this).text(productos[index].name);
+							//i++;
+						});
+
+						console.log(productos);
+						
+						console.log(theMRP.length);
+						console.log(theMRP[0].length);
+						console.log(theMRP[0][0].length);
+						var auxiliar1 = 0;
+						for(var k = 0; k < theMRP.length; k++) {
+							var i = 0;
+							if(k == 0) {
+								i = 2;
+							}
+							for (; i < theMRP[k].length; i++){
+								
+								if(i == 0) {
+									$('.iGross').parent("tr").find("td").find("#g"+auxiliar1).each(function(indexa) {
+										$(this).text(theMRP[k][i][indexa]);
+									});
+								} 
+								
+								if(i == 2) {
+									$('.iAvaila').parent("tr").find("td").find("#b"+auxiliar1).each(function(indexb) {
+										$(this).text(theMRP[k][i][indexb]);
+									});
+								}
+
+								if(i == 3) {
+									$('.iNetR').parent("tr").find("td").find("#n"+auxiliar1).each(function(indexc) {
+										$(this).text(theMRP[k][i][indexc]);
+									});
+								}
+								
+								if(i == 4) {
+									$('.iReception').parent("tr").find("td").find("#r"+auxiliar1).each(function(indexd) {
+										$(this).text(theMRP[k][i][indexd]);
+									});
+								}
+								
+								if(i == 5) {
+									$('.iRelease').parent("tr").find("td").find("#p"+auxiliar1).each(function(indexe) {
+										$(this).text(theMRP[k][i][indexe]);
+									});
+								}
+							}
+							auxiliar1++;
+						}
+					
+                    }, function (error) {
+                        alert(error)
+                        $('.cover').toggle(400);
+                        console.log(error);
+                        console.log('no funciona');
+                    })
+        }
+    </script>
+</body>
+</html>

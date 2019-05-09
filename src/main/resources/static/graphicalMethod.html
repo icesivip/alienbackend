@@ -28,19 +28,39 @@
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <style>
+        td,
+        th {
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .expand {
+            width: 100%;
+            height: 100%;
+        }
+
+        .white-text {
+            color: white;
+        }
+        
+        input[type=number] {
+            width: 100%;
+        }
+
+/*         
         table,
         th,
         td {
             border: 1px solid black;
-        }
+        } */
 
-        .image {
+        /* .image {
             display: inline;
             margin-left: auto;
             margin-right: auto;
             margin-top: auto;
             vertical-align: center;
-        }
+        } */
 
         .cover {
             opacity: 0.8;
@@ -123,6 +143,7 @@
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
                         <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class="collapse-item" href="mrp-1.html">MRP</a>
                     </div>
                 </div>
             </li>
@@ -251,157 +272,152 @@
                     <div class="text-center">
                         <h1>GRAPHICAL METHOD LINEAR PROGRAMMING SOLVER </h1>
                     </div>
-                    <div class="row">
-                        <div class="col-lg">
-                            <!-- Nested Row within Card Body -->
-                            <div class="p-5">
-                                <form class="user" id="user">
-                                    <h2>Type <span class="label label-default"></span></h2>
+                    <br>
+                    <form id="submit-form">
+                        <h2 class="text-center">Objective Function</h2>
+                        <div class="table-responsive">
 
-                                    <div class="form-group">
-
-                                        <select class="form-control" id="type">
-                                            <option>MAXIMIZE</option>
-                                            <option>MINIMIZE</option>
-                                        </select>
-                                        <hr>
-
-                                    </div>
-
-
-                                    <h2>Objective Function</h2>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-2 ">
-                                            <input type="number" step="any" class="form-control form-control-user"
-                                                id="cX1" required>
-                                        </div>
-                                        <div class="col-sm-0.1">
-                                            <h4> X1 + </h4>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="number" step="any" class="form-control form-control-user"
-                                                id="cX2" required>
-                                        </div>
-                                        <div class="col-sm-0.1">
-                                            <h4> X2 </h4>
-                                        </div>
-
-                                    </div>
-
-                                    <hr>
-                                    <h2>Constraints</h2>
-                                    <div id="constraintPanel">
-                                        <div class='constraint'>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2 ">
-                                                    <input type="number" step="any"
-                                                        class="form-control form-control-user" id="X1" required>
-                                                </div>
-                                                <div class=" col-sm-0.1">
-                                                    <h4> X1 + </h4>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <input type="number" step="any"
-                                                        class="form-control form-control-user" id="X2" required>
-                                                </div>
-                                                <div class="col-sm-0.1">
-                                                    <h4> X2 </h4>
-                                                </div>
-
-                                                <div class="centered col-sm-1.5 mb-4 mb-sm-0">
-                                                    <select class="form-control" id='r1'>
-                                                        <option>&lt=</option>
-                                                        <option>&gt=</option>
-                                                        <option>=</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <input type="number" step="any"
-                                                        class="form-control form-control-user" id="rv" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="text-white" class="form-control form-control-user">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <a onclick="addConstraint()" class="btn btn-success btn-user btn-block">
-                                                    Add Constraint
-
-                                                </a>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <a onclick="removeConstraint()"
-                                                    class="btn btn-danger btn-user btn-block">
-                                                    <i class="fab fa-fw"></i> Remove Constraint
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <input type="submit" class="btn btn-primary btn-user btn-block"
-                                            value="SOLVE MODEL">
+                            <table class="table table-bordered table-striped" id="first" width="100%" cellspacing="0">
+                                <thead class="white-text bg-primary">
+                                    <tr id="of-head">
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            X1
+                                        </th>
+                                        <th>
+                                            X2
+                                        </th>
 
 
-                                    </div>
-                                    <hr>
-                                    <h2>Solution Space Chart</h2>
-                                    <canvas id="chart-area" width="400" height="device-height"></canvas>
-                                    <br>
-                                    <hr>
-                                    <h2> Basic Feasible Solutions</h2>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-                                            <thead>
-                                                <th>X1</th>
-                                                <th>X2</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="of-body">
+                                    <tr>
+                                        <td>
+                                            <select>
+                                                <option>MAXIMIZE</option>
+                                                <option>MINIMIZE</option>
 
-                                                <th>Z</th>
-                                            </thead>
-                                            <tbody id="table-body">
-
-                                            </tbody>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
 
 
-                                        </table>
-                                    </div>
+                                    </tr>
 
 
-                                </form>
+                                </tbody>
 
-                            </div>
+
+
+
+                            </table>
+
                         </div>
-                    </div>
+                        <hr>
+                        <h2 class="text-center">Constraint Table</h2>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                <thead class="white-text bg-primary">
+                                    <tr id="thead-tr">
+                                        <th>
+                                            X1
+                                        </th>
+                                        <th>
+                                            X2
+                                        </th>
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            Value
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <tr>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                        <td> <select>
+                                                <option>&lt=</option>
+                                                <option>&gt=</option>
+                                                <option>=</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" step="0.01" required
+                                                class="form-control form-control-user"></td>
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+
+
+                        </div>
+                        <hr>
+                        <div class="row row-eq-height">
+                            <div class="col text-center"><button type="button" class="btn btn-outline-primary expand"
+                                    onclick="addCons()">Add
+                                    Constraint</button>
+                            </div>
+                            <div class="col text-center"> <button type="button" class="btn btn-outline-danger expand"
+                                    onclick="removeCons()">Remove
+                                    Constraint</button></div>
+
+                        </div>
+                        <br>
+                        <div class="row text-center">
+                            <div class="col text-center"><button type="submit"
+                                    class="btn btn-outline-success expand">Solve</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                    <hr>
+                    <h2 class="text-center">Solution Space Chart</h2>
+                    <canvas id="chart-area" width="400" height="device-height"></canvas>
+                    <br>
+                    <hr>
+                    <h2 class="text-center"> Basic Feasible Solutions</h2>
+                    <div id="resultTable-cont" class="table-responsive">
+
+                            <table class="table table-bordered" width="100%" cellspacing="0" id="result">
+                                <thead class="white-text bg-primary">
+                                    <th> X1</th>
+                                    <th>X2</th>
+                                    <th>Z</th>
+                                    
+                                </thead>
+                                <tbody >
+    
+                                </tbody>
+    
+    
+    
+    
+                            </table>
+    
+    
+                        </div>
+
+
+
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>
@@ -450,16 +466,17 @@
     </div>
 
     <script>
+
+
+        var varCount = 2;
+        var consCount = 1;
+
         $(document).ready(function () {
-            $('#result').DataTable();
+            $("#result").DataTable();
+          
+            $("#chart").hide();
         });
-
-        document.getElementById("user").addEventListener("submit", function (e) {
-            e.preventDefault();
-            solveModel();
-        });
-
-        document.getElementById("upload-form").addEventListener("submit", function (e) {
+      document.getElementById("upload-form").addEventListener("submit", function (e) {
             e.preventDefault();
 
             var file = document.getElementById("fileUpload").files[0];
@@ -542,7 +559,6 @@
                 });
 
             }, function (error) {
-                alert("Failed to process request.")
 
                 console.log(error);
             });
@@ -551,36 +567,91 @@
             $('.modal-backdrop').remove();
             // alert("Esta funcion aun no esta implementada.");
         });
-        var consCount=1;
         function addConstraint() {
             console.log("Added contraint");
             $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
             consCount++; 
         }
-        function removeConstraint() {
-            var n = $('.constraint').length;
-            console.log(n);
-            if (n > 1) {
-                console.log("Removed contraint");
-                $('.constraint').last().remove();
+
+        document.getElementById("submit-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function addCons() {
+            $("#table-body").append(generateNewConsRow(varCount));
+            consCount++;
+        }
+        function generateNewConsRow(count) {
+            var st = "<tr>";
+            for (let index = 0; index < count; index++) {
+                st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
+
+            }
+            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            return st;
+        }
+
+        function removeCons() {
+            if (consCount > 1) {
+                $("#table-body tr").last().remove();
+                consCount--;
+            }
+        }
+        function insertAtIndex(i) {
+            if (i === 0) {
+                $("#controller").prepend("<div>okay things</div>");
+                return;
             }
             consCount--;
+            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
         }
-        function constructRequestString() {
-            type = $("#type").val();
-            obfun = $("#cX1").val() + "," + $("#cX2").val();
-            vars = "X1:C,X2:C";
+
+        function constructQueryString() {
+            type = "";
+            obfun = "";
+            vars = "";
             constraints = "";
-            $(".constraint").each(function (index) {
-                constraints += $(this).find("#X1").val() + "," + $(this).find("#X2").val() + "," + $(this).find("#r1").val() + "," + $(this).find("#rv").val() + ";";
+            $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
+
+                } else {
+                    obfun += $(this).find('input').val() + ",";
+                }
             });
+            for (i = 0; i < varCount; i++) {
+                vars += "X" + (i + 1) + ":C" + ",";
+            }
+
+            $('#table-body tr').each(function (i) {
+                $(this).find('td').each(function (j) {
+
+                    if (j < varCount || j == varCount + 1) {
+
+                        if (j == varCount + 1) {
+                            constraints += $(this).find('input').val() + ";";
+                        } else {
+
+                            constraints += $(this).find('input').val() + ",";
+                        }
+                    } else {
+                        constraints += $(this).find('select').val() + ",";
+                    }
+                });
+
+            });
+
+            vars = vars.substring(0, vars.length - 1);
+            obfun = obfun.substring(0, obfun.length - 1);
             console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
             return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+
         }
         var myChart = null;
         function solveModel() {
             $(".cover").toggle(400);
-            var string = constructRequestString();
+            var string = constructQueryString();
             $.ajax({
                 url: "https://viptest1.herokuapp.com/graphicalMethod" + string
             }).then(function (data) {
@@ -750,11 +821,6 @@
                         fill: area,
                         steppedLine: false,
                         lineTension: 0,
-
-
-
-
-
                     });
 
                     count++;
