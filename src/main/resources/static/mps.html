@@ -805,18 +805,18 @@
                 ReceptionsOfPlannedOrders = data.planOrders;
                 maintainCost=0;
                 orderCost=0;
-                avgInventory=0;
                 rotInventory=0;
                 for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
                     maintainCost+=AvailableInventoryProgrammed[i];
-                    if(ReceptionsOfPlannedOrders[i]!=(null|0))
+                    if(ReceptionsOfPlannedOrders[i]!=(0)){
                         orderCost++;
-                    avgInventory+=AvailableInventoryProgrammed[i];
+                    }
                     rotInventory+=data.bruteRequirements[i];
                 }
+                avgInventory=maintainCost;
                 maintainCost=maintainCost*data.maintenanceCost;
-                orderCost=orderCost*data.orderingCost;
-                avgInventory=avgInventory/data.TPeriodOFSupply;
+                orderCost=orderCost*data.preparationCost;
+                avgInventory=avgInventory/data.tperiodOFSupply;
                 rotInventory=rotInventory/avgInventory;
                 $("#maintainCost").append("<td style='width: 15%; height: 100%';>" + maintainCost + "</td>");
                 $("#organizeCost").append("<td style='width: 15%; height: 100%';>" + orderCost + "</td>");
