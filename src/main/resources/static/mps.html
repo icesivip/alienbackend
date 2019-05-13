@@ -815,7 +815,7 @@
                 }
                 avgInventory=maintainCost;
                 maintainCost=maintainCost*data.maintenanceCost;
-                orderCost=orderCost*parseInt(data.orderingCost);
+                orderCost=orderCost*data.preparationCost;
                 avgInventory=avgInventory/data.tperiodOFSupply;
                 rotInventory=rotInventory/avgInventory;
                 $("#maintainCost").append("<td style='width: 15%; height: 100%';>" + maintainCost + "</td>");
