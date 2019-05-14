@@ -465,25 +465,25 @@
                     <div class="text-black">
                         <div class="form-group form-row">
                             
-                                <div class="col-sm-6 mb-3 mb-sm-3">
+                                <div class="col-sm-6 mb-3 ">
                                   <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                     Add Variable
     
                                 </button>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 mb-3">
                                     <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
                                  Remove Variable
                             </button>
                                 </div>
                            
-                            <div class="col-sm-6 mb-3 mb-sm-1">
+                            <div class="col-sm-6 mb-3 ">
                               <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                 Add Constraint
 
                             </button>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 mb-3">
                               <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
                                 Remove Constraint
                             </button>
@@ -539,10 +539,11 @@
                           </table>
                     
                       <br>
+                      
+                      </div>
                       <div id="mensajeS">
-
-                      </div>
-                      </div>
+                         
+                        </div>
                   <hr>
                       
                       
@@ -798,8 +799,9 @@
                  }
                  }
                  $("#mensajeS").empty();
+                 $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
                 $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3><font color= #3ca71c >"+messageSol+"</font></h3>")
+                  $("#mensajeS").prepend("<h3><font color= #1cc88a >"+messageSol+"</font></h3>")
 
                    
 
@@ -937,9 +939,10 @@
                  termino=true;
 
                  $("#mensajeS").empty();
+                 $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
                 $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3><font color= #3ca71c >"+messageSol+"</font></h3>")
-                
+                  $("#mensajeS").prepend("<h3><font color= #1cc88a >"+messageSol+"</font></h3>")
+
                }
              
                   
