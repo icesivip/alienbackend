@@ -711,11 +711,8 @@
                     }
                 }
                 else if (cons.length - 1 < consCount) {
-                    for (i = 0; i < cons.length - 1; i++) {
-                        if (consCount > cons.length - 1) {
-                            removeCons();
-                            if (consCount == cons.length - 1) break;
-                        }
+                    while(consCount > cons.length - 1){
+                        removeCons();
                     }
                 }
 
