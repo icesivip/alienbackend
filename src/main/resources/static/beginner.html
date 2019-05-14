@@ -912,7 +912,7 @@
 
       
       $.ajax({
-                url: "http://localhost:8080/simplexMethod" + string
+                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
             }).then(function (data) {
               var variables = data.everyVariableName;
                 var actualMatrix = data.actualMatrix;
@@ -1011,7 +1011,7 @@
 
 
         function saveProblem() {
-            object = { data: constructRequestString() };
+            object = { data: constructQueryString() };
             exportToJson(object);
         }
 
