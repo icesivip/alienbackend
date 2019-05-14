@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,14 +60,14 @@
             <span> Linear Programming </span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Programs</h6>
-                <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-            </div>
+             <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                    </div>
         </div>
     </li>
 
@@ -187,30 +188,41 @@
  
   }
 
-  form.user .form-control-user {
-   
-    border-radius: 10rem;
-    padding: 1.5rem 1rem;
-}
+  
   .btn-icon-split{
     
     position: relative;
     
+   
+  }
+  .table{
+    color: black;
     
-   
   }
-  .solution{
-    text-align: center;
-  }
- 
- #but2 {
-   
-    width: 100%;
+  .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
+  .h3, h3 {
+    font-size: 1.75rem;
+    color: black;}
+    #menIteration {
+    color: black;
+    
+    font-size: larger;
 }
 </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+            <div class="cover"></div>
           <!-- Page Heading -->
           <div class="text-center">
           <h1>Simplex Method </h1>
@@ -223,7 +235,6 @@
             <!-- Nested Row within Card Body -->
             <div class="p-5">
                 <form class="user" id="user">
-
                   <div class="col-sm-6">
                     <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
                       <span class="icon text-white-50">
@@ -233,9 +244,8 @@
                     </a>
                   </div>
 
-
                     <hr>
-                    <h2 class="text-center">Problem Title</h2>
+                    <h2 class = 'text-center'>Problem Title</h2>
                     <div class="form-group2">
                         <div class="col-sm-14 " >
                             <input type="text" class="form-control form-control-user" id="cTitle" required="">
@@ -243,17 +253,17 @@
                       </div>
                       <hr>
                       <div class="row">
-                          <div class="col"></div>
-                          <div class="col-sm-4 mb-3 mb-sm-0">  
-                            <h2 >Number of Variables</h2>
+                        
+                          <div class="col">  
+                            <h2>Number of Variables</h2>
 
-                            <div class="form-group row ">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
+                            <div class="form-group row">
+                                <div class="col-sm-4 ">
                                     <input type="number" class="form-control form-control-user" id="cVariable" required="">
                                 </div>
                                 <div class="text-black-50">
-                                  <div class="col-sm-12 mb-3 mb-sm-0">
-                                      <button onclick="goVar()" class="btn btn-outline-success btn-icon-split" type="button">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                           </span>
@@ -263,16 +273,16 @@
                                   </div>
                                    </div>
                                   </div></div>
-                          <div class="col-sm-4 mb-3 mb-sm-0">
+                          <div class="col">
                               <h2>Number of Constraints</h2>
 
                               <div class="form-group row">
-                                  <div class="col-sm-7 mb-3 mb-sm-0">
+                                  <div class="col-sm-4 ">
                                       <input type="number" class="form-control form-control-user" id="goConstraint" required="">
                                   </div>
                                   <div class="text-black-50">
-                                  <div class="col-sm-12 mb-3 mb-sm-0">
-                                      <button onclick="goConst()" class="btn btn-outline-success btn-icon-split" type="button">
+                                  <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
                                           <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                           </span>
@@ -283,8 +293,6 @@
                               </div>
 
                           </div>
-                          <div class="col"></div>
-
                           
                          
                         </div>
@@ -292,20 +300,18 @@
                     
                    
                           
-
-
+                        
+                    <hr>
 
 
                     <div class="table-responsive">
-                        <h2 class="text-center">Objective Function</h2>
+                        <h2 >Objective Function</h2>
                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
                             <thead class="bg-gradient-primary">
-                                <tr class="text-center"id="of-head">
-                                  
+                                <tr id="of-head">
                                     <th>
                                         <font color="#fff">Type</font>
                                     </th>
-                                   
                                     <th>
                                         <font color="#fff">X1</font>
                                     </th>
@@ -319,7 +325,7 @@
             
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="of-body">
+                            <tbody id="of-body">
                                 <tr>
                                     <td>
                                         <select>
@@ -348,14 +354,13 @@
                      
                     
 
-
                     <hr>
                    
                     <div class="table-responsive">
-                        <h2 class="text-center">Constraint Table</h2>
+                        <h2 >Constraint Table</h2>
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead class="bg-gradient-primary">
-                                <tr class="text-center" id="thead-tr">
+                                <tr id="thead-tr">
                                     <th>
                                         <font color="#fff">X1</font>
                                     </th>
@@ -373,7 +378,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="table-body">
+                            <tbody id="table-body">
                                 <tr>
                                     <td><input type="number" step="0.01" required></td>
                                     <td><input type="number" step="0.01" required></td>
@@ -396,84 +401,49 @@
                         </table>
             
             
-
                     </div>
                     <br>
                     <hr>
-                    
-
                     <div class="text-black">
-                      <div class="form-group row">
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                              <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
-                                  Add Constraint
+                        <div class="form-group form-row">
+                            
+                                <div class="col-sm-6 mb-3 mb-sm-1">
+                                    <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                                        Add Variable
+    
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
+                                        <i class="fab fa-fw"></i> Remove Variable
+                                    </a>
+                                </div>
+                           
+                            <div class="col-sm-6 mb-3 mb-sm-1">
+                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                                    Add Constraint
 
-                              </button>
-                          </div>
-                          <div class="col-sm-6">
-                              <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
-                                  Remove Constraint
-                              </button>
-                          </div>
-                      </div>
-                      
-
-                      
-
-                  </div>
-
-                  <div class="text-black">
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
-                                Add Variable
-
-                            </button>
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
+                                    <i class="fab fa-fw"></i> Remove Constraint
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
-                                <i class="fab fa-fw"></i> Remove Variable
-                            </button>
-                        </div>
-                    </div>
-                  
-
-                    
-
-
-                </div>
                         <hr>
 
                         
 
 
-                  
+                    </div>
                     <br>
 
-                    <div class="text-black">
-                      <div class="form-group row">
-                        
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                            <button onclick=" finalSolution()" id= "but2" class="btn btn-outline-secondary btn-icon-split" >
-                              
-                              <span class="text" id = "finalS">Final Solution</span>
-                            </button>
-                          </div>
-                          <div class="col-sm-6" >
-                            <button onclick="nextSolution()" id= "but2" class="btn btn-outline-secondary btn-icon-split" >
-                              
-                              <span class="text" id = "StepB">Step by Step</span>
-                            </button>
-                          </div>
-                      </div>
-                    
-                    
+                   
                 
-                
-                    <hr>
                       
                       <div id="resultTable-cont" class="table-responsive">
-                          <h2 class="text-center">Data Table and Results</h2> <div id="menIteration"> </div>
+                          <h2>Data Table</h2> <div id="menIteration"> </div>
                           <table class="table table-bordered"  width="100%" cellspacing="0" id="resultTable">
                               <thead class="bg-gradient-primary">
                                 
@@ -493,11 +463,34 @@
 
                       </div>
                       </div>
-                
+                  <hr>
                       
                       
                 </form>
-                
+                <div class="text-black">
+                <div class="row">
+                  
+                  <div class="col">
+                    <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                      </span>
+                      <span class="text" id = "finalS">Final Solution</span>
+                    </button>
+                  
+                </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col">
+                    <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                      </span>
+                      <span class="text" id = "StepB">Step by Step</span>
+                    </button>
+                  </div>
+                </div>
+            </div>
         </div>
      
 
@@ -543,7 +536,6 @@
       </div>
     </div>
   </div>
-
   <script>
    
      var varCount = 3;
@@ -615,7 +607,7 @@
         }
       
 //-----------------------------------
-     function goConst() {
+     function goConstraint() {
        
       var nConst = parseInt(document.getElementById("goConstraint").value)-consCount;
     
@@ -714,7 +706,7 @@
 
 
                 var p1 = new Promise((resolve, reject) => {
-                  $("#resultTable thead").append("<tr></tr>");
+                  $("#resultTable thead").append("<tr ></tr>");
                     $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
                     $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
                     for (index = 0; index < variables.length; index++) {
@@ -730,7 +722,7 @@
                  for (let index = 0; index < actualMatrix.length; index++) {
                  
                   if(index==0){
-                    $("#resultTable tbody").append("<tr></tr>");
+                    $("#resultTable tbody").append("<tr ></tr>");
                     $("#resultTable tbody").find("tr").append("<td>Z</td>");
                     $("#resultTable tbody").find("tr").append("<td>1</td>");
                     for (let j = 0; j < actualMatrix[0].length; j++) {
@@ -823,7 +815,7 @@
 
       
       $.ajax({
-                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+                url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
               var variables = data.everyVariableName;
                 var actualMatrix = data.actualMatrix;
@@ -903,7 +895,6 @@
                 });
      }
   </script>
-
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
