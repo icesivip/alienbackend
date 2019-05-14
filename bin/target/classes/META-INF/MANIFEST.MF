@@ -7,4 +7,3 @@ Implementation-Vendor-Id: icesi.vip.alien
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
  -starter-parent/alien
 Created-By: Maven Integration for Eclipse
-

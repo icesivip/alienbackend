@@ -43,9 +43,9 @@ public class LotSizingMethods {
 	 * @return ArrayList<Integer> arrayList with all the net requirements to
 	 *         ordering in all t times.
 	 */
-	public ArrayList<Integer> systemEconomicOrderQuantiy(String periodicty, ArrayList<Integer> requiredArticles, double itemCost,
+	public ArrayList<Integer> systemEconomicOrderQuantiy(String periodicty, ArrayList<Integer> requiredArticlesBrutes, ArrayList<Integer> requiredArticlesLxL, double itemCost,
 			double preparationCost, double maintenanceCost) {
-		double EOQDoub = calculateEconomicOrderQuantity(periodicty, requiredArticles, itemCost, preparationCost, maintenanceCost);
+		double EOQDoub = calculateEconomicOrderQuantity(periodicty, requiredArticlesBrutes, itemCost, preparationCost, maintenanceCost);
 		int EOQ = (int) EOQDoub;
 		// Techo si EOQDoub > EOQ ya que son unidades, si s�lo se castea har� piso.
 		if (EOQDoub > EOQ) {
@@ -54,9 +54,13 @@ public class LotSizingMethods {
 		System.out.println(EOQ);
 		ArrayList<Integer> result = new ArrayList<>();
 		int quantity = 0;
-		result.add(EOQ);
-		for (int i = 0; i < requiredArticles.size(); i++) {
-			quantity += requiredArticles.get(i);
+		boolean primero = true;
+		for (int i = 0; i < requiredArticlesLxL.size(); i++) {
+			quantity += requiredArticlesLxL.get(i);
+			if(quantity > 0 && primero) {
+				result.add(EOQ);
+				primero = false;
+			}
 			if (quantity > EOQ) {
 				result.add(EOQ);
 				quantity = quantity-EOQ;
@@ -85,63 +89,39 @@ public class LotSizingMethods {
 	 */
 	public double calculateEconomicOrderQuantity(String periodicity, ArrayList<Integer> requiredArticles, double itemCost,
 			double preparationCost, double maintenanceCost) {
-		int totalItems;
+		int totalItems = 0;
 		double D;
 		double H;
 		double EOQ;
+		for (int i = 0; i < requiredArticles.size(); i++) {
+			totalItems += requiredArticles.get(i);
+		}
 		switch (periodicity) {
 		case MONTHLY:
-			totalItems = 0;
-			for (int i = 0; i < requiredArticles.size(); i++) {
-				totalItems += requiredArticles.get(i);
-			}
 			D = (totalItems * 1.0);
-
-			// found the anuual maintenance cost
+			// found the annual maintenance cost
 			H = maintenanceCost * itemCost * MONTHS_IN_YEAR;
-			EOQ = Math.sqrt((2 * D * preparationCost) / H);
-
-			return EOQ;
+			break;
 		case ANNUAL:
-			totalItems = 0;
-			for (int i = 0; i < requiredArticles.size(); i++) {
-				totalItems += requiredArticles.get(i);
-			}
 			D = (totalItems * 1.0) / requiredArticles.size();
-
-			// found the anuual maintenance cost
+			// found the annual maintenance cost
 			H = maintenanceCost * itemCost;
-			EOQ = Math.sqrt((2 * D * preparationCost) / H);
-
-			return EOQ;
+			break;
 		case DAILY:
-			totalItems = 0;
-			for (int i = 0; i < requiredArticles.size(); i++) {
-				totalItems += requiredArticles.get(i);
-			}
 			D = ((totalItems * 1.0) / requiredArticles.size()) * (DAYS_IN_YEAR);
-
-			// found the anuual maintenance cost
+			// found the annual maintenance cost
 			H = maintenanceCost * itemCost * DAYS_IN_YEAR;
-			EOQ = Math.sqrt((2 * D * preparationCost) / H);
-
-			return EOQ;
+			break;
 			//In this case, default is weekly
 		default:
 			// we past from week to years
-			totalItems = 0;
-			for (int i = 0; i < requiredArticles.size(); i++) {
-				totalItems += requiredArticles.get(i);
-			}
 			D = ((totalItems * 1.0) / requiredArticles.size()) * (WEEKS_IN_YEAR);
-
-			// found the anuual maintenance cost
+			// found the annual maintenance cost
 			H = maintenanceCost * itemCost * WEEKS_IN_YEAR;
-			EOQ = Math.sqrt((2 * D * preparationCost) / H);
-			System.out.println(D + " - " + totalItems + " - " + H);
-
-			return EOQ;
+			break;
 		}
+		EOQ = Math.sqrt((2 * D * preparationCost) / H);
+		return EOQ;
 	}
 
 	/**
@@ -198,19 +178,36 @@ public class LotSizingMethods {
 	 * @return ArrayList<Integer> arrayList with all the net requirements to
 	 *         ordering in all t times.
 	 */
-	public ArrayList<Integer> systemPeriodOrderQuantity(String periodicity, ArrayList<Integer> requiredArticles, double itemCost,
+	public ArrayList<Integer> systemPeriodOrderQuantity(String periodicity, ArrayList<Integer> requiredArticlesBrutes, ArrayList<Integer> requiredArticlesLxL, double itemCost,
 			double preparationCost, double maintenanceCost) {
 		ArrayList<Integer> returnReves = new ArrayList<Integer>();
-		int demand = 0;
-		for (int i = 0; i < requiredArticles.size(); i++) {
-			demand += requiredArticles.get(i);
+		int totalItems = 0;
+		for (int i = 0; i < requiredArticlesBrutes.size(); i++) {
+			totalItems += requiredArticlesBrutes.get(i);
 		}
-		double frequencyRequested = (demand * 1.0)
-				/ calculateEconomicOrderQuantity(periodicity, requiredArticles, itemCost, preparationCost, maintenanceCost);
-		int optimalPeriodRequested = (int)Math.round((requiredArticles.size() * 1.0) / frequencyRequested);
+		double demand = 0.0;
+		switch (periodicity) {
+		case MONTHLY:
+			demand = (totalItems * 1.0);
+			break;
+		case ANNUAL:
+			demand = (totalItems * 1.0) / requiredArticlesBrutes.size();
+			
+			break;
+		case DAILY:
+			demand = ((totalItems * 1.0) / requiredArticlesBrutes.size()) * (DAYS_IN_YEAR);
+			break;
+			//In this case, default is weekly
+		default:
+			demand = ((totalItems * 1.0) / requiredArticlesBrutes.size()) * (WEEKS_IN_YEAR);
+			break;
+		}
+		double frequencyRequested = demand
+				/ calculateEconomicOrderQuantity(periodicity, requiredArticlesBrutes, itemCost, preparationCost, maintenanceCost);
+		int optimalPeriodRequested = (int)Math.round((requiredArticlesLxL.size() * 1.0) / frequencyRequested);
 		int quantity = 0;
-		for (int j = requiredArticles.size() - 1; j >= 0; j--) {
-			quantity += requiredArticles.get(j);
+		for (int j = requiredArticlesLxL.size() - 1; j >= 0; j--) {
+			quantity += requiredArticlesLxL.get(j);
 			if (j % optimalPeriodRequested == 0) {
 				returnReves.add(quantity);
 				quantity = 0;
