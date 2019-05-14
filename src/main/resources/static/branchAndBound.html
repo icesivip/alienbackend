@@ -691,7 +691,7 @@
 
                 for (i = 0; i < obj.length; i++) {
                     if (i == 0) {
-                        if (obj[0].substring(18, 19) != '') document.getElementById("objectiveFunctionVar0").value = obj[0].substring(18, 19);
+                        if (obj[0].substring(18, 19) != '') document.getElementById("objectiveFunctionVar0").value = obj[0].substring(18, (obj[0].length));
                         else document.getElementById("objectiveFunctionVar0").value = '';
                     }
                     else {
@@ -730,7 +730,7 @@
                 $('#table-body td').each(function (index) {
                     if (con==0) {
                         if(constrainCon==0){
-                            $(this).find('input').val(ins[0].substring(12, 13));
+                            $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
                         }
                         else {
                             var nothing= ins[auxCon].split(';');

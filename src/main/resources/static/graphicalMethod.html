@@ -484,37 +484,39 @@
             $.ajax({
                 url: urlFile
             }).then(function (data) {
+
                 console.log(data);
                 var split = data.data.split('&');
-
-                if (split[0].substring(6, 14) == 'MAXIMIZE') {
-                    document.getElementById("type").selectedIndex = "0";
-                    console.log("Selected index MAXIMIZE in the options.");
-                }
-                else if (split[0].substring(6, 14) == 'MINIMIZE') {
-                    document.getElementById("type").selectedIndex = "1";
-                    console.log("Selected index MINIMIZE in the options.");
-                }
-
                 var obj = split[2].split(',');
+                var c = 0;
+                var vars = split[1].split(',');
 
-                for (i = 0; i < obj.length; i++) {
-                    if (i == 0) {
-                        if (obj[0].substring(18, 19) != '') document.getElementById("cX1").value = obj[0].substring(18, obj[0].length);
-                        else document.getElementById("cX1").value = '';
+                $('#of-body td').each(function (index) {
+                    if (index == 0) {
+                        if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                            $(this).find('select').val("MAXIMIZE");
+                        }
+                        else {
+                            $(this).find('select').val("MINIMIZE");
+                        }
+                    } else {
+                        if (c == 0) {
+                            $(this).find('input').val(obj[0].substring(18, obj[0].length));
+                        }
+                        else {
+                            $(this).find('input').val(obj[c]);
+                        }
+                        c++;
                     }
-                    else {
-                        if (obj[i] != '') document.getElementById("cX" + (i + 1)).value = obj[i];
-                        else document.getElementById("cX" + (i + 1)).value = '';
-                    }
-                }
+                });
+
 
                 var cons = split[3].split(';');
 
                 if (cons.length - 1 > consCount - 1) {
                     for (i = 0; i < cons.length - 1; i++) {
                         if (consCount < cons.length - 1) {
-                            addConstraint();
+                            addCons();
                             if (consCount == cons.length - 1) break;
                         }
                     }
@@ -522,7 +524,7 @@
                 else if (cons.length - 1 < consCount) {
                     for (i = 0; i < cons.length - 1; i++) {
                         if (consCount > cons.length - 1) {
-                            removeConstraint();
+                            removeCons();
                             if (consCount == cons.length - 1) break;
                         }
                     }
@@ -533,30 +535,42 @@
                 var countRequest = 0;
                 var aux = 0;
 
+                // {"data":"?type=MAXIMIZE&vars=X1:C,X2:C&objectiveFunction=2,2&constraints=2,2,<=,2;3,3,<=,3;2,2,>=,22;2,,<=,2;"}
+                //                  0             1                   2                                   3
 
-                $(".constraint").each(function (index) {
-                    if (aux == 0) {
-                        $(this).find("#X1").val(ins[0].substring(12, (ins[0].length)));
-                        countRequest++;
-                        aux++;
-                    }
-                    else {
-                        var nothing = ins[countRequest].split(';');
-
-                        $(this).find("#X1").val(nothing[1]);
-                        countRequest++;
-                    }
-                    $(this).find("#X2").val(ins[countRequest]);
-                    countRequest++;
-
-                    if (ins[countRequest] == '<=') $(this).find("#r1").val("<=");
-                    else if (ins[countRequest] == '>=') $(this).find("#r1").val(">=");
-                    else $(this).find("#r1").val("=");
-                    countRequest++;
-                    var nothing = ins[countRequest].split(';');
-                    console.log(nothing);
-                    $(this).find("#rv").val(nothing[0]);
+                $('#table-body tr').each(function (i) {
+                    $(this).find('td').each(function (j) {
+                        if (i == 0 && j == 0) {
+                            $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
+                            countRequest++;
+                        }
+                        else {
+                            if (j < varCount || j == varCount + 1) {
+                                if (j == varCount + 1) {
+                                    var nothing = ins[countRequest].split(';');
+                                    $(this).find('input').val(nothing[0]);
+                                } else {
+                                    if (j == 0) {
+                                        var nothing = ins[countRequest].split(';');
+                                        $(this).find('input').val(nothing[1]);
+                                        countRequest++;
+                                    }
+                                    else {
+                                        $(this).find('input').val(ins[countRequest]);
+                                        countRequest++;
+                                    }
+                                }
+                            } else {
+                        
+                                  if (ins[countRequest] == '<=') $(this).find('select').val("<=");
+                                  else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
+                                  else $(this).find('select').val("=");
+                                  countRequest++;
+                            }
+                        }
+                    });
                 });
+                
 
             }, function (error) {
 
@@ -567,12 +581,6 @@
             $('.modal-backdrop').remove();
             // alert("Esta funcion aun no esta implementada.");
         });
-        function addConstraint() {
-            console.log("Added contraint");
-            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
-            consCount++; 
-        }
-
         document.getElementById("submit-form").addEventListener("submit", function (e) {
             e.preventDefault();
             solveModel();
@@ -901,7 +909,7 @@
 
 
         function saveProblem() {
-            object = { data: constructRequestString() };
+            object = { data: constructQueryString() };
             exportToJson(object);
         }
     </script>
