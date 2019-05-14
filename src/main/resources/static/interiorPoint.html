@@ -553,13 +553,11 @@
                     }
                 }
                 else if (cons.length - 1 < consCount) {
-                    for (i = 0; i < cons.length - 1; i++) {
-                        if (consCount > cons.length - 1) {
-                            removeCons();
-                            if (consCount == cons.length - 1) break;
-                        }
+                    while(consCount > cons.length - 1){
+                        removeCons();
                     }
                 }
+
 
                 var ins = split[3].split(',');
 
@@ -591,7 +589,7 @@
                             } else {
                                   if (ins[countRequest] == '<=') $(this).find('select').val("<=");
                                   else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
-                                  else $(this).find('select').selectedIndex.val("=");
+                                  else $(this).find('select').val("=");
                                   countRequest++;
                             }
                         }
