@@ -599,48 +599,7 @@
     var consCount = 1;
 
 
-    $(document).ready(function () {
-            $("#resultTable-cont").hide();
-            $("#chart").hide();
-            $("#tree-container").hide();
-
-
-
-
-            var file = document.getElementById('fileUpload');
-
-            file.onchange = function (e) {
-                var ext = this.value.match(/\.([^\.]+)$/)[1];
-                switch (ext) {
-                    case 'json':
-
-
-                        break;
-                    default:
-                        alert('Selected file type is not allowed. Select a .json file.');
-                        this.value = '';
-                }
-            };
-        });
-        document.getElementById("submit-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            solveModel();
-        });
-
-
-        document.getElementById("upload-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            $('#uploadModal').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-
-            alert("Esta funcion aun no esta implementada.");
-
-
-        });
-    
-
+   
 
         function addCons() {
             $("#table-body").append(generateNewConsRow(varCount));
@@ -1011,7 +970,7 @@
 
 
         function saveProblem() {
-            object = { data: constructQueryString() };
+            object = { data: constructRequestString() };
             exportToJson(object);
         }
 
