@@ -1,12 +1,12 @@
 package icesi.vip.alien.alien.ruteo;
 
-public class Triplete <V, PN, SN>{
+public class Trifuerza <V, PN, SN>{
 
 	private V ahorro;
 	private PN primerNodo;
 	private SN segundoNodo;
 	
-	public Triplete(V ahorro, PN primerNodo, SN segundoNodo) {
+	public Trifuerza(V ahorro, PN primerNodo, SN segundoNodo) {
 		this.ahorro = ahorro;
 		this.primerNodo = primerNodo;
 		this.segundoNodo = segundoNodo;
