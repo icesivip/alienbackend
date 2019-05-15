@@ -106,9 +106,9 @@ public class MRP{
 					aux.set(Integer.parseInt(rqBdate.get(K))-1, rqB.get(K));
 				}
 				
-				mrp.add(allMRP(tree, product.get(i).getId(), productTime, aux, rqBdate));
+				mrp.add(allMRP(tree, product.get(i).getName(), productTime, aux, rqBdate));
 			} else {
-				mrp.add(allMRP(tree, product.get(i).getId(), productTime, nAryTree.getRootProduct().search(product.get(i).darFather()).getBuyingOrder(), rqBdate));
+				mrp.add(allMRP(tree, product.get(i).getName(), productTime, nAryTree.getRootProduct().search(product.get(i).darFather()).getBuyingOrder(), rqBdate));
 			}
 			
 		}

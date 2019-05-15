@@ -93,7 +93,7 @@ public class Product {
 	 */
 	public Product search(String id) {
 		
-		if (this.id.equals(id)) {
+		if (this.name.equals(id)) {
 			return this;
 		} else {
 			for (int i = 0; i < subProducts.size(); i++) {
@@ -168,7 +168,7 @@ public class Product {
 	 * @return
 	 */
 	public String darFather() {
-		return father.getId();
+		return father.getName();
 	}
 
 	/**
