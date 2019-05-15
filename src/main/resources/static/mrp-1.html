@@ -733,8 +733,8 @@
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        url: 'http://localhost:8080/pruebaMRP' + request
-                        //url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                        //url: 'http://localhost:8080/pruebaMRP' + request
+                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
