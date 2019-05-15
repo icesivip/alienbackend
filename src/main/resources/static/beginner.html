@@ -663,7 +663,7 @@
         }
       
 //-----------------------------------
-     function goConstraint() {
+     function goConst() {
        
       var nConst = parseInt(document.getElementById("goConstraint").value)-consCount;
     
@@ -973,7 +973,7 @@
 
 
         function saveProblem() {
-            object = { data: constructRequestString() };
+            object = { data: document.getElementById("cTitle").value+"|"+constructRequestString()};
             exportToJson(object);
         }
 
