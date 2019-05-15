@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,11 +14,24 @@
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
 
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 </head>
 
 <body id="page-top">
@@ -42,7 +54,7 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -54,29 +66,29 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-            aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Linear Programming </span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span> Linear Programming </span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-             <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Programs</h6>
-                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                    </div>
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Programs</h6>
+            <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+            <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+            <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+            <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+            <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+          </div>
         </div>
-    </li>
+      </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
-            aria-expanded="true" aria-controls="collapseMPS">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Master Plan Schedule </span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS" aria-expanded="true"
+          aria-controls="collapseMPS">
+          <i class="fas fa-fw fa-folder"></i>
+          <span> Master Plan Schedule </span>
         </a>
         <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -86,7 +98,7 @@
                 <a class="collapse-item" href="mrp-1.html">MRP</a>
             </div>
         </div>
-    </li>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -116,28 +128,65 @@
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
+              <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                data-target="#uploadModal">
+                Upload Problem
+                <i class="fas fa-upload"></i>
+              </button>
+              <button onclick="saveProblem()" class="btn btn-outline-primary nav-button" type="button">
+                Save Problem
+                <i class="far fa-save"></i>
+              </button>
             </div>
           </form>
+          <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form id="upload-form">
+                  <div class="modal-body">
+                    <p>
+                      Here you have to select a previously saved problem in .json format. Make
+                      sure the file has not
+                      been modified or there are going to be problems in the upload process.
+                    </p>
 
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">Choose File</label>
+                      <input type="file" class="form-control-file" id="fileUpload" accept=".json" required>
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="input" class="btn btn-primary">Upload</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-outline-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -148,59 +197,83 @@
               </div>
             </li>
 
-  <!-- Nav Item - Alerts -->
-  <li class="nav-item dropdown no-arrow mx-1">
-              
-  </a>
-  <!-- Dropdown - Alerts -->
-  
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
 
-<!-- Nav Item - Messages -->
+              </a>
+              <!-- Dropdown - Alerts -->
 
 
+              <!-- Nav Item - Messages -->
 
 
-<!-- Nav Item - User Information -->
 
 
-</ul>
-
-</nav>
-<!-- End of Topbar -->
-<style>
- 
-
-.container1 {
-  position: relative;
-  text-align: center;
-  color:black;
+              <!-- Nav Item - User Information -->
 
 
-  font-family:'Times New Roman', Times, serif;
+          </ul>
 
-}
-.container1-1{
-  position: absolute;
- text-anchor: middle;
-  top: -20%;
-  left: 50%;
-  transform: translate(-50%, 20%);
- 
- 
-  }
+        </nav>
+        <!-- End of Topbar -->
+        <style>
+          .input-group {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
 
-  
-  .btn-icon-split{
-    
-    position: relative;
-    
-   
-  }
-  .table{
-    color: black;
-    
-  }
-  .cover {
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+            width: 100%;
+          }
+
+          .container1 {
+            position: relative;
+            text-align: center;
+            color: black;
+
+
+            font-family: 'Times New Roman', Times, serif;
+
+          }
+
+          .container1-1 {
+            position: absolute;
+            text-anchor: middle;
+            top: -20%;
+            left: 50%;
+            transform: translate(-50%, 20%);
+
+
+          }
+
+          form.user .form-control-user {
+            font-size: larger;
+            border-radius: 10rem;
+            padding: 1.5rem 1rem;
+          }
+
+          .btn-icon-split {
+
+            position: relative;
+
+
+          }
+
+          #but2 {
+
+            width: 100%;
+          }
+
+          .table {
+            color: black;
+
+          }
+
+          .cover {
             opacity: 0.8;
             background-color: #ccc;
             position: fixed;
@@ -211,700 +284,822 @@
             z-index: 1000;
             background: url(img/loading.gif) center center no-repeat;
             display: none;
-        }
-  .h3, h3 {
-    font-size: 1.75rem;
-    color: black;}
-    #menIteration {
-    color: black;
-    
-    font-size: larger;
-}
-</style>
+          }
+
+          .h3,
+          h3 {
+            font-size: 1.75rem;
+            color: black;
+          }
+
+          #menIteration {
+            color: black;
+
+            font-size: larger;
+          }
+        </style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <div class="cover"></div>
+          <div class="cover"></div>
           <!-- Page Heading -->
           <div class="text-center">
-          <h1>Simplex Method </h1>
-          <h2>Step by step mode </h2>
-        </div>
+            <h1>Simplex Method </h1>
+            <h2>Step by step mode </h2>
+          </div>
 
         </div>
         <!-- /.container-fluid -->
         <div class="col-lg">
-            <!-- Nested Row within Card Body -->
-            <div class="p-5">
-                <form class="user" id="user">
-                  <div class="col-sm-6">
-                    <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-left"></i>
-                      </span>
-                      <span class="text">Back</span>
-                    </a>
+          <!-- Nested Row within Card Body -->
+          <div class="p-5">
+            <form class="user" id="user">
+              <div class="col-sm-6">
+                <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                  </span>
+                  <span class="text">Back</span>
+                </a>
+              </div>
+
+              <hr>
+              <h2 class='text-center'>Problem Title</h2>
+              <div class="form-group2">
+                <div class="col-sm-14 ">
+                  <input type="text" class="form-control form-control-user" id="cTitle" required="">
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col"></div>
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                  <h2>Number of Variables</h2>
+
+                  <div class="form-group row ">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input type="number" class="form-control form-control-user" id="cVariable" required="">
+                    </div>
+                    <div class="text-black-50">
+                      <div class="col-sm-12 mb-3 mb-sm-0">
+                        <button onclick="goVar()" class="btn btn-outline-success btn-icon-split" type="button">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                          </span>
+                          <span class="text">Go!</span>
+                          </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                  <h2>Number of Constraints</h2>
+
+                  <div class="form-group row">
+                    <div class="col-sm-7 mb-3 mb-sm-0">
+                      <input type="number" class="form-control form-control-user" id="goConstraint" required="">
+                    </div>
+                    <div class="text-black-50">
+                      <div class="col-sm-12 mb-3 mb-sm-0">
+                        <button onclick="goConst()" class="btn btn-outline-success btn-icon-split" type="button">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                          </span>
+                          <span class="text">Go!</span>
+                          </a>
+                      </div>
+                    </div>
                   </div>
 
-                    <hr>
-                    <h2>Problem Title</h2>
-                    <div class="form-group2">
-                        <div class="col-sm-14 " >
-                            <input type="text" class="form-control form-control-user" id="cTitle" required="">
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                          <div class="col">  
-                            <h2>Number of Variables</h2>
-
-                            <div class="form-group row">
-                                <div class="col-sm-4 ">
-                                    <input type="number" class="form-control form-control-user" id="cVariable" required="">
-                                </div>
-                                <div class="text-black-50">
-                                  <div class="col-sm-6 mb-3 mb-sm-0">
-                                      <a onclick="goVar()" class="btn btn-outline-success btn-icon-split" >
-                                          <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                          </span>
-                                          <span class="text">Go!</span>
-                                        </a>
-        
-                                  </div>
-                                   </div>
-                                  </div></div>
-                          <div class="col">
-                              <h2>Number of Constraints</h2>
-
-                              <div class="form-group row">
-                                  <div class="col-sm-4 ">
-                                      <input type="number" class="form-control form-control-user" id="goConstraint" required="">
-                                  </div>
-                                  <div class="text-black-50">
-                                  <div class="col-sm-6 mb-3 mb-sm-0">
-                                      <a onclick="goConstraint()" class="btn btn-outline-success btn-icon-split" >
-                                          <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                          </span>
-                                          <span class="text">Go!</span>
-                                        </a>
-                                  </div>
-                                </div>
-                              </div>
-
-                          </div>
-                          
-                         
-                        </div>
-                        <hr>
-                    
-                   
-                          
-                        
-                    <hr>
+                </div>
+                <div class="col"></div>
 
 
-                    <div class="table-responsive">
-                        <h2 >Objective Function</h2>
-                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-                            <thead class="bg-gradient-primary">
-                                <tr id="of-head">
-                                    <th>
-                                        <font color="#fff">Type</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X1</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X2</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X3</font>
-                                    </th>
-            
-            
-                                </tr>
-                            </thead>
-                            <tbody id="of-body">
-                                <tr>
-                                    <td>
-                                        <select>
-                                            <option>MAXIMIZE</option>
-                                            <option>MINIMIZE</option>
-            
-                                        </select>
-                                    </td>
-                                    <td><input type="number" step="0.01" required></td>
-                                    <td><input type="number" step="0.01" required></td>
-                                    <td><input type="number" step="0.01" required></td>
-            
-            
-                                </tr>
-            
-            
-                            </tbody>
-            
-            
-            
-            
-                        </table>
-            
-                    </div>
-                    
-                     
-                    
 
-                    <hr>
-                   
-                    <div class="table-responsive">
-                        <h2 >Constraint Table</h2>
-                        <table class="table table-bordered" width="100%" cellspacing="0">
-                            <thead class="bg-gradient-primary">
-                                <tr id="thead-tr">
-                                    <th>
-                                        <font color="#fff">X1</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X2</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X3</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">Type</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">Value</font>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                <tr>
-                                    <td><input type="number" step="0.01" required></td>
-                                    <td><input type="number" step="0.01" required></td>
-                                    <td><input type="number" step="0.01" required></td>
-                                    <td> <select>
-                                            <option>&lt=</option>
-                                            <option>&gt=</option>
-                                            <option>=</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" step="0.01" required></td>
-                                </tr>
-            
-            
-                            </tbody>
-            
-            
-            
-            
-                        </table>
-            
-            
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="text-black">
-                        <div class="form-group form-row">
-                            
-                                <div class="col-sm-6 mb-3 mb-sm-1">
-                                    <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
-                                        Add Variable
-    
-                                    </a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
-                                        <i class="fab fa-fw"></i> Remove Variable
-                                    </a>
-                                </div>
-                           
-                            <div class="col-sm-6 mb-3 mb-sm-1">
-                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
-                                    Add Constraint
-
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
-                                    <i class="fab fa-fw"></i> Remove Constraint
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-
-                        
+              </div>
+              <hr>
 
 
-                    </div>
-                    <br>
 
-                   
-                
-                      
-                      <div id="resultTable-cont" class="table-responsive">
-                          <h2>Data Table</h2> <div id="menIteration"> </div>
-                          <table class="table table-bordered"  width="100%" cellspacing="0" id="resultTable">
-                              <thead class="bg-gradient-primary">
-                                
-                                 
-                              </thead>
-                              <tbody>
-              
-                              </tbody>
-              
-              
-              
-              
-                          </table>
-                    
-                      <br>
-                      <div id="mensajeS">
 
-                      </div>
-                      </div>
-                  <hr>
-                      
-                      
-                </form>
+
+
+
+              <div class="table-responsive">
+                <h2 class="text-center">Objective Function</h2>
+                <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+                  <thead class="bg-gradient-primary">
+                    <tr class="text-center" id="of-head">
+                      <th>
+                        <font color="#fff">Type</font>
+                      </th>
+                      <th>
+                        <font color="#fff">X1</font>
+                      </th>
+                      <th>
+                        <font color="#fff">X2</font>
+                      </th>
+                      <th>
+                        <font color="#fff">X3</font>
+                      </th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody id="of-body">
+                    <tr>
+                      <td>
+                        <select>
+                          <option>MAXIMIZE</option>
+                          <option>MINIMIZE</option>
+
+                        </select>
+                      </td>
+                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required></td>
+
+
+                    </tr>
+
+
+                  </tbody>
+
+
+
+
+                </table>
+
+              </div>
+
+
+
+
+              <hr>
+
+              <div class="table-responsive">
+                <h2 class="text-center">Constraint Table</h2>
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                  <thead class="bg-gradient-primary">
+                    <tr class="text-center" id="thead-tr">
+                      <th>
+                        <font color="#fff">X1</font>
+                      </th>
+                      <th>
+                        <font color="#fff">X2</font>
+                      </th>
+                      <th>
+                        <font color="#fff">X3</font>
+                      </th>
+                      <th>
+                        <font color="#fff">Type</font>
+                      </th>
+                      <th>
+                        <font color="#fff">Value</font>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    <tr>
+                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required></td>
+                      <td> <select>
+                          <option>&lt=</option>
+                          <option>&gt=</option>
+                          <option>=</option>
+                        </select>
+                      </td>
+                      <td><input type="number" step="0.01" required></td>
+                    </tr>
+
+
+                  </tbody>
+
+
+
+
+                </table>
+
+
+              </div>
+
+              <hr>
+              <div class="text-black">
+                <div class="form-group form-row">
+
+                  <div class="col-sm-6 mb-3 ">
+                    <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                      Add Variable
+
+                    </button>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                      Remove Variable
+                    </button>
+                  </div>
+
+                  <div class="col-sm-6 mb-3 ">
+                    <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                      Add Constraint
+
+                    </button>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                      Remove Constraint
+                    </button>
+                  </div>
+
+                </div>
+                <hr>
+                <br>
                 <div class="text-black">
-                <div class="row">
-                  
-                  <div class="col">
-                    <button onclick=" finalSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-right"></i>
-                      </span>
-                      <span class="text" id = "finalS">Final Solution</span>
-                    </button>
-                  
-                </div>
-                  <div class="col"></div>
-                  <div class="col"></div>
-                  <div class="col">
-                    <button onclick="nextSolution()" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-right"></i>
-                      </span>
-                      <span class="text" id = "StepB">Step by Step</span>
-                    </button>
+                  <div class="row">
+
+                    <div class="col">
+                      <button onclick=" finalSolution()" id="but2" class="btn btn-outline-secondary btn-icon-split"
+                        type="button">
+
+                        <span class="text" id="finalS">Final Solution</span>
+                      </button>
+
+                    </div>
+
+                    <div class="col">
+                      <button onclick="nextSolution()" id="but2" class="btn btn-outline-secondary btn-icon-split"
+                        type="button">
+
+                        <span class="text" id="StepB">Step by Step</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <hr>
+
+
+
+
+              </div>
+              <br>
+
+
+
+
+              <div id="resultTable-cont" class="table-responsive">
+                <h2 class="text-center">Data Table</h2>
+                <div id="menIteration"> </div>
+                <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
+                  <thead class="bg-gradient-primary">
+
+
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+
+
+
+
+                </table>
+
+                <br>
+
+              </div>
+              <div id="mensajeS">
+
+              </div>
+              <hr>
+
+
+            </form>
+
+          </div>
+
+
+
+          <!-- End of Main Content ------>
+
+          <!-- Footer -->
+          <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2019</span>
+              </div>
             </div>
+          </footer>
+          <!-- End of Footer -->
+
         </div>
-     
+        <!-- End of Content Wrapper -->
 
-      
-      <!-- End of Main Content ------>
+      </div>
+      <!-- End of Page Wrapper -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+      </a>
+
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-outline-primary" href="login.html">Logout</a>
+            </div>
           </div>
         </div>
-      </footer>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-outline-primary" href="login.html">Logout</a>
-        </div>
       </div>
-    </div>
-  </div>
-  <script>
-   
-     var varCount = 3;
-    var consCount = 1;
+      <script>
+
+        var varCount = 3;
+        var consCount = 1;
+
+        function countVariables(num2) {
+          var num = num2 - 3;
+          return num / 2;
+        }
+
+        document.getElementById("upload-form").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var file = document.getElementById("fileUpload").files[0];
+          urlFile = window.URL.createObjectURL(file);
+          $.ajax({
+            url: urlFile
+          }).then(function (data) {
+            console.log(data);
+            var split = data.data.split('|');
+            var title = split[0]
+            if (title != "null") {
+              document.getElementById("cTitle").value = title;
+            }
+            var obj = split[1].split('?');
+            var obj2 = obj[1].split('&');
+
+            var obj3 = obj2[1].split('=');
+            var numVar = obj3[1]
+            var numVar2 = numVar.split(' ');
+            var c = 2;
+           
+            
+            console.log();
+            var numberVar = countVariables(numVar2.length)
 
 
+            if (numberVar > varCount) {
+              for (i = 0; i < numberVar; i++) {
+                if (varCount < numberVar) {
+                  addVar();
+                  if (varCount == numberVar) break;
+                }
+              }
+            }
+            else if (numberVar < varCount) {
+              for (i = 0; i < numberVar; i++) {
+                if (varCount > numberVar) {
+                  removeVar();
+                  if (varCount == numberVar) break;
+                }
+              }
+            }
 
-    
+            $('#of-body td').each(function (index) {
+              if (index == 0) {
+                if (obj2[0].substring(5, 14) == 'MAXIMIZE') {
+                  $(this).find('select').val("MAXIMIZE");
+                }
+                else {
+                  $(this).find('select').val("MINIMIZE");
+                }
+              } else {
 
+
+                $(this).find('input').val(-numVar2[c]);
+                c += 2;
+
+
+              }
+
+            });
+
+
+          }, function (error) {
+            alert("Failed to process request.")
+            console.log(error);
+          });
+          $('#uploadModal').modal('hide');
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+          
+        });
 
         function addCons() {
-            $("#table-body").append(generateNewConsRow(varCount));
-            consCount++;
+          $("#table-body").append(generateNewConsRow(varCount));
+          consCount++;
         }
 
         function removeVar() {
-            if (varCount > 1) {
-              
-                $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
-                $("#table-body tr td:nth-child(1)").remove();
+          if (varCount > 1) {
 
-                $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
-                $("#of-body tr td:nth-child(2)").remove();
-                varCount--;
-            }
+            $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
+            $("#table-body tr td:nth-child(1)").remove();
+
+            $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
+            $("#of-body tr td:nth-child(2)").remove();
+            varCount--;
+          }
 
         }
 
         function generateNewConsRow(count) {
-            var st = "<tr>";
-            for (let index = 0; index < count; index++) {
-                st += "<td><input type='number' step='0.01' required></td>";
+          var st = "<tr>";
+          for (let index = 0; index < count; index++) {
+            st += "<td><input type='number' step='0.01' required></td>";
 
-            }
-            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required></td></tr>"
-            return st;
+          }
+          st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required></td></tr>"
+          return st;
         }
 
         function removeCons() {
-          
-            if (consCount > 1) {
-              
-                $("#table-body tr").last().remove();
-                consCount--;
-            }
+
+          if (consCount > 1) {
+
+            $("#table-body tr").last().remove();
+            consCount--;
+          }
 
         }
 
         function addVar() {
-            $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
-            $("#table-body tr").prepend("<td><input type='number' step='0.01' required></td>");
+          $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
+          $("#table-body tr").prepend("<td><input type='number' step='0.01' required></td>");
 
-            $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
-            $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
+          $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
+          $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
 
-           
-            varCount++;
-           
+
+          varCount++;
+
         }
 
         function insertAtIndex(i) {
-            if (i === 0) {
-                $("#controller").prepend("<div>okay things</div>");
-                return;
+          if (i === 0) {
+            $("#controller").prepend("<div>okay things</div>");
+            return;
+          }
+
+
+          $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+        }
+
+        //-----------------------------------
+        function goConst() {
+
+          var nConst = parseInt(document.getElementById("goConstraint").value) - consCount;
+
+          if (nConst > 0) {
+            for (var j = 0; j < nConst; j++) {
+              addCons();
             }
 
-
-            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+          } else if (nConst < 0) {
+            var rem = Math.abs(nConst);
+            for (var j = 0; j < rem; j++) {
+              removeCons();
+            }
+          }
         }
-      
-//-----------------------------------
-     function goConstraint() {
-       
-      var nConst = parseInt(document.getElementById("goConstraint").value)-consCount;
-    
-      if(nConst>0){
-          for (var j = 0; j < nConst; j++) {
-            addCons();
-        }
+        function goVar() {
+          var nVar = parseInt(document.getElementById("cVariable").value) - varCount;
+          if (nVar > 0) {
+            for (var j = 0; j < nVar; j++) {
+              addVar();
 
-        }else if(nConst<0){
-          var rem = Math.abs(nConst);
-        for (var j = 0; j < rem; j++) {
-          removeCons();
-        }
-        }
-                       }
-      function goVar(){
-        var nVar = parseInt(document.getElementById("cVariable").value)-varCount;
-        if(nVar>0){
-          for (var j = 0; j < nVar; j++) {
-            addVar();
-      
-        }
-
-        }else if(nVar<0){
-          var rem = Math.abs(nVar);
-        for (var j = 0; j < rem; j++) {
-          removeVar();
-        }
-        }
-      }
-      //-----------------------------------
-                
-       
-    
-      function constructRequestString() {
-       
-      
-       type = "";
-        
-        var menFun = "";
-        $('#of-body td').each(function (index) {
-                if (index == 0) {
-                    type = ($(this).find('select').val());
-
-                }else {
-                  menFun += (-($(this).find('input').val()) )+ " X"+index+" ";
-                }
-                });
-      
-        obfun = 1+" Z " +menFun+"= 0";
-               
-        var menObj = "";
-        $('#table-body tr').each(function (i) {
-          menObj+="n0 Z ";
-          $(this).find('td').each(function (j) {
-            
-            if (j < varCount || j == varCount + 1) {
-
-            if (j == varCount + 1) {
-              menObj += " "+$(this).find('input').val();
-            } else {
-
-              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
-              }
-            } else {
-              menObj += $(this).find('select').val() ;
-              }
-          });
-        });  
-                console.log("?type="+type+"&"+"equations="+obfun+menObj);
-        
-            
-                 
-                return "?type="+type+"&"+"equations="+obfun+menObj;
-     }
-   
-     function  finalSolution() {
-      $("#menIteration").empty();
-       var rest= varCount+1
-            var string = constructRequestString();
-            $.ajax({
-                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            }).then(function (data) {
-             
-                $("#resultTable thead").empty();
-                $("#resultTable tbody").empty();
-              console.log(data)
-
-                var variables = data.everyVariableName;
-                var actualMatrix = data.actualMatrix;
-                var messageSol = data.messageSol;
-                var operationsDone = data.operationsDone;
-                var solutionInWords = data.solutionInWords;
-                var theta = data.theta;
-                var varsBase = data.varsBase;
-
-
-                var p1 = new Promise((resolve, reject) => {
-                  $("#resultTable thead").append("<tr></tr>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
-                    for (index = 0; index < variables.length; index++) {
-                        $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
-
-                    }
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
-
-                    resolve();
-                });
-               
-                 for (let index = 0; index < actualMatrix.length; index++) {
-                 
-                  if(index==0){
-                    $("#resultTable tbody").append("<tr></tr>");
-                    $("#resultTable tbody").find("tr").append("<td>Z</td>");
-                    $("#resultTable tbody").find("tr").append("<td>1</td>");
-                    for (let j = 0; j < actualMatrix[0].length; j++) {
-                      $("#resultTable tbody").find("tr").append("<td>"+actualMatrix[0][j]+"</td>");
-                    }
-                    $("#resultTable tbody").find("tr").append("<td></td>");
-                  }else if(index>0){
-                    console.log("index:"+index+" valor:"+varsBase[index-1])
-                    $("#resultTable tbody").append("<tr id='row"+index+"'></tr>");
-                  $("#resultTable tbody").find("#row"+index).append("<td>"+varsBase[index-1]+"</td>");
-                  $("#resultTable tbody").find("#row"+index).append("<td>0</td>");
-                  for (let j = 0; j < actualMatrix[0].length; j++) {
-                      $("#resultTable tbody").find("#row"+index).append("<td>"+actualMatrix[index][j]+"</td>");
-                    }
-                    $("#resultTable tbody").find("#row"+index).append("<td>"+theta[index-1]+"</td>");
-                   
-                 }
-                 }
-                 $("#mensajeS").empty();
-                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
-
-                   
-
-                
-                
-     }, function (error) {
-                    $(".cover").toggle(900);
-                    alert("Failed to process requests.")
-                   
-                    console.log(error);
-                });
             }
 
+          } else if (nVar < 0) {
+            var rem = Math.abs(nVar);
+            for (var j = 0; j < rem; j++) {
+              removeVar();
+            }
+          }
+        }
+        //-----------------------------------
 
 
 
+        function constructRequestString() {
 
-            function constructRequestString2(numero) {
-       
-      var iteration=numero;
-      type = "";
-        
-        var menFun = "";
-        $('#of-body td').each(function (index) {
-                if (index == 0) {
-                    type = ($(this).find('select').val());
 
-                }else {
-                  menFun +=  (-($(this).find('input').val()) ) + " X"+index+" ";
-                }
-                });
-      
-        obfun = 1+" Z " +menFun+"= 0";
-               
-        var menObj = "";
-        $('#table-body tr').each(function (i) {
-          menObj+="n0 Z ";
-          $(this).find('td').each(function (j) {
-            
-            if (j < varCount || j == varCount + 1) {
+          type = "";
 
-            if (j == varCount + 1) {
-              menObj += " "+$(this).find('input').val();
+          var menFun = "";
+          $('#of-body td').each(function (index) {
+            if (index == 0) {
+              type = ($(this).find('select').val());
+
             } else {
-
-              menObj += +$(this).find('input').val() + " X"+(j+1)+" ";
-              }
-            } else {
-              menObj += $(this).find('select').val() ;
-              }
+              menFun += (-($(this).find('input').val())) + " X" + index + " ";
+            }
           });
-        });  
 
-                console.log("?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj);
-        
-            
-                 
-                return "?type="+type+"&"+"iteration="+iteration+"&"+"equations="+obfun+menObj;
-     }
-     veces =0;
-     termino =false;
-     function  nextSolution() {
-      $("#menIteration").empty();
+          obfun = 1 + " Z " + menFun + "= 0";
 
-    $("#menIteration").text("Iteration: "+veces);
-    console.log(veces)
-       var rest= varCount+1
-      var string = constructRequestString2(veces);
+          var menObj = "";
+          $('#table-body tr').each(function (i) {
+            menObj += "n0 Z ";
+            $(this).find('td').each(function (j) {
 
-      
-      $.ajax({
-                url: "http://localhost:8080/simplexMethod" + string
-            }).then(function (data) {
-              var variables = data.everyVariableName;
-                var actualMatrix = data.actualMatrix;
-                var messageSol = data.messageSol;
-                var operationsDone = data.operationsDone;
-                var solutionInWords = data.solutionInWords;
-                var theta = data.theta;
-                var varsBase = data.varsBase;
+              if (j < varCount || j == varCount + 1) {
 
-             if(messageSol==null){
+                if (j == varCount + 1) {
+                  menObj += " " + $(this).find('input').val();
+                } else {
+
+                  menObj += +$(this).find('input').val() + " X" + (j + 1) + " ";
+                }
+              } else {
+                menObj += $(this).find('select').val();
+              }
+            });
+          });
+          console.log("?type=" + type + "&" + "equations=" + obfun + menObj);
+
+
+
+          return "?type=" + type + "&" + "equations=" + obfun + menObj;
+        }
+
+        function finalSolution() {
+          $(".cover").toggle(400);
+          $("#menIteration").empty();
+          var rest = varCount + 1
+          var string = constructRequestString();
+          $.ajax({
+            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+          }).then(function (data) {
+
+            $("#resultTable thead").empty();
+            $("#resultTable tbody").empty();
+            console.log(data)
+            $(".cover").toggle(600);
+            var variables = data.everyVariableName;
+            var actualMatrix = data.actualMatrix;
+            var messageSol = data.messageSol;
+            var operationsDone = data.operationsDone;
+            var solutionInWords = data.solutionInWords;
+            var theta = data.theta;
+            var varsBase = data.varsBase;
+
+
+            var p1 = new Promise((resolve, reject) => {
+              $("#resultTable thead").append("<tr></tr>");
+              $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
+              $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
+              for (index = 0; index < variables.length; index++) {
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
+
+              }
+              $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
+              $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
+
+              resolve();
+            });
+
+            for (let index = 0; index < actualMatrix.length; index++) {
+
+              if (index == 0) {
+                $("#resultTable tbody").append("<tr ></tr>");
+                $("#resultTable tbody").find("tr").append("<td>Z</td>");
+                $("#resultTable tbody").find("tr").append("<td>1</td>");
+                for (let j = 0; j < actualMatrix[0].length; j++) {
+                  $("#resultTable tbody").find("tr").append("<td>" + actualMatrix[0][j] + "</td>");
+                }
+                $("#resultTable tbody").find("tr").append("<td></td>");
+              } else if (index > 0) {
+                console.log("index:" + index + " valor:" + varsBase[index - 1])
+                $("#resultTable tbody").append("<tr id='row" + index + "'></tr>");
+                $("#resultTable tbody").find("#row" + index).append("<td>" + varsBase[index - 1] + "</td>");
+                $("#resultTable tbody").find("#row" + index).append("<td>0</td>");
+                for (let j = 0; j < actualMatrix[0].length; j++) {
+                  $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
+                }
+                $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+
+              }
+            }
+            $("#mensajeS").empty();
+            $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+            $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>" + solutionInWords + "</font></h5>");
+            $("#mensajeS").prepend("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+
+
+
+
+
+          }, function (error) {
+            $(".cover").toggle(900);
+            alert("Failed to process requests.")
+
+            console.log(error);
+          });
+        }
+
+
+
+
+
+        function constructRequestString2(numero) {
+
+          var iteration = numero;
+          type = "";
+
+          var menFun = "";
+          $('#of-body td').each(function (index) {
+            if (index == 0) {
+              type = ($(this).find('select').val());
+
+            } else {
+              menFun += (-($(this).find('input').val())) + " X" + index + " ";
+            }
+          });
+
+          obfun = 1 + " Z " + menFun + "= 0";
+
+          var menObj = "";
+          $('#table-body tr').each(function (i) {
+            menObj += "n0 Z ";
+            $(this).find('td').each(function (j) {
+
+              if (j < varCount || j == varCount + 1) {
+
+                if (j == varCount + 1) {
+                  menObj += " " + $(this).find('input').val();
+                } else {
+
+                  menObj += +$(this).find('input').val() + " X" + (j + 1) + " ";
+                }
+              } else {
+                menObj += $(this).find('select').val();
+              }
+            });
+          });
+
+          console.log("?type=" + type + "&" + "iteration=" + iteration + "&" + "equations=" + obfun + menObj);
+
+
+
+          return "?type=" + type + "&" + "iteration=" + iteration + "&" + "equations=" + obfun + menObj;
+        }
+        veces = 0;
+        termino = false;
+        function nextSolution() {
+          $("#menIteration").empty();
+
+          $("#menIteration").text("Iteration: " + veces);
+          console.log(veces)
+          var rest = varCount + 1
+          var string = constructRequestString2(veces);
+
+
+          $.ajax({
+            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+          }).then(function (data) {
+            var variables = data.everyVariableName;
+            var actualMatrix = data.actualMatrix;
+            var messageSol = data.messageSol;
+            var operationsDone = data.operationsDone;
+            var solutionInWords = data.solutionInWords;
+            var theta = data.theta;
+            var varsBase = data.varsBase;
+
+            if (messageSol == null) {
               $("#mensajeS").empty();
-                console.log("entro:"+data.messageSol)
-              
-                $("#resultTable thead").empty();
-                $("#resultTable tbody").empty();
+              console.log("entro:" + data.messageSol)
+
+              $("#resultTable thead").empty();
+              $("#resultTable tbody").empty();
               console.log(data)
 
-               
-                
-                var p1 = new Promise((resolve, reject) => {
-                  $("#resultTable thead").append("<tr></tr>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
-                    for (index = 0; index < variables.length; index++) {
-                        $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
 
-                    }
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
-                    $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
 
-                    resolve();
-                });
-               
-                 for (let index = 0; index < actualMatrix.length; index++) {
-                 
-                  if(index==0){
-                    $("#resultTable tbody").append("<tr></tr>");
-                    $("#resultTable tbody").find("tr").append("<td>Z</td>");
-                    $("#resultTable tbody").find("tr").append("<td>1</td>");
-                    for (let j = 0; j < actualMatrix[0].length; j++) {
-                      $("#resultTable tbody").find("tr").append("<td>"+actualMatrix[0][j]+"</td>");
-                    }
-                    $("#resultTable tbody").find("tr").append("<td></td>");
-                  }else if(index>0){
-                    
-                    console.log("index:"+index+" valor:"+varsBase[index-1])
-                    $("#resultTable tbody").append("<tr id='row"+index+"'></tr>");
-                  $("#resultTable tbody").find("#row"+index).append("<td>"+varsBase[index-1]+"</td>");
-                  $("#resultTable tbody").find("#row"+index).append("<td>0</td>");
+              var p1 = new Promise((resolve, reject) => {
+                $("#resultTable thead").append("<tr></tr>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
+                for (index = 0; index < variables.length; index++) {
+                  $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variables[index] + "</font></th>");
+
+                }
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
+
+                resolve();
+              });
+
+              for (let index = 0; index < actualMatrix.length; index++) {
+
+                if (index == 0) {
+                  $("#resultTable tbody").append("<tr></tr>");
+                  $("#resultTable tbody").find("tr").append("<td>Z</td>");
+                  $("#resultTable tbody").find("tr").append("<td>1</td>");
                   for (let j = 0; j < actualMatrix[0].length; j++) {
-                      $("#resultTable tbody").find("#row"+index).append("<td>"+actualMatrix[index][j]+"</td>");
-                    }
-                    if(theta!=null){
-                    $("#resultTable tbody").find("#row"+index).append("<td>"+theta[index-1]+"</td>");}
-                   
-                 }
+                    $("#resultTable tbody").find("tr").append("<td>" + actualMatrix[0][j] + "</td>");
+                  }
+                  $("#resultTable tbody").find("tr").append("<td></td>");
+                } else if (index > 0) {
 
-                 }
-                veces++;
-                
+                  console.log("index:" + index + " valor:" + varsBase[index - 1])
+                  $("#resultTable tbody").append("<tr id='row" + index + "'></tr>");
+                  $("#resultTable tbody").find("#row" + index).append("<td>" + varsBase[index - 1] + "</td>");
+                  $("#resultTable tbody").find("#row" + index).append("<td>0</td>");
+                  for (let j = 0; j < actualMatrix[0].length; j++) {
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
+                  }
+                  if (theta != null) {
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                  }
+
+                }
+
               }
-              if(messageSol!=null){
-                 termino=true;
+              veces++;
 
-                 $("#mensajeS").empty();
-                $("#mensajeS").prepend("<h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5>");
-                  $("#mensajeS").prepend("<h3>"+messageSol+"</h3>")
-                
-               }
-             
-                  
-            },function (error) {
-                    $(".cover").toggle(900);
-                    alert("Failed to process requests.")
-                   
-                    console.log(error);
-                });
-     }
-  </script>
+            }
+            if (messageSol != null) {
+              termino = true;
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+              $("#mensajeS").empty();
+              $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+              $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>" + solutionInWords + "</font></h5>");
+              $("#mensajeS").prepend("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
 
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            }
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+
+          }, function (error) {
+            $(".cover").toggle(900);
+            alert("Failed to process requests.")
+
+            console.log(error);
+          });
+        }
+
+        function exportToJson(objectData) {
+          let filename = "Problem_" + document.getElementById("cTitle").value + ".json";
+          let contentType = "application/json;charset=utf-8;";
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+            navigator.msSaveOrOpenBlob(blob, filename);
+          } else {
+            var a = document.createElement('a');
+            a.download = filename;
+            a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+        }
+
+
+        function saveProblem() {
+          object = { data: document.getElementById("cTitle").value + "|" + constructRequestString() };
+          exportToJson(object);
+        }
+
+      </script>
+
+      <!-- Bootstrap core JavaScript-->
+
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+      <!-- Core plugin JavaScript-->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+      <!-- Custom scripts for all pages-->
+      <script src="js/sb-admin-2.min.js"></script>
+
+      <!-- Page level plugins -->
+      <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+      <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+      <!-- Page level custom scripts -->
+      <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 

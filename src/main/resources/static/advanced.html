@@ -13,12 +13,26 @@
 
   <title>LINEAR - OPTIMIZATION</title>
 
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+ <!-- Custom fonts for this template-->
+ <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+ <link
+   href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+   rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+ <!-- Custom styles for this template-->
+ <link href="css/sb-admin-2.min.css" rel="stylesheet">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
+
+ <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+ <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+ <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+ <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 
 </head>
 
@@ -116,14 +130,51 @@
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
+              <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                  data-target="#uploadModal">
+                  Upload Problem
+                  <i class="fas fa-upload"></i>
+              </button>
+              <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
+                  Save Problem
+                  <i class="far fa-save"></i>
+              </button>
+          </div>
           </form>
+          <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <form id="upload-form">
+                      <div class="modal-body">
+                          <p>
+                              Here you have to select a previously saved problem in .json format. Make
+                              sure the file has not
+                              been modified or there are going to be problems in the upload process.
+                          </p>
+
+                          <div class="form-group">
+                              <label for="exampleFormControlFile1">Choose File</label>
+                              <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                  required>
+                          </div>
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary"
+                              data-dismiss="modal">Close</button>
+                          <button type="input" class="btn btn-primary">Upload</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -168,8 +219,24 @@
 </nav>
 <!-- End of Topbar -->
 <style>
+    form.user .form-control-user {
+    font-size: larger;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
  
-
+ .input-group {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+   
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
 .container1 {
   position: relative;
   text-align: center;
@@ -203,13 +270,17 @@
     
     font-size: larger;
 }
+#but2 {
+   
+   width: 100%;
+}
 .container1-1{
   position: absolute;
  text-anchor: middle;
   top: -20%;
   left: 50%;
   transform: translate(-50%, 20%);
- 
+
  
   }
 
@@ -226,10 +297,9 @@
             <div class="cover"></div>
           <!-- Page Heading -->
           <div class="text-center">
-            <h1><u>SIMPLEX METHOD</u> </h1>
-            <h2><u> Fast-track mode</u> </h2>
-
-        </div>
+            <h1>Simplex Method </h1>
+            <h2>Fast-track mode </h2>
+          </div>
         <!-- /.container-fluid -->
         <div class="col-lg">
             <!-- Nested Row within Card Body --->
@@ -245,13 +315,20 @@
                   </div>
 
                     <hr>
-                    <h2>Problem Title</h2>
+                    <div class="form-row">
+
+                      <div class="col-10">
+                    <h2 clas>Problem Title</h2>
+
                     <div class="form-group2">
                         <div class="col-sm-14 " >
                             <input type="text" class="form-control form-control-user" id="cTitle" required="">
                         </div>
                       </div>
-                      <hr>
+                     
+                    </div>
+
+                    <div class="col-2">
                     <h2>Type <span class="label label-default"></span></h2>
 
                     <div class="form-group">
@@ -260,82 +337,92 @@
                             <option>MAXIMIZE</option>
                             <option>MINIMIZE</option>
                         </select>
-                        <hr>
-
-                    </div>
-                    
-                    <h2>Number of Variables</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="nVariable" required="">
-                        </div>
-                    </div>
-
-                  
-                    <h2>Number of Constraints</h2>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 ">
-                            <input type="number" class="form-control form-control-user" id="nConstraints" required="">
-                        </div>
                         
-                    </div>
-
-                    <div class="text-black">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                          
-                            <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" >
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-check"></i>
-                                </span>
-                                <span class="text" href="#thead-tr">Go!</span>
-                              </button>
-                            
-                        </div>
                       </div>
-                  <br>
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-sm-4 mb-3 mb-sm-0">  
+                          <h2 >Number of Variables</h2>
+
+                          <div class="form-group row ">
+                              <div class="col-sm-10 mb-3 mb-sm-0">
+                                  <input type="number" class="form-control form-control-user" id="nVariable" >
+                              </div>
+                             
+                                </div></div>
+                        <div class="col-sm-5 mb-3 mb-sm-0">
+                            <h2>Number of Constraints</h2>
+
+                            <div class="form-group row">
+                                <div class="col-sm-11 mb-3 mb-sm-0">
+                                    <input type="number" class="form-control form-control-user" id="nConstraints" >
+                                </div>
+                              
+                            </div>
+
+                        </div>
+                        <div class="col"></div>
+                          
+                        
+                       
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-5 mb-4 mb-sm-2"></div>
+                         
+                          <div class="col-sm-4">
+                              <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" type="button" >
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-check"></i>
+                                  </span>
+                                  <span class="text" href="#thead-tr">Go!</span>
+                                </button>
+                          </div>
+                          <div class="col-sm-2"></div>
+                      </div>
                   <hr>
                   
               
-                    <br>
-                    <div class="Table-container">
+                    
+                    <div class="table-responsive">
 
-                        <h2>Inputs</h2>
-                        <div class="table-responsive ">
-                          <table class="table table-responsive-xl">
+                        <h2 class="text-center">Data Table</h2>
+                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+                          
                               
-                            <thead class="bg-primary">
+                            <thead class="bg-gradient-primary">
                                 
                                 <tr id="thead-tr">
                                   <th>
-                                       Z
+                                      <font color="#fff">Z</font>
                                    </th>  
                                   <th>
-                                        X1
+                                      <font color="#fff">X1</font>
                                     </th>
                                     <th>
-                                        X2
+                                        <font color="#fff">X2</font>
                                     </th>
                                     <th>
-                                        Type
+                                        <font color="#fff">Type</font>
                                     </th>
                                     <th>
-                                        Value
+                                        <font color="#fff">Value</font>
                                     </th>
                                 </tr>
                                 
                             </thead>
                             <tbody id="table-entries">
                                 <tr>
-                                    <td><font color="#000000">1</font></td>
+                                    <td>1</td>
                                     <td><input type="number" step="0.01" id="cX1" required></td>
                                     <td><input type="number" step="0.01" id = "cX2" required></td>
-                                    <td><font color="#000000">=</font></td>
-                                    <td><font color="#000000">0</font></td>
+                                    <td>=</td>
+                                    <td>0</td>
                                 </tr>
                                 <tr>
-                                  <td><font color="#000000">0</font></td>
+                                  <td>0</td>
                                   <td><input type="number" step="0.01" id="X11" required></td>
                                   <td><input type="number" step="0.01" id = "X12" required></td>
                                   <td> <select id="r1">
@@ -352,21 +439,22 @@
             
             
                         </table>
+                        </div>
                         <br>
                         
                     <hr>
                     <div class="text-black">
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <a onclick="addCons()" class="btn btn-outline-success btn-user btn-block">
+                                <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                     Add Constraint
-
-                                </a>
+    
+                                </button>
                             </div>
                             <div class="col-sm-6">
-                                <a onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block">
+                                <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
                                     Remove Constraint
-                                </a>
+                                </button>
                             </div>
                         </div>
                         
@@ -378,15 +466,15 @@
                     <div class="text-black">
                       <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
-                              <a onclick="addVar()" class="btn btn-outline-success btn-user btn-block">
+                              <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
                                   Add Variable
-
-                              </a>
+  
+                              </button>
                           </div>
                           <div class="col-sm-6">
-                              <a onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block">
-                                  <i class="fab fa-fw"></i> Remove Variable
-                              </a>
+                              <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                  Remove Variable
+                              </button>
                           </div>
                       </div>
                     
@@ -401,20 +489,25 @@
                     <div class="solution">
                         <div class="text-black">
                             <div class="botonsitos">
-                                    <a onClick="finalSolution()" href="#mensajeS" class="btn btn-outline-info btn-user btn-block">
-                                        Solve
-                                    </a>
+                                   
+                                    <button onclick=" finalSolution()" href="#mensajeS" id="but2" class="btn btn-outline-secondary btn-icon-split" type="button">
+                             
+                                        <span class="text" id = "finalS">Final Solution</span>
+                                      </button>
                               
                                
                             </div>
                     </div>
+                    <hr>
                     <br>
-                    <div class="Table-container" id = "tableSolution">
 
-                        <h2>Outputs</h2>
+                    <div class="table-responsive" id = "tableSolution">
+
+                        <h2 class="text-center">Solution</h2>
                         <div id="menIteration"> </div>
-                        <div class="table-responsive ">
-                          <table class="table table-responsive-xl">
+                       
+                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+       
                               
                             <thead class="bg-gradient-primary">
                                 
@@ -458,6 +551,7 @@
             
             
                         </table>
+                        </div>
                         <br>
                         <div id="mensajeS">
   
@@ -565,7 +659,7 @@
       
     }
         function  generateNewConsRow(count) {
-            var st = "<tr><td><font color='#000000'>0</font></td>";
+            var st = "<tr><td>0</td>";
             for (let index = 1; index <= count; index++) {
                 st += "<td><input type='number' step='0.01' id='X"+consCount+index+"'required></td>";
 
@@ -584,7 +678,7 @@
         function addVar() {
           
             varCount++;
-            $("#thead-tr th:nth-child(" + varCount + ")").after("<th>X" + varCount + "</th>");
+            $("#thead-tr th:nth-child(" + varCount + ")").after("<th> <font color='#fff'>X" + varCount + "</font></th>");
             $("#table-entries tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
             for (let i = 1; i <= consCount; i++) {
               
@@ -691,8 +785,12 @@ function addVarSolution() {
                 }}
                   }
                   $("#solution").remove();
-                  $("#mensajeS").prepend("<div id='solution'><h3>"+mensajeSol+"</h3><h3>Solution:</h3><h5><font color='black'>"+solutionInWords+"</font></h5></div>");
                  
+                  $("#mensajeS").empty();
+                 $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+                $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>"+solutionInWords+"</font></h5>");
+                  $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
+
                 }
                 
      }, function (error) {
@@ -769,15 +867,23 @@ function addVarSolution() {
      }
   </script>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <!-- Bootstrap core JavaScript-->
+  
+   <script src="vendor/jquery/jquery.min.js"></script>
+   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+   <!-- Core plugin JavaScript-->
+   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+   <!-- Custom scripts for all pages-->
+   <script src="js/sb-admin-2.min.js"></script>
+
+   <!-- Page level plugins -->
+   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+   <!-- Page level custom scripts -->
+   <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
