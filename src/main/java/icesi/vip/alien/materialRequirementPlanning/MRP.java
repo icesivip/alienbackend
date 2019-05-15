@@ -15,13 +15,14 @@ public class MRP{
 	
 	/**
 	 * 
-	 * @param fatherName
-	 * @param id
-	 * @param name
-	 * @param leadTime
-	 * @param timeUnit
-	 * @param amount
+	 *  param fatherName
+	 *  param id
+	 *  param name
+	 *  param leadTime
+	 *  param timeUnit
+	 *  param amount
 	 */
+	  
 	public void insertProduct (String fatherName, String id, String name, int leadTime, String timeUnit, int amount) {
 		
 		if (nAryTree.getRootProduct() == null) {
@@ -34,21 +35,22 @@ public class MRP{
 	
 	/**
 	 * 
-	 * @param fatherName
-	 * @param id
-	 * @param name
-	 * @param leadTime
-	 * @param amount
-	 * @param timeUnit
-	 * @param initialInv
-	 * @param securiInv
-	 * @param date
-	 * @param programDelivery
+	 *  param fatherName
+	 *  param id
+	 *  param name
+	 *  param leadTime
+	 *  param amount
+	 *  param timeUnit
+	 *  param initialInv
+	 *  param securiInv
+	 *  param date
+	 *  param programDelivery
 	 */
+	  
 	public void inserProductMRP (String fatherName, String id, String name, int leadTime, int amount, int initialInv, int securiInv, ArrayList<String> date, ArrayList<Integer> programDelivery) {
 		
 		if (nAryTree.getRootProduct() == null) {
-			nAryTree.insertProductMRP(null, id, name, leadTime, amount, initialInv, securiInv, date, programDelivery);
+			nAryTree.insertProductMRP(null, fatherName , id, name, leadTime, amount, initialInv, securiInv, date, programDelivery);
 		} else {
 			nAryTree.insertSubProductMRP(fatherName, id, name, leadTime, amount, initialInv, securiInv, date, programDelivery);
 		}
@@ -57,27 +59,30 @@ public class MRP{
 	
 	/**
 	 * 
-	 * @return
+	 *  return
 	 */
+	  
 	public ArrayList<Product> generateProductTree () {
 		return nAryTree.getByLevels();
 	}
 	
 	/**
 	 * 
-	 * @return
+	 *  return
 	 */
+	  
 	public N_Ary_Tree getN_Ary_Tree () {
 		return nAryTree;
 	}
 	
 	/**
 	 * 
-	 * @param tree
-	 * @param rqB
-	 * @param rqBdate
-	 * @return
+	 *  param tree
+	 *  param rqB
+	 *  param rqBdate
+	 *  return
 	 */
+	  
 	public ArrayList<Integer[][]> allProductsMRP (N_Ary_Tree tree, ArrayList<Integer> rqB, ArrayList<String> rqBdate) {
 		
 		mrp = new ArrayList<>();
@@ -101,9 +106,9 @@ public class MRP{
 					aux.set(Integer.parseInt(rqBdate.get(K))-1, rqB.get(K));
 				}
 				
-				mrp.add(allMRP(tree, product.get(i).getId(), productTime, aux, rqBdate));
+				mrp.add(allMRP(tree, product.get(i).getName(), productTime, aux, rqBdate));
 			} else {
-				mrp.add(allMRP(tree, product.get(i).getId(), productTime, nAryTree.getRootProduct().search(product.get(i).darFather()).getBuyingOrder(), rqBdate));
+				mrp.add(allMRP(tree, product.get(i).getName(), productTime, nAryTree.getRootProduct().search(product.get(i).darFather()).getBuyingOrder(), rqBdate));
 			}
 			
 		}
@@ -113,8 +118,8 @@ public class MRP{
 	
 	/**
 	 * 
-	 * @param rqB
-	 * @return
+	 *  param rqB
+	 *  return
 	 */
 	private int biggestDateRqb (ArrayList<String> date) {
 		
@@ -133,12 +138,12 @@ public class MRP{
 	
 	/**
 	 * 
-	 * @param t
-	 * @param id
-	 * @param productTime
-	 * @param rqB
-	 * @param rqBdate
-	 * @return
+	 *  param t
+	 *  param id
+	 *  param productTime
+	 *  param rqB
+	 *  param rqBdate
+	 *  return
 	 */
 	private Integer[][] allMRP (N_Ary_Tree t, String id, int productTime, ArrayList<Integer> rqB, ArrayList<String> rqBdate) {
 		
@@ -231,11 +236,11 @@ public class MRP{
 
 	/**
 	 * 
-	 * @param A
-	 * @param B
-	 * @param C
-	 * @param invS
-	 * @return
+	 *  param A
+	 *  param B
+	 *  param C
+	 *  param invS
+	 *  return
 	 */
 	private int checkNetRq (int A, int B, int C, int invS) {
 		int check = 0;

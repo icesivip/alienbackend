@@ -3,6 +3,7 @@ package icesi.vip.alien.materialRequirementPlanning;
 import java.util.ArrayList;
 
 
+
 public class N_Ary_Tree{
 
 	/**
@@ -53,7 +54,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public int getLevels() {
 		return levels;
 	}
@@ -62,7 +63,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public String getName() {
 		return name;
 	}
@@ -71,7 +72,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @param levels
 	 */
-	
+	 
 	public void setLevels(int levels) {
 		this.levels = levels;
 	}
@@ -80,7 +81,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @param name
 	 */
-	
+	 
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -89,7 +90,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public Product getRootProduct() {
 		return rootProduct;
 	}
@@ -98,7 +99,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @param rootProduct
 	 */
-	
+	 
 	public void setRootProduct(Product rootProduct) {
 		this.rootProduct = rootProduct;
 	}
@@ -107,7 +108,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public int getFullSizeTree() {
 		return fullSizeTree;
 	}
@@ -116,7 +117,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @param fullSizeTree
 	 */
-	
+	 
 	public void setFullSizeTree(int fullSizeTree) {
 		this.fullSizeTree = fullSizeTree;
 	}
@@ -131,7 +132,7 @@ public class N_Ary_Tree{
 	 * @param timeUnit
 	 *            The unit time in which the product father is made.
 	 */
-	
+	 
 	public void insertProduct(String id, String name, int productionTime, String timeUnit) {
 		rootProduct = new Product(null, id, name, productionTime, 1);
 		fullSizeTree++;
@@ -150,10 +151,10 @@ public class N_Ary_Tree{
 	 * @param date
 	 * @param programDelivery
 	 */
-	
-	public void insertProductMRP (Product father, String id, String name, int productionTime, int amount, int initialInv, int securiInv, ArrayList<String> date, ArrayList<Integer> programDelivery) {
+	 
+	public void insertProductMRP (Product father, String fatherName ,String id, String name, int productionTime, int amount, int initialInv, int securiInv, ArrayList<String> date, ArrayList<Integer> programDelivery) {
 		
-		rootProduct = new Product(father, id, name, productionTime, amount, initialInv, securiInv);
+		rootProduct = new Product(father, fatherName , id, name, productionTime, amount, initialInv, securiInv);
 		
 		if(programDelivery != null) {
 			for (int i = 0; i < programDelivery.size(); i++) {
@@ -179,7 +180,7 @@ public class N_Ary_Tree{
 	 * @param timeUnit
 	 *            The product's time unit
 	 */
-	
+	 
 	public void insertSubProduct(String fatherName, String id, String name, int productionTime, int amount, String timeUnit) {
 
 		Product fatherProduct = rootProduct.search(fatherName);
@@ -205,13 +206,13 @@ public class N_Ary_Tree{
 	 * @param date
 	 * @param programDelivery
 	 */
-	
+	 
 	public void insertSubProductMRP(String fatherName, String id, String name, int productionTime, int amount, int initialInv, int securiInv, ArrayList<String> date, ArrayList<Integer> programDelivery) {
 
 		Product fatherProduct = rootProduct.search(fatherName);
 
 		if (fatherProduct != null) {
-			Product subProduct = new Product(fatherProduct, id, name, productionTime, amount, initialInv, securiInv);
+			Product subProduct = new Product(fatherProduct, fatherName , id, name, productionTime, amount, initialInv, securiInv);
 			fatherProduct.insertProduct(subProduct);
 			
 			if (programDelivery != null) {
@@ -229,7 +230,7 @@ public class N_Ary_Tree{
 	 * @param id
 	 * @return
 	 */
-	
+	 
 	public Product search (String id) {
 		
 		Product product = rootProduct.search(id);
@@ -246,7 +247,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public ArrayList<Product> inorder() {
 
 		ArrayList<Product> products = new ArrayList<>();
@@ -261,7 +262,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public ArrayList<Product> getPreorder() {
 		ArrayList<Product> products = new ArrayList<>();
 
@@ -276,7 +277,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public ArrayList<Product> getPostorder() {
 		ArrayList<Product> products = new ArrayList<>();
 		
@@ -291,7 +292,7 @@ public class N_Ary_Tree{
 	 * 
 	 * @return
 	 */
-	
+	 
 	public ArrayList<Product> getByLevels() {
 
 		ArrayList<Product> products = new ArrayList<>();
