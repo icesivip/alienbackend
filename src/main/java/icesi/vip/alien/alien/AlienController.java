@@ -1,17 +1,21 @@
 package icesi.vip.alien.alien;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
+import icesi.vip.alien.materialRequirementPlanning.MRP;
 import lombok.extern.log4j.Log4j2;
 import model.Constraint;
 import model.Model;
@@ -221,5 +225,127 @@ public class AlienController {
 		}
 
 	}
+	
+	
+	@JsonIgnore()
+	@CrossOrigin()
+	@RequestMapping("/pruebaMRP")
+	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName, @RequestParam(value = "id") String paramId,
+			@RequestParam(value = "name") String paramName, @RequestParam(value = "leadTime") String paramLeadTime,
+			@RequestParam(value = "amount") String paramAmount,
+			@RequestParam(value = "initialInv") String paramInitialInv, @RequestParam(value = "securityInv") String paramSecuriInv,
+			@RequestParam(value = "date") String paramDate,
+			@RequestParam(value = "programDelivery") String paramProgramDelivery, @RequestParam(value = "rqB") String paramRqB, 
+			@RequestParam(value = "rqBDates") String paramRqBDates) {
+
+		MRP m = new MRP();
+		
+		String [] id = paramId.split(";");
+		
+		String [] fatherName = paramFatherName.split(";");
+
+		String [] name = paramName.split(";");
+
+		String [] leadTime = paramLeadTime.split(";");
+
+		String [] amount = paramAmount.split(";");
+
+		String [] initialInv = paramInitialInv.split(";");
+
+		String [] securiInv = paramSecuriInv.split(";");
+
+		String [] dates = new String [Integer.parseInt(paramDate)];
+
+		for (int i = 0; i < dates.length; i++) {
+			dates[i] = (i+1+"");
+		}
+		
+		System.out.println(paramProgramDelivery);
+		System.out.println(paramRqB);
+		System.out.println(paramRqBDates);
+		
+		String [] programDelivery = paramProgramDelivery.split("-");
+		String [] reqBrutos = paramRqB.split(";");
+		String [] reqBrutosDates = paramRqBDates.split("-");
+
+		ArrayList<String> datesAr = new ArrayList<String>();
+		
+		ArrayList<ArrayList<Integer>> maestro = new ArrayList<>(); 
+		
+		ArrayList<Integer> programDeliveryAr = new ArrayList<Integer>();
+		
+		ArrayList<Integer> rqBAr = new ArrayList<Integer>();
+		ArrayList<String> rqBDatesAr = new ArrayList<String>();
+		
+		for (int j = 0; j < dates.length; j++) {
+			datesAr.add(dates[j]);		
+		}
+		
+		for (int i = 1; i < programDelivery.length; i++) {	
+			
+			String [] tempDelivery = programDelivery[i].split(";");	
+			programDeliveryAr = new ArrayList<>();
+			for (int j = 0; j < tempDelivery.length; j++) {
+				if (!tempDelivery[i].equals("")) {
+					int temp = Integer.parseInt(tempDelivery[j]);
+					programDeliveryAr.add(temp);
+				}
+			}
+			maestro.add(programDeliveryAr);
+		}
+		
+		for (int j = 0; j < 10; j++) {
+			rqBDatesAr.add((j+1)+"");
+		}
+
+		for (int j = 0; j < reqBrutos.length; j++) {				
+			if (!reqBrutos[j].equals("")) {
+				int temp = Integer.parseInt(reqBrutos[j]);
+				rqBAr.add(temp);					
+			}
+		}
+
+		int [] leadTimeInteger = new int [fatherName.length];
+		int [] amountInteger = new int [fatherName.length];
+		int [] initialInvInteger = new int [fatherName.length];
+		int [] securyInvInteger = new int [fatherName.length];
+		
+		for (int i = 0; i < securiInv.length; i++) {
+			if (!amount[i].equals("")) {				
+				amountInteger[i] = Integer.parseInt(amount[i]);
+			}
+			
+			initialInvInteger[i] = Integer.parseInt(initialInv[i]);
+			leadTimeInteger[i] = Integer.parseInt(leadTime[i]);
+			securyInvInteger[i] = Integer.parseInt(securiInv[i]);
+		}
+				
+		for (int i = 0; i < fatherName.length; i++) {
+			System.out.println(maestro.get(i));
+			int amount_1 = !amount[i].equals("") ? Integer.parseInt(amount[i]): 0; 
+			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), amount_1, 
+					Integer.parseInt(initialInv[i]),
+					Integer.parseInt(securiInv[i]),
+					datesAr, maestro.get(i));
+		}
+
+		ArrayList<Integer[][]> a = m.allProductsMRP(m.getN_Ary_Tree(),rqBAr,rqBDatesAr);
+		
+		System.out.println();
+		System.out.println("=======Nuevo MRP=======");
+		System.out.println();
+		for(int i = 0; i< a.size(); i++) {
+			for (int j = 0; j < a.get(i).length; j++) {
+				for(int k = 0; k < a.get(i)[0].length; k++) {
+					System.out.print(a.get(i)[j][k] + " ");
+				}
+				System.out.println();
+			}
+		}
+		
+		return m;
+
+	}
+
 
 }
