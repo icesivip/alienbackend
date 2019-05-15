@@ -51,6 +51,8 @@ public class Product {
 	 */
 	private Product father;
 	
+	private String fatherName;
+	
 	/**
 	 * 
 	 */
@@ -259,6 +261,14 @@ public class Product {
 		this.timeUnit = timeUnit;
 	}
 	
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
 	/**
 	 * 
 	 * @param products
@@ -361,7 +371,7 @@ public class Product {
 	}
 
 	
-	public Product (Product father, String id, String name, int leadTime, int amount, int initialInv, int securiInv) {
+	public Product (Product father, String fatherName ,String id, String name, int leadTime, int amount, int initialInv, int securiInv) {
 		
 		this.name = name;
 		this.id = id;
@@ -370,7 +380,7 @@ public class Product {
 		this.father = father;
 		this.initialInv = initialInv;
 		this.securityInv = securiInv;
-		
+		this.fatherName = fatherName;
 		this.programDelivery = new Hashtable<>();
 		
 		subProducts = new ArrayList<>();
