@@ -8,7 +8,7 @@ import model.*;
 
 public class Simplex implements Solver{
 
-    private static final int BIG_M = 1000000;
+    public static final int BIG_M = 1000000;
     
 	private Model model;
         private SensivilityAnalysis analysis;
@@ -64,7 +64,8 @@ public class Simplex implements Solver{
             generateConstraintsLeftMatrix(equations, model.getType().equals(Model.MAXIMIZE));
             solve(model);
             } catch (Exception e) {
-            throw new Exception("Characters not allowed");
+//            throw new Exception("Characters not allowed");
+            	 e.printStackTrace();
             }
 //            System.out.print(isMaximization);
         }
@@ -509,12 +510,12 @@ public class Simplex implements Solver{
         return theta;
     }
 
-    public String buildAnalysis() {
-       analysis = new SensivilityAnalysis(this, model, solution, SlackOF, equalities, Final);
-       return analysis.getEquations();
+    public void buildAnalysis() {
+    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, SlackOF, equalities, Final);
     }
 
     public void getIntervals() {
-        analysis.getIntervalsD();
+        analysis.getIntervalsDConstraints();
+        analysis.getIntervalsDFO();
     }
 }
