@@ -642,11 +642,21 @@
                 }
                 var obj = split[1].split('?');
                 var obj2 = obj[1].split('&');
-                var obj3 = obj2[1].split('n');
-                var numVar = obj3[0]
-                console.log(numVar);
                
-                
+                var obj3 = obj2[1].split('=');
+                var numVar = obj3[1]
+               
+               
+                  $('#of-body td').each(function (index) {
+                    if (index == 0) {
+                        if (obj2[0].substring(5, 14) == 'MAXIMIZE') {
+                            $(this).find('select').val("MAXIMIZE");
+                        }
+                        else {
+                            $(this).find('select').val("MINIMIZE");
+                        }
+                  }
+                }); 
                 
               
             }, function (error) {
