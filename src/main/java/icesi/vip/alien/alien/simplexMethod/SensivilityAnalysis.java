@@ -23,13 +23,12 @@ import model.Variable;
 public class SensivilityAnalysis {
 
     private ArrayList<Integer> posSlacks;
-//    Simplex simplexMethod;
     int[] base;
     Solution solution;
     Model modeloS;
     Matrix finalM;
     private String equationsFO;
-    private String equationsConstraints;
+	private String equationsConstraints;
     double[][] intervalsFO;
     double[][] intervalsConstraints;
     
@@ -46,8 +45,16 @@ public class SensivilityAnalysis {
                 posSlacks.add(i);
         }
     }
+    
+    public String getEquationsFO() {
+		return equationsFO;
+	}
 
-    String getEquationsConstraints() {
+	public String getEquationsConstraints() {
+		return equationsConstraints;
+	}
+	
+    String buildEquationsConstraints() {
         StringBuilder equations = new StringBuilder("<html><body>");
              try {
                   equations.append("Z = ");
@@ -86,7 +93,7 @@ public class SensivilityAnalysis {
         return equations.toString();
 }
     public double[][] getIntervalsDConstraints() {
-        String toSolve = getEquationsConstraints();
+        String toSolve = buildEquationsConstraints();
         System.out.println(toSolve);
         
         String [] lines = toSolve.split("<br>");
@@ -120,21 +127,21 @@ public class SensivilityAnalysis {
             }
         }
         Matrix alv = new Matrix(intervals);
-        intervalsConstraints = intervals;
+        intervalsConstraints = Simplex.roundMatrix(intervals);
         alv.print(2, 2);
         return intervals;
     }
 
     public double[][] getIntervalsDFO() {
-        String toSolve = getEquationsFO();
+        String toSolve = buildEquationsFO();
         System.out.println(toSolve);
         String [] lines = toSolve.split("<br>");
         String[] line = lines[0].split(" ");
-        double[][] doubMatrix = new double[lines.length][(line.length-3)/2];
+        double[][] doubMatrix = new double[lines.length][getInitialVars()];
         double[] constants = new double[lines.length];
         
-        double [][] intervals = initializeIntervals(new double[constants.length][2]);
-        for (int i = 0; i < lines.length ; i++) {
+        double [][] intervals = initializeIntervals(new double[getInitialVars()][2]);
+        for (int i = 0; i < lines.length; i++) {
             line = lines[i].split(" ");
             constants[i] = Double.parseDouble(line[2]);
             for (int j = 3; j < line.length; j+=2) {
@@ -163,18 +170,27 @@ public class SensivilityAnalysis {
             }
         }
         Matrix alv = new Matrix(intervals);
-        intervalsFO = intervals;
+        intervalsFO = Simplex.roundMatrix(intervals);
         alv.print(2, 2);
         return intervals;
     }
-    String getEquationsFO() {
+    private int getInitialVars() {
+    	int count = 0;
+    	for (int i = 0; i < modeloS.getVariableCount(); i++) {
+			if(modeloS.getVariableAt(i).getName().startsWith("X"))
+				count++;
+		}
+    	return count;
+	}
+
+	String buildEquationsFO() {
         StringBuilder equations = new StringBuilder("<html><body>");
              try {
              int x = 0;
-            for (int i = 1; i < finalM.getRowDimension(); i++) {
+            for (int i = 1; i < modeloS.getVariableCount(); i++) {
                while( x<modeloS.getVariableCount() && (solution.getVariableValue(modeloS.getVariableAt(x)) != 0 )){
                    x++;
-                   }
+                   }	
                    if(x==modeloS.getVariableCount())
                    break;
                    
@@ -226,4 +242,5 @@ public class SensivilityAnalysis {
         }
         return intervals;
     }
+
 }
