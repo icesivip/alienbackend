@@ -22,19 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-    <style>
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-    </style>
-
 </head>
 
 <body id="page-top">
@@ -181,207 +168,126 @@
 
                 <!-- Begin page content -->
 
-                <div  class="container-fluid">
+                <div class="container-fluid">
                     <form class="user" id="user">
-                        <div id="divTableData" class="row">
-                            <table id="tableData" class="table-responsive table text-dark">
-                                <thead>
-                                    <tr class="bg-success">
-                                        <th colspan="6" scope="col" class="text-center">MPS</th>
-                                    </tr>
-                                    <tr id="periodsHeader" class="bg-success">
-                                        <th scope="col">Period</th>
-                                        <th class="text-center" scope="col">1</th>
-                                        <th class="text-center" scope="col">2</th>
-                                        <th class="text-center" scope="col">3</th>
-                                        <th class="text-center" scope="col">4</th>
-                                        <th id="colMaker" class="text-center nav-item dropdown no-arrow"
-                                            style="width: 8%; height: 100%;" scope="col">
-                                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="text-center">...</span>
-                                            </a>
-                                            <!-- Dropdown - Resize Information -->
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                                aria-labelledby="userDropdown">
-                                                <h6 class="dropdown-header">
-                                                    Number of periods:
-                                                </h6>
-                                                <input class="form-control border-0 dropdown-item" id="tamPeriods"
-                                                    min="4" type="number" placeholder="# Periods">
-                                                <div class="dropdown-divider"></div>
-                                                <input class="form-control border-0 btn btn-outline-info"
-                                                    id="resizePeriods" type="button" name="resizePeriods" value="Resize"
-                                                    onclick="resize()">
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr id="grossRequeriment">
-                                        <th class="bg-success" scope="row">Gross Requeriments</th>
-                                        <td style="width: 8%; height: 100%;"><input id="gross1" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross2" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross3" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="gross4" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                    </tr>
-                                    <tr id="scheduledReceptions">
-                                        <th class="bg-success" scope="row">Scheduled Receptions</th>
-                                        <td style="width: 8%; height: 100%;"><input id="sr1" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr2" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr3" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                        <td style="width: 8%; height: 100%;"><input id="sr4" class="border-0"
-                                                type="number" min="0" style="width: 100%">
-                                        </td>
-                                    </tr>
-                                    <tr id="AvailableInventoryProgrammed">
-                                        <th class="bg-success" scope="row">Available Inventory Programmed</th>
-                                    </tr>
-                                    <tr id="Netrequirements">
-                                        <th class="bg-success" scope="row">Net requirements</th>
-                                    </tr>
-                                    <tr id="ReceptionsOfPlannedOrders">
-                                        <th class="bg-success" scope="row">Receptions of planned orders</th>
-                                    </tr>
-                                    <tr id="releasedPlanOrders">
-                                        <th class="bg-success" scope="row">Release of planned orders</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="itemName" type="text" name="itemName"
-                                        placeholder="Name of the item" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="levelCode" type="text" name="levelCode"
-                                        placeholder="Level code" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="initialInventory" type="number" min="0"
-                                        name="initialInventory" placeholder="Initial inventory" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="leadTime" type="number" min="0" name="leadTime"
-                                        placeholder="Lead time" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="securityStock" type="number" min="0"
-                                        name="securityStock" placeholder="Security stock" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="costArticle" type="text" name="costArticle"
-                                        placeholder="Cost of the article" required>
-                                </div>
+                    <div class="row">
+                        <table id="tableData" class="table-responsive table text-dark">
+                            <thead>
+                                <tr class="bg-success">
+                                    <th colspan="16" scope="col" class="text-center">MPS</th>
+                                </tr>
+                                <tr class="bg-success">
+                                    <th scope="col">Period</th>
+                                    <th class="text-center" scope="col">1</th>
+                                    <th class="text-center" scope="col">2</th>
+                                    <th class="text-center" scope="col">3</th>
+                                    <th class="text-center" scope="col">4</th>
+                                    <th class="text-center" scope="col">...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="grossRequeriment">
+                                    <th id="levelOfDetail" class="bg-success" scope="row">Gross Requeriments</th>
+                                    <td style="width: 8%; height: 100%;"><input id="gross1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="gross4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                </tr>
+                                <tr id="scheduledReceptions">
+                                    <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                    <td style="width: 8%; height: 100%;"><input id="sr1" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr2" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr3" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                    <td style="width: 8%; height: 100%;"><input id="sr4" class="form-control border-0" type="number" min="0" style="width: 100%"></td>
+                                </tr>
+                                <tr id="AvailableInventoryProgrammed">
+                                    <th class="bg-success" scope="row">Available Inventory Programmed</th>
+
+                                </tr>
+                                <tr id ="Netrequirements">
+                                    <th class="bg-success" scope="row">Net requirements</th>
+                                </tr>
+                                <tr id="ReceptionsOfPlannedOrders">
+                                    <th class="bg-success" scope="row">Receptions of planned orders</th>
+                                </tr>
+                                <tr id="releasedPlanOrders">
+                                    <th class="bg-success" scope="row">Release of planned orders</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="itemName" type="text" name="itemName" placeholder="Name of the item" required>
                             </div>
-                            <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost"
-                                        placeholder="Maintenance cost" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="orderingCost" type="text" name="orderingCost"
-                                        placeholder="Cost of ordering" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-dark custom-select bg-success" id="periodicity" required>
-                                        <option value="" name="periodicity" disabled selected hidden>Time between
-                                            periods (periodicity)
-                                        </option>
-                                        <option name="Annual">Annual</option>
-                                        <option name="Monthly">Monthly</option>
-                                        <option name="Weekly">Weekly</option>
-                                        <option name="Daily">Daily</option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
-                                        <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
-                                        <option name="Lot for Lot">Lot for Lot</option>
-                                        <option name="Economic Order Quantity">Economic Order Quantity</option>
-                                        <option name="Periods Of Suply">Periods Of Suply</option>
-                                        <option name="Period Order Quantity">Period Order Quantity</option>
-                                        <option name="Least Unit Cost">Least Unit Cost</option>
-                                        <option name="Least Total Cost">Least Total Cost</option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="TPeriodOFSupply" type="number" min="0"
-                                        name="TPeriodOFSupply" placeholder="Period of supply">
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="custom-select bg-success" id="levelOfDetail" required>
-                                        <option value="" name="levelOfDetail" disabled selected hidden>Level of detail
-                                        </option>
-                                        <option name="High">High</option>
-                                        <option name="Low">Low</option>
-                                    </select>
-                                </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="levelCode" type="text" name="levelCode" placeholder="Level code" required>
                             </div>
-                            <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <label>Others options:</label>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <input id="makeTotalCosts" name="otherOptions" type="checkbox"
-                                                value="makeTotalCosts">
-                                        </div>
-                                    </div>
-                                    <input type="text" class="text-dark form-control bg-success" value="Total costs"
-                                        readonly>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <input id="makePerformanceIndicators" name="otherOptions" type="checkbox"
-                                                value="makePerformanceIndicators">
-                                        </div>
-                                    </div>
-                                    <input type="text" class="text-dark form-control bg-success"
-                                        value="Indicators of performance" readonly>
-                                </div>
-                                <div class="input-group-append mb-3 flex-nowrap justify-content-end">
-                                    <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate"
-                                        value="Calculate">
-                                        <input class="btn btn-outline-primary" id="calculateAll" type="button" name="calculateAll"
-                                        value="CalculateAll"   onclick="solveModel(true)">
-                                        <input class="btn btn-outline-primary" id="compareResults" type="button" name="compareResults"
-                                        value="Compare Results" onclick="addTableComparison()">
-                                </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="initialInventory" type="number" min="0" name="initialInventory" placeholder="Initial inventory" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="leadTime" type="number" min="0" name="leadTime" placeholder="Lead time" required>
                             </div>
                         </div>
-                    </form>
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost" placeholder="Maintenance cost" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input class="form-control" id="orderingCost" type="text" name="orderingCost" placeholder="Cost of ordering" required>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
+                                    <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
+                                    <option name="lotxlot">LotxLot</option>
+                                    <option name="another">Another</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <select class="custom-select bg-success" id="levelOfDetail" required>
+                                    <option value="" name="levelOfDetail" disabled selected hidden>Level of detail</option>
+                                    <option name="High">High</option>
+                                    <option name="Low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3 flex-nowrap">
+                                <label >Others options:</label>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input id="makeTotalCosts" name="otherOptions" type="checkbox" value="makeTotalCosts">
+                                    </div>
+                                </div>
+                                <input type="text" class="text-dark form-control bg-success" value="Total costs" readonly>
+                            </div>
+                            <div class="input-group mb-3 flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input id="makePerformanceIndicators" name="otherOptions" type="checkbox" value="makePerformanceIndicators">
+                                    </div>
+                                </div>
+                                <input type="text" class="text-dark form-control bg-success" value="Indicators of performance" readonly>
+                            </div>
+                            <div class="input-group-append mb-3 flex-nowrap justify-content-end">
+                                <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate" value="Calculate">
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 </div>
-                
 
                 <!-- End of page content -->
 
                 <!-- Footer -->
-                <footer id="piso"class="sticky-footer bg-white">
+                <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow"
-                                    href="https://github.com/icesivip">https://github.com/icesivip</a> - 2019
-                                <br><br>If you want further information feel free to contact us at vip@icesi.edu.co
-                            </span>
+                            <span>Copyright &copy; 2019</span>
                         </div>
                     </div>
                 </footer>
@@ -397,6 +303,25 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Begin Page Content -->
 
     </div>
@@ -426,414 +351,88 @@
             e.preventDefault();
             solveModel();
         });
-        function addTableComparison(){
-            $("#content-wrapper").append("<table id=\"comparisonTable\" class=\"table-responsive table text-dark\">\r\n" + 
-			"                        <thead>\r\n" + 
-			"                            <tr id=\"comparisonHeader\" class=\"bg-success\">\r\n" + 
-			"                                <th scope=\"col\">Indicators</th>\r\n" + 
-			"                                <th scope=\"col\">Lot for Lot</th>\r\n" + 
-			"                                <th scope=\"col\">Economic Order Quantity</th>\r\n" + 
-			"                                <th scope=\"col\">Periods Of Supply</th>\r\n" + 
-			"                                <th scope=\"col\">Period Order Quantity</th>\r\n" + 
-			"                                <th scope=\"col\">Least Unit Cost</th>\r\n" + 
-			"                                <th scope=\"col\">Least Total Cost</th>\r\n" + 
-			"                            </tr>\r\n" + 
-			"                        </thead>\r\n" + 
-			"                        <tbody>\r\n" + 
-			"                            <tr id=\"maintainCost\">\r\n" + 
-			"                                <th class=\"bg-success\" scope=\"row\">Maintainance Cost</th>\r\n" + 
-			"                            </tr>\r\n" + 
-			"                            <tr id=\"organizeCost\">\r\n" + 
-			"                                <th class=\"bg-success\" scope=\"row\">Sorting Cost</th>\r\n" + 
-			"                            </tr>\r\n" + 
-			"                            <tr id=\"averageInventory\">\r\n" + 
-			"                                <th class=\"bg-success\" scope=\"row\">Average Inventory</th>\r\n" + 
-			"                            </tr>\r\n" + 
-			"                            <tr id=\"inventoryRot\">\r\n" + 
-			"                               <th class=\"bg-success\" scope=\"row\">Inventory Rotation</th>\r\n" + 
-			"                            </tr>\r\n" + 
-			"                        </tbody>\r\n" + 
-			"                    </table>");
-            for(var i=0;i<5;i++){
-                solveModelC(i);
-            }
-        }
-        function resize() {
-            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
-            var actualPeriods = 0;
-            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
-            if ($('#tamPeriods').val() > actualPeriods) {
-                var totalPeriods = $('#tamPeriods').val();
-                var toBeAdded = totalPeriods - actualPeriods;
-                //Span del mps mayor (value + 2)
-                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
-                //Recorrer cada fila y add una td
-                var resizeCommand = document.getElementById("colMaker");
-                var pHeader = document.getElementById("periodsHeader");
-                resizeCommand.parentNode.removeChild(resizeCommand);
-                for (var i = 0; i < toBeAdded; i++) {
-                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + i + 1) + "</th>")
-                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
-                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
-                }
-                pHeader.appendChild(resizeCommand);
-            } else if ($('#tamPeriods').val() >= 4/*Valor mímimo de periodos admitidos*/) {
-                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = $('#tamPeriods').val() + 2;
-                while ($('#tamPeriods').val() < actualPeriods) {
-                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)]);
-                    dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
-                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
-                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
-                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
-                }
-                //Work in progress
-            }
-        }
 
-        function getBruteRequirements() {
-            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
+        function getBruteRequirements(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
             var cellsOfRow = "";
             var dataOfTable = [];
             console.log("llega");
             cellsOfRow = tableDat.getElementsByTagName('tr');
             cells = cellsOfRow[0].getElementsByTagName('td');
-            for (var j = 0; j < cells.length; j++) {
+            for(var j = 0; j < cells.length; j++){
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
 
         }
 
-        function getScheduledReceptions() {
-            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
+        function getScheduledReceptions(){
+            var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
             var cellsOfRow = "";
             var dataOfTable = [];
             console.log("llega");
             cellsOfRow = tableDat.getElementsByTagName('tr');
             cells = cellsOfRow[1].getElementsByTagName('td');
-            for (var j = 0; j < cells.length; j++) {
+            for(var j = 0; j < cells.length; j++){
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
 
         }
 
-
-
-        function generateTables(){
-            var lotSizingRule = document.getElementById('lotSizingRule');
-            var content = document.getElementById('content');
-            //lotSizingRule.childNodes.length
-            for(var i=0; i<lotSizingRule.childNodes.length;i++){
-                if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
-                
-                    //Creamos la tabla
-                    var table   = document.createElement("table");
-                    table.id="tableData";
-                    table.className="table-responsive table text-dark";
-                    //Creamos la cabeza de la tabla
-                    var tblHead = document.createElement("thead");
-                    createHeadTable(lotSizingRule.childNodes.item(i).value,tblHead);
-                    //Creamos el body de la tabla
-                    var tblBody = document.createElement("tbody");
-                    createBodyTable(lotSizingRule.childNodes.item(i).value,tblBody);
-                    //Agregamos la cabeza y el cuerpo
-                    table.appendChild(tblHead);
-                    table.appendChild(tblBody);
-                    var piso = document.getElementById('piso');
-                    content.insertBefore(table,piso );
-                }
-              
-            }
-        }
-
-        function createBodyTable(lotSizingRule,tblBody){
-
-            for(var i=0;i<2;i++){
-            var bodyTr = document.createElement("tr");
-            var th = document.createElement("th");
-            th.className="bg-success"
-            th.scope="row";
-                if(i==0){
-                    bodyTr.id="grossRequeriment";
-                    th.textContent="Gross Requeriments";
-                }else{
-                    bodyTr.id="scheduledReceptions";
-                    th.textContent="Scheduled Receptions";
-
-                }
-            bodyTr.appendChild(th);
-            for(var j =0; j<4;j++){
-                var td = document.createElement("td");
-                td.style="width: 8%; height: 100%;";
-                var input = document.createElement("input");
-                if(i==0){
-                    input.id="gross"+(j+1)
-                }else{
-                    input.id="src"+(j+1)
-                }
-                input.className="border-0";
-                input.type="number";
-                input.min="0";
-                input.style="width: 100%";
-                td.appendChild(input);
-                bodyTr.appendChild(td);
-            }     
-            tblBody.appendChild(bodyTr);
-            }
-
-            var texts = ["Available Inventory Programmed", "Net requirements", "Receptions of planned orders","Release of planned orders"];
-            var bodyTr = document.createElement("tr");
-            for(var i=0; i<texts.length;i++){
-                var Tr = document.createElement("tr");
-                Tr.id=texts[i].replace(/ /g, "")+lotSizingRule.replace(/ /g, "");
-                var th = document.createElement("th");
-                th.className="bg-success";
-                th.scope="row";
-                th.textContent=texts[i];
-                Tr.appendChild(th);
-                bodyTr.appendChild(Tr);
-            }
-            tblBody.appendChild(bodyTr);
-
-          
-        }
-        function createHeadTable(lotSizingRule,tblHead){
-                    //Creamos el primer Tr del head de la tabla y asignamos valores
-                    var headTr = document.createElement("tr");
-                    headTr.className = "bg-success";
-                    var headTrTh = document.createElement("th");
-                    headTrTh.attributes.colspan = "6";
-                    headTrTh.scope = "col";
-                    headTrTh.className ="text-center";
-                    headTrTh.textContent = "MPS (Problema solucionado con al tecnica de loteo: "+lotSizingRule+")";                
-                    headTr.appendChild(headTrTh);
-                    //Creamos el segundo Tr del head de la tabla y asignamos valores
-                    var headTr2 = document.createElement("tr");
-                    headTr2.id = "periodsHeader";
-                    headTr2.className="bg-success";
-                     //Creamos el segundo los th del head de la tabla y asignamos valores
-                    for(var j=0;j<5;j++){
-                        var th = document.createElement("th");
-                        th.scope="col";
-                        if(j==0){
-                        th.textContent="Period";
-                        }else{
-                        th.textContent=""+(j);
-                        th.className="text-center";
-                        }
-                        headTr2.appendChild(th);
-                    }       
-                     /*    var th = document.createElement("th");
-                        th.id="colMaker";
-                        th.className="text-center nav-item dropdown no-arrow";
-                        th.style="width: 8%; height: 100%;";
-                        th.scope="col";
-                        var a = document.createElement("a");
-                        a.className="nav-link dropdown-toggle";
-                        a.href="#";
-                        a.id="userDropdown";
-                        a.role="button";
-                        a.setAttribute("data-toggle","dropdown");
-                        a.setAttribute("aria-haspopup","true");
-                        a.setAttribute("aria-expanded","false");
-
-                        var span = document.createElement("span");
-                        span.className="text-center";
-                        span.textContent="..."
-                        a.appendChild(span);
-                        th.appendChild(a);
-                       
-                        var div = document.createElement("div");
-                        div.className="dropdown-menu dropdown-menu-right shadow animated--grow-in";
-                        div.setAttribute("aria-labelledby","userDropdown");
-                        var h6 = document.createElement("h6");
-                        h6.className="dropdown-header";
-                        h6.textContent=" Number of periods:";
-                        div.appendChild(h6);
-                        var imput = document.createElement("input");
-                        imput.className="form-control border-0 dropdown-item";
-                        imput.id="tamPeriods";
-                        imput.min=""
-                        imput.type="number";
-                        imput.placeholder="# Periods";
-                        div.appendChild(imput);
-                        var div2 = document.createElement("div");
-                        div2.className="dropdown-divider";
-                        div.appendChild(div2);
-                        var imput2 = document.createElement("input");
-                        imput2.className="form-control border-0 btn btn-outline-info";
-                        imput2.id="resizePeriods";
-                        imput2.type="button";
-                        imput2.name="resizePeriods";
-                        imput2.value="Resize";
-                        imput2.onclick="resize()";
-                        div.appendChild(imput2);
-                        th.appendChild(div);
-                        headTr2.appendChild(th);*/
-                    tblHead.appendChild(headTr);
-                    tblHead.appendChild(headTr2);
-        }
-
-        function constructRequestString(compareRequest,index) {
-            if(compareRequest==false){
-                lotSizingRule = $('#lotSizingRule').val();
-            }else{
-                if(index==0)
-                    lotSizingRule="Lot for Lot";
-                if(index==1)
-                    lotSizingRule="Economic Order Quantity";
-                if(index==2)
-                    lotSizingRule="Periods Of Suply";
-                if(index==3)
-                    lotSizingRule="Period Order Quantity";
-                if(index==4)
-                    lotSizingRule="Least Unit Cost";
-                if(index==5)
-                    lotSizingRule="Least Total Cost";
-            }
-            var result = new Array(1);
-            result[0]=construcRequestCommon()+ "&lotSizingRule=" + lotSizingRule;
-            return result
-        }
-        function construcRequestCommon(){
+        function constructRequestString() {
             name = $("#itemName").val();
             levelCode = $("#levelCode").val();
             initialInventory = $("#initialInventory").val();
             leadTime = $("#leadTime").val();
             maintenanceCost = $("#maintenanceCost").val();
             orderingCost = $("#orderingCost").val();
-            securityStock = $('#securityStock').val();
-            costArticle = $('#costArticle').val();
-            periodicity = $('#periodicity').val();
-            TPeriodOFSupply = $('#TPeriodOFSupply').val();
-            scheduledReceptions = "";
-            grossRequeriment = "";
-            for (var i = 1; i < document.getElementById('grossRequeriment').childElementCount; i++) {
-                grossRequeriment = grossRequeriment + $('#gross' + i).val() + "-";
-                scheduledReceptions = scheduledReceptions + $('#sr' + i).val() + "-";
+            scheduledReceptions="";
+            grossRequeriment="";
+            for(var i =1; i<document.getElementById('grossRequeriment').childElementCount;i++){
+                grossRequeriment = grossRequeriment+$('#gross'+i).val()+"-";
+                scheduledReceptions = scheduledReceptions+$('#sr'+i).val()+"-";
+                 
+             
             }
-            return "?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime 
-            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost;
             
+            //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
+            //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
+            console.log("?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost);
+            return "?scheduledReceptions="+scheduledReceptions+"&grossRequeriment="+grossRequeriment+"&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime+"&maintenanceCost=" + maintenanceCost;
         }
 
-        function constructRequestStringAll() {
-            var lotSizingRule = document.getElementById('lotSizingRule');
-            var result = new Array(lotSizingRule.childNodes.length);
-            for(var i=0;i<lotSizingRule.childNodes.length;i++){
-                if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
-                    result[i] = construcRequestCommon()+"&lotSizingRule=" + lotSizingRule.childNodes.item(i).value;
-                }
+        function solveModel(){
+            $(".cover").toggle(400);
+            var request = constructRequestString();
 
-            }
-            return result;
-            
-        }
-
-
-        function addData(lotSizingRule,data){    
-                        //console.log("All: "+data[i].scheduledAvailableStock)
-                        $(".AvailableInventoryProgrammed"+lotSizingRule.replace(/ /g, "")).remove();
-                        $(".Netrequirements"+lotSizingRule.replace(/ /g, "")).remove();
-                        $(".ReceptionsOfPlannedOrders"+lotSizingRule.replace(/ /g, "")).remove();
-                        $(".releasedPlanOrders"+lotSizingRule.replace(/ /g, "")).remove();
-                        for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
-                            $("#AvailableInventoryProgrammed"+lotSizingRule.replace(/ /g, "")).append("<td class='AvailableInventoryProgrammed' style='width: 8%; height: 100%';>" + data.scheduledAvailableStock[i] + "</td>");
-                            $("#Netrequirements"+lotSizingRule.replace(/ /g, "")).append("<td class='Netrequirements' style='width: 8%; height: 100%';>" +  data.netRequirements[i] + "</td>");
-                            $("#ReceptionsOfPlannedOrders"+lotSizingRule.replace(/ /g, "")).append("<td class='ReceptionsOfPlannedOrders' style='width: 8%; height: 100%';>" + data.planOrders[i] + "</td>");
-                            $("#releasedPlanOrders"+lotSizingRule.replace(/ /g, "")).append("<td  class='releasedPlanOrders' style='width: 8%; height: 100%';>" + data.releasedPlanOrders[i] + "</td>");
-                        }   
-
-        }
-        function solveModel(all) {
-            $(".cover").toggle(400);    
-            var tec = ["LotforLot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
-            var request = new Array(1);
-            var url="";
-            if(!all){
-                request =constructRequestString(false,0);
-                url ="https://icesiviptest.herokuapp.com/master";
-        
-            }else{
-                generateTables();
-                request =constructRequestStringAll();
-                url ="https://icesiviptest.herokuapp.com/master";
-            }      
-            var allAux=true;
-            var contador=0;
-            for(var i=0;i<request.length&&allAux;i++){
-                if(!all){
-                    allAux=false;
-                }
-                if(request[i]!=null){
-
-                    $.ajax({
-                        url: url + request[i]
+            $.ajax({
+                        url: "https://viptest1.herokuapp.com/master" + request
                     }).then(function (data) {
-                        $(".cover").toggle(400);
+                     $(".cover").toggle(400);
+                        console.log("Funciona");
+                        console.log(data);
                         AvailableInventoryProgrammed = data.scheduledAvailableStock;
-                        Netrequirements = data.netRequirements;
-                        ReceptionsOfPlannedOrders = data.planOrders;
-                        ReleaseOfPlannedOrders = data.releasedPlanOrders;
-                        if(!all){
-                            addData("",data);
-                            
-                         }else{
-                            addData(tec[contador],data);
-                            contador++;
+                        Netrequirements=data.netRequirements;
+                        ReceptionsOfPlannedOrders=data.planOrders;
+                        ReleaseOfPlannedOrders=data.releasedPlanOrders;
+                      
+                        for( var i =0;+i<AvailableInventoryProgrammed.length;i++){
+                        $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[i]+"</td>");
+                        $("#Netrequirements").append("<td style='width: 8%; height: 100%';>"+Netrequirements[i]+"</td>");
+                        $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>"+ReceptionsOfPlannedOrders[i]+"</td>");
+                        $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>"+releasedPlanOrders[i]+"</td>");
                         }
+                     //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
                     }, function (error) {
                         alert(error)
                         $(".cover").toggle(400);
                         console.log(error);
+                        console.log("no funciona");
                     })
-
-                }
-            }
-
-
-        }
-        function solveModelC(index) {
-            $(".cover").toggle(400);
-            var request = constructRequestString(true,index);
-            $.ajax({
-                //http://localhost:8080
-                url: "https://icesiviptest.herokuapp.com/master" + request
-            }).then(function (data) {
-                $(".cover").toggle(400);
-                console.log("Funciona");
-                console.log(data);
-                AvailableInventoryProgrammed = data.scheduledAvailableStock;
-                ReceptionsOfPlannedOrders = data.planOrders;
-                maintainCost=0;
-                orderCost=0;
-                rotInventory=0;
-                for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
-                    maintainCost+=AvailableInventoryProgrammed[i];
-                    if(ReceptionsOfPlannedOrders[i]!=(0)){
-                        orderCost++;
-                    }
-                    rotInventory+=data.bruteRequirements[i];
-                }
-                avgInventory=maintainCost;
-                maintainCost=maintainCost*data.maintenanceCost;
-                orderCost=orderCost*data.preparationCost;
-                avgInventory=avgInventory/data.tperiodOFSupply;
-                rotInventory=rotInventory/avgInventory;
-                $("#maintainCost").append("<td style='width: 15%; height: 100%';>" + maintainCost + "</td>");
-                $("#organizeCost").append("<td style='width: 15%; height: 100%';>" + orderCost + "</td>");
-                $("#averageInventory").append("<td style='width: 15%; height: 100%';>" + avgInventory + "</td>");
-                $("#inventoryRot").append("<td style='width: 15%; height: 100%';>" + rotInventory + "</td>");
-                //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
-            }, function (error) {
-                alert(error)
-                $(".cover").toggle(400);
-                console.log(error);
-                console.log("no funciona");
-            })
         }
     </script>
 </body>
 
 </html>
+

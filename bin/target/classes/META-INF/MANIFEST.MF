@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
-Built-By: root
-Build-Jdk: 11.0.3
 Implementation-Title: alien
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: juan0
 Implementation-Vendor-Id: icesi.vip.alien
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
- -starter-parent/alien
+Build-Jdk: 1.8.0_202
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/alien
 Created-By: Maven Integration for Eclipse
+
