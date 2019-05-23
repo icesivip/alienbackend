@@ -165,19 +165,22 @@ public class AlienController {
 			@RequestParam(value = "levelCode", required = true) String levelCode,
 			@RequestParam(value = "initialInventory", required = true) String initialInventory,
 			@RequestParam(value = "leadTime", defaultValue = "1") String leadTime,
-			@RequestParam(value = "securityStock", defaultValue = "1") String securityStock,
-			@RequestParam(value = "costArticle", defaultValue = "1") String articleCost,
 			@RequestParam(value = "maintenanceCost", defaultValue = "1") String maintenanceCost,
 			@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
-			@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule,
-			@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
-			@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
+			@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule) throws Exception {
 
-		//Si no agrego algun cambio en el backend no me deja hacer pull, maldita sea
+		// log.info("funciona");
+
 		try {
+			switch (lotSizingRule) {
+			case ("1"):
+				lotSizingRule = MasterPlanSchedule.LOTXLOT;
+				break;
+			}
 
-			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime), Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name, 
-					Double.parseDouble(articleCost), Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), periodicity, Integer.parseInt(TPeriodOFSupply));
+			MasterPlanSchedule m = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime),
+					Integer.parseInt(initialInventory), 2, levelCode, name, 1.0, Double.parseDouble(orderingCost),
+					Double.parseDouble(maintenanceCost), "" + 1);
 
 			scheduledReceptions = scheduledReceptions.substring(0, scheduledReceptions.length() - 1);
 			grossRequeriment = grossRequeriment.substring(0, grossRequeriment.length() - 1);
@@ -185,14 +188,14 @@ public class AlienController {
 			String[] gross = grossRequeriment.split("-");
 			String[] schedules = scheduledReceptions.split("-");
 			for (int i = 0; i < gross.length; i++) {
-				MPS.addBruteRequirement(Integer.parseInt(gross[i]));
-				MPS.addScheduleReception(Integer.parseInt(schedules[i]));
+				m.addBruteRequirement(Integer.parseInt(gross[i]));
+				m.addScheduleReception(Integer.parseInt(schedules[i]));
 			}
-
-			MPS.createMPS();
-			return MPS;
+			// m.calculatePlanOrders();
+			m.hopeThisWorks();
+			return m;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception(e.getStackTrace().toString());
 		}
 
 	}
