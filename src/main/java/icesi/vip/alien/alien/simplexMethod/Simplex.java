@@ -490,25 +490,21 @@ public class Simplex implements Solver{
         return roundMatrix(sig);
     }
 
-   public String getSolutionInWords() {
-        StringBuilder sb = new StringBuilder("<html><body>");
+   public double[] getVarsValuesSolution() {
+        double [] sb = new double[getEveryVariableName().length + 1];
         if(solution!= null && model != null){
              try {
             for (int i = 0; i < model.getVariableCount(); i++) {
                
-                    sb.append(model.getVariableAt(i).getName()+" = ");
-                    sb.append(roundDouble(solution.getVariableValue(model.getVariableAt(i))));
-                    sb.append("<br>");
+                    sb[i] = roundDouble(solution.getVariableValue(model.getVariableAt(i)));
                      
             }
-            sb.append("Z = ");
-            sb.append(roundDouble(solution.getObjectiveFunctionValue()));
-            sb.append("</body></html>");
+            sb[model.getVariableCount()] = roundDouble(solution.getObjectiveFunctionValue());
             } catch (Exception ex) {
                     Logger.getLogger(Simplex.class.getName()).log(Level.SEVERE, null, ex);
                 }  
         }
-        return sb.toString();
+        return sb;
         
     }
 
@@ -536,8 +532,8 @@ public class Simplex implements Solver{
     }
 
     public void getIntervals() {
-        analysis.getIntervalsDConstraints();
-        analysis.getIntervalsDFO();
+			analysis.getIntervalsDConstraints();
+			analysis.getIntervalsDFO();
     }
 
 	public SensivilityAnalysis getAnalysis() {
