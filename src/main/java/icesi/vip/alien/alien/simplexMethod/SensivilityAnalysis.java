@@ -61,8 +61,8 @@ public class SensivilityAnalysis {
             equations.append(solution.getObjectiveFunctionValue() + " ");
             for (int j = 0; j < posSlacks.size(); j++) {
                 if(finalM.getArray()[0][posSlacks.get(j)]<0)
-                equations.append(finalM.getArray()[0][posSlacks.get(j)] + " D" + (j+1) + " ");
-                else equations.append("+"+finalM.getArray()[0][posSlacks.get(j)] + " D" + (j+1) + " ");
+                equations.append(Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
+                else equations.append("+"+Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
             }
             equations.append("<br>");
              int x = 0;
@@ -76,11 +76,11 @@ public class SensivilityAnalysis {
                     x = base[i-1];
                Variable var = modeloS.getVariableAt(x);
                     equations.append(var.getName()+" = ");
-                    equations.append(solution.getVariableValue(var) + " ");
+                    equations.append(Simplex.roundDouble(solution.getVariableValue(var)) + " ");
                     for (int j = 0; j < posSlacks.size(); j++) {
                         if(finalM.getArray()[i][posSlacks.get(j)]<0)
-                equations.append(finalM.getArray()[i][posSlacks.get(j)] + " D" + (j+1) + " ");
-                else equations.append("+"+finalM.getArray()[i][posSlacks.get(j)] + " D" + (j+1) + " ");
+                equations.append(Simplex.roundDouble(finalM.getArray()[i][posSlacks.get(j)]) + " D" + (j+1) + " ");
+                else equations.append("+"+Simplex.roundDouble(finalM.getArray()[i][posSlacks.get(j)]) + " D" + (j+1) + " ");
             }
                     x++;    
             }
@@ -118,11 +118,11 @@ public class SensivilityAnalysis {
                 double aIngresar = constants[i]/doubMatrix[i][j]*-1;
                 if(aIngresar > 0){
                     if(intervals[j][1] > aIngresar)
-                    intervals[j][1] = aIngresar;
+                    intervals[j][1] = Simplex.roundDouble(aIngresar);
                 }
                 else {
                     if(intervals[j][0] < aIngresar)
-                    intervals[j][0] = aIngresar;
+                    intervals[j][0] = Simplex.roundDouble(aIngresar);
                 }
             }
         }
@@ -161,11 +161,11 @@ public class SensivilityAnalysis {
                 double aIngresar = constants[i]/doubMatrix[i][j]*-1;
                 if(aIngresar > 0){
                     if(intervals[j][1] > aIngresar)
-                    intervals[j][1] = aIngresar;
+                    intervals[j][1] = Simplex.roundDouble(aIngresar);
                 }
                 else {
                     if(intervals[j][0] < aIngresar)
-                    intervals[j][0] = aIngresar;
+                    intervals[j][0] = Simplex.roundDouble(aIngresar);
                 }
             }
         }
@@ -208,20 +208,20 @@ public class SensivilityAnalysis {
 //                                    constant = (finalM.get(j, x) - Simplex.BIG_M)+ " ";
 //                            }
 //                            else
-                                constant = finalM.get(j, x) + " ";
+                                constant = Simplex.roundDouble(finalM.get(j, x)) + " ";
                             equations.append(constant);
                             
                         }
                         else
                         if(modeloS.getVariableAt(base[j-1]).getName().startsWith("X")){
                             if(finalM.get(j, x) <0)
-                            equations.append(finalM.get(j, x) + " D" + (modeloS.getVariableAt(base[j-1]).getName().charAt(1)) + " ");
+                            equations.append(Simplex.roundDouble(finalM.get(j, x)) + " D" + (modeloS.getVariableAt(base[j-1]).getName().charAt(1)) + " ");
                             else
-                                equations.append("+" +finalM.get(j, x) + " D" + (modeloS.getVariableAt(base[j-1]).getName().charAt(1)) + " ");
+                                equations.append("+" +Simplex.roundDouble(finalM.get(j, x)) + " D" + (modeloS.getVariableAt(base[j-1]).getName().charAt(1)) + " ");
                         }
             }
                     if(var.getName().startsWith("X"))
-                        equations.append("-1.0 D" + (x+1)+" ");
+                        equations.append("-1 D" + (x+1)+" ");
                     x++;    
             }
             equations.append("</body></html>");
