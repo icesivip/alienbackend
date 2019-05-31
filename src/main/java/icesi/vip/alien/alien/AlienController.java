@@ -38,20 +38,24 @@ public class AlienController {
 			@RequestParam(value = "equations", required = true)String equations) throws Exception {
 		equations.replaceAll("%20", " ");
 		String[] equas = equations.split("n");
-		Simplex alv = new Simplex(opti, equas);
-		double[][] finalFinal = null;
-        double[][] sig = alv.getActualMatrix();
+		Simplex simplex = new Simplex(opti, equas);
         if(iteration.equals("F")) {
-        while(finalFinal != sig){
-            finalFinal = sig;
-            sig = alv.nextIteration();
-        } 
+        	 double[][] finalFinal = null;
+             double[][] sig = simplex.nextIteration();
+             while(!sig.equals(finalFinal)){
+                 finalFinal = sig;
+                 sig = simplex.nextIteration();
+             }
         }else {
         	for (int i = 0; i < Integer.parseInt(iteration); i++) {
-                alv.nextIteration();
+                simplex.nextIteration();
             }
         }
-		return alv;
+        if(simplex.getMessageSol() != null) {
+        simplex.buildAnalysis();
+        simplex.getIntervals();
+        }
+		return simplex;
 	}
 
 	@CrossOrigin

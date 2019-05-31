@@ -1,5 +1,9 @@
 package icesi.vip.alien.alien.simplexMethod;
 import Jama.Matrix;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -8,7 +12,7 @@ import model.*;
 
 public class Simplex implements Solver{
 
-    private static final int BIG_M = 1000000;
+    public static final int BIG_M = 1000000;
     
 	private Model model;
         private SensivilityAnalysis analysis;
@@ -64,7 +68,8 @@ public class Simplex implements Solver{
             generateConstraintsLeftMatrix(equations, model.getType().equals(Model.MAXIMIZE));
             solve(model);
             } catch (Exception e) {
-            throw new Exception("Characters not allowed");
+//            throw new Exception("Characters not allowed");
+            	 e.printStackTrace();
             }
 //            System.out.print(isMaximization);
         }
@@ -109,7 +114,24 @@ public class Simplex implements Solver{
              return Final.getArray();
         }
         
-        /**
+        public static double[][] roundMatrix(double[][] array) {
+        	double[][] toConvert = new double[array.length][array[0].length];
+        	for (int i = 0; i < array.length; i++) {
+				for (int j = 0; j < array[0].length; j++) {
+					toConvert[i][j] = roundDouble(array[i][j]);
+				}
+			}
+			return toConvert;
+		}
+
+		public static double roundDouble(double d) {
+			DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
+        	separadoresPersonalizados.setDecimalSeparator('.');
+        	DecimalFormat df = new DecimalFormat("#.##", separadoresPersonalizados);
+			return Double.parseDouble(df.format(d));
+		}
+
+		/**
          * Calcula la base inicial del problema
          */
        private void calculateInitialBase () {
@@ -344,15 +366,15 @@ public class Simplex implements Solver{
     }
     public static void main(String[] args) throws Exception {
 //        Problema normi
-        Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -5 X2 = 0",
-                                           "0 Z 1 X1 0 X2 <= 4",
-                                           "0 Z 0 X1 2 X2 <= 12",
-                                           "0 Z 3 X1 2 X2 <= 18"});
+//        Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -5 X2 = 0",
+//                                           "0 Z 1 X1 0 X2 <= 4",
+//                                           "0 Z 0 X1 2 X2 <= 12",
+//                                           "0 Z 3 X1 2 X2 <= 18"});
 //           Gran M method
-//           Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
-//                                           "0 Z 0.5 X1 0.25 X2 <= 4",
-//                                           "0 Z 1 X1 3 X2 >= 20",
-//                                           "0 Z 1 X1 1 X2 = 10"});
+           Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
+                                           "0 Z 0.5 X1 0.25 X2 <= 4",
+                                           "0 Z 1 X1 3 X2 >= 20",
+                                           "0 Z 1 X1 1 X2 = 10"});
 //          Solución no factible
 //          Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
 //                                           "0 Z 0.5 X1 0.25 X2 <= 4",
@@ -458,35 +480,21 @@ public class Simplex implements Solver{
         return vars;
     }
 
-    public double [][] getFinalSolution() {
-        double[][] finalFinal = null;
-        double[][] sig = nextIteration();
-        while(finalFinal != sig){
-            finalFinal = sig;
-            sig = nextIteration();
-        }
-        return sig;
-    }
-
-   public String getSolutionInWords() {
-        StringBuilder sb = new StringBuilder("<html><body>");
+   public double[] getVarsValuesSolution() {
+        double [] sb = new double[getEveryVariableName().length + 1];
         if(solution!= null && model != null){
              try {
             for (int i = 0; i < model.getVariableCount(); i++) {
                
-                    sb.append(model.getVariableAt(i).getName()+" = ");
-                    sb.append(solution.getVariableValue(model.getVariableAt(i)));
-                    sb.append("<br>");
+                    sb[i] = roundDouble(solution.getVariableValue(model.getVariableAt(i)));
                      
             }
-            sb.append("Z = ");
-            sb.append(solution.getObjectiveFunctionValue());
-            sb.append("</body></html>");
+            sb[model.getVariableCount()] = roundDouble(solution.getObjectiveFunctionValue());
             } catch (Exception ex) {
                     Logger.getLogger(Simplex.class.getName()).log(Level.SEVERE, null, ex);
                 }  
         }
-        return sb.toString();
+        return sb;
         
     }
 
@@ -498,7 +506,7 @@ public class Simplex implements Solver{
     }
 
     public double[][] getActualMatrix() {
-        return Final.getArray();
+        return roundMatrix(Final.getArray());
     }
 
     public String getOperationsDone() {
@@ -509,12 +517,20 @@ public class Simplex implements Solver{
         return theta;
     }
 
-    public String buildAnalysis() {
-       analysis = new SensivilityAnalysis(this, model, solution, SlackOF, equalities, Final);
-       return analysis.getEquations();
+    public void buildAnalysis() {
+    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, SlackOF, equalities, Final);
     }
 
     public void getIntervals() {
-        analysis.getIntervalsD();
+			analysis.getIntervalsDConstraints();
+			analysis.getIntervalsDFO();
     }
+
+	public SensivilityAnalysis getAnalysis() {
+		return analysis;
+	}
+
+	public void setAnalysis(SensivilityAnalysis analysis) {
+		this.analysis = analysis;
+	}
 }
