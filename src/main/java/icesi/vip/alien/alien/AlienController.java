@@ -49,8 +49,10 @@ public class AlienController {
             }
         	simplex.roundMatrix(simplex.getActualMatrix());
         }
+        if(simplex.getMessageSol() != null) {
         simplex.buildAnalysis();
         simplex.getIntervals();
+        }
 		return simplex;
 	}
 
