@@ -23,7 +23,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
 
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -137,6 +137,7 @@
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
                         <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class="collapse-item" href="mrp-1.html">MRP</a>
                     </div>
                 </div>
             </li>
@@ -172,16 +173,58 @@
                     <!-- Topbar Search -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
+
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                            <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                                data-target="#uploadModal">
+                                Upload Problem
+                                <i class="fas fa-upload"></i>
+                            </button>
+                            <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
+                                Save Problem
+                                <i class="far fa-save"></i>
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="upload-form">
+                                    <div class="modal-body">
+                                        <p>
+                                            Here you have to select a previously saved problem in .json format. Make
+                                            sure the file has not
+                                            been modified or there are going to be problems in the upload process.
+                                        </p>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Choose File</label>
+                                            <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                                required>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="input" class="btn btn-primary">Upload</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </div>
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -251,8 +294,8 @@
                                     <tr>
                                         <td>
                                             <select>
-                                                <option>MAXIMIZE</option>
-                                                <option>MINIMIZE</option>
+                                                <option >MAXIMIZE</option>
+                                                <option >MINIMIZE</option>
 
                                             </select>
                                         </td>
@@ -308,9 +351,9 @@
                                         <td><input type="number" step="0.01" required
                                                 class="form-control form-control-user"></td>
                                         <td> <select>
-                                                <option>&lt=</option>
-                                                <option>&gt=</option>
-                                                <option>=</option>
+                                                <option >&lt=</option>
+                                                <option >&gt=</option>
+                                                <option >=</option>
                                             </select>
                                         </td>
                                         <td><input type="number" step="0.01" required
@@ -384,41 +427,8 @@
                     <div id="chart" class="text-center">
                         <h2>Solution Space Chart</h2>
                         <canvas id="chart-area" width="400" height="device-height"></canvas>
-
-
                     </div>
-
-
-
-
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -479,6 +489,126 @@
             solveModel();
         });
 
+        document.getElementById("upload-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            var file = document.getElementById("fileUpload").files[0];
+            urlFile = window.URL.createObjectURL(file);
+            $.ajax({
+                url: urlFile
+            }).then(function (data) {
+                console.log(data);
+                var split = data.data.split('&');
+                var obj = split[2].split(',');
+
+                var c = 0;
+
+                var vars = split[1].split(',');
+                console.log(vars.length);
+                if (vars.length > varCount) {
+                    for (i = 0; i < vars.length; i++) {
+                        if (varCount < vars.length) {
+                            addVar();
+                            if (varCount == vars.length) break;
+                        }
+                    }
+                }
+                else if (vars.length < varCount) {
+                    for (i = 0; i < vars.length; i++) {
+                        if (varCount > vars.length) {
+                            removeVar();
+                            if (varCount == vars.length) break;
+                        }
+                    }
+                }
+
+                $('#of-body td').each(function (index) {
+                    if (index == 0) {
+                        if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                            $(this).find('select').val("MAXIMIZE");
+                        }
+                        else {
+                            $(this).find('select').val("MINIMIZE");
+                        }
+                    } else {
+                        if (c == 0) {
+                            $(this).find('input').val(obj[0].substring(18, obj[0].length));
+                        }
+                        else {
+                            $(this).find('input').val(obj[c]);
+                        }
+                        c++;
+                    }
+                });
+
+
+                var cons = split[3].split(';');
+
+                if (cons.length - 1 > consCount - 1) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount < cons.length - 1) {
+                            addCons();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+                else if (cons.length - 1 < consCount) {
+                    while(consCount > cons.length - 1){
+                        removeCons();
+                    }
+                }
+
+
+                var ins = split[3].split(',');
+
+                var countRequest = 0;
+                var aux = 0;
+
+                $('#table-body tr').each(function (i) {
+                    $(this).find('td').each(function (j) {
+                        if (i == 0 && j == 0) {
+                            $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
+                            countRequest++;
+                        }
+                        else {
+                            if (j < varCount || j == varCount + 1) {
+                                if (j == varCount + 1) {
+                                    var nothing = ins[countRequest].split(';');
+                                    $(this).find('input').val(nothing[0]);
+                                } else {
+                                    if (j == 0) {
+                                        var nothing = ins[countRequest].split(';');
+                                        $(this).find('input').val(nothing[1]);
+                                        countRequest++;
+                                    }
+                                    else {
+                                        $(this).find('input').val(ins[countRequest]);
+                                        countRequest++;
+                                    }
+                                }
+                            } else {
+                                  if (ins[countRequest] == '<=') $(this).find('select').val("<=");
+                                  else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
+                                  else $(this).find('select').val("=");
+                                  countRequest++;
+                            }
+                        }
+                    });
+                });
+
+            }, function (error) {
+                alert("Failed to process request.")
+                console.log(error);
+            });
+            $('#uploadModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+            // alert("Esta funcion aun no esta implementada.");
+
+
+        });
+
         function addCons() {
             $("#table-body").append(generateNewConsRow(varCount));
             consCount++;
@@ -502,7 +632,7 @@
                 st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
 
             }
-            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            st += "<td> <select><option >&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
             return st;
         }
 
@@ -892,7 +1022,28 @@
 
         }
 
+        function exportToJson(objectData) {
+            let filename = "saved_problem.json";
+            let contentType = "application/json;charset=utf-8;";
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                var a = document.createElement('a');
+                a.download = filename;
+                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
 
+
+        function saveProblem() {
+            object = { data: constructQueryString() };
+            exportToJson(object);
+        }
 
 
     </script>

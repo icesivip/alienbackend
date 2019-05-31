@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vehicle Routing</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <style>
+        td,
+        th {
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .expand {
+            width: 100%;
+            height: 100%;
+        }
+
+        .white-text {
+            color: white;
+        }
+        
+        input[type=number] {
+            width: 100%;
+        }
+
+/*         
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        } */
+
+        /* .image {
+            display: inline;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: auto;
+            vertical-align: center;
+        } */
+
+        .cover {
+            opacity: 0.8;
+            background-color: #ccc;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+            background: url(img/loading.gif) center center no-repeat;
+            display: none;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard >
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Dashboard</span></a>
+                    </li-->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Modules
+            </div>
+
+            <!-- PL -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Linear Programming </span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
+                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
+                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                    </div>
+                </div>
+            </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
+                    aria-expanded="true" aria-controls="collapseMPS">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Master Plan Schedule </span>
+                </a>
+                <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <!-- cambiar href -->
+                        <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class="collapse-item" href="mrp-1.html">MRP</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
+
+                    <div class="input-group" >
+                        <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                            data-target="#uploadModal" >
+                            Upload Problem
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
+                            Save Problem
+                            <i class="far fa-save"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+
+                <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="upload-form">
+                                <div class="modal-body">
+                                    <p>
+                                        Here you have to select a previously saved problem in .json format. Make
+                                        sure the file has not
+                                        been modified or there are going to be problems in the upload process.
+                                    </p>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Choose File</label>
+                                        <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="input" class="btn btn-primary">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+                    <div class="cover">
+                        <!--                         <img src="img/loading.gif" class="image" height="30%" width="30%"> -->
+                    </div>
+                    <div class="text-center">
+                        <h1>Routing Vehicle </h1>
+                    </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; 2019</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--
+    <script>
+        var varCount = 2;
+        var consCount = 1;
+
+        $(document).ready(function () {
+            $("#result").DataTable();
+          
+            $("#chart").hide();
+        });
+      document.getElementById("upload-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            var file = document.getElementById("fileUpload").files[0];
+            urlFile = window.URL.createObjectURL(file);
+            $.ajax({
+                url: urlFile
+            }).then(function (data) {
+                console.log(data);
+                var split = data.data.split('&');
+
+                if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                    document.getElementById("type").selectedIndex = "0";
+                    console.log("Selected index MAXIMIZE in the options.");
+                }
+                else if (split[0].substring(6, 14) == 'MINIMIZE') {
+                    document.getElementById("type").selectedIndex = "1";
+                    console.log("Selected index MINIMIZE in the options.");
+                }
+
+                var obj = split[2].split(',');
+
+                for (i = 0; i < obj.length; i++) {
+                    if (i == 0) {
+                        if (obj[0].substring(18, 19) != '') document.getElementById("cX1").value = obj[0].substring(18, obj[0].length);
+                        else document.getElementById("cX1").value = '';
+                    }
+                    else {
+                        if (obj[i] != '') document.getElementById("cX" + (i + 1)).value = obj[i];
+                        else document.getElementById("cX" + (i + 1)).value = '';
+                    }
+                }
+
+                var cons = split[3].split(';');
+
+                if (cons.length - 1 > consCount - 1) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount < cons.length - 1) {
+                            addConstraint();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+                else if (cons.length - 1 < consCount) {
+                    for (i = 0; i < cons.length - 1; i++) {
+                        if (consCount > cons.length - 1) {
+                            removeConstraint();
+                            if (consCount == cons.length - 1) break;
+                        }
+                    }
+                }
+
+                var ins = split[3].split(',');
+
+                var countRequest = 0;
+                var aux = 0;
+
+
+                $(".constraint").each(function (index) {
+                    if (aux == 0) {
+                        $(this).find("#X1").val(ins[0].substring(12, (ins[0].length)));
+                        countRequest++;
+                        aux++;
+                    }
+                    else {
+                        var nothing = ins[countRequest].split(';');
+
+                        $(this).find("#X1").val(nothing[1]);
+                        countRequest++;
+                    }
+                    $(this).find("#X2").val(ins[countRequest]);
+                    countRequest++;
+
+                    if (ins[countRequest] == '<=') $(this).find("#r1").val("<=");
+                    else if (ins[countRequest] == '>=') $(this).find("#r1").val(">=");
+                    else $(this).find("#r1").val("=");
+                    countRequest++;
+                    var nothing = ins[countRequest].split(';');
+                    console.log(nothing);
+                    $(this).find("#rv").val(nothing[0]);
+                });
+
+            }, function (error) {
+
+                console.log(error);
+            });
+            $('#uploadModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            // alert("Esta funcion aun no esta implementada.");
+        });
+        function addConstraint() {
+            console.log("Added contraint");
+            $("#constraintPanel").append("<div class='constraint'><div class='form-group row'><div class='col-sm-2 '><input type='number' step='any' class='form-control form-control-user' id='X1' required></div><div class=' col-sm-0.1'><h4> X1 + </h4></div><div class='col-sm-2'><input type='number' step='any' class='form-control form-control-user' id='X2' required></div><div class='col-sm-0.1'><h4> X2 </h4></div><div class='centered col-sm-1.5 mb-4 mb-sm-0'><select class='form-control' id='r1'><option>&lt=</option><option>&gt=</option><option>=</option></select></div><div class='col-sm-2'><input type='number'  step='any'class='form-control form-control-user' id='rv' required></div></div></div>");
+            consCount++; 
+        }
+
+        document.getElementById("submit-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            solveModel();
+        });
+
+        function addCons() {
+            $("#table-body").append(generateNewConsRow(varCount));
+            consCount++;
+        }
+        function generateNewConsRow(count) {
+            var st = "<tr>";
+            for (let index = 0; index < count; index++) {
+                st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
+
+            }
+            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+            return st;
+        }
+
+        function removeCons() {
+            if (consCount > 1) {
+                $("#table-body tr").last().remove();
+                consCount--;
+            }
+        }
+        function insertAtIndex(i) {
+            if (i === 0) {
+                $("#controller").prepend("<div>okay things</div>");
+                return;
+            }
+            consCount--;
+            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+        }
+
+        function constructQueryString() {
+            type = "";
+            obfun = "";
+            vars = "";
+            constraints = "";
+            $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
+
+                } else {
+                    obfun += $(this).find('input').val() + ",";
+                }
+            });
+            for (i = 0; i < varCount; i++) {
+                vars += "X" + (i + 1) + ":C" + ",";
+            }
+
+            $('#table-body tr').each(function (i) {
+                $(this).find('td').each(function (j) {
+
+                    if (j < varCount || j == varCount + 1) {
+
+                        if (j == varCount + 1) {
+                            constraints += $(this).find('input').val() + ";";
+                        } else {
+
+                            constraints += $(this).find('input').val() + ",";
+                        }
+                    } else {
+                        constraints += $(this).find('select').val() + ",";
+                    }
+                });
+
+            });
+
+            vars = vars.substring(0, vars.length - 1);
+            obfun = obfun.substring(0, obfun.length - 1);
+            console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+
+        }
+        var myChart = null;
+        function solveModel() {
+            $(".cover").toggle(400);
+            var string = constructQueryString();
+            $.ajax({
+                url: "https://viptest1.herokuapp.com/graphicalMethod" + string
+            }).then(function (data) {
+                $(".cover").toggle(400);
+                console.log(data);
+                var constraints = data.constraints;
+                var optimal = data.optimalSolution;
+                var solList = data.solutionList;
+                var solX = [];
+                var solY = [];
+                $("#result").DataTable().clear();
+                solList.forEach(element => {
+                    $("#result").DataTable().row.add(
+                        [element.variables.X1, element.variables.X2, element.z]
+                    ).draw();
+
+
+                });
+                type = $("#type").val();
+                if (type == "MAXIMIZE") {
+                    $("#result").DataTable().order([2, 'desc']).draw();
+                } else {
+                    $("#result").DataTable().order([2, 'asc']).draw();
+                }
+
+                constraints.forEach(element => {
+                    cx = element.rightValue / element.xValue;
+                    cy = element.rightValue / element.yValue;
+                    if (cx != Infinity && cx != -Infinity) {
+                        solX.push(cx);
+                    }
+                    if (cy != Infinity && cy != -Infinity) {
+                        solY.push(cy);
+                    }
+                });
+                solList.forEach(element => {
+                    solX.push(element.variables.X1);
+                    solY.push(element.variables.X2);
+                });
+
+
+
+
+                minX = Math.min.apply(Math, solX);
+
+                maxX = Math.max.apply(Math, solX);
+                constraints.forEach(element => {
+                    if (element.xValue != 0 && element.yValue != 0) {
+                        solY.push((element.rightValue - (element.xValue * minX)) / element.yValue);
+                        solY.push((element.rightValue - (element.xValue * maxX)) / element.yValue);
+                    }
+                });
+                minY = Math.min.apply(Math, solY);
+                maxY = Math.max.apply(Math, solY);
+                if (minX == 0 && maxX == 0) {
+                    maxX = 1;
+                }
+                if (minY == 0 && maxY == 0) {
+                    maxY = 1;
+                }
+                console.log(minX, maxX, minY, maxY);
+                constCount = constraints.length;
+                dataframe = [];
+                dataAux = [];
+                solList.forEach(element => {
+                    dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
+                });
+                dataframe.push({
+                    label: ' Basic Feasible Solutions',
+                    data: dataAux,
+                    backgroundColor: [
+                        'rgba(255, 255, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(100,100,0,1)'
+                    ],
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 5,
+                    showLine: false,
+                    steppedLine: false,
+                    lineTension: 0,
+
+
+
+
+
+                });
+                count = 1;
+                constraints.forEach(element => {
+                    dataAux = [];
+                    area = "start";
+                    if (element.xValue == 0 || element.yValue == 0) {
+                        if (element.xValue == 0) {
+                            dataAux.push({ x: minX, y: (element.rightValue) / element.yValue });
+                            dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
+                            if (element.type == "<=") {
+                                if (element.yValue < 0) {
+                                    area = "end";
+                                } else {
+                                    area = "start";
+                                }
+                            } else if (element.type == ">=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                } else {
+                                    area = "end";
+                                }
+                            } else {
+                                area = false;
+                            }
+                        } else {
+                            dataAux.push({ x: (element.rightValue) / element.xValue, y: minY });
+                            dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
+                            if (element.type == "<=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                    dataAux.push({ x: maxX, y: maxY });
+                                } else {
+                                    area = "start";
+                                    dataAux.push({ x: minX, y: maxY });
+                                }
+                            } else if (element.type == ">=") {
+                                if (element.yValue < 0) {
+                                    area = "start";
+                                    dataAux.push({ x: minX, y: maxY });
+                                } else {
+                                    area = "start";
+                                    dataAux.push({ x: maxX, y: maxY });
+                                }
+                            } else {
+                                area = false;
+                            }
+                        }
+                    } else {
+                        if (element.type == "<=") {
+                            if (element.yValue < 0) {
+                                area = "end";
+                            } else {
+                                area = "start";
+                            }
+                        } else if (element.type == ">=") {
+                            if (element.yValue < 0) {
+                                area = "start";
+                            } else {
+                                area = "end";
+                            }
+                        } else {
+                            area = false;
+                        }
+                        dataAux.push({ x: minX, y: (element.rightValue - (element.xValue * minX)) / element.yValue });
+                        dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
+                    }
+                    //console.log(dataframe);
+                    dataframe.push({
+                        label: 'C' + count,
+                        data: dataAux,
+                        pointRadius: 0,
+                        borderDash: [10, 5],
+                        backgroundColor: [
+                            'rgba(0, 255, 0, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(0,100,0,1)'
+                        ],
+                        borderWidth: 1,
+                        fill: area,
+                        steppedLine: false,
+                        lineTension: 0,
+                    });
+
+                    count++;
+                });
+
+                var ctx = document.getElementById("chart-area");
+                if (myChart != null) { myChart.destroy() }
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+
+                        datasets: dataframe
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false,
+                                    min: minY,
+                                    max: maxY
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'X2',
+
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: false,
+                                    min: minX,
+                                    max: maxX
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'X1'
+                                },
+                                gridLines: {
+                                    // You can change the color, the dash effect, the main axe color, etc.
+                                    borderDash: [1, 2],
+                                    zeroLineColor: 'rgba(0,0,0,1)'
+
+                                }
+                            }]
+                        },
+
+                    }
+                });
+            }, function (error) {
+                alert("Failed to process request, model may be unsolvable.")
+                $(".cover").toggle(400);
+                console.log(error);
+            });
+        }
+        function exportToJson(objectData) {
+            let filename = "saved_problem.json";
+            let contentType = "application/json;charset=utf-8;";
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                var a = document.createElement('a');
+                a.download = filename;
+                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+
+        function saveProblem() {
+            object = { data: constructRequestString() };
+            exportToJson(object);
+        }
+    </script>
+-->
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+</body>
+
+</html>
