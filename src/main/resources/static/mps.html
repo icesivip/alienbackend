@@ -830,13 +830,13 @@
             var url="";
             if(!all){
                 request =constructRequestString(false,0);
-                url ="http://localhost:8080/master";
+                url ="https://icesiviptest.herokuapp.com/master";
         
             }else{
                 deleteAllTables();
                 generateTables();
                 request =constructRequestStringAll();
-                url ="http://localhost:8080/master";
+                url ="https://icesiviptest.herokuapp.com/master";
             }      
             var allAux=true;
             var contador=0;
@@ -878,7 +878,7 @@
             $.ajax({
                 //http://localhost:8080
               //  https://icesiviptest.herokuapp.com/master"
-                url: "http://localhost:8080/master" + request
+                url: "https://icesiviptest.herokuapp.com/master" + request
             }).then(function (data) {
                 $(".cover").toggle(400);
                 //console.log("Funciona");
