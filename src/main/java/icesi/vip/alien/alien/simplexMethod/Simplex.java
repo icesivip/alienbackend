@@ -124,7 +124,7 @@ public class Simplex implements Solver{
 			return toConvert;
 		}
 
-		private static double roundDouble(double d) {
+		public static double roundDouble(double d) {
 			DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
         	separadoresPersonalizados.setDecimalSeparator('.');
         	DecimalFormat df = new DecimalFormat("#.##", separadoresPersonalizados);
