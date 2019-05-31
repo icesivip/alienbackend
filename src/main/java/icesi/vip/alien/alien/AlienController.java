@@ -39,15 +39,17 @@ public class AlienController {
 		equations.replaceAll("%20", " ");
 		String[] equas = equations.split("n");
 		Simplex simplex = new Simplex(opti, equas);
-		double[][] finalFinal = null;
-        double[][] sig = simplex.getActualMatrix();
         if(iteration.equals("F")) {
-        simplex.getFinalSolution();
+        	 double[][] finalFinal = null;
+             double[][] sig = simplex.nextIteration();
+             while(!sig.equals(finalFinal)){
+                 finalFinal = sig;
+                 sig = simplex.nextIteration();
+             }
         }else {
         	for (int i = 0; i < Integer.parseInt(iteration); i++) {
                 simplex.nextIteration();
             }
-        	simplex.roundMatrix(simplex.getActualMatrix());
         }
         if(simplex.getMessageSol() != null) {
         simplex.buildAnalysis();

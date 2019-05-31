@@ -480,16 +480,6 @@ public class Simplex implements Solver{
         return vars;
     }
 
-    public double [][] getFinalSolution() {
-        double[][] finalFinal = null;
-        double[][] sig = nextIteration();
-        while(!sig.equals(finalFinal)){
-            finalFinal = sig;
-            sig = nextIteration();
-        }
-        return roundMatrix(sig);
-    }
-
    public double[] getVarsValuesSolution() {
         double [] sb = new double[getEveryVariableName().length + 1];
         if(solution!= null && model != null){

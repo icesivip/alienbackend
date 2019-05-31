@@ -694,7 +694,6 @@
              }
             $('#table-body td').each(function (index) {
              
-
             });
 
           }, function (error) {
@@ -716,10 +715,10 @@
           if (varCount > 1) {
 
             $("#thead-tr th:nth-child(" + (varCount) + ")").remove();
-            $("#table-body tr td:nth-child(1)").remove();
+            $("#table-body tr td:nth-child("+(varCount)+")").remove();
 
             $("#of-head th:nth-child(" + (varCount + 1) + ")").remove();
-            $("#of-body tr td:nth-child(2)").remove();
+            $("#of-body tr td:nth-child(" + (varCount+1) + ")").remove();
             varCount--;
           }
 
@@ -747,8 +746,9 @@
 
         function addVar() {
           $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
-          $("#table-body tr").prepend("<td><input type='number' step='0.01' required></td>");
-
+          for (let i = 0; i < consCount; i++) {
+              $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' required></td>");
+              }
           $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
           $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
 
@@ -861,9 +861,6 @@
              
           }).then(function (data) {
 
-            $("#resultTable thead").empty();
-            $("#resultTable tbody").empty();
-            console.log(data)
             $(".cover").toggle(600);
             var variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
@@ -872,6 +869,9 @@
             var solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            $("#resultTable thead").empty();
+            $("#resultTable tbody").empty();
+            console.log(data)
 
 
             var p1 = new Promise((resolve, reject) => {
@@ -1001,16 +1001,15 @@
             var solutionInWords = data.solutionInWords;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            var analysis = data.analysis;
 
-            if (messageSol == null) {
+            if (analysis == null) {
               $("#mensajeS").empty();
               console.log("entro:" + data.messageSol)
 
               $("#resultTable thead").empty();
               $("#resultTable tbody").empty();
               console.log(data)
-
-
 
               var p1 = new Promise((resolve, reject) => {
                 $("#resultTable thead").append("<tr></tr>");
@@ -1055,7 +1054,7 @@
               veces++;
 
             }
-            if (messageSol != null) {
+            if (analysis != null) {
               termino = true;
              
 
