@@ -648,7 +648,7 @@
             var c = 2;
            
             
-            console.log();
+            
             var numberVar = countVariables(numVar2.length)
 
 
@@ -687,7 +687,15 @@
               }
 
             });
+            var constraints = split[1].split('n').length-3;
+            for (let i = 0; i < constraints; i++) {
+              addCons();
+               
+             }
+            $('#table-body td').each(function (index) {
+             
 
+            });
 
           }, function (error) {
             alert("Failed to process request.")
