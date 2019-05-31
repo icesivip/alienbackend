@@ -692,10 +692,54 @@
               addCons();
                
              }
-            $('#table-body td').each(function (index) {
+             var restricciones = split[1].split('n');
+             var numerosTabla=[];
+             var simbolos = [];
              
+            for (let index = 0; index < consCount; index++) {
+              var restr = restricciones[2+index];
+              var restr = restr.split(' ');
+              
+              for (let j = 0; j < varCount+1 ;j++) {
+                if(((2*j)+2)!=restr.length-2 ){
+                numerosTabla.push(restr[(2*j)+2]);
+                
+                }else{
+                  numerosTabla.push(restr[restr.length-1]);
+                  simbolos.push(restr[(2*j)+2]);
+                }
+              }
+             
+              
+            }
+         
+            var numero=0;
+            var valor = 0;
+            $('#table-body tr').each(function (i) {
+              $(this).find('td').each(function (j) {
+                   
+                   if(j!=varCount){
+                   
+                    $(this).find('input').val(numerosTabla[numero]);
+                    
+                   
+                   
+                   numero++;
+                   
+                   }else{
+                     j++;
+                     if (simbolos[valor] == '<=') $(this).find('select').val("<=");
+                                  else if (simbolos[valor] == '>=') $(this).find('select').val(">=");
+                                  else $(this).find('select').val("=");
+                                  valor++;
+                   }
 
+                  
+                   
+              });
+                   
             });
+            
 
           }, function (error) {
             alert("Failed to process request.")
