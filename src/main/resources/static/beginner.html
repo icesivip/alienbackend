@@ -894,7 +894,7 @@
 
           return "?type=" + type + "&" + "equations=" + obfun + menObj;
         }
-
+        var analysis;
         function finalSolution() {
           $(".cover").toggle(400);
           $("#menIteration").empty();
@@ -914,6 +914,8 @@
             var solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            analysis = data.analysis;
+
             $("#resultTable thead").empty();
             $("#resultTable tbody").empty();
             console.log(data)
@@ -1053,7 +1055,6 @@
 
 
 
-
           return "?type=" + type + "&" + "iteration=" + iteration + "&" + "equations=" + obfun + menObj;
         }
         veces = 0;
@@ -1075,10 +1076,10 @@
             var actualMatrix = data.actualMatrix;
             var messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            var solutionInWords = data.solutionInWords;
+            var solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
-            var analysis = data.analysis;
+            analysis = data.analysis;
 
             if (analysis == null) {
               $("#mensajeS").empty();
@@ -1149,7 +1150,7 @@
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
+        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")  
 
             }
 
