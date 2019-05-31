@@ -82,9 +82,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
                     </div>
                 </div>
@@ -102,7 +100,6 @@
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
                         <a class="collapse-item" href="mps.html">MPS</a>
-                        <a class="collapse-item" href="mrp-1.html">MRP</a>
                     </div>
                 </div>
             </li>
@@ -182,15 +179,15 @@
 
                 <!-- Begin page content -->
 
-                <div class="container-fluid">
+                <div id="container-form" class="container-fluid">
                     <form class="user" id="user">
-                        <div class="row">
-                            <table id="tableData" class="table-responsive table text-dark">
+                        <div id="divTableData" class="row">
+                            <table id="tableData" class="table-responsive table text-light">
                                 <thead>
-                                    <tr class="bg-success">
-                                        <th colspan="6" scope="col" class="text-center">MPS</th>
+                                    <tr class="bg-primary">
+                                        <th colspan="6" scope="col" class="text-center-light">MPS</th>
                                     </tr>
-                                    <tr id="periodsHeader" class="bg-success">
+                                    <tr id="periodsHeader" class="bg-primary">
                                         <th scope="col">Period</th>
                                         <th class="text-center" scope="col">1</th>
                                         <th class="text-center" scope="col">2</th>
@@ -220,7 +217,7 @@
                                 </thead>
                                 <tbody>
                                     <tr id="grossRequeriment">
-                                        <th class="bg-success" scope="row">Gross Requeriments</th>
+                                        <th class="bg-primary text-light" scope="row">Gross Requeriments</th>
                                         <td style="width: 8%; height: 100%;"><input id="gross1" class="border-0"
                                                 type="number" min="0" style="width: 100%">
                                         </td>
@@ -235,7 +232,7 @@
                                         </td>
                                     </tr>
                                     <tr id="scheduledReceptions">
-                                        <th class="bg-success" scope="row">Scheduled Receptions</th>
+                                        <th class="bg-primary" scope="row">Scheduled Receptions</th>
                                         <td style="width: 8%; height: 100%;"><input id="sr1" class="border-0"
                                                 type="number" min="0" style="width: 100%">
                                         </td>
@@ -250,16 +247,16 @@
                                         </td>
                                     </tr>
                                     <tr id="AvailableInventoryProgrammed">
-                                        <th class="bg-success" scope="row">Available Inventory Programmed</th>
+                                        <th class="bg-primary" scope="row">Available Inventory Programmed</th>
                                     </tr>
                                     <tr id="Netrequirements">
-                                        <th class="bg-success" scope="row">Net requirements</th>
+                                        <th class="bg-primary" scope="row">Net requirements</th>
                                     </tr>
                                     <tr id="ReceptionsOfPlannedOrders">
-                                        <th class="bg-success" scope="row">Receptions of planned orders</th>
+                                        <th class="bg-primary" scope="row">Receptions of planned orders</th>                                        
                                     </tr>
                                     <tr id="releasedPlanOrders">
-                                        <th class="bg-success" scope="row">Release of planned orders</th>
+                                        <th class="bg-primary" scope="row">Release of planned orders</th>                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -301,7 +298,7 @@
                                         placeholder="Cost of ordering" required>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-dark custom-select bg-success" id="periodicity" required>
+                                    <select class="text-light custom-select bg-primary" id="periodicity" required>
                                         <option value="" name="periodicity" disabled selected hidden>Time between
                                             periods (periodicity)
                                         </option>
@@ -312,9 +309,8 @@
                                     </select>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-dark custom-select bg-success" id="lotSizingRule" required>
-                                        <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule
-                                        </option>
+                                    <select class="text-light custom-select bg-primary" id="lotSizingRule" required>
+                                        <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
                                         <option name="Lot for Lot">Lot for Lot</option>
                                         <option name="Economic Order Quantity">Economic Order Quantity</option>
                                         <option name="Periods Of Suply">Periods Of Suply</option>
@@ -328,7 +324,7 @@
                                         name="TPeriodOFSupply" placeholder="Period of supply">
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
-                                    <select class="custom-select bg-success" id="levelOfDetail" required>
+                                    <select class="custom-select bg-primary text-light" id="levelOfDetail" required>
                                         <option value="" name="levelOfDetail" disabled selected hidden>Level of detail
                                         </option>
                                         <option name="High">High</option>
@@ -347,7 +343,7 @@
                                                 value="makeTotalCosts">
                                         </div>
                                     </div>
-                                    <input type="text" class="text-dark form-control bg-success" value="Total costs"
+                                    <input type="text" class="text-light form-control bg-primary" value="Total costs"
                                         readonly>
                                 </div>
                                 <div class="input-group mb-3 flex-nowrap">
@@ -357,22 +353,27 @@
                                                 value="makePerformanceIndicators">
                                         </div>
                                     </div>
-                                    <input type="text" class="text-dark form-control bg-success"
+                                    <input type="text" class="text-light form-control bg-primary"
                                         value="Indicators of performance" readonly>
                                 </div>
                                 <div class="input-group-append mb-3 flex-nowrap justify-content-end">
                                     <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate"
                                         value="Calculate">
+                                        <input class="btn btn-outline-primary" id="calculateAll" type="button" name="calculateAll"
+                                        value="CalculateAll"   onclick="solveModel(true)">
+                                        <input class="btn btn-outline-primary" id="compareResults" type="button" name="compareResults"
+                                        value="Compare Results" onclick="addTableComparison()">
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
+                
 
                 <!-- End of page content -->
 
                 <!-- Footer -->
-                <footer class="sticky-footer bg-white">
+                <footer id="piso"class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
                             <span>Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow"
@@ -423,7 +424,46 @@
             e.preventDefault();
             solveModel();
         });
-
+        function addTableComparison(){
+            var piso = document.getElementById('piso');
+            var content = document.getElementById('content');
+            content.removeChild(piso);
+            var beforeTable = document.getElementById('comparisonTable');
+            if(beforeTable){
+                content.removeChild(beforeTable);
+            }
+            $("#content").append("<table id=\"comparisonTable\" class=\"table-responsive table text-light\">\r\n" + 
+			"                        <thead>\r\n" + 
+			"                            <tr id=\"comparisonHeader\" class=\"bg-primary\">\r\n" + 
+			"                                <th scope=\"col\">Indicators</th>\r\n" + 
+			"                                <th scope=\"col\">Lot for Lot</th>\r\n" + 
+			"                                <th scope=\"col\">Economic Order Quantity</th>\r\n" + 
+			"                                <th scope=\"col\">Periods Of Supply</th>\r\n" + 
+			"                                <th scope=\"col\">Period Order Quantity</th>\r\n" + 
+			"                                <th scope=\"col\">Least Unit Cost</th>\r\n" + 
+			
+			"                            </tr>\r\n" + 
+			"                        </thead>\r\n" + 
+			"                        <tbody>\r\n" + 
+			"                            <tr id=\"maintainCost\">\r\n" + 
+			"                                <th class=\"bg-primary\" scope=\"row\">Maintainance Cost</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"organizeCost\">\r\n" + 
+			"                                <th class=\"bg-primary\" scope=\"row\">Ordering Cost</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"averageInventory\">\r\n" + 
+			"                                <th class=\"bg-primary\" scope=\"row\">Average Inventory</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                            <tr id=\"inventoryRot\">\r\n" + 
+			"                               <th class=\"bg-primary\" scope=\"row\">Inventory Rotation</th>\r\n" + 
+			"                            </tr>\r\n" + 
+			"                        </tbody>\r\n" + 
+			"                    </table>");
+            for(var i=0;i<5;i++){
+                solveModelC(i);
+            }
+            content.appendChild(piso);
+        }
         function resize() {
             var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
             var actualPeriods = 0;
@@ -451,8 +491,11 @@
                     actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
                     document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
                     document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("AvailableInventoryProgrammed").removeChild(document.getElementById("AvailableInventoryProgrammed").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("Netrequirements").removeChild(document.getElementById("Netrequirements").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("ReceptionsOfPlannedOrders").removeChild(document.getElementById("ReceptionsOfPlannedOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("releasedPlanOrders").removeChild(document.getElementById("releasedPlanOrders").getElementsByTagName("td")[(dataColSize - 2)]);
                 }
-                //Work in progress
             }
         }
 
@@ -484,7 +527,122 @@
 
         }
 
-        function constructRequestString() {
+
+
+        function generateTables(){
+           // var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
+            var lotSizingRule = document.getElementById('lotSizingRule');
+            var content = document.getElementById('content');
+            //lotSizingRule.childNodes.length
+            for(var i=0; i<lotSizingRule.childNodes.length;i++){
+                if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
+                    //Creamos el div de la tabla
+                    var divTable   = document.createElement("div");
+                    divTable.className="container-fluid";
+                    //Creamos la tabla
+                    var table   = document.createElement("table");
+                    table.id="tableDataAll";
+                    table.className="table-responsive table text-light";
+                    //Creamos la cabeza de la tabla
+                    var tblHead = document.createElement("thead");
+                    //tblHead.className="table-responsive table text-light";
+                    createHeadTable(lotSizingRule.childNodes.item(i).value,tblHead);
+                    //Creamos el body de la tabla
+                    var tblBody = document.createElement("tbody");
+                   
+                    createBodyTable(lotSizingRule.childNodes.item(i).value,tblBody);
+                    //Agregamos la cabeza y el cuerpo
+                    table.appendChild(tblHead);
+                    table.appendChild(tblBody);
+                    divTable.appendChild(table);
+                    var piso = document.getElementById('piso');
+                    //var containerFluid =document.getElementById('container-form');
+                    //containerFluid.appendChild(divTable);
+                    content.insertBefore(divTable,piso);
+                
+                }
+              
+            }
+        }
+
+        function createBodyTable(lotSizingRule,tblBody){
+    
+            var texts = ["Available Inventory Programmed", "Net requirements", "Receptions of planned orders","Release of planned orders"];
+            //var bodyTr = document.createElement("tr");
+            for(var i=0; i<texts.length;i++){
+                var Tr = document.createElement("tr");
+                Tr.id=texts[i].replace(/ /g, "")+lotSizingRule.replace(/ /g, "");
+                var th = document.createElement("th");
+                th.className="text-light bg-primary";
+                th.scope="row";
+                th.textContent=texts[i];
+                Tr.appendChild(th);
+                tblBody.appendChild(Tr);
+            }
+            //tblBody.appendChild(bodyTr);
+
+          
+        }
+        function createHeadTable(lotSizingRule,tblHead){
+                    var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+                    //Creamos el primer Tr del head de la tabla y asignamos valores
+                    var headTr = document.createElement("tr");
+                    headTr.className = "bg-primary";
+                    var headTrTh = document.createElement("th");
+                    var actualPeriods = 0;
+                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+                    //Span del mps mayor (value + 2)
+                    headTrTh.colSpan = actualPeriods + 1;
+                    //Delete -> headTrTh.colSpan = "3";
+                    headTrTh.scope = "col";
+                    headTrTh.className ="text-center-light";
+                    headTrTh.textContent = "MPS (Problema solucionado con la técnica de loteo: "+lotSizingRule+")";   
+                    headTrTh.id ="tablaAllHead"+lotSizingRule.replace(/ /g, "");             
+                    headTr.appendChild(headTrTh);
+                    //Creamos el segundo Tr del head de la tabla y asignamos valores
+                    var headTr2 = document.createElement("tr");
+                    headTr2.id = "periodsHeader";
+                    //headTr2.className="bg-primary";
+                     //Creamos el segundo los th del head de la tabla y asignamos valores
+                    for(var j=0;j<=actualPeriods;j++){
+                        var th = document.createElement("th");
+                        th.scope="col";
+                        th.className="text-light bg-primary";
+                        if(j==0){
+                        th.textContent="Period";
+                        }else{
+                        th.textContent=""+(j);
+                        }
+                        headTr2.appendChild(th);
+                    }       
+                     
+                    tblHead.appendChild(headTr);
+                    tblHead.appendChild(headTr2);
+        }
+
+        function constructRequestString(compareRequest,index) {
+            if(compareRequest==false){
+                lotSizingRule = $('#lotSizingRule').val();
+            }else{
+                if(index==0)
+                    lotSizingRule="Lot for Lot";
+                if(index==1)
+                    lotSizingRule="Economic Order Quantity";
+                if(index==2)
+                    lotSizingRule="Periods Of Suply";
+                if(index==3)
+                    lotSizingRule="Period Order Quantity";
+                if(index==4)
+                    lotSizingRule="Least Unit Cost";
+                if(index==5)
+                    lotSizingRule="Least Total Cost";
+            }
+            var result = new Array(1);
+            result[0]=construcRequestCommon()+ "&lotSizingRule=" + lotSizingRule;
+            return result
+        }
+    
+        function construcRequestCommon(){
             name = $("#itemName").val();
             levelCode = $("#levelCode").val();
             initialInventory = $("#initialInventory").val();
@@ -493,7 +651,6 @@
             orderingCost = $("#orderingCost").val();
             securityStock = $('#securityStock').val();
             costArticle = $('#costArticle').val();
-            lotSizingRule = $('#lotSizingRule').val();
             periodicity = $('#periodicity').val();
             TPeriodOFSupply = $('#TPeriodOFSupply').val();
             scheduledReceptions = "";
@@ -502,36 +659,251 @@
                 grossRequeriment = grossRequeriment + $('#gross' + i).val() + "-";
                 scheduledReceptions = scheduledReceptions + $('#sr' + i).val() + "-";
             }
-            //"?scheduledReceptions" + scheduledReceptions+"?grossRequeriment"+grossRequeriment+
-            //Se debería llamar las dos funci=ones de arriba para las listas de parámetros de las tablas (¡it's already done!)
-            console.log("?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime 
-            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&lotSizingRule=" + lotSizingRule + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost);
             return "?scheduledReceptions=" + scheduledReceptions + "&grossRequeriment=" + grossRequeriment + "&name=" + name + "&levelCode=" + levelCode + "&initialInventory=" + initialInventory + "&leadTime=" + leadTime 
-            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&lotSizingRule=" + lotSizingRule + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost;
+            + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost;
+            
         }
 
-        function solveModel() {
-            $(".cover").toggle(400);
-            var request = constructRequestString();
+        function constructRequestStringAll() {
+            /*
+            var lotSizingRule = document.getElementById('lotSizingRule');
+            var result = new Array(lotSizingRule.childNodes.length);
+            for(var i=0;i<lotSizingRule.childNodes.length;i++){
+                if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
+                    result[i] = construcRequestCommon()+"&lotSizingRule=" + lotSizingRule.childNodes.item(i).value;
+                }
 
+            }
+            return result;*/
+            var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
+            var result = new Array(tec.length);
+            for(var i=0;i<tec.length;i++){
+                    result[i] = construcRequestCommon()+"&lotSizingRule=" + tec[i];
+                   
+            }
+            return result;
+            
+        }
+        function deleteAllTables(){
+
+            tabla = document.getElementById("tableDataAll");
+            while(tabla){
+                if(tabla){
+                    padre = tabla.parentNode;
+                    padre.removeChild(tabla);  
+                }
+                tabla = document.getElementById("tableDataAll");
+            }
+             
+
+        }
+
+
+        function addDataAll(lotSizingMethod,data){    
+                        for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                                t =document.getElementById("availableInventoryProgrammedId"+lotSizingMethod.replace(/ /g, ""));
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("NetrequirementsId"+lotSizingMethod.replace(/ /g, ""));
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("ReceptionsOfPlannedOrdersId"+lotSizingMethod.replace(/ /g, ""));
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("releasedPlanOrdersId"+lotSizingMethod.replace(/ /g, ""));
+                                if(t){
+                                t.remove();
+                                }
+                        }   
+                        for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                                availableInventoryProgrammed =document.getElementById("AvailableInventoryProgrammed"+lotSizingMethod.replace(/ /g, ""));
+                                td = document.createElement("td");
+                                td.id="availableInventoryProgrammedId"+lotSizingMethod.replace(/ /g, "");
+                                td.className="text-dark AvailableInventoryProgrammed";
+                                td.textContent=data.scheduledAvailableStock[i];
+                                td.style ="width: 8%; height: 100%";
+                                availableInventoryProgrammed.appendChild(td);
+
+
+                                Netrequirements=document.getElementById("Netrequirements"+lotSizingMethod.replace(/ /g, ""));      
+                                td1 = document.createElement("td");
+                                td1.id="NetrequirementsId"+lotSizingMethod.replace(/ /g, "");
+                                td1.className="text-dark Netrequirements";
+                                td1.textContent=data.netRequirements[i] ;
+                                td1.style ="width: 8%; height: 100%";
+                                Netrequirements.appendChild(td1);
+
+                                ReceptionsOfPlannedOrders=document.getElementById("Receptionsofplannedorders"+lotSizingMethod.replace(/ /g, ""));
+                                td2 = document.createElement("td");
+                                td2.id="ReceptionsOfPlannedOrdersId"+lotSizingMethod.replace(/ /g, "");
+                                td2.className="text-dark ReceptionsOfPlannedOrders";
+                                td2.textContent=data.planOrders[i] ;
+                                td2.style ="width: 8%; height: 100%";
+                                ReceptionsOfPlannedOrders.appendChild(td2);
+
+                                Releaseofplannedorders=document.getElementById("Releaseofplannedorders"+lotSizingMethod.replace(/ /g, ""));                      
+                                td3 = document.createElement("td");
+                                td3.id="releasedPlanOrdersId"+lotSizingMethod.replace(/ /g, "");
+                                td3.className="text-dark Releaseofplannedorders";
+                                td3.textContent=data.releasedPlanOrders[i];
+                                td3.style ="width: 8%; height: 100%";
+                                Releaseofplannedorders.appendChild(td3);
+                                
+                                tablaHealAll= document.getElementById("tablaAllHead"+lotSizingMethod.replace(/ /g, ""));                            
+                                tablaHealAll.textContent= "MPS ("+data.lotSizingMethod+")";
+                               
+                        }    
+        }   
+
+                        function addData(data){    
+                        for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                                t =document.getElementById("availableInventoryProgrammedId");
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("NetrequirementsId");
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("ReceptionsOfPlannedOrdersId");
+                                if(t){
+                                t.remove();
+                                }
+                                t =document.getElementById("releasedPlanOrdersId");
+                                if(t){
+                                t.remove();
+                                }
+                        }   
+                        for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
+                               // $(".AvailableInventoryProgrammed"+lotSizingRule.replace(/ /g, "")).remove();
+                               //$(".Netrequirements"+lotSizingRule.replace(/ /g, "")).remove();
+                               // $(".ReceptionsOfPlannedOrders"+lotSizingRule.replace(/ /g, "")).remove();
+                               // $(".Releaseofplannedorders"+lotSizingRule.replace(/ /g, "")).remove();
+                                availableInventoryProgrammed =document.getElementById("AvailableInventoryProgrammed");
+                                td = document.createElement("td");
+                                td.id="availableInventoryProgrammedId";
+                                td.className="text-dark AvailableInventoryProgrammed";
+                                td.textContent=data.scheduledAvailableStock[i];
+                                td.style ="width: 8%; height: 100%";
+                                availableInventoryProgrammed.appendChild(td);
+
+
+                                Netrequirements=document.getElementById("Netrequirements");      
+                                td1 = document.createElement("td");
+                                td1.id="NetrequirementsId";
+                                td1.className="text-dark Netrequirements";
+                                td1.textContent=data.netRequirements[i] ;
+                                td1.style ="width: 8%; height: 100%";
+                                Netrequirements.appendChild(td1);
+
+                                ReceptionsOfPlannedOrders=document.getElementById("ReceptionsOfPlannedOrders");  
+                                td2 = document.createElement("td");
+                                td2.id="ReceptionsOfPlannedOrdersId";
+                                td2.className="text-dark ReceptionsOfPlannedOrders";
+                                td2.textContent=data.planOrders[i] ;
+                                td2.style ="width: 8%; height: 100%";
+                                ReceptionsOfPlannedOrders.appendChild(td2);
+
+                                Releaseofplannedorders=document.getElementById("releasedPlanOrders");
+                                td3 = document.createElement("td");
+                                td3.id="releasedPlanOrdersId";
+                                td3.className="text-dark Releaseofplannedorders";
+                                td3.textContent=data.releasedPlanOrders[i];
+                                td3.style ="width: 8%; height: 100%";
+                                Releaseofplannedorders.appendChild(td3);
+                                //$("#AvailableInventoryProgrammed").append("<td class='text-dark AvailableInventoryProgrammed' style='width: 8%; height: 100%';>" + data.scheduledAvailableStock[i] + "</td>");
+                               // $("#Netrequirements").append("<td class=' text-dark Netrequirements' style='width: 8%; height: 100%';>" +  data.netRequirements[i] + "</td>");
+                                //$("#Receptionsofplannedorders").append("<td class='text-dark ReceptionsOfPlannedOrders' style='width: 8%; height: 100%';>" + data.planOrders[i] + "</td>");               
+                               // $("#Releaseofplannedorders").append("<td  class='text-dark Releaseofplannedorders' style='width: 8%; height: 100%';>" + data.releasedPlanOrders[i] + "</td>");
+         
+                        }       
+
+
+        }
+        function solveModel(all) {
+            $(".cover").toggle(400);    
+            var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
+            var request = new Array(1);
+            var url="";
+            if(!all){
+                request =constructRequestString(false,0);
+                url ="http://localhost:8080/master";
+        
+            }else{
+                deleteAllTables();
+                generateTables();
+                request =constructRequestStringAll();
+                url ="http://localhost:8080/master";
+            }      
+            var allAux=true;
+            var contador=0;
+            for(var i=0;i<request.length&&allAux;i++){
+                if(!all){
+                    allAux=false;
+                }
+                if(request[i]!=null){
+                  
+                    $.ajax({
+                        url: url + request[i]
+                    }).then(function (data) {
+                        $(".cover").toggle(400);
+                        AvailableInventoryProgrammed = data.scheduledAvailableStock;
+                        Netrequirements = data.netRequirements;
+                        ReceptionsOfPlannedOrders = data.planOrders;
+                        ReleaseOfPlannedOrders = data.releasedPlanOrders;
+
+                        if(!all){
+                            addData(data);                            
+                         }else{
+                            addDataAll(tec[contador],data);
+                            contador++;                           
+                        }
+                    }, function (error) {
+                        alert(error)
+                        $(".cover").toggle(400);
+                        console.log(error);
+                    })
+
+                }
+            }
+
+
+        }
+        function solveModelC(index) {
+            $(".cover").toggle(400);
+            var request = constructRequestString(true,index);
             $.ajax({
                 //http://localhost:8080
-                url: "https://icesiviptest.herokuapp.com/master" + request
+              //  https://icesiviptest.herokuapp.com/master"
+                url: "http://localhost:8080/master" + request
             }).then(function (data) {
                 $(".cover").toggle(400);
-                console.log("Funciona");
-                console.log(data);
+                //console.log("Funciona");
+                //console.log(data);
                 AvailableInventoryProgrammed = data.scheduledAvailableStock;
-                Netrequirements = data.netRequirements;
                 ReceptionsOfPlannedOrders = data.planOrders;
-                ReleaseOfPlannedOrders = data.releasedPlanOrders;
-
+                maintainCost=0;
+                orderCost=0;
+                rotInventory=0;
                 for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
-                    $("#AvailableInventoryProgrammed").append("<td style='width: 8%; height: 100%';>" + AvailableInventoryProgrammed[i] + "</td>");
-                    $("#Netrequirements").append("<td style='width: 8%; height: 100%';>" + Netrequirements[i] + "</td>");
-                    $("#ReceptionsOfPlannedOrders").append("<td style='width: 8%; height: 100%';>" + ReceptionsOfPlannedOrders[i] + "</td>");
-                    $("#releasedPlanOrders").append("<td style='width: 8%; height: 100%';>" + ReleaseOfPlannedOrders[i] + "</td>");
+                    maintainCost+=AvailableInventoryProgrammed[i];
+                    if(ReceptionsOfPlannedOrders[i]!=(0)){
+                        orderCost++;
+                    }
+                    rotInventory+=data.bruteRequirements[i];
                 }
+                avgInventory=parseFloat((maintainCost).toFixed(2));
+                maintainCost=parseFloat((maintainCost*data.maintenanceCost).toFixed(2));
+                orderCost=parseFloat((orderCost*data.preparationCost).toFixed(2));
+                avgInventory=parseFloat((avgInventory/data.tperiodOFSupply).toFixed(2));
+                rotInventory=parseFloat((rotInventory/avgInventory).toFixed(2));
+                $("#maintainCost").append("<td class='text-dark';style='width: 15%; height: 100%';>" + maintainCost + "</td>");
+                $("#organizeCost").append("<td class='text-dark';style='width: 15%; height: 100%';>" + orderCost + "</td>");
+                $("#averageInventory").append("<td class='text-dark';style='width: 15%; height: 100%';>" + avgInventory + "</td>");
+                $("#inventoryRot").append("<td class='text-dark'; style='width: 15%; height: 100%';>" + rotInventory + "</td>");
                 //   document.getElementById('AvailableInventoryProgrammed').appendChild("<td style='width: 8%; height: 100%';>"+AvailableInventoryProgrammed[0]+"</td>");
             }, function (error) {
                 alert(error)

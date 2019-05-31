@@ -51,7 +51,6 @@ public class LotSizingMethods {
 		if (EOQDoub > EOQ) {
 			EOQ += 1;
 		}
-		System.out.println(EOQ);
 		ArrayList<Integer> result = new ArrayList<>();
 		int quantity = 0;
 		boolean primero = true;
@@ -237,7 +236,7 @@ public class LotSizingMethods {
 	 *         ordering in all t times.
 	 */
 	public ArrayList<Integer> systemLeastUnitCost(ArrayList<Integer> requiredArticles, double preparationCost,
-			double maintenanceCost) {
+			double maintenanceCost, double itemCost) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		int quantity = 0;
 		int StoredTimes = 0;
@@ -246,10 +245,10 @@ public class LotSizingMethods {
 		for (int i = 0; i < requiredArticles.size(); i++) {
 			quantity += requiredArticles.get(i);
 			storedUnits += requiredArticles.get(i) * StoredTimes;
-			double UnitCost = (preparationCost + (maintenanceCost * (storedUnits * 1.0))) / (quantity * 1.0);
+			double UnitCost = (preparationCost + (maintenanceCost * (itemCost * storedUnits * 1.0))) / (quantity * 1.0);
 			if (i != requiredArticles.size() - 1) {
 				int nextStoredUnits = storedUnits + (requiredArticles.get(i + 1) * (StoredTimes + 1));
-				double nextUnitCost = (preparationCost + (maintenanceCost * (nextStoredUnits * 1.0)))
+				double nextUnitCost = (preparationCost + (maintenanceCost * (itemCost * nextStoredUnits * 1.0)))
 						/ ((quantity + requiredArticles.get(i + 1)) * 1.0);
 				if (nextUnitCost > UnitCost) {
 					updateAuxiliaryList(result, lastTime, i, quantity);
@@ -282,7 +281,7 @@ public class LotSizingMethods {
 	 *         ordering in all t times.
 	 */
 	public ArrayList<Integer> systemLeastTotalCost(ArrayList<Integer> requiredArticles, double preparationCost,
-			double maintenanceCost) {
+			double maintenanceCost, double itemCost) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		int quantity = 0;
 		int StoredTimes = 0;
@@ -291,10 +290,10 @@ public class LotSizingMethods {
 		for (int i = 0; i < requiredArticles.size(); i++) {
 			quantity += requiredArticles.get(i);
 			storedUnits += requiredArticles.get(i) * StoredTimes;
-			double difference = Math.abs(preparationCost - (maintenanceCost * (storedUnits * 1.0)));
+			double difference = Math.abs(preparationCost - (maintenanceCost * (itemCost * storedUnits * 1.0)));
 			if (i != requiredArticles.size() - 1) {
 				int nextStoredUnits = storedUnits + (requiredArticles.get(i + 1) * (StoredTimes + 1));
-				double nextDiference = Math.abs(preparationCost - (maintenanceCost * (nextStoredUnits * 1.0)));
+				double nextDiference = Math.abs(preparationCost - (maintenanceCost * (itemCost * nextStoredUnits * 1.0)));
 				if (nextDiference > difference) {
 					updateAuxiliaryList(result, lastTime, i, quantity);
 					quantity = 0;
@@ -312,6 +311,7 @@ public class LotSizingMethods {
 	}
 
 	// preguntarle a jeison
+	// preguntarme que?
 	/**
 	 * Update the list with all net requeriments adding.
 	 * <p>
