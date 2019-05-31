@@ -951,25 +951,24 @@
                 for (let j = 0; j < actualMatrix[0].length; j++) {
                   $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                 }
-              
-
               }
             }
             $("#mensajeS").empty();
-            $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
-            var tableContent = "";
-                    for (let index = 0; index < variableNames.length; index++) {
-                                tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
-                        }
-                        tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
-                $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
-                  +'<table class="table table-bordered" width="100%" cellspacing="0">'
-                   +'<thead class="bg-gradient-primary">'
-                    +'<tr> <th> <font color="#fff">Var</font></th>'
-                     +'<th> <font color="#fff">Value</font></th>'
-                      +'</tr> </thead> <tbody>' + tableContent
-                       +'</tbody></table>');
-                 $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+          $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+          var tableContent = "";
+          for (let index = 0; index < variableNames.length; index++) {
+          tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
+          }
+          tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
+          $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
+          +'<table class="table table-bordered" width="100%" cellspacing="0">'
+          +'<thead class="bg-gradient-primary">'
+          +'<tr> <th> <font color="#fff">Var</font></th>'
+          +'<th> <font color="#fff">Value</font></th>'
+          +'</tr> </thead> <tbody>' + tableContent
+          +'</tbody></table>');
+        $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
           }, function (error) {
             $(".cover").toggle(900);
             alert("Failed to process requests.")
@@ -978,7 +977,39 @@
           });
         }
 
+        function addSolutionInTable(variableNames){
+         
+      }
 
+        function analysisS() {
+      $("#Analysis").remove();
+          $("#mensajeS").append("<h3 class = 'text-center'>Sensitivity Analysis:</h3>");
+          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Equations for Constraints D's intervals</font></h4><h4 class='col-sm-6'><font color='black'>Equations for shadow price D's intervals</font></h4></div>");
+          $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>"+analysis.equationsConstraints+"</font></h5><h5 class='col-sm-6'><font color='black'>"+analysis.equationsFO+"</font></h5></div>");
+          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Constraints intervals</font></h4><h4 class='col-sm-6'><font color='black'>Shadow price intervals</font></h4></div>");
+          var intervalsCons = "<div class='col-sm-6'>";
+          for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
+            if(analysis.intervalsDConstraints[index][0] < -999999999999999999)
+            intervalsCons += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
+            else intervalsCons += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDConstraints[index][0];
+            if(analysis.intervalsDConstraints[index][1] > 999999999999999999)
+            intervalsCons += " <= Infinity</font></h5>";
+            else intervalsCons += " <= "+ analysis.intervalsDConstraints[index][1] +"</font></h5>"
+          }
+          intervalsCons += "</div>";
+          var intervalsVars = "<div class='col-sm-6'>";
+            for (let index = 0; index < analysis.intervalsDFO.length; index++) {
+              if(analysis.intervalsDFO[index][0] < -999999999999999999)
+              intervalsVars += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
+              else intervalsVars += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDFO[index][0]
+              if (analysis.intervalsDFO[index][1] > 999999999999999999)
+              intervalsVars +=" <= Infinity</font></h5>";
+              else intervalsVars +=" <= "+ analysis.intervalsDFO[index][1] +"</font></h5>";
+          }
+          intervalsVars += "</div>";
+          $("#mensajeS").append("<div class='row'>" +intervalsCons + intervalsVars + "</div>");
+      //$("#mensajeS").append(analysis.equationsConstraints);
+     }
 
 
 
@@ -1102,11 +1133,22 @@
             if (analysis != null) {
               termino = true;
              
-
               $("#mensajeS").empty();
-              $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-              $("#mensajeS").prepend("<h3 class = 'text-center'>Solution:</h3><h5 class='text-center'><font color='black'>" + solutionInWords + "</font></h5>");
-              $("#mensajeS").prepend("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+          $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+          var tableContent = "";
+          for (let index = 0; index < variableNames.length; index++) {
+          tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
+          }
+          tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
+          $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
+          +'<table class="table table-bordered" width="100%" cellspacing="0">'
+          +'<thead class="bg-gradient-primary">'
+          +'<tr> <th> <font color="#fff">Var</font></th>'
+          +'<th> <font color="#fff">Value</font></th>'
+          +'</tr> </thead> <tbody>' + tableContent
+          +'</tbody></table>');
+        $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
 
             }
 
