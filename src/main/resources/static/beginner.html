@@ -329,60 +329,54 @@
                   <input type="text" class="form-control form-control-user" id="cTitle" required="">
                 </div>
               </div>
+          
               <hr>
-
               <div class="row">
-                <div class="col"></div>
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                  <h2>Number of Variables</h2>
+                <div class="col-sm-2"></div>
+               
+                
+                <div class="col-sm-4 mb-3 mb-sm-0">  
+                  <h2 >Number of Variables</h2>
 
                   <div class="form-group row ">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="number" class="form-control form-control-user" id="cVariable" required="">
-                    </div>
-                    <div class="text-black-50">
-                      <div class="col-sm-12 mb-3 mb-sm-0">
-                        <button onclick="goVar()" class="btn btn-outline-success btn-icon-split" type="button">
-                          <span class="icon text-white-50">
-                            <i class="fas fa-check"></i>
-                          </span>
-                          <span class="text">Go!</span>
-                          </a>
-
+                      <div class="col-sm-10 mb-3 mb-sm-0">
+                          <input type="number" class="form-control form-control-user" id="cVariable" >
                       </div>
-                    </div>
-                  </div>
-                </div>
+                     
+                        </div></div>
                 <div class="col-sm-4 mb-3 mb-sm-0">
-                  <h2>Number of Constraints</h2>
+                    <h2>Number of Constraints</h2>
 
-                  <div class="form-group row">
-                    <div class="col-sm-7 mb-3 mb-sm-0">
-                      <input type="number" class="form-control form-control-user" id="goConstraint" required="">
+                    <div class="form-group row">
+                        <div class="col-sm-10 mb-3 mb-sm-0">
+                            <input type="number" class="form-control form-control-user" id="goConstraint" >
+                        </div>
+                      
                     </div>
-                    <div class="text-black-50">
-                      <div class="col-sm-12 mb-3 mb-sm-0">
-                        <button onclick="goConst()" class="btn btn-outline-success btn-icon-split" type="button">
+
+                </div>
+                <div class="col-sm-1"></div>
+                  
+                
+               
+              </div>
+              <div class="row">
+                  <div class="col-sm-5 mb-0 mb-sm-0"></div>
+                 
+                  <div class="col-sm-2">
+                      <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" type="button" >
                           <span class="icon text-white-50">
                             <i class="fas fa-check"></i>
                           </span>
-                          <span class="text">Go!</span>
-                          </a>
-                      </div>
-                    </div>
+                          <span class="text" href="#thead-tr">Go!</span>
+                        </button>
                   </div>
-
-                </div>
-                <div class="col"></div>
-
-
-
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-2"></div>
               </div>
-              <hr>
 
 
-
-
+                <hr>
 
 
 
@@ -654,7 +648,7 @@
             var c = 2;
            
             
-            console.log();
+            
             var numberVar = countVariables(numVar2.length)
 
 
@@ -693,7 +687,15 @@
               }
 
             });
+            var constraints = split[1].split('n').length-3;
+            for (let i = 0; i < constraints; i++) {
+              addCons();
+               
+             }
+            $('#table-body td').each(function (index) {
+             
 
+            });
 
           }, function (error) {
             alert("Failed to process request.")
@@ -797,6 +799,11 @@
             }
           }
         }
+        function createTable(){
+          
+          goVar();
+          goConst();
+        }
         //-----------------------------------
 
 
@@ -849,7 +856,9 @@
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
             url: "http://localhost:8080/simplexMethod" + string
+             
           }).then(function (data) {
 
             $("#resultTable thead").empty();
@@ -874,7 +883,7 @@
 
               }
               $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
-              $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
+             
 
               resolve();
             });
@@ -888,7 +897,7 @@
                 for (let j = 0; j < actualMatrix[0].length; j++) {
                   $("#resultTable tbody").find("tr").append("<td>" + actualMatrix[0][j] + "</td>");
                 }
-                $("#resultTable tbody").find("tr").append("<td></td>");
+               
               } else if (index > 0) {
                 console.log("index:" + index + " valor:" + varsBase[index - 1])
                 $("#resultTable tbody").append("<tr id='row" + index + "'></tr>");
@@ -897,7 +906,7 @@
                 for (let j = 0; j < actualMatrix[0].length; j++) {
                   $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                 }
-                $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+              
 
               }
             }
@@ -982,6 +991,7 @@
 
 
           $.ajax({
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
             url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
             var variableNames = data.everyVariableName;
@@ -1047,6 +1057,7 @@
             }
             if (messageSol != null) {
               termino = true;
+             
 
               $("#mensajeS").empty();
               $("#mensajeS").prepend('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick=""  class="btn btn-outline-success btn-icon-split" type="button"><span class="text" id = "Analysis">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');

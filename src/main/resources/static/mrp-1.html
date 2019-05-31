@@ -233,13 +233,13 @@
 								<div class='col-sm-6'>
 									<a onclick='addConstraint()'
 										class='btn btn-success btn-user btn-block'> <i
-										class='fab fa-fw'></i> Add Product
+										class='fab fa-fw'></i> ADD PRODUCT
 									</a>
 								</div>
 								<div class='col-sm-6'>
 									<a onclick='removeConstraint()'
 										class='btn btn-danger btn-user btn-block'> <i
-										class='fab fa-fw'></i> Remove Product
+										class='fab fa-fw'></i> REMOVE PRODUCT
 									</a>
 								</div>
 							</div>
@@ -251,9 +251,9 @@
 								<article>
 									<button id="btn-abrir-popup"
 										class="btn btn-success btn-user btn-block"
-										onclick='pintarArbol()'>PAINT PRODUCT TREE</button>
+										onclick='pintarArbol()'>SHOW PRODUCT TREE</button>
 								</article>
-
+								<hr>
 								<div class='overlay' id="overlay">
 									<div class="popup" id="popup">
 										<a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i
@@ -668,11 +668,14 @@
 			nodes = new vis.DataSet([]);
         	
         	for (var i = 0; i < productos.length; i++) {
-        		nodes.add([
-					{id: i, label: productos[i].name, title: "Name: " + productos[i].name + "<br>ID: " + productos[i].id + "<br>Amount: " + productos[i].amount}
+        			nodes.add([
+        			{id: i, label: productos[i].name + "  (" + productos[i].amount + ")"}
 					]);
-        	}
-        	
+        	}	
+			//		{id: i, label: productos[i].name + "  (" + productos[i].amount + ")", title: "Name: " + productos[i].name + "<br>ID: " + productos[i].id + "<br>Amount: " + productos[i].amount}
+				//	]);
+        	//}
+		
         	var edges;
         	
         	edges = new vis.DataSet ([]);
@@ -733,8 +736,8 @@
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        url: 'http://localhost:8080/pruebaMRP' + request
-                        //url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                        //url: 'http://localhost:8080/pruebaMRP' + request
+                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
