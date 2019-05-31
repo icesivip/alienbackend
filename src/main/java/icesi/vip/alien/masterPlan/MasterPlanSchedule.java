@@ -1,9 +1,6 @@
 package icesi.vip.alien.masterPlan;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class MasterPlanSchedule {
 	
@@ -92,10 +89,10 @@ public class MasterPlanSchedule {
 			planOrders = lotSizingMethods.systemPeriodOrderQuantity(periodicity, bruteRequirements, planOrdersLxL, costArticle, preparationCost, maintenanceCost);
 			break;
 		case(LEAST_UNIT_COST):/*Sí*/
-			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemLeastUnitCost(planOrdersLxL, preparationCost, maintenanceCost, costArticle);
 			break;
 		case(LEAST_TOTAL_COST):/*Sí*/
-			planOrders = lotSizingMethods.systemLeastTotalCost(planOrdersLxL, preparationCost, maintenanceCost);
+			planOrders = lotSizingMethods.systemLeastTotalCost(planOrdersLxL, preparationCost, maintenanceCost, costArticle);
 			break;
 		}
 	}
