@@ -66,7 +66,11 @@ public class Simplex implements Solver{
                 generateEquaAndFOMatries(equations, opti);
             
             generateConstraintsLeftMatrix(equations, model.getType().equals(Model.MAXIMIZE));
-            solve(model);
+            
+            calculateInitialBase();
+            internalteration(model.getType().equals(Model.MAXIMIZE));
+            
+//            solve(model);
             } catch (Exception e) {
 //            throw new Exception("Characters not allowed");
             	 e.printStackTrace();
@@ -444,8 +448,12 @@ public class Simplex implements Solver{
 
     @Override
     public Solution solve(Model model) {
-        calculateInitialBase();
-        internalteration(model.getType().equals(Model.MAXIMIZE));
+    	double[][] finalFinal = null;
+        double[][] sig = nextIteration();
+        while(!sig.equals(finalFinal)){
+            finalFinal = sig;
+            sig = nextIteration();
+        }
         return solution;
     }
 
