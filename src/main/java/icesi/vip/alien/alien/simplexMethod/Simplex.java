@@ -306,7 +306,7 @@ public class Simplex implements Solver {
 	 * Metodo encargado de generar las restricciones de la matriz sin sus igualdades
 	 * 
 	 * @param equations Conjunto de ecuaciones del problema
-	 * @param isMax Indica si se esta maximizando minimizando el problema
+	 * @param isMax     Indica si se esta maximizando minimizando el problema
 	 * @return Indicacion si se creo correctamente las restricciones
 	 */
 	private boolean generateConstraintsLeftMatrix(String[] equations, boolean isMax) {
@@ -378,10 +378,11 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Metodo encargado de generar las matrices de la funcion objetivo y de las restricciones
+	 * Metodo encargado de generar las matrices de la funcion objetivo y de las
+	 * restricciones
 	 * 
 	 * @param equations Representa el conjunto de ecuaciones del problema
-	 * @param opti Indica si se esta maximizando este problema o no.
+	 * @param opti      Indica si se esta maximizando este problema o no.
 	 */
 	private void generateEquaAndFOMatries(String[] equations, String opti) {
 		String[] objective = equations[0].split(" ");
@@ -501,7 +502,7 @@ public class Simplex implements Solver {
 	 * Metodo encargado de calcular las posiciones de las variables de exceso
 	 * 
 	 * @param equations Representa las ecuaciones del problema
-	 * @return Conjunto de numero
+	 * @return Conjunto de numeros
 	 */
 	private ArrayList<Integer> calculatePosExcess(String[] equations) {
 		ArrayList<Integer> resultado = new ArrayList();
@@ -514,7 +515,11 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * calcula las posiciones de las igualdades de las restricciones
+	 * Metodo encargado de calcular las posiciones de las igualdades de las
+	 * restricciones
+	 * 
+	 * @param equations Representa el conjunto de ecuaciones del problema.
+	 * @return Un conjunto de valores calculados
 	 */
 	private ArrayList<Integer> calculatePosEqualities(String[] equations) {
 		ArrayList<Integer> resultado = new ArrayList();
@@ -527,10 +532,10 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Modifica la matriz con la Big M
+	 * Metodo encargado de modificar la matriz con la Big M
 	 * 
-	 * @param emes
-	 * @param equations
+	 * @param emes      Indica el valor de la M
+	 * @param equations Conjunto de ecuaciones
 	 */
 	private void normalizeBigM(int emes, String[] equations) {
 		System.out.println("emes " + emes);
@@ -541,8 +546,8 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
-	 * @param excess
+	 * Metodo encargado de representar la nueva funcion objetivo
+	 * @param excess Indica el valor de la variable en exceso
 	 */
 	private void enlargeFO(int excess) {
 		double[][] newFO = new double[FObj.getRowDimension() + excess][1];
@@ -556,7 +561,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * Metodo encargado de controlar las iteraciones internas del problema.
 	 */
 	private void internalteration(boolean isMax) {
 		MId = CreaB(ConsLeft, Base);
@@ -570,7 +575,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * Metodo encargado de realizar la solucion de un problema a partir de su modelo
 	 */
 	@Override
 	public Solution solve(Model model) {
@@ -584,9 +589,9 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
-	 * @return
-	 * @throws Exception
+	 * Metodo encargado de indicar el tipo de solution que se encuentra con el problema.
+	 * @return Un mensaje indicando el tipo de solucion
+	 * @throws Exception Indica si se obtuvo un problema realizando estas operaciones
 	 */
 	private String findKindOfSolution() throws Exception {
 		model.isFeasibleSolution(solution);
@@ -607,6 +612,8 @@ public class Simplex implements Solver {
 	}
 
 	/**
+	 * Metodo encargado de retornar un mensaje indicando si el problema tiene
+	 * solucion o no.
 	 * 
 	 * @return
 	 */
@@ -615,6 +622,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
+	 * Metodo encargado de retornar los valores de la M inicial
 	 * 
 	 * @return
 	 */
@@ -623,8 +631,9 @@ public class Simplex implements Solver {
 	}
 
 	/**
+	 * Metodo encargado de retornar el nombre de las variables
 	 * 
-	 * @return
+	 * @return conjunto de nombres de las variables
 	 */
 	public String[] getEveryVariableName() {
 		String[] vars = new String[model.getVariableCount()];
@@ -634,8 +643,9 @@ public class Simplex implements Solver {
 	}
 
 	/**
+	 * Metodo encargado de retornar los valores de la solucion
 	 * 
-	 * @return
+	 * @return Conjunto de resultados
 	 */
 	public double[] getVarsValuesSolution() {
 		double[] sb = new double[getEveryVariableName().length + 1];
@@ -657,6 +667,7 @@ public class Simplex implements Solver {
 
 	/**
 	 * Indica el criterio con el que se manejara el problema
+	 * 
 	 * @return Mensaje que representa el criterio del modelo
 	 */
 	public String getCriterion() {
@@ -665,6 +676,7 @@ public class Simplex implements Solver {
 
 	/**
 	 * Indica el numero de iteracion en el que se esta hasta el momento
+	 * 
 	 * @return Numero que indica la iteracion
 	 */
 	public int getIterationID() {
@@ -673,6 +685,7 @@ public class Simplex implements Solver {
 
 	/**
 	 * Metodo encargado de retornar la matriz actual del problema
+	 * 
 	 * @return Matriz actual del problema
 	 */
 	public double[][] getActualMatrix() {
@@ -680,7 +693,9 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Metodo encargado de retornar un mensaje indicando si las iteraciones se terminaron o no.
+	 * Metodo encargado de retornar un mensaje indicando si las iteraciones se
+	 * terminaron o no.
+	 * 
 	 * @return Mensaje con la indicacion
 	 */
 	public String getOperationsDone() {
@@ -689,6 +704,7 @@ public class Simplex implements Solver {
 
 	/**
 	 * Metodo encargado de retornar los valores theta de la iteracion
+	 * 
 	 * @return
 	 */
 	public double[] getTheta() {
