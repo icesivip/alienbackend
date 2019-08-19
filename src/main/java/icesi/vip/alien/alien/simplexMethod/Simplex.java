@@ -13,7 +13,7 @@ import model.*;
 
 public class Simplex implements Solver {
 	/**
-	 * 
+	 * The M represents the coeficient of the artifical variables in the objective function to penalize the solution.
 	 */
 	public static final int BIG_M = 1000000;
 	/**
@@ -25,42 +25,40 @@ public class Simplex implements Solver {
 	 */
 	private SensivilityAnalysis analysis;
 	/**
-	 * matriz interna, solo variables y sin la columna y fila del Z, tampoco tiene
-	 * la fila de las igualdades
+	 * Matrix with variables, without the Z row, the basic variables column non thw equalities row.
 	 */
 	private Matrix ConsLeft;
 	/**
-	 * matriz identidad antes de convertirse
+	 * Identity matrix before its conversion
 	 */
 	private Matrix MId;
 	/**
-	 * matriz con la función objetivo dada en la primera columna
+	 * Matrix that contains the objective function in the first column
 	 */
 	private Matrix FObj;
 	/**
-	 * matriz que representa las variables de holgura que acompañan a la función
-	 * objetivo (primera columna)
+	 * Matrix that contains the representation of the slack variables in the column of Basic Variables
 	 */
 	private Matrix SlackOF;
 	/**
-	 * matriz de igualdades en la primera columna
+	 * Matrix that represents the right side of the constraints.
 	 */
 	private Matrix equalities;
 	/**
-	 * indices que forman la matriz identidad
+	 *  Position of the variables contained in the base.
 	 */
 	private int[] Base;
 	/**
-	 * 
+	 * Name of the variables contained in base. 
 	 */
 	private String[] varsBase;
 
 	/**
-	 * matriz que representa la matriz final de una iteración (sin la columna del Z)
+	 * Matrix that repsents the result of an iteration (without the z column). 
 	 */
 	private Matrix Final;
 	/**
-	 * 
+	 * Number of decision variables.  
 	 */
 	private int nVarDecision;
 	/**
@@ -84,15 +82,15 @@ public class Simplex implements Solver {
 	 */
 	private String operationsDone;
 	/**
-	 * 
+	 *  Represents the ratio test.
 	 */
 	private double[] theta;
 
 	/**
-	 * 
-	 * @param opti
+	 * Create the constructor of the Simplex class
+	 * @param opti 
 	 * @param equations
-	 * @throws Exception
+	 * @throws Exception especificar cual método arroja la excepcion "se presenta una excepcion cuando o porque"
 	 */
 	public Simplex(String opti, String[] equations) throws Exception {
 		initialM = equations;
@@ -117,7 +115,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 *  Returns the variables contained in the base.
 	 * @return
 	 */
 	public String[] getVarsBase() {
@@ -125,10 +123,9 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Cambia a la siguiente matriz de la iteración correspondiente (no contiene la
-	 * columna del Z)
+	 * Change to the next matrix of the iteration (without the basic variables column).
 	 * 
-	 * @return Una matriz completa que corresponde al resultado de la iteración
+	 * @return Complete matrix that represents the results of the iteration
 	 */
 	public double[][] nextIteration() {
 		operationsDone = "";
@@ -163,7 +160,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 *   redondea toda la matriz a dos decimales
 	 * @param array
 	 * @return
 	 */
@@ -178,7 +175,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * redondea un numero a dos decimales
 	 * @param d
 	 * @return
 	 */
@@ -221,9 +218,9 @@ public class Simplex implements Solver {
 	/**
 	 * Crea una matriz que compone todas las matrices de entrada
 	 * 
-	 * @param TAB    lado izquierdo de la igualdad
+	 * @param TAB   left side of the equality 
 	 * @param X_B    don know
-	 * @param Fila_z ecuación objetivo
+	 * @param Fila_z coeficients of the objective function 
 	 * @param z_v    don know
 	 * @return matriz completa dados los parámetros
 	 */
@@ -251,7 +248,7 @@ public class Simplex implements Solver {
 
 	/**
 	 * Crea la matriz don know
-	 * 
+	 *  toma/devuelve/retornalos coeficientes de las variables basicas de la matriz inicial
 	 * @param A
 	 * @param Base
 	 * @return
@@ -273,7 +270,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * toma/devuelve/retorna las variables de holgura de la funcion objetivo
 	 * @param ObjF
 	 * @param Base
 	 * @return
@@ -292,7 +289,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 *  genera las restricciones de la matriz sin las igualdades
 	 * @param equations
 	 * @param isMax
 	 * @return
@@ -366,7 +363,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * genera las matrices de la funcion objetivo y de las restricciones
 	 * @param equations
 	 * @param opti
 	 */
@@ -401,7 +398,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * regla del cociente
 	 * @return
 	 */
 	private boolean quotientTest() {
@@ -452,7 +449,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * metodo de pruebas
 	 * @param args
 	 * @throws Exception
 	 */
@@ -483,7 +480,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * calcula las posiciones de las variables de exceso
 	 * @param equations
 	 * @return
 	 */
@@ -498,7 +495,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 * calcula las posiciones de las igualdades de las restricciones
 	 */
 	private ArrayList<Integer> calculatePosEqualities(String[] equations) {
 		ArrayList<Integer> resultado = new ArrayList();
@@ -511,7 +508,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * 
+	 *  Modifica la matriz con la Big M
 	 * @param emes
 	 * @param equations
 	 */
