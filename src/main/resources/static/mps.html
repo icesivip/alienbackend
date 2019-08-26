@@ -481,6 +481,7 @@
                     $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + i + 1) + "</th>")
                     $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
                     $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods + i + 1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
+                    
                 }
                 pHeader.appendChild(resizeCommand);
             } else if ($('#tamPeriods').val() >= 4/*Valor mímimo de periodos admitidos*/) {
@@ -491,10 +492,12 @@
                     actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
                     document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
                     document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
-                    document.getElementById("AvailableInventoryProgrammed").removeChild(document.getElementById("AvailableInventoryProgrammed").getElementsByTagName("td")[(dataColSize - 2)]);
-                    document.getElementById("Netrequirements").removeChild(document.getElementById("Netrequirements").getElementsByTagName("td")[(dataColSize - 2)]);
-                    document.getElementById("ReceptionsOfPlannedOrders").removeChild(document.getElementById("ReceptionsOfPlannedOrders").getElementsByTagName("td")[(dataColSize - 2)]);
-                    document.getElementById("releasedPlanOrders").removeChild(document.getElementById("releasedPlanOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                    try{
+                        document.getElementById("AvailableInventoryProgrammed").removeChild(document.getElementById("AvailableInventoryProgrammed").getElementsByTagName("td")[(dataColSize - 2)]);
+                        document.getElementById("Netrequirements").removeChild(document.getElementById("Netrequirements").getElementsByTagName("td")[(dataColSize - 2)]);
+                        document.getElementById("ReceptionsOfPlannedOrders").removeChild(document.getElementById("ReceptionsOfPlannedOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                        document.getElementById("releasedPlanOrders").removeChild(document.getElementById("releasedPlanOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                    }catch(error){}
                 }
             }
         }
