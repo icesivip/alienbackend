@@ -39,6 +39,8 @@ public class SensivilityAnalysis {
         this.finalM = finalM;
         this.solution = solution;
         String [] varNames = varN;
+        System.out.print("shadow price");
+        shadowPrice.print(2, 2);
         posSlacks = new ArrayList();
         for (int i = 0; i < varNames.length; i++) {
             if(varNames[i].startsWith("S") || varNames[i].startsWith("A"))
@@ -201,13 +203,15 @@ public class SensivilityAnalysis {
                     for (int j = 0; j < finalM.getRowDimension(); j++) {
                         if(j==0){
                             String constant;
-//                            if(var.getName().startsWith("A")){
-//                                if(modeloS.getType().equals(Model.MINIMIZE))
-//                                   constant = (finalM.get(j, x) + Simplex.BIG_M)+ " ";
-//                                else
-//                                    constant = (finalM.get(j, x) - Simplex.BIG_M)+ " ";
-//                            }
-//                            else
+                            if(var.getName().startsWith("A")){
+                                if(modeloS.getType().equals(Model.MINIMIZE))
+                                   constant = (finalM.get(j, x) + Simplex.BIG_M)+ " ";
+                                else
+                                    constant = (finalM.get(j, x) - Simplex.BIG_M)+ " ";
+                            }
+                            else if(var.getName().startsWith("E"))
+                            	continue;
+                            else
                                 constant = Simplex.roundDouble(finalM.get(j, x)) + " ";
                             equations.append(constant);
                             

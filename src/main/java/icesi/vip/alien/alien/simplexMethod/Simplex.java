@@ -42,7 +42,7 @@ public class Simplex implements Solver{
         private int [] Base;
         private String [] varsBase;
         
-
+        private Matrix B_inv;
 		/**
          * matriz que representa la matriz final de una iteración (sin la columna del Z)
          */
@@ -70,7 +70,11 @@ public class Simplex implements Solver{
             calculateInitialBase();
             internalteration(model.getType().equals(Model.MAXIMIZE));
             
-//            solve(model);
+            //métodos de prueba
+            solve(model);
+            buildAnalysis();
+            getIntervals();
+            
             } catch (Exception e) {
 //            throw new Exception("Characters not allowed");
             	 e.printStackTrace();
@@ -394,6 +398,11 @@ public class Simplex implements Solver{
 //                                           "0 Z 4 X1 2 X2 1.5 X3 <= 20",
 //                                           "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
 //                                            "0 Z 0 X1 1 X2 0 X3 <= 5"});
+//        	Caso análisis
+//    	Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -2 X2 -5 X3 = 0",
+//                 "0 Z 1 X1 2 X2 1 X3 <= 430",
+//                 "0 Z 3 X1 0 X2 2 X3 <= 460",
+//                 "0 Z 1 X1 4 X2 0 X3 <= 420"});
     }
 
     private ArrayList <Integer> calculatePosExcess(String[] equations) {
@@ -438,7 +447,7 @@ public class Simplex implements Solver{
     private void internalteration(boolean isMax) {
         MId = CreaB(ConsLeft, Base);
         SlackOF = takeSlackOF(FObj, Base);
-        Matrix B_inv = MId.inverse(); 
+        B_inv = MId.inverse(); 
         Matrix X_B = B_inv.times(equalities);            
         Matrix TAB = B_inv.times(ConsLeft);
         Matrix Fila_z = ((SlackOF.transpose()).times(TAB)).minus(FObj.transpose());
@@ -526,7 +535,9 @@ public class Simplex implements Solver{
     }
 
     public void buildAnalysis() {
-    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, SlackOF, equalities, Final);
+    	SlackOF.transpose();
+    	Matrix shadowPrice = SlackOF.times(B_inv);
+    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, shadowPrice, equalities, Final);
     }
 
     public void getIntervals() {
