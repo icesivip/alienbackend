@@ -342,7 +342,7 @@
                                 <h2 class="text-center white-text">Email</h2>
                             </div>
                             <div class="card-body">
-                                <input type="email" class="expand" id="mail-text"></input>
+                                <input type="email" class="expand" id="mail-text" required></input>
 
                             </div>
 
@@ -425,7 +425,9 @@
 
            console.log("cosa")
             $.ajax({
-                url: "https://icesiviptest.herokuapp.com/neosServer"+constructQueryString()
+                url: "https://icesiviptest.herokuapp.com/neosServer",
+                type: "POST",
+                data: getPostData()
             }).then(function (data) {
                 alert(data);
                 
@@ -449,6 +451,16 @@
 
 
             return "?model=" + model + "&data=" + data + "&commands=" + commands + "&email=" + mail;
+        }
+
+        function getPostData() {
+            model =document.getElementById("model-text").value;
+            data =document.getElementById("data-text").value;
+            commands =document.getElementById("commands-text").value;
+            mail =document.getElementById("mail-text").value
+
+
+            return {model:model,data:data,commands:commands,mail:mail}
         }
             
         

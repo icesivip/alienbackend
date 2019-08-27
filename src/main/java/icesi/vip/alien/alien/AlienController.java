@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -138,7 +139,7 @@ public class AlienController {
 	
 	
 	@CrossOrigin
-	@RequestMapping("/neosServer")
+	@RequestMapping(value="/neosServer" ,method=RequestMethod.POST)
 	public String neosServerRemoteJob(@RequestParam(value = "model", required = true) String model,
 			@RequestParam(value = "data", required = true) String data,
 			@RequestParam(value = "commands", required = true) String commands,
@@ -192,7 +193,7 @@ public class AlienController {
 	
 
 	@CrossOrigin
-	@RequestMapping("/interiorPoint")
+	@RequestMapping(value="/interiorPoint")
 	public InteriorPointContainer interiorPoint(@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "vars", required = true) String vars,
 			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
