@@ -289,7 +289,7 @@
    
   }
 </style>
-        <!-- Begin Page Content --->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
             <div class="cover"></div>
           <!-- Page Heading -->
@@ -299,7 +299,7 @@
           </div>
         <!-- /.container-fluid -->
         <div class="col-lg">
-            <!-- Nested Row within Card Body --->
+            <!-- Nested Row within Card Body -->
             <div class="p-5">
                 <form class="user" id="user">
                   <div class="col-sm-6">
@@ -498,7 +498,7 @@
                     <hr>
                     <br>
 
-                    <div style="display: none"class="table-responsive" id = "tableSolution">
+                    <div style="display: none" class="table-responsive" id = "tableSolution">
 
                         <h2 class="text-center">Solution</h2>
                         <div id="menIteration"> </div>
@@ -564,7 +564,7 @@
      
 
       
-      <!-- End of Main Content -------->
+      <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -889,8 +889,8 @@ function addVarSolution() {
        var otherVars= varCount+1
             var string = constructRequestString();
             $.ajax({
-                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-                //url: "http://localhost:8080/simplexMethod" + string
+                //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+                url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
              $("#tableSolution").show();
               $(".cover").toggle(1000);

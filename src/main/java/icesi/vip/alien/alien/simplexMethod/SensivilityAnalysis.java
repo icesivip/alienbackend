@@ -59,14 +59,14 @@ public class SensivilityAnalysis {
     String buildEquationsConstraints() {
         StringBuilder equations = new StringBuilder("<html><body>");
              try {
-                  equations.append("Z = ");
-            equations.append(solution.getObjectiveFunctionValue() + " ");
-            for (int j = 0; j < posSlacks.size(); j++) {
-                if(finalM.getArray()[0][posSlacks.get(j)]<0)
-                equations.append(Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
-                else equations.append("+"+Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
-            }
-            equations.append("<br>");
+//                  equations.append("Z = ");
+//            equations.append(solution.getObjectiveFunctionValue() + " ");
+//            for (int j = 0; j < posSlacks.size(); j++) {
+//                if(finalM.getArray()[0][posSlacks.get(j)]<0)
+//                equations.append(Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
+//                else equations.append("+"+Simplex.roundDouble(finalM.getArray()[0][posSlacks.get(j)]) + " D" + (j+1) + " ");
+//            }
+//            equations.append("<br>");
              int x = 0;
             for (int i = 1; i < finalM.getRowDimension(); i++) {
                 if(i>1)
@@ -100,16 +100,16 @@ public class SensivilityAnalysis {
         
         String [] lines = toSolve.split("<br>");
         String[] line = lines[0].split(" ");
-        double[][] doubMatrix = new double[lines.length-1][(line.length-3)/2];
-        double[] constants = new double[lines.length-1];
+        double[][] doubMatrix = new double[lines.length][(line.length-3)/2];
+        double[] constants = new double[lines.length];
         double [][] intervals = initializeIntervals(new double[constants.length][2]);
         //toma doubles necesarios
-        for (int i = 1; i < lines.length ; i++) {
+        for (int i = 0; i < lines.length ; i++) {
             line = lines[i].split(" ");
-            constants[i-1] = Double.parseDouble(line[2]);
+            constants[i] = Double.parseDouble(line[2]);
             for (int j = 3; j < line.length; j+=2) {
                 if(!line[j].startsWith("<"))
-                doubMatrix[i-1][(j-3)/2] = Double.parseDouble(line[j]);
+                doubMatrix[i][(j-3)/2] = Double.parseDouble(line[j]);
             }
         }
         Matrix aimp = new Matrix(doubMatrix);
@@ -190,7 +190,7 @@ public class SensivilityAnalysis {
              try {
              int x = 0;
             for (int i = 1; i < modeloS.getVariableCount(); i++) {
-               while( x<modeloS.getVariableCount() && (solution.getVariableValue(modeloS.getVariableAt(x)) != 0 )){
+               while( x<modeloS.getVariableCount() && (solution.getVariableValue(modeloS.getVariableAt(x)) != 0 || modeloS.getVariableAt(x).getName().startsWith("A"))){
                    x++;
                    }	
                    if(x==modeloS.getVariableCount())
@@ -203,15 +203,15 @@ public class SensivilityAnalysis {
                     for (int j = 0; j < finalM.getRowDimension(); j++) {
                         if(j==0){
                             String constant;
-                            if(var.getName().startsWith("A")){
-                                if(modeloS.getType().equals(Model.MINIMIZE))
-                                   constant = (finalM.get(j, x) + Simplex.BIG_M)+ " ";
-                                else
-                                    constant = (finalM.get(j, x) - Simplex.BIG_M)+ " ";
-                            }
-                            else if(var.getName().startsWith("E"))
-                            	continue;
-                            else
+//                            if(var.getName().startsWith("A")){
+//                                if(modeloS.getType().equals(Model.MINIMIZE))
+//                                   constant = (finalM.get(j, x) + Simplex.BIG_M)+ " ";
+//                                else
+//                                    constant = (finalM.get(j, x) - Simplex.BIG_M)+ " ";
+//                            }
+//                            else if(var.getName().startsWith("E"))
+//                            	continue;
+//                            else
                                 constant = Simplex.roundDouble(finalM.get(j, x)) + " ";
                             equations.append(constant);
                             

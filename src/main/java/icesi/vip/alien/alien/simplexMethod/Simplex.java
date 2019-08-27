@@ -9,6 +9,9 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.databind.deser.BuilderBasedDeserializer;
+
 import model.*;
 
 public class Simplex implements Solver {
@@ -115,11 +118,11 @@ public class Simplex implements Solver {
 			internalteration(model.getType().equals(Model.MAXIMIZE));
 
 //            solve(model);
+            
 		} catch (Exception e) {
 //            throw new Exception("Characters not allowed");
 			e.printStackTrace();
 		}
-//            System.out.print(isMaximization);
 	}
 
 	/**
@@ -194,7 +197,7 @@ public class Simplex implements Solver {
 	public static double roundDouble(double d) {
 		DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
 		separadoresPersonalizados.setDecimalSeparator('.');
-		DecimalFormat df = new DecimalFormat("#.##", separadoresPersonalizados);
+		DecimalFormat df = new DecimalFormat("#.###", separadoresPersonalizados);
 		return Double.parseDouble(df.format(d));
 	}
 
@@ -233,7 +236,7 @@ public class Simplex implements Solver {
 	 * @param TAB    Represents the left side of equality
 	 * @param X_B    Represents the matrix where the left side of the equality will be calculated in each iteration.
 	 * @param Fila_z Represents the coeficients of the objective function 
-	 * @param z_v    Represents the coeficients of the objective function in each interarion
+	 * @param z_v    Represents the coeficients of the objective function in each interation
 	 * @return       Full array given the parameters
 	 */
 	public static Matrix CrearTabla(Matrix TAB, Matrix X_B, Matrix Fila_z, Matrix z_v) {
@@ -241,18 +244,18 @@ public class Simplex implements Solver {
 		double[][] Tabla = new double[TAB.getRowDimension() + 1][TAB.getColumnDimension() + 1];
 
 		for (int j = 0; j < TAB.getColumnDimension(); j++) {
-			Tabla[0][j] = Math.round(Fila_z.getArray()[0][j] * 100d) / 100d;
+			Tabla[0][j] = Fila_z.getArray()[0][j];
 		}
 		Tabla[0][TAB.getColumnDimension()] = z_v.getArray()[0][0];
 
 		for (int i = 0; i < TAB.getRowDimension(); i++) {
 			for (int j = 0; j < TAB.getColumnDimension(); j++) {
-				Tabla[i + 1][j] = Math.round(TAB.getArray()[i][j] * 100d) / 100d;
+				Tabla[i + 1][j] = TAB.getArray()[i][j];
 			}
 		}
 
 		for (int i = 0; i < TAB.getRowDimension(); i++) {
-			Tabla[i + 1][TAB.getColumnDimension()] = Math.round(X_B.getArray()[i][0] * 100d) / 100d;
+			Tabla[i + 1][TAB.getColumnDimension()] = X_B.getArray()[i][0];
 		}
 		Matrix Tabla1 = new Matrix(Tabla);
 		return Tabla1;
@@ -477,8 +480,10 @@ public class Simplex implements Solver {
 //                                           "0 Z 0 X1 2 X2 <= 12",
 //                                           "0 Z 3 X1 2 X2 <= 18"});
 //           Gran M method
-		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0", "0 Z 0.5 X1 0.25 X2 <= 4",
-				"0 Z 1 X1 3 X2 >= 20", "0 Z 1 X1 1 X2 = 10" });
+		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0",
+														   "0 Z 0.5 X1 0.25 X2 <= 4",
+														   "0 Z 1 X1 3 X2 >= 20",
+														   "0 Z 1 X1 1 X2 = 10" });
 //          Solución no factible
 //          Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
 //                                           "0 Z 0.5 X1 0.25 X2 <= 4",
@@ -494,6 +499,8 @@ public class Simplex implements Solver {
 //                                           "0 Z 4 X1 2 X2 1.5 X3 <= 20",
 //                                           "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
 //                                            "0 Z 0 X1 1 X2 0 X3 <= 5"});
+		s.buildAnalysis();
+		s.getIntervals();
 	}
 
 	/**
@@ -711,7 +718,7 @@ public class Simplex implements Solver {
 	 * Method responsible of building sensitivity analysis
 	 */
 	public void buildAnalysis() {
-		SlackOF.transpose();
+		SlackOF = SlackOF.transpose();
     	Matrix shadowPrice = SlackOF.times(B_inv);
     	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, shadowPrice, equalities, Final);
 	}
