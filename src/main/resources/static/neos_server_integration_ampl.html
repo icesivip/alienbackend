@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Graphical Method Solver</title>
+    <title>Neos Server Integration</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -132,8 +132,7 @@
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
                         <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER INTEGRATION (AMPL) </a>
-                    </div>
+                                            </div>
                 </div>
             </li>
             <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
@@ -303,7 +302,7 @@
                             </div>
                             <div class="card-body">
 
-                                <textarea rows="20" class="expand" id="model-text"></textarea>
+                                <textarea rows="15" columns ="15" class="expand" id="model-text"></textarea>
                             </div>
 
                         </div>
@@ -316,7 +315,7 @@
                                 <h2 class="text-center white-text">Data</h2>
                             </div>
                             <div class="card-body">
-                                <textarea rows="20" class="expand" id="data-text"></textarea>
+                                <textarea rows="15" columns = "15" class="expand" id="data-text"></textarea>
 
                             </div>
 
@@ -330,7 +329,7 @@
                                 <h2 class="text-center white-text">Commands</h2>
                             </div>
                             <div class="card-body">
-                                <textarea rows="20" class="expand" id="commands-text"></textarea>
+                                <textarea rows="15" columns = "15" class="expand" id="commands-text"></textarea>
 
                             </div>
 
@@ -360,7 +359,18 @@
 
                         </div>
 
+                        <br>
+                        <br>
+                        <div class="card shadow-sm" id="results">
+                            <div class="card-header bg-primary">
+                                <h2 class="text-center white-text">Results</h2>
+                            </div>
+                            <div class="card-body">
+                                <textarea rows="15" columns = "15" class="expand" id="results-text" readonly></textarea>
 
+                            </div>
+
+                        </div>
                     </form>
 
 
@@ -422,6 +432,7 @@
 
       document.getElementById("submit-form").addEventListener("submit", function (e) {
             e.preventDefault();
+            document.getElementById("results-text").value = ""
 
            console.log("cosa")
             $.ajax({
@@ -429,7 +440,8 @@
                 type: "POST",
                 data: getPostData()
             }).then(function (data) {
-                alert(data);
+                //alert(data);
+                document.getElementById("results-text").value = data
                 
                 
 
