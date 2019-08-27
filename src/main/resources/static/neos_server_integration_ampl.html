@@ -335,6 +335,18 @@
 
                         </div>
 
+
+                        <div class="card shadow-sm" id="mail">
+                            <div class="card-header bg-primary">
+                                <h2 class="text-center white-text">Email</h2>
+                            </div>
+                            <div class="card-body">
+                                <input type="email" class="expand" id="mail-text"></input>
+
+                            </div>
+
+                        </div>
+
                         <br></form>
                         <hr>
                         <div class="row text-center">
@@ -412,9 +424,9 @@
 
            
             $.ajax({
-                url: urlFile
+                url: "https://icesiviptest.herokuapp.com/neosServer"+constructQueryString()
             }).then(function (data) {
-
+                alert(data);
                 
                 
 
@@ -429,7 +441,13 @@
 
 
         function constructQueryString() {
-            
+            model =document.getElementById("model-text").value;
+            data =document.getElementById("data-text").value;
+            commands =document.getElementById("commands-text").value;
+            mail =document.getElementById("email-text").value
+
+
+            return "?model=" + model + "&data=" + data + "&commands=" + commands + "&email=" + email;
         }
             
         

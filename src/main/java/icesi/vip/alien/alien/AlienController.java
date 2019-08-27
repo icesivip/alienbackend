@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
+import icesi.vip.alien.alien.neosServer.FileUtils;
+import icesi.vip.alien.alien.neosServer.NeosClient;
+import icesi.vip.alien.alien.neosServer.NeosJob;
+import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import icesi.vip.alien.materialRequirementPlanning.MRP;
@@ -130,6 +134,62 @@ public class AlienController {
 		return new GraphicalMethodContainer(m);
 
 	}
+	
+	
+	
+	@CrossOrigin
+	@RequestMapping("/neosServer")
+	public String neosServerRemoteJob(@RequestParam(value = "model", required = true) String model,
+			@RequestParam(value = "data", required = true) String data,
+			@RequestParam(value = "commands", required = true) String commands,
+			@RequestParam(value = "email", defaultValue = "") String email) throws Exception {
+	      
+		
+		
+		 String HOST="neos-server.org";
+		   String PORT="3333";
+		NeosClient client = new NeosClient(HOST, PORT);
+			
+	      
+	      NeosJobXml exJob = new NeosJobXml("milp", "CPLEX", "AMPL"); 
+
+			FileUtils fileUtils = FileUtils.getInstance(FileUtils.APPLICATION_MODE);
+
+			String example = model;
+
+			/* add contents of string example to model field of job XML */
+
+			exJob.addParam("model", example);
+
+			example = data;
+
+			/* add contents of string example to data field of job XML */
+
+			exJob.addParam("data", example);
+
+			example = commands;
+
+			/* add contents of string example to commands field of job XML */
+
+			exJob.addParam("commands", example); 
+
+			/* convert job XML to string and add it to the parameter vector */
+
+			example = email;
+			/* add contents of string example to email field of job XML */
+			exJob.addParam("email", example);
+
+
+	      /* call submitJob() method with string representation of job XML */
+	      NeosJob job = client.submitJob(exJob.toXMLString());
+	      /* print results to standard output */
+	      return job.getResult();
+
+	}
+	
+	
+	
+	
 
 	@CrossOrigin
 	@RequestMapping("/interiorPoint")
