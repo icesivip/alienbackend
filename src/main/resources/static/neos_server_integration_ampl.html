@@ -348,7 +348,7 @@
 
                         </div>
 
-                        <br></form>
+                        <br>
                         <hr>
                         <div class="row text-center">
                             <div class="col text-center"><button type="submit"
@@ -423,7 +423,7 @@
       document.getElementById("submit-form").addEventListener("submit", function (e) {
             e.preventDefault();
 
-           
+           console.log("cosa")
             $.ajax({
                 url: "https://icesiviptest.herokuapp.com/neosServer"+constructQueryString()
             }).then(function (data) {
@@ -445,10 +445,10 @@
             model =document.getElementById("model-text").value;
             data =document.getElementById("data-text").value;
             commands =document.getElementById("commands-text").value;
-            mail =document.getElementById("email-text").value
+            mail =document.getElementById("mail-text").value
 
 
-            return "?model=" + model + "&data=" + data + "&commands=" + commands + "&email=" + email;
+            return "?model=" + model + "&data=" + data + "&commands=" + commands + "&email=" + mail;
         }
             
         
