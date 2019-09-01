@@ -27,6 +27,7 @@ public class SensivilityAnalysis {
     Solution solution;
     Model modeloS;
     Matrix finalM;
+    Matrix shadowPrice;
     private String equationsFO;
 	private String equationsConstraints;
     double[][] intervalsFO;
@@ -38,6 +39,7 @@ public class SensivilityAnalysis {
         modeloS = modelo;
         this.finalM = finalM;
         this.solution = solution;
+        this.shadowPrice = shadowPrice;
         String [] varNames = varN;
         System.out.print("shadow price");
         shadowPrice.print(2, 2);
@@ -52,6 +54,10 @@ public class SensivilityAnalysis {
 		return equationsFO;
 	}
 
+    public double[][] getShadowPrice(){
+    	return Simplex.roundMatrix(shadowPrice.getArray());
+    }
+    
 	public String getEquationsConstraints() {
 		return equationsConstraints;
 	}

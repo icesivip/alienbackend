@@ -172,6 +172,9 @@ public class Simplex implements Solver {
 		return Final.getArray();
 	}
 
+	public double[][] getFObj() {
+		return FObj.getArray();
+	}
 	/**
 	 * Rounds the values of the entire matrix to numbers of two decimal places
 	 * 
@@ -467,6 +470,9 @@ public class Simplex implements Solver {
 		return procd;
 	}
 
+	public int getnVarDecision() {
+		return nVarDecision;
+	}
 	/**
 	 * Method in charge of conducting class tests
 	 * 
@@ -630,8 +636,12 @@ public class Simplex implements Solver {
 	 * 
 	 * @return
 	 */
-	public String[] getInitialM() {
-		return initialM;
+	public double[] getRHSInitialM() {
+		double[] rhs = new double[initialM.length];
+		for (int i = 0; i < initialM.length; i++) {
+			rhs[i] = Double.parseDouble(initialM[i].split(" ")[nVarDecision*2 + 3]);
+		}
+		return rhs;
 	}
 
 	/**
