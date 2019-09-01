@@ -82,8 +82,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER INTEGRATION (AMPL) </a>
                     </div>
                 </div>
             </li>
@@ -99,7 +102,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
-                        <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class='collapse-item' href='mps.html'>MPS</a> <a
+							class='collapse-item' href='mrp.html'>MRP </a>
                     </div>
                 </div>
             </li>
@@ -193,6 +197,7 @@
                                         <th class="text-center" scope="col">2</th>
                                         <th class="text-center" scope="col">3</th>
                                         <th class="text-center" scope="col">4</th>
+                                        
                                         <th id="colMaker" class="text-center nav-item dropdown no-arrow"
                                             style="width: 8%; height: 100%;" scope="col">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -200,6 +205,7 @@
                                                 <span class="text-center">...</span>
                                             </a>
                                             <!-- Dropdown - Resize Information -->
+                                            
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                                 aria-labelledby="userDropdown">
                                                 <h6 class="dropdown-header">
@@ -208,11 +214,21 @@
                                                 <input class="form-control border-0 dropdown-item" id="tamPeriods"
                                                     min="4" type="number" placeholder="# Periods">
                                                 <div class="dropdown-divider"></div>
+                                                
                                                 <input class="form-control border-0 btn btn-outline-info"
                                                     id="resizePeriods" type="button" name="resizePeriods" value="Resize"
                                                     onclick="resize()">
+
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriodsByOne" type="button" name="resizePeriodsByOne" value="Add only one"
+                                                    onclick="addColumn()">
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="removePeriodsByOne" type="button" name="removePeriodsByOne" value="Remove only one"
+                                                    onclick="removeColumn()">
+                                           
                                             </div>
                                         </th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -502,6 +518,45 @@
             }
         }
 
+        function addColumn(){
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+    
+                var toBeAdded = 1;
+                //Span del mps mayor (value + 2)
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
+                //Recorrer cada fila y add una td
+                var resizeCommand = document.getElementById("colMaker");
+                var pHeader = document.getElementById("periodsHeader");
+                resizeCommand.parentNode.removeChild(resizeCommand);
+               
+                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + 1) + "</th>")
+                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
+                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods + 1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
+                
+                pHeader.appendChild(resizeCommand);
+            
+        }
+        function removeColumn(){
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+            
+            if(actualPeriods>4){
+            document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = $('#tamPeriods').val() + 2;
+                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)]);
+                    dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("AvailableInventoryProgrammed").removeChild(document.getElementById("AvailableInventoryProgrammed").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("Netrequirements").removeChild(document.getElementById("Netrequirements").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("ReceptionsOfPlannedOrders").removeChild(document.getElementById("ReceptionsOfPlannedOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("releasedPlanOrders").removeChild(document.getElementById("releasedPlanOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                
+            }
+        }
         function getBruteRequirements() {
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";

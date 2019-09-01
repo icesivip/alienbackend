@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
+import icesi.vip.alien.alien.neosServer.FileUtils;
+import icesi.vip.alien.alien.neosServer.NeosClient;
+import icesi.vip.alien.alien.neosServer.NeosJob;
+import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import icesi.vip.alien.materialRequirementPlanning.MRP;
@@ -32,26 +37,29 @@ public class AlienController {
 
 	@CrossOrigin
 	@RequestMapping("/simplexMethod")
-	public Simplex simplexMethod(
-			@RequestParam(value = "type", required = true)String opti,
-			@RequestParam(value = "iteration", defaultValue = "F")String iteration,
-			@RequestParam(value = "equations", required = true)String equations) throws Exception {
+	public Simplex simplexMethod(@RequestParam(value = "type", required = true) String opti,
+			@RequestParam(value = "iteration", defaultValue = "F") String iteration,
+			@RequestParam(value = "equations", required = true) String equations) throws Exception {
 		equations.replaceAll("%20", " ");
 		String[] equas = equations.split("n");
-		Simplex alv = new Simplex(opti, equas);
-		double[][] finalFinal = null;
-        double[][] sig = alv.getActualMatrix();
-        if(iteration.equals("F")) {
-        while(finalFinal != sig){
-            finalFinal = sig;
-            sig = alv.nextIteration();
-        } 
-        }else {
-        	for (int i = 0; i < Integer.parseInt(iteration); i++) {
-                alv.nextIteration();
-            }
-        }
-		return alv;
+		Simplex simplex = new Simplex(opti, equas);
+		if (iteration.equals("F")) {
+			double[][] finalFinal = null;
+			double[][] sig = simplex.nextIteration();
+			while (!sig.equals(finalFinal)) {
+				finalFinal = sig;
+				sig = simplex.nextIteration();
+			}
+		} else {
+			for (int i = 0; i < Integer.parseInt(iteration); i++) {
+				simplex.nextIteration();
+			}
+		}
+		if (simplex.getMessageSol() != null) {
+			simplex.buildAnalysis();
+			simplex.getIntervals();
+		}
+		return simplex;
 	}
 
 	@CrossOrigin
@@ -129,8 +137,63 @@ public class AlienController {
 	}
 	
 	
+	
 	@CrossOrigin
-	@RequestMapping("/interiorPoint")
+	@RequestMapping(value="/neosServer" ,method=RequestMethod.POST)
+	public String neosServerRemoteJob(@RequestParam(value = "model", required = true) String model,
+			@RequestParam(value = "data", required = true) String data,
+			@RequestParam(value = "commands", required = true) String commands,
+			@RequestParam(value = "email", defaultValue = "") String email) throws Exception {
+	      
+		
+		
+		 String HOST="neos-server.org";
+		   String PORT="3333";
+		NeosClient client = new NeosClient(HOST, PORT);
+			
+	      
+	      NeosJobXml exJob = new NeosJobXml("milp", "CPLEX", "AMPL"); 
+
+			FileUtils fileUtils = FileUtils.getInstance(FileUtils.APPLICATION_MODE);
+
+			String example = model;
+
+			/* add contents of string example to model field of job XML */
+
+			exJob.addParam("model", example);
+
+			example = data;
+
+			/* add contents of string example to data field of job XML */
+
+			exJob.addParam("data", example);
+
+			example = commands;
+
+			/* add contents of string example to commands field of job XML */
+
+			exJob.addParam("commands", example); 
+
+			/* convert job XML to string and add it to the parameter vector */
+
+			example = email;
+			/* add contents of string example to email field of job XML */
+			exJob.addParam("email", example);
+
+
+	      /* call submitJob() method with string representation of job XML */
+	      NeosJob job = client.submitJob(exJob.toXMLString());
+	      /* print results to standard output */
+	      return job.getResult();
+
+	}
+	
+	
+	
+	
+
+	@CrossOrigin
+	@RequestMapping(value="/interiorPoint")
 	public InteriorPointContainer interiorPoint(@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "vars", required = true) String vars,
 			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
@@ -155,7 +218,7 @@ public class AlienController {
 		return new InteriorPointContainer(m);
 
 	}
-	
+
 	@CrossOrigin
 	@RequestMapping("/branchAndBound")
 	public BranchAndBoundContainer branchAndBound(@RequestParam(value = "type", required = true) String type,
@@ -182,7 +245,6 @@ public class AlienController {
 		return new BranchAndBoundContainer(m);
 
 	}
-	
 
 	@CrossOrigin
 	@RequestMapping("/master")
@@ -202,11 +264,12 @@ public class AlienController {
 			@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
 			@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
 
-		
 		try {
 
-			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime), Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name, 
-					Double.parseDouble(articleCost), Double.parseDouble(orderingCost), Double.parseDouble(maintenanceCost), periodicity, Integer.parseInt(TPeriodOFSupply));
+			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime),
+					Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name,
+					Double.parseDouble(articleCost), Double.parseDouble(orderingCost),
+					Double.parseDouble(maintenanceCost), periodicity, Integer.parseInt(TPeriodOFSupply));
 
 			scheduledReceptions = scheduledReceptions.substring(0, scheduledReceptions.length() - 1);
 			grossRequeriment = grossRequeriment.substring(0, grossRequeriment.length() - 1);
@@ -225,65 +288,64 @@ public class AlienController {
 		}
 
 	}
-	
-	
+
 	@JsonIgnore()
 	@CrossOrigin()
 	@RequestMapping("/pruebaMRP")
-	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName, @RequestParam(value = "id") String paramId,
-			@RequestParam(value = "name") String paramName, @RequestParam(value = "leadTime") String paramLeadTime,
-			@RequestParam(value = "amount") String paramAmount,
-			@RequestParam(value = "initialInv") String paramInitialInv, @RequestParam(value = "securityInv") String paramSecuriInv,
-			@RequestParam(value = "date") String paramDate,
-			@RequestParam(value = "programDelivery") String paramProgramDelivery, @RequestParam(value = "rqB") String paramRqB, 
-			@RequestParam(value = "rqBDates") String paramRqBDates) {
+	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName,
+			@RequestParam(value = "id") String paramId, @RequestParam(value = "name") String paramName,
+			@RequestParam(value = "leadTime") String paramLeadTime, @RequestParam(value = "amount") String paramAmount,
+			@RequestParam(value = "initialInv") String paramInitialInv,
+			@RequestParam(value = "securityInv") String paramSecuriInv, @RequestParam(value = "date") String paramDate,
+			@RequestParam(value = "programDelivery") String paramProgramDelivery,
+			@RequestParam(value = "rqB") String paramRqB, @RequestParam(value = "rqBDates") String paramRqBDates) {
 
 		MRP m = new MRP();
-		
-		String [] id = paramId.split(";");
-		
-		String [] fatherName = paramFatherName.split(";");
 
-		String [] name = paramName.split(";");
+		String[] id = paramId.split(";");
 
-		String [] leadTime = paramLeadTime.split(";");
+		String[] fatherName = paramFatherName.split(";");
 
-		String [] amount = paramAmount.split(";");
+		String[] name = paramName.split(";");
 
-		String [] initialInv = paramInitialInv.split(";");
+		String[] leadTime = paramLeadTime.split(";");
 
-		String [] securiInv = paramSecuriInv.split(";");
+		String[] amount = paramAmount.split(";");
 
-		String [] dates = new String [Integer.parseInt(paramDate)];
+		String[] initialInv = paramInitialInv.split(";");
+
+		String[] securiInv = paramSecuriInv.split(";");
+
+		String[] dates = new String[Integer.parseInt(paramDate)];
 
 		for (int i = 0; i < dates.length; i++) {
-			dates[i] = (i+1+"");
+			dates[i] = (i + 1 + "");
 		}
-		
+
 		System.out.println(paramProgramDelivery);
 		System.out.println(paramRqB);
 		System.out.println(paramRqBDates);
-		
-		String [] programDelivery = paramProgramDelivery.split("-");
-		String [] reqBrutos = paramRqB.split(";");
-		String [] reqBrutosDates = paramRqBDates.split("-");
+
+		String[] programDelivery = paramProgramDelivery.split("-");
+		String[] reqBrutos = paramRqB.split(";");
+		String[] reqBrutosDates = paramRqBDates.split("-");
 
 		ArrayList<String> datesAr = new ArrayList<String>();
-		
-		ArrayList<ArrayList<Integer>> maestro = new ArrayList<>(); 
-		
+
+		ArrayList<ArrayList<Integer>> maestro = new ArrayList<>();
+
 		ArrayList<Integer> programDeliveryAr = new ArrayList<Integer>();
-		
+
 		ArrayList<Integer> rqBAr = new ArrayList<Integer>();
 		ArrayList<String> rqBDatesAr = new ArrayList<String>();
-		
+
 		for (int j = 0; j < dates.length; j++) {
-			datesAr.add(dates[j]);		
+			datesAr.add(dates[j]);
 		}
-		
-		for (int i = 1; i < programDelivery.length; i++) {	
-			
-			String [] tempDelivery = programDelivery[i].split(";");	
+
+		for (int i = 1; i < programDelivery.length; i++) {
+
+			String[] tempDelivery = programDelivery[i].split(";");
 			programDeliveryAr = new ArrayList<>();
 			for (int j = 0; j < tempDelivery.length; j++) {
 				if (!tempDelivery[i].equals("")) {
@@ -293,59 +355,56 @@ public class AlienController {
 			}
 			maestro.add(programDeliveryAr);
 		}
-		
+
 		for (int j = 0; j < 10; j++) {
-			rqBDatesAr.add((j+1)+"");
+			rqBDatesAr.add((j + 1) + "");
 		}
 
-		for (int j = 0; j < reqBrutos.length; j++) {				
+		for (int j = 0; j < reqBrutos.length; j++) {
 			if (!reqBrutos[j].equals("")) {
 				int temp = Integer.parseInt(reqBrutos[j]);
-				rqBAr.add(temp);					
+				rqBAr.add(temp);
 			}
 		}
 
-		int [] leadTimeInteger = new int [fatherName.length];
-		int [] amountInteger = new int [fatherName.length];
-		int [] initialInvInteger = new int [fatherName.length];
-		int [] securyInvInteger = new int [fatherName.length];
-		
+		int[] leadTimeInteger = new int[fatherName.length];
+		int[] amountInteger = new int[fatherName.length];
+		int[] initialInvInteger = new int[fatherName.length];
+		int[] securyInvInteger = new int[fatherName.length];
+
 		for (int i = 0; i < securiInv.length; i++) {
-			if (!amount[i].equals("")) {				
+			if (!amount[i].equals("")) {
 				amountInteger[i] = Integer.parseInt(amount[i]);
 			}
-			
+
 			initialInvInteger[i] = Integer.parseInt(initialInv[i]);
 			leadTimeInteger[i] = Integer.parseInt(leadTime[i]);
 			securyInvInteger[i] = Integer.parseInt(securiInv[i]);
 		}
-				
+
 		for (int i = 0; i < fatherName.length; i++) {
 			System.out.println(maestro.get(i));
-			int amount_1 = !amount[i].equals("") ? Integer.parseInt(amount[i]): 0; 
-			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), amount_1, 
-					Integer.parseInt(initialInv[i]),
-					Integer.parseInt(securiInv[i]),
-					datesAr, maestro.get(i));
+			int amount_1 = !amount[i].equals("") ? Integer.parseInt(amount[i]) : 0;
+			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), amount_1,
+					Integer.parseInt(initialInv[i]), Integer.parseInt(securiInv[i]), datesAr, maestro.get(i));
 		}
 
-		ArrayList<Integer[][]> a = m.allProductsMRP(m.getN_Ary_Tree(),rqBAr,rqBDatesAr);
-		
+		ArrayList<Integer[][]> a = m.allProductsMRP(m.getN_Ary_Tree(), rqBAr, rqBDatesAr);
+
 		System.out.println();
 		System.out.println("=======Nuevo MRP=======");
 		System.out.println();
-		for(int i = 0; i< a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			for (int j = 0; j < a.get(i).length; j++) {
-				for(int k = 0; k < a.get(i)[0].length; k++) {
+				for (int k = 0; k < a.get(i)[0].length; k++) {
 					System.out.print(a.get(i)[j][k] + " ");
 				}
 				System.out.println();
 			}
 		}
-		
+
 		return m;
 
 	}
-
 
 }
