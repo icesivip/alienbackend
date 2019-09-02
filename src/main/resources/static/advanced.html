@@ -1,745 +1,741 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
 
-  <title>LINEAR - OPTIMIZATION</title>
+    <title>LINEAR - OPTIMIZATION</title>
 
- <!-- Custom fonts for this template-->
- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
- <link
-   href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-   rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
 
- <!-- Custom styles for this template-->
- <link href="css/sb-admin-2.min.css" rel="stylesheet">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!--    <script src="vendor/chart.js/Chart.min.js"></script> -->
 
- <script src="vendor/datatables/jquery.dataTables.min.js"></script>
- <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
- <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 
 </head>
 
 <body id="page-top">
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">VIP ALIEN</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Modules
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-            aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Linear Programming </span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-             <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Programs</h6>
-                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER</a>
-                    </div>
-        </div>
-    </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
-            aria-expanded="true" aria-controls="collapseMPS">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Master Plan Schedule </span>
-        </a>
-        <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Programs</h6>
-                <!-- cambiar href -->
-                <a class="collapse-item" href="mps.html">MPS</a>
-                <a class='collapse-item' href='mrp-1.html'>MRP</a>
-            </div>
-        </div>
-    </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
-                data-target="#uploadModal">
-                Upload Problem
-                <i class="fas fa-upload"></i>
-              </button>
-              <button onclick="saveProblem()" class="btn btn-outline-primary nav-button" type="button">
-                Save Problem
-                <i class="far fa-save"></i>
-              </button>
-            </div>
-          </form>
-          <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form id="upload-form">
-                  <div class="modal-body">
-                    <p>
-                      Here you have to select a previously saved problem in .json format. Make
-                      sure the file has not
-                      been modified or there are going to be problems in the upload process.
-                    </p>
-
-                    <div class="form-group">
-                      <label for="exampleFormControlFile1">Choose File</label>
-                      <input type="file" class="form-control-file" id="fileUpload" accept=".json" required>
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="input" class="btn btn-primary">Upload</button>
-                  </div>
-                </form>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+              <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
               </div>
+              <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+            </a>
+      
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+      
+            <!-- inútil por ahora -->
+            <!-- Nav Item - Dashboard -->
+            <!--li class="nav-item active">
+              <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li-->
+      
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+      
+            <!-- Heading -->
+            <div class="sidebar-heading">
+              Modules
             </div>
-          </div>
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
+            <!-- PL -->
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span> Linear Programming </span>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
+              <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Programs</h6>
+                  <a class="collapse-item" href="interiorPoint.html">Interior Point</a>
+                  <a class="collapse-item" href="graphicalMethod.html">Graphical Method</a>
+                  <a class="collapse-item" href="branchAndBound.html">Branch & Bound</a>
+                  <a class="collapse-item" href="homeSimplex.html">Simplex Algorithm </a>
+                  <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS Server</a>
+                </div>
               </div>
             </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS" aria-expanded="true"
+                aria-controls="collapseMPS">
+                <i class="fas fa-fw fa-folder"></i>
+                <span> Master Plan Schedule </span>
+              </a>
+              <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Programs</h6>
+                  <!-- cambiar href -->
+                  <a class="collapse-item" href="mps.html">MPS</a>
+                  <a class="collapse-item" href="mrp-1.html">MRP</a>
+                </div>
+              </div>
+            </li>
+      
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+      
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+      
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+              <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+      
+          </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-  <!-- Nav Item - Alerts -->
-  <li class="nav-item dropdown no-arrow mx-1">
-              
-  </a>
-  <!-- Dropdown - Alerts -->
-  
+            <!-- Main Content -->
+            <div id="content">
 
-<!-- Nav Item - Messages -->
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
-
-
-<!-- Nav Item - User Information -->
-
-
-</ul>
-
-</nav>
-<!-- End of Topbar -->
-<style>
-    form.user .form-control-user {
-    font-size: larger;
-    border-radius: 10rem;
-    padding: 1.5rem 1rem;
-}
- 
- .input-group {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-   
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    width: 100%;
-}
-.container1 {
-  position: relative;
-  text-align: center;
-  color:black;
-
-
-  font-family:'Times New Roman', Times, serif;
-
-}
-.table{
-    color: black;
-    
-  }
-  .cover {
-            opacity: 0.8;
-            background-color: #ccc;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            left: 0px;
-            z-index: 1000;
-            background: url(img/loading.gif) center center no-repeat;
-            display: none;
-        }
-  .h3, h3 {
-    font-size: 1.75rem;
-    color: black;}
-    #menIteration {
-    color: black;
-    
-    font-size: larger;
-}
-#but2 {
-   
-   width: 100%;
-}
-.container1-1{
-  position: absolute;
- text-anchor: middle;
-  top: -20%;
-  left: 50%;
-  transform: translate(-50%, 20%);
-
- 
-  }
-
-  
-  .btn-icon-split{
-    
-    position: relative;
-    
-   
-  }
-</style>
-        <!-- Begin Page Content --->
-        <div class="container-fluid">
-            <div class="cover"></div>
-          <!-- Page Heading -->
-          <div class="text-center">
-            <h1>Simplex Method </h1>
-            <h2>Fast-track mode </h2>
-          </div>
-        <!-- /.container-fluid -->
-        <div class="col-lg">
-            <!-- Nested Row within Card Body --->
-            <div class="p-5">
-                <form class="user" id="user">
-                  <div class="col-sm-6">
-                    <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split" >
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-left"></i>
-                      </span>
-                      <span class="text">Back</span>
-                    </a>
-                  </div>
-
-                    <hr>
-                    <div class="form-row">
-
-                      <div class="col-10">
-                    <h2 clas>Problem Title</h2>
-
-                    <div class="form-group2">
-                        <div class="col-sm-14 " >
-                            <input type="text" class="form-control form-control-user" id="cTitle" required="">
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
+                                    data-target="#uploadModal">
+                                Upload Problem
+                                <i class="fas fa-upload"></i>
+                            </button>
+                            <button onclick="saveProblem()" class="btn btn-outline-primary nav-button" type="button">
+                                Save Problem
+                                <i class="far fa-save"></i>
+                            </button>
                         </div>
-                      </div>
-                     
-                    </div>
-
-                    <div class="col-2">
-                    <h2>Type <span class="label label-default"></span></h2>
-
-                    <div class="form-group">
-
-                        <select class="form-control" id="type">
-                            <option>MAXIMIZE</option>
-                            <option>MINIMIZE</option>
-                        </select>
-                        
-                      </div>
-                    </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col"></div>
-                        <div class="col-sm-4 mb-3 mb-sm-0">  
-                          <h2 >Number of Variables</h2>
-
-                          <div class="form-group row ">
-                              <div class="col-sm-10 mb-3 mb-sm-0">
-                                  <input type="number" class="form-control form-control-user" id="nVariable" >
-                              </div>
-                             
-                                </div></div>
-                        <div class="col-sm-5 mb-3 mb-sm-0">
-                            <h2>Number of Constraints</h2>
-
-                            <div class="form-group row">
-                                <div class="col-sm-11 mb-3 mb-sm-0">
-                                    <input type="number" class="form-control form-control-user" id="nConstraints" >
+                    </form>
+                    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                              
-                            </div>
+                                <form id="upload-form">
+                                    <div class="modal-body">
+                                        <p>
+                                            Here you have to select a previously saved problem in .json format. Make
+                                            sure the file has not
+                                            been modified or there are going to be problems in the upload process.
+                                        </p>
 
-                        </div>
-                        <div class="col"></div>
-                          
-                        
-                       
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-5 mb-4 mb-sm-2"></div>
-                         
-                          <div class="col-sm-4">
-                              <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" type="button" >
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-check"></i>
-                                  </span>
-                                  <span class="text" href="#thead-tr">Go!</span>
-                                </button>
-                          </div>
-                          <div class="col-sm-2"></div>
-                      </div>
-                  <hr>
-                  
-              
-                    
-                    <div class="table-responsive">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Choose File</label>
+                                            <input type="file" class="form-control-file" id="fileUpload" accept=".json" required>
+                                        </div>
 
-                        <h2 class="text-center">Data Table</h2>
-                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-                          
-                              
-                            <thead class="bg-gradient-primary">
-                                
-                                <tr id="thead-tr">
-                                  <th>
-                                      <font color="#fff">Z</font>
-                                   </th>  
-                                  <th>
-                                      <font color="#fff">X1</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X2</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">Type</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">Value</font>
-                                    </th>
-                                </tr>
-                                
-                            </thead>
-                            <tbody id="table-entries">
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="number" step="0.01" id="cX1" required></td>
-                                    <td><input type="number" step="0.01" id = "cX2" required></td>
-                                    <td>=</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                  <td>0</td>
-                                  <td><input type="number" step="0.01" id="X11" required></td>
-                                  <td><input type="number" step="0.01" id = "X12" required></td>
-                                  <td> <select id="r1">
-                                    <option>&lt;=</option>
-                                    <option>&gt;=</option>
-                                    <option>=</option>
-                                  </select></td>
-                                  <td><input type='number' step='0.01' id="rv1" required></td></tr>
-                              </tr>
-            
-                            </tbody>
-            
-            
-            
-            
-                        </table>
-                        </div>
-                        <br>
-                        
-                    <hr>
-                    <div class="text-black">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
-                                    Add Constraint
-    
-                                </button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
-                                    Remove Constraint
-                                </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="input" class="btn btn-primary">Upload</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        
-
-                        
-
                     </div>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
 
-                    <div class="text-black">
-                      <div class="form-group row">
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                              <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
-                                  Add Variable
-  
-                              </button>
-                          </div>
-                          <div class="col-sm-6">
-                              <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
-                                  Remove Variable
-                              </button>
-                          </div>
-                      </div>
-                    
-
-                      
-
-
-                  </div>
-                    <br>
-
-                    
-                    <div class="solution">
-                        <div class="text-black">
-                            <div class="botonsitos">
-                                   
-                                    <button onclick=" finalSolution()" href="#mensajeS" id="but2" class="btn btn-outline-secondary btn-icon-split" type="button">
-                             
-                                        <span class="text" id = "finalS">Final Solution</span>
-                                      </button>
-                              
-                               
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                    </div>
-                    <hr>
-                    <br>
+                        </li>
 
-                    <div style="display: none"class="table-responsive" id = "tableSolution">
-
-                        <h2 class="text-center">Solution</h2>
-                        <div id="menIteration"> </div>
-                       
-                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-       
-                              
-                            <thead class="bg-gradient-primary">
-                                
-                                <tr id="thead-ans">
-                                    <th>
-                                      <font color='#fff'>BV</font>
-                                    </th>
-                                  <th>
-                                        <font color="#fff">Z</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X1</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">X2</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">RHS</font>
-                                    </th>
-                                    <th>
-                                        <font color="#fff">Theta</font>
-                                    </th>
-                                </tr>
-                                
-                            </thead>
-                           
-                            <tbody id="table-body">
-                                <tr id ="tr0">
-                                    <th><font>Z</font></th>
-                                     <td id="val00"></td>
-                                     <td id="val01"></td>
-                                     <td id="val02"></td>
-                                     <td id="valR0"></td>
-                                     <td id="valT0"></td>
-                                </tr>
-            
-            
-                            </tbody>
-            
-                         
-            
-            
-                        </table>
-                        </div>
-                        <br>
-                        <div id="mensajeS">
-  
-                        </div>
-                        
-                    <hr>
-                        
-                        </div>
-                </form>
 
             </div>
-        </div>
-     
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
 
-      
-      <!-- End of Main Content -------->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
+                <!-- Dropdown - Alerts -->
+                <!-- Nav Item - Messages -->
+                <!-- Nav Item - User Information -->
+                </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <style>
+                    form.user .form-control-user {
+                        font-size: larger;
+                        border-radius: 10rem;
+                        padding: 1.5rem 1rem;
+                    }
+
+                    .input-group {
+                        position: relative;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        -ms-flex-wrap: wrap;
+                        flex-wrap: wrap;
+                        -webkit-box-align: stretch;
+                        -ms-flex-align: stretch;
+                        align-items: stretch;
+                        width: 100%;
+                    }
+
+                    .container1 {
+                        position: relative;
+                        text-align: center;
+                        color: black;
+                        font-family: 'Times New Roman', Times, serif;
+                    }
+
+                    .table {
+                        color: black;
+                    }
+
+                    .cover {
+                        opacity: 0.8;
+                        background-color: #ccc;
+                        position: fixed;
+                        width: 100%;
+                        height: 100%;
+                        top: 0px;
+                        left: 0px;
+                        z-index: 1000;
+                        background: url(img/loading.gif) center center no-repeat;
+                        display: none;
+                    }
+
+                    .h3, h3 {
+                        font-size: 1.75rem;
+                        color: black;
+                    }
+
+                    #menIteration {
+                        color: black;
+                        font-size: larger;
+                    }
+
+                    #but2 {
+                        width: 100%;
+                    }
+
+                    .container1-1 {
+                        position: absolute;
+                        text-anchor: middle;
+                        top: -20%;
+                        left: 50%;
+                        transform: translate(-50%, 20%);
+                    }
+
+
+                    .btn-icon-split {
+                        position: relative;
+                    }
+                </style>
+                <!-- Begin Page Content --->
+                <div class="container-fluid">
+                    <div class="cover"></div>
+                    <!-- Page Heading -->
+                    <div class="text-center">
+                        <h1>Simplex Method </h1>
+                        <h2>Fast-track mode </h2>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <div class="col-lg">
+                        <!-- Nested Row within Card Body --->
+                        <div class="p-5">
+                            <form class="user" id="user">
+                                <div class="col-sm-6">
+                                    <a href="homeSimplex.html" class="btn btn-outline-secondary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-arrow-left"></i>
+                                        </span>
+                                        <span class="text">Back</span>
+                                    </a>
+                                </div>
+
+                                <hr>
+                                <div class="form-row">
+
+                                    <div class="col-10">
+                                        <h2 clas>Problem Title</h2>
+
+                                        <div class="form-group2">
+                                            <div class="col-sm-14 ">
+                                                <input type="text" class="form-control form-control-user" id="cTitle" required="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-2">
+                                        <h2>Type <span class="label label-default"></span></h2>
+
+                                        <div class="form-group">
+
+                                            <select class="form-control" id="type">
+                                                <option>MAXIMIZE</option>
+                                                <option>MINIMIZE</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <h2>Number of Variables</h2>
+
+                                        <div class="form-group row ">
+                                            <div class="col-sm-10 mb-3 mb-sm-0">
+                                                <input type="number" class="form-control form-control-user" id="nVariable">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <h2>Number of Constraints</h2>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-11 mb-3 mb-sm-0">
+                                                <input type="number" class="form-control form-control-user" id="nConstraints">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col"></div>
+
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 mb-4 mb-sm-2"></div>
+
+                                    <div class="col-sm-4">
+                                        <button onclick="createTable()" class="btn btn-outline-success btn-icon-split" type="button">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="text" href="#thead-tr">Go!</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                </div>
+                                <hr>
+
+
+
+                                <div class="table-responsive">
+
+                                    <h2 class="text-center">Data Table</h2>
+                                    <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+
+
+                                        <thead class="bg-gradient-primary">
+
+                                            <tr id="thead-tr">
+                                                <th>
+                                                    <font color="#fff">Z</font>
+                                                </th>
+                                                <th>
+                                                    <font color="#fff">X1</font>
+                                                </th>
+                                                <th>
+                                                    <font color="#fff">X2</font>
+                                                </th>
+                                                <th>
+                                                    <font color="#fff">Type</font>
+                                                </th>
+                                                <th>
+                                                    <font color="#fff">Value</font>
+                                                </th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody id="table-entries">
+                                            <tr>
+                                                <td>1</td>
+                                                <td><input type="number" step="0.01" id="cX1" required></td>
+                                                <td><input type="number" step="0.01" id="cX2" required></td>
+                                                <td>=</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>0</td>
+                                                <td><input type="number" step="0.01" id="X11" required></td>
+                                                <td><input type="number" step="0.01" id="X12" required></td>
+                                                <td>
+                                                    <select id="r1">
+                                                        <option>&lt;=</option>
+                                                        <option>&gt;=</option>
+                                                        <option>=</option>
+                                                    </select>
+                                                </td>
+                                                <td><input type='number' step='0.01' id="rv1" required></td>
+                                            </tr>
+
+
+                                        </tbody>
+
+
+
+
+                                    </table>
+                                </div>
+                                <br>
+
+                                <hr>
+                                <div class="text-black">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <button onclick="addCons()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                                                Add Constraint
+
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button onclick="removeCons()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                                Remove Constraint
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                                <div class="text-black">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                                                Add Variable
+
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                                Remove Variable
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                                <br>
+
+
+                                <div class="solution">
+                                    <div class="text-black">
+                                        <div class="botonsitos">
+
+                                            <button onclick=" finalSolution()" href="#mensajeS" id="but2" class="btn btn-outline-secondary btn-icon-split" type="button">
+
+                                                <span class="text" id="finalS">Final Solution</span>
+                                            </button>
+
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <br>
+
+                                    <div style="display: none" class="table-responsive" id="tableSolution">
+
+                                        <h2 class="text-center">Solution</h2>
+                                        <div id="menIteration"> </div>
+
+                                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+
+
+                                            <thead class="bg-gradient-primary">
+
+                                                <tr id="thead-ans">
+                                                    <th>
+                                                        <font color='#fff'>BV</font>
+                                                    </th>
+                                                    <th>
+                                                        <font color="#fff">Z</font>
+                                                    </th>
+                                                    <th>
+                                                        <font color="#fff">X1</font>
+                                                    </th>
+                                                    <th>
+                                                        <font color="#fff">X2</font>
+                                                    </th>
+                                                    <th>
+                                                        <font color="#fff">RHS</font>
+                                                    </th>
+                                                    <th>
+                                                        <font color="#fff">Theta</font>
+                                                    </th>
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody id="table-body">
+                                                <tr id="tr0">
+                                                    <th><font>Z</font></th>
+                                                    <td id="val00"></td>
+                                                    <td id="val01"></td>
+                                                    <td id="val02"></td>
+                                                    <td id="valR0"></td>
+                                                    <td id="valT0"></td>
+                                                </tr>
+
+
+                                            </tbody>
+
+
+
+
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <div id="mensajeS">
+
+                                    </div>
+
+                                    <hr>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- End of Main Content -------->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2019</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
         </div>
-      </footer>
-      <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
     </div>
-  </div>
-  <script>
-    
-    var varCount = 2;
-    var slackCount = 0;
-            var divNum = 6; 
+    <script>
+
+        var varCount = 2;
+        var slackCount = 0;
+        var divNum = 6;
         var consCount = 1;
         function countVariables(num2) {
-          var num = num2 - 3;
-          return num / 2;
+            var num = num2 - 3;
+            return num / 2;
         }
 
         document.getElementById("upload-form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var file = document.getElementById("fileUpload").files[0];
-          urlFile = window.URL.createObjectURL(file);
-          $.ajax({
-            url: urlFile
-          }).then(function (data) {
-            console.log(data);
-            var split = data.data.split('|');
-            var title = split[0]
-            if (title != "null") {
-              document.getElementById("cTitle").value = title;
-            }
-            var obj = split[1].split('?');
-            var obj2 = obj[1].split('&');
-
-            var obj3 = obj2[1].split('=');
-            var numVar = obj3[1]
-            var numVar2 = numVar.split(' ');
-            var c = 2;
-           
-            
-            
-            var numberVar = countVariables(numVar2.length)
-
-
-            if (numberVar > varCount) {
-              for (i = 0; i < numberVar; i++) {
-                if (varCount < numberVar) {
-                  addVar();
-                  if (varCount == numberVar) break;
+            e.preventDefault();
+            var file = document.getElementById("fileUpload").files[0];
+            urlFile = window.URL.createObjectURL(file);
+            $.ajax({
+                url: urlFile
+            }).then(function (data) {
+                console.log(data);
+                var split = data.data.split('|');
+                var title = split[0]
+                if (title != "null") {
+                    document.getElementById("cTitle").value = title;
                 }
-              }
-            }
-            else if (numberVar < varCount) {
-              for (i = 0; i < numberVar; i++) {
-                if (varCount > numberVar) {
-                  removeVar();
-                  if (varCount == numberVar) break;
+                var obj = split[1].split('?');
+                var obj2 = obj[1].split('&');
+
+                var obj3 = obj2[1].split('=');
+                var numVar = obj3[1]
+                var numVar2 = numVar.split(' ');
+                var c = 2;
+
+
+
+                var numberVar = countVariables(numVar2.length)
+
+
+                if (numberVar > varCount) {
+                    for (i = 0; i < numberVar; i++) {
+                        if (varCount < numberVar) {
+                            addVar();
+                            if (varCount == numberVar) break;
+                        }
+                    }
                 }
-              }
-            }
-
-            $('#of-body td').each(function (index) {
-              if (index == 0) {
-                if (obj2[0].substring(5, 14) == 'MAXIMIZE') {
-                  $(this).find('select').val("MAXIMIZE");
+                else if (numberVar < varCount) {
+                    for (i = 0; i < numberVar; i++) {
+                        if (varCount > numberVar) {
+                            removeVar();
+                            if (varCount == numberVar) break;
+                        }
+                    }
                 }
-                else {
-                  $(this).find('select').val("MINIMIZE");
+
+                $('#of-body td').each(function (index) {
+                    if (index == 0) {
+                        if (obj2[0].substring(5, 14) == 'MAXIMIZE') {
+                            $(this).find('select').val("MAXIMIZE");
+                        }
+                        else {
+                            $(this).find('select').val("MINIMIZE");
+                        }
+                    } else {
+
+
+                        $(this).find('input').val(-numVar2[c]);
+                        c += 2;
+
+
+                    }
+
+                });
+                var constraints = split[1].split('n').length - 3;
+                for (let i = 0; i < constraints; i++) {
+                    addCons();
+
                 }
-              } else {
+                var restricciones = split[1].split('n');
+                var numerosTabla = [];
+                var simbolos = [];
+
+                for (let index = 0; index < consCount; index++) {
+                    var restr = restricciones[2 + index];
+                    var restr = restr.split(' ');
+
+                    for (let j = 0; j < varCount + 1; j++) {
+                        if (((2 * j) + 2) != restr.length - 2) {
+                            numerosTabla.push(restr[(2 * j) + 2]);
+
+                        } else {
+                            numerosTabla.push(restr[restr.length - 1]);
+                            simbolos.push(restr[(2 * j) + 2]);
+                        }
+                    }
 
 
-                $(this).find('input').val(-numVar2[c]);
-                c += 2;
+                }
+
+                var numero = 0;
+                var valor = 0;
+                $('#table-body tr').each(function (i) {
+                    $(this).find('td').each(function (j) {
+
+                        if (j != varCount) {
+
+                            $(this).find('input').val(numerosTabla[numero]);
 
 
-              }
 
+                            numero++;
+
+                        } else {
+                            j++;
+                            if (simbolos[valor] == '<=') $(this).find('select').val("<=");
+                            else if (simbolos[valor] == '>=') $(this).find('select').val(">=");
+                            else $(this).find('select').val("=");
+                            valor++;
+                        }
+
+
+
+                    });
+
+                });
+
+
+            }, function (error) {
+                alert("Failed to process request.")
+                console.log(error);
             });
-            var constraints = split[1].split('n').length-3;
-            for (let i = 0; i < constraints; i++) {
-              addCons();
-               
-             }
-             var restricciones = split[1].split('n');
-             var numerosTabla=[];
-             var simbolos = [];
-             
-            for (let index = 0; index < consCount; index++) {
-              var restr = restricciones[2+index];
-              var restr = restr.split(' ');
-              
-              for (let j = 0; j < varCount+1 ;j++) {
-                if(((2*j)+2)!=restr.length-2 ){
-                numerosTabla.push(restr[(2*j)+2]);
-                
-                }else{
-                  numerosTabla.push(restr[restr.length-1]);
-                  simbolos.push(restr[(2*j)+2]);
-                }
-              }
-             
-              
-            }
-         
-            var numero=0;
-            var valor = 0;
-            $('#table-body tr').each(function (i) {
-              $(this).find('td').each(function (j) {
-                   
-                   if(j!=varCount){
-                   
-                    $(this).find('input').val(numerosTabla[numero]);
-                    
-                   
-                   
-                   numero++;
-                   
-                   }else{
-                     j++;
-                     if (simbolos[valor] == '<=') $(this).find('select').val("<=");
-                                  else if (simbolos[valor] == '>=') $(this).find('select').val(">=");
-                                  else $(this).find('select').val("=");
-                                  valor++;
-                   }
+            $('#uploadModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
 
-                  
-                   
-              });
-                   
-            });
-            
-
-          }, function (error) {
-            alert("Failed to process request.")
-            console.log(error);
-          });
-          $('#uploadModal').modal('hide');
-          $('body').removeClass('modal-open');
-          $('.modal-backdrop').remove();
-          
         });
         function addCons() {
             consCount++;
@@ -748,50 +744,50 @@
 
         function removeVar() {
             if (varCount > 1) {
-                $("#thead-tr th:nth-child(" + (varCount+1) + ")").remove();
-                $("#table-entries tr td:nth-child("+(varCount+1)+")").remove();
-                $("#thead-ans th:nth-child(" + (varCount+2) + ")").remove();
-                $("#table-body td:nth-child(" + (varCount+2) + ")").remove();
+                $("#thead-tr th:nth-child(" + (varCount + 1) + ")").remove();
+                $("#table-entries tr td:nth-child(" + (varCount + 1) + ")").remove();
+                $("#thead-ans th:nth-child(" + (varCount + 2) + ")").remove();
+                $("#table-body td:nth-child(" + (varCount + 2) + ")").remove();
                 varCount--;
             }
 
         }
-        function createTable(){
-      var nVar = parseInt(document.getElementById("nVariable").value)-varCount;
-      var nConst = parseInt(document.getElementById("nConstraints").value)-consCount;
-      console.log("variables: "+nVar);
-      console.log("variables: "+nConst);
-     
-     if(nVar>0){
-        for (var j = 0; j < nVar; j++) {
-        addVar();
-        }
-       }else if(nVar<0){
-        var rem = Math.abs(nVar);
-        for (var j = 0; j < rem; j++) {
-          removeVar();
-        }
-       }
-       if(nConst>0){
-        for (var i = 0; i < nConst; i++) {
-        addCons();
-        }
-       }else if(nConst<0){
-        var rem = Math.abs(nConst);
-        for (var j = 0; j < rem; j++) {
-          removeCons();
-        }
+        function createTable() {
+            var nVar = parseInt(document.getElementById("nVariable").value) - varCount;
+            var nConst = parseInt(document.getElementById("nConstraints").value) - consCount;
+            console.log("variables: " + nVar);
+            console.log("variables: " + nConst);
 
-     }
-      
-    }
-        function  generateNewConsRow(count) {
-            var st = "<tr><td>0</td>";
-            for (let index = 1; index <= count; index++) {
-                st += "<td><input type='number' step='0.01' id='X"+consCount+index+"'required></td>";
+            if (nVar > 0) {
+                for (var j = 0; j < nVar; j++) {
+                    addVar();
+                }
+            } else if (nVar < 0) {
+                var rem = Math.abs(nVar);
+                for (var j = 0; j < rem; j++) {
+                    removeVar();
+                }
+            }
+            if (nConst > 0) {
+                for (var i = 0; i < nConst; i++) {
+                    addCons();
+                }
+            } else if (nConst < 0) {
+                var rem = Math.abs(nConst);
+                for (var j = 0; j < rem; j++) {
+                    removeCons();
+                }
 
             }
-            st += "<td> <select id='r"+consCount+"'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv"+consCount+"'required></td></tr>"
+
+        }
+        function generateNewConsRow(count) {
+            var st = "<tr><td>0</td>";
+            for (let index = 1; index <= count; index++) {
+                st += "<td><input type='number' step='0.01' id='X" + consCount + index + "'required></td>";
+
+            }
+            st += "<td> <select id='r" + consCount + "'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv" + consCount + "'required></td></tr>"
             return st;
         }
         function removeCons() {
@@ -803,247 +799,248 @@
         }
 
         function addVar() {
-          
+
             varCount++;
             $("#thead-tr th:nth-child(" + varCount + ")").after("<th> <font color='#fff'>X" + varCount + "</font></th>");
-            $("#table-entries tr:nth-child("+1+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='cX"+varCount +"'required></td>");
+            $("#table-entries tr:nth-child(" + 1 + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='cX" + varCount + "'required></td>");
             for (let i = 1; i <= consCount; i++) {
-              
-            $("#table-entries tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' id='X"+i+ varCount +"'required></td>");
-              
+
+                $("#table-entries tr:nth-child(" + (i + 1) + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='X" + i + varCount + "'required></td>");
+
             }
             addVarSolution();
         }
-function addVarSolution() {
+        function addVarSolution() {
 
-            $("#thead-ans th:nth-child(" + (varCount+1) + ")").after("<th><font color='#fff'>X"+(varCount)+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount+1) + ")").after("<td id='val0"+(varCount)+"'></td>");
-           
+            $("#thead-ans th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount) + "</font></th>");
+            $("#table-body td:nth-child(" + (varCount + 1) + ")").after("<td id='val0" + (varCount) + "'></td>");
+
         }
         function addSlackInSol(n, varName) {
-      cVar=varCount+n;
-            $("#thead-ans th:nth-child(" + (varCount+2) + ")").after("<th id = 'head"+ n + "'><font color='#fff'>"+varName+"</font></th>");
-            $("#table-body td:nth-child(" + (varCount +2) + ")").after("<td id='val0"+(cVar)+"'></td>");
-         
+            cVar = varCount + n;
+            $("#thead-ans th:nth-child(" + (varCount + 2) + ")").after("<th id = 'head" + n + "'><font color='#fff'>" + varName + "</font></th>");
+            $("#table-body td:nth-child(" + (varCount + 2) + ")").after("<td id='val0" + (cVar) + "'></td>");
+
         }
         function addRowSolution(num, base) {
             $("#table-body").append(generateSolRow(num, base));
-           
+
         }
         function removeOldSlacksInSol() {
-          for (let i = 1; i <= slackCount; i++) {
-            console.log("entra a eliminar slacks");
-            $("#head"+(i)).remove();
-            $("#table-body td:nth-child(" + (varCount+3) + ")").remove();
-          }
+            for (let i = 1; i <= slackCount; i++) {
+                console.log("entra a eliminar slacks");
+                $("#head" + (i)).remove();
+                $("#table-body td:nth-child(" + (varCount + 3) + ")").remove();
+            }
         }
         function removeOldRowSolution() {
-          while(cons >1){
-          $("#table-body tr").last().remove();
-            cons--;
-          }
+            while (cons > 1) {
+                $("#table-body tr").last().remove();
+                cons--;
+            }
         }
         function generateSolRow(count, base) {
-            var st = "<tr id='td"+cons+"'>";
-                st +="<th><font>"+base+"</font></th>";
+            var st = "<tr id='td" + cons + "'>";
+            st += "<th><font>" + base + "</font></th>";
             for (let index = 0; index < count; index++) {
-                st += "<td id='val"+cons+""+index+"'></td>";
+                st += "<td id='val" + cons + "" + index + "'></td>";
             }
-            st+="</tr>"
+            st += "</tr>"
             cons++
-                return st;
+            return st;
         }
         function analysisS() {
-      $("#Analysis").remove();
-          $("#mensajeS").append("<h3 class = 'text-center'>Sensitivity Analysis:</h3>");
-          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Equations for Constraints D's intervals</font></h4><h4 class='col-sm-6'><font color='black'>Equations for shadow price D's intervals</font></h4></div>");
-          $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>"+analysis.equationsConstraints+"</font></h5><h5 class='col-sm-6'><font color='black'>"+analysis.equationsFO+"</font></h5></div>");
-          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Constraints intervals</font></h4><h4 class='col-sm-6'><font color='black'>Shadow price intervals</font></h4></div>");
-          var intervalsCons = "<div class='col-sm-6'>";
-          for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
-            if(analysis.intervalsDConstraints[index][0] < -999999999999999999)
-            intervalsCons += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
-            else intervalsCons += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDConstraints[index][0];
-            if(analysis.intervalsDConstraints[index][1] > 999999999999999999)
-            intervalsCons += " <= Infinity</font></h5>";
-            else intervalsCons += " <= "+ analysis.intervalsDConstraints[index][1] +"</font></h5>"
-          }
-          intervalsCons += "</div>";
-          var intervalsVars = "<div class='col-sm-6'>";
+            $("#Analysis").remove();
+            $("#mensajeS").append("<h3 class = 'text-center'>Sensitivity Analysis:</h3>");
+            $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Equations for Constraints D's intervals</font></h4><h4 class='col-sm-6'><font color='black'>Equations for shadow price D's intervals</font></h4></div>");
+            $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>" + analysis.equationsConstraints + "</font></h5><h5 class='col-sm-6'><font color='black'>" + analysis.equationsFO + "</font></h5></div>");
+            $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Constraints intervals</font></h4><h4 class='col-sm-6'><font color='black'>Shadow price intervals</font></h4></div>");
+            var intervalsCons = "<div class='col-sm-6'>";
+            for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
+                if (analysis.intervalsDConstraints[index][0] < -999999999999999999)
+                    intervalsCons += "<h5 class='col-sm-6'><font color='black'>Infinity <= D" + (index + 1);
+                else intervalsCons += "<h5 class='col-sm-6'><font color='black'>" + analysis.intervalsDConstraints[index][0];
+                if (analysis.intervalsDConstraints[index][1] > 999999999999999999)
+                    intervalsCons += " <= Infinity</font></h5>";
+                else intervalsCons += " <= " + analysis.intervalsDConstraints[index][1] + "</font></h5>"
+            }
+            intervalsCons += "</div>";
+            var intervalsVars = "<div class='col-sm-6'>";
             for (let index = 0; index < analysis.intervalsDFO.length; index++) {
-              if(analysis.intervalsDFO[index][0] < -999999999999999999)
-              intervalsVars += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
-              else intervalsVars += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDFO[index][0]
-              if (analysis.intervalsDFO[index][1] > 999999999999999999)
-              intervalsVars +=" <= Infinity</font></h5>";
-              else intervalsVars +=" <= "+ analysis.intervalsDFO[index][1] +"</font></h5>";
-          }
-          intervalsVars += "</div>";
-          $("#mensajeS").append("<div class='row'>" +intervalsCons + intervalsVars + "</div>");
-      //$("#mensajeS").append(analysis.equationsConstraints);
-     }
-        var cons=1;
+                if (analysis.intervalsDFO[index][0] < -999999999999999999)
+                    intervalsVars += "<h5 class='col-sm-6'><font color='black'>Infinity <= D" + (index + 1);
+                else intervalsVars += "<h5 class='col-sm-6'><font color='black'>" + analysis.intervalsDFO[index][0]
+                if (analysis.intervalsDFO[index][1] > 999999999999999999)
+                    intervalsVars += " <= Infinity</font></h5>";
+                else intervalsVars += " <= " + analysis.intervalsDFO[index][1] + "</font></h5>";
+            }
+            intervalsVars += "</div>";
+            $("#mensajeS").append("<div class='row'>" + intervalsCons + intervalsVars + "</div>");
+            //$("#mensajeS").append(analysis.equationsConstraints);
+        }
+        var cons = 1;
         var analysis;
 
-        function  finalSolution() {
-      $(".cover").toggle(1000);
-       var otherVars= varCount+1
+        function finalSolution() {
+            $(".cover").toggle(1000);
+            var otherVars = varCount + 1
             var string = constructRequestString();
             $.ajax({
                 url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
                 //url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
-             $("#tableSolution").show();
-              $(".cover").toggle(1000);
+                $("#tableSolution").show();
+                $(".cover").toggle(1000);
                 console.log(data);
                 var actualMatrix = data.actualMatrix;
-                var newS=actualMatrix[0].length-otherVars;
+                var newS = actualMatrix[0].length - otherVars;
                 var variableNames = data.everyVariableName;
 
                 var theta = data.theta;
-                var sizeT =data.theta.length;
-                var posT = varCount+2+newS;
+                var sizeT = data.theta.length;
+                var posT = varCount + 2 + newS;
 
                 var mensajeSol = data.messageSol;
                 var solutionValues = data.varsValuesSolution;
                 var baseCol = data.varsBase;
                 analysis = data.analysis;
-               console.log("CantidadS: "+newS);
-                  removeOldSlacksInSol();
-                  slackCount = newS;
-                for (var i = newS; i >0; i--) {
-                  addSlackInSol(i, variableNames[i+varCount-1]);
+                console.log("CantidadS: " + newS);
+                removeOldSlacksInSol();
+                slackCount = newS;
+                for (var i = newS; i > 0; i--) {
+                    addSlackInSol(i, variableNames[i + varCount - 1]);
                 }
-                if(actualMatrix.length>1){
-                  removeOldRowSolution();
-                  for (var i = 0; i < actualMatrix.length; i++) {
-                    if(i==0){
-                      $("#val00").text(1.0);
+                if (actualMatrix.length > 1) {
+                    removeOldRowSolution();
+                    for (var i = 0; i < actualMatrix.length; i++) {
+                        if (i == 0) {
+                            $("#val00").text(1.0);
 
-                    }else{
-                    addRowSolution(varCount+3+newS, baseCol[i-1]);
-                      $("#val"+i+""+0+"").text(0,0); 
-                  }
-                    for (var j = 1; j <= actualMatrix[0].length; j++){
-                    
-                      var valor=actualMatrix[i][j-1];
-                      $("#val"+i+""+j+"").text(valor);
-                      
-                      if(i==0 && varCount+1+newS==actualMatrix[0].length){
-                        $("#valR0").text(valor);
-                      }
-                     
-                    
-                  }
-                  if(i>0){
-                  var j=0
-                  for (j; j < sizeT; j++){
-                    var valor=theta[j];
-                    $("#val"+(i)+""+posT+"").text(valor);
-                    
-                  
-                }}
-                  }
-                  $("#solution").remove();
-                 
-                  $("#mensajeS").empty();
-                  var tableContent = "";
-                    for (let index = 0; index < variableNames.length; index++) {
-                                tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
+                        } else {
+                            addRowSolution(varCount + 3 + newS, baseCol[i - 1]);
+                            $("#val" + i + "" + 0 + "").text(0, 0);
                         }
-                        tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
-                $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
-                  +'<table class="table table-bordered" width="100%" cellspacing="0">'
-                   +'<thead class="bg-gradient-primary">'
-                    +'<tr> <th> <font color="#fff">Var</font></th>'
-                     +'<th> <font color="#fff">Value</font></th>'
-                      +'</tr> </thead> <tbody>' + tableContent
-                       +'</tbody></table>');
-                 $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-                        
-                  //      <h5 class='text-center'><font color='black'>"+solutionInWords+"</font></h5>
-                  $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
+                        for (var j = 1; j <= actualMatrix[0].length; j++) {
+
+                            var valor = actualMatrix[i][j - 1];
+                            $("#val" + i + "" + j + "").text(valor);
+
+                            if (i == 0 && varCount + 1 + newS == actualMatrix[0].length) {
+                                $("#valR0").text(valor);
+                            }
+
+
+                        }
+                        if (i > 0) {
+                            var j = 0
+                            for (j; j < sizeT; j++) {
+                                var valor = theta[j];
+                                $("#val" + (i) + "" + posT + "").text(valor);
+
+
+                            }
+                        }
+                    }
+                    $("#solution").remove();
+
+                    $("#mensajeS").empty();
+                    var tableContent = "";
+                    for (let index = 0; index < variableNames.length; index++) {
+                        tableContent += '<tr><th><font>' + variableNames[index] + '</font></th><td>' + solutionValues[index] + '</td></tr>';
+                    }
+                    tableContent += '<tr><th><font>Z</font></th><td>' + solutionValues[variableNames.length] + '</td></tr>';
+                    $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
+                        + '<table class="table table-bordered" width="100%" cellspacing="0">'
+                        + '<thead class="bg-gradient-primary">'
+                        + '<tr> <th> <font color="#fff">Var</font></th>'
+                        + '<th> <font color="#fff">Value</font></th>'
+                        + '</tr> </thead> <tbody>' + tableContent
+                        + '</tbody></table>');
+                    $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
+
+                    //      <h5 class='text-center'><font color='black'>"+solutionInWords+"</font></h5>
+                    $("#mensajeS").prepend("<h3><font color= #1cc88a >" + mensajeSol + "</font></h3>")
 
                 }
-                
-     }, function (error) {
-                    $(".cover").toggle(900);
-                    alert("Failed to process requests.")
-                   
-                    console.log(error);
-                });
-            }
+
+            }, function (error) {
+                $(".cover").toggle(900);
+                alert("Failed to process requests.")
+
+                console.log(error);
+            });
+        }
 
         function constructRequestString() {
 
-        type = $("#type").val();
+            type = $("#type").val();
 
-        var menFun = "";
+            var menFun = "";
 
-        for (var i = 1; i <=  varCount; i++) {
-       
-          menFun+= ($("#cX"+i+"").val() )+ " X"+i+" ";
-          
+            for (var i = 1; i <= varCount; i++) {
+
+                menFun += ($("#cX" + i + "").val()) + " X" + i + " ";
+
+            }
+            obfun = 1 + " Z " + menFun + "= 0";
+
+            menObj = "";
+
+            for (var i = 1; i <= consCount; i++) {
+                menConst = "n0 Z ";
+                for (var j = 1; j <= varCount; j++) {
+                    menConst += $("#X" + i + j).val() + " X" + j + " ";
+
+                }
+                menConst += $("#r" + i).val() + " " + $("#rv" + i).val();
+
+                menObj += menConst;
+            }
+
+            console.log("?type=" + type + "&" + "equations=" + obfun + menObj);
+
+            return "?type=" + type + "&" + "equations=" + obfun + menObj;
         }
-        obfun = 1+" Z " +menFun+"= 0";
-               
-                menObj = "";
-               
-                for (var i = 1; i <=  consCount; i++) {
-                  menConst="n0 Z ";
-                for (var j = 1; j <=  varCount; j++) {
-                  menConst+=  $("#X"+i+j).val() + " X"+j+" ";
-                
-                }
-                menConst+=$("#r"+i).val() +" "+ $("#rv"+i).val() ;
-              
-                menObj+=menConst;
-                }
-
-                console.log("?type="+type+"&"+"equations="+obfun+menObj);
-                 
-                return "?type="+type+"&"+"equations="+obfun+menObj;
-     }
-    function saveProblem() {
-          object = { data: document.getElementById("cTitle").value + "|" + constructRequestString() };
-          exportToJson(object);
+        function saveProblem() {
+            object = { data: document.getElementById("cTitle").value + "|" + constructRequestString() };
+            exportToJson(object);
         }
         function exportToJson(objectData) {
-          let filename = "Problem_" + document.getElementById("cTitle").value + ".json";
-          let contentType = "application/json;charset=utf-8;";
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
-            navigator.msSaveOrOpenBlob(blob, filename);
-          } else {
-            var a = document.createElement('a');
-            a.download = filename;
-            a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
-            a.target = '_blank';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          }
+            let filename = "Problem_" + document.getElementById("cTitle").value + ".json";
+            let contentType = "application/json;charset=utf-8;";
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                var a = document.createElement('a');
+                a.download = filename;
+                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+                a.target = '_blank';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
         }
 
-  </script>
+    </script>
 
-   <!-- Bootstrap core JavaScript-->
-  
-   <script src="vendor/jquery/jquery.min.js"></script>
-   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
 
-   <!-- Core plugin JavaScript-->
-   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-   <!-- Custom scripts for all pages-->
-   <script src="js/sb-admin-2.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-   <!-- Page level plugins -->
-   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-   <!-- Page level custom scripts -->
-   <script src="js/demo/datatables-demo.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
