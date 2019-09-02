@@ -29,7 +29,6 @@
             -webkit-appearance: none;
             margin: 0;
         }
-
         input[type="number"] {
             -moz-appearance: textfield;
         }
@@ -82,8 +81,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
+                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
                         <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
+                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
                         <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER</a>
                     </div>
                 </div>
             </li>
@@ -99,7 +101,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Programs</h6>
                         <!-- cambiar href -->
-                        <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class='collapse-item' href='mps.html'>MPS</a> <a
+							class='collapse-item' href='mrp.html'>MRP </a>
                     </div>
                 </div>
             </li>
@@ -193,6 +196,7 @@
                                         <th class="text-center" scope="col">2</th>
                                         <th class="text-center" scope="col">3</th>
                                         <th class="text-center" scope="col">4</th>
+                                        
                                         <th id="colMaker" class="text-center nav-item dropdown no-arrow"
                                             style="width: 8%; height: 100%;" scope="col">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -200,6 +204,7 @@
                                                 <span class="text-center">...</span>
                                             </a>
                                             <!-- Dropdown - Resize Information -->
+                                            
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                                 aria-labelledby="userDropdown">
                                                 <h6 class="dropdown-header">
@@ -208,11 +213,21 @@
                                                 <input class="form-control border-0 dropdown-item" id="tamPeriods"
                                                     min="4" type="number" placeholder="# Periods">
                                                 <div class="dropdown-divider"></div>
+                                                
                                                 <input class="form-control border-0 btn btn-outline-info"
                                                     id="resizePeriods" type="button" name="resizePeriods" value="Resize"
                                                     onclick="resize()">
+
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriodsByOne" type="button" name="resizePeriodsByOne" value="Add only one"
+                                                    onclick="addColumn()">
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="removePeriodsByOne" type="button" name="removePeriodsByOne" value="Remove only one"
+                                                    onclick="removeColumn()">
+                                           
                                             </div>
                                         </th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -419,7 +434,6 @@
     <script src="js/demo/chart-pie-demo.js"></script>
 
     <script>
-
         document.getElementById("user").addEventListener("submit", function (e) {
             e.preventDefault();
             solveModel();
@@ -498,7 +512,45 @@
                 }
             }
         }
-
+        function addColumn(){
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+    
+                var toBeAdded = 1;
+                //Span del mps mayor (value + 2)
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
+                //Recorrer cada fila y add una td
+                var resizeCommand = document.getElementById("colMaker");
+                var pHeader = document.getElementById("periodsHeader");
+                resizeCommand.parentNode.removeChild(resizeCommand);
+               
+                    $("#periodsHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + 1) + "</th>")
+                    $("#grossRequeriment").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
+                    $("#scheduledReceptions").append("<td style='width: 8%; height: 100%;'><input id='sr" + (actualPeriods + 1) + "' class='border-0' type='number' min='0' style='width: 100%'></td>");
+                
+                pHeader.appendChild(resizeCommand);
+            
+        }
+        function removeColumn(){
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+            
+            if(actualPeriods>4){
+            document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = $('#tamPeriods').val() + 2;
+                    document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].removeChild(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)]);
+                    dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+                    actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+                    document.getElementById("grossRequeriment").removeChild(document.getElementById("grossRequeriment").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("scheduledReceptions").removeChild(document.getElementById("scheduledReceptions").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("AvailableInventoryProgrammed").removeChild(document.getElementById("AvailableInventoryProgrammed").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("Netrequirements").removeChild(document.getElementById("Netrequirements").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("ReceptionsOfPlannedOrders").removeChild(document.getElementById("ReceptionsOfPlannedOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                    document.getElementById("releasedPlanOrders").removeChild(document.getElementById("releasedPlanOrders").getElementsByTagName("td")[(dataColSize - 2)]);
+                
+            }
+        }
         function getBruteRequirements() {
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";
@@ -510,9 +562,7 @@
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
-
         }
-
         function getScheduledReceptions() {
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";
@@ -524,11 +574,7 @@
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
-
         }
-
-
-
         function generateTables(){
            // var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
             var lotSizingRule = document.getElementById('lotSizingRule');
@@ -564,7 +610,6 @@
               
             }
         }
-
         function createBodyTable(lotSizingRule,tblBody){
     
             var texts = ["Available Inventory Programmed", "Net requirements", "Receptions of planned orders","Release of planned orders"];
@@ -580,7 +625,6 @@
                 tblBody.appendChild(Tr);
             }
             //tblBody.appendChild(bodyTr);
-
           
         }
         function createHeadTable(lotSizingRule,tblHead){
@@ -619,7 +663,6 @@
                     tblHead.appendChild(headTr);
                     tblHead.appendChild(headTr2);
         }
-
         function constructRequestString(compareRequest,index) {
             if(compareRequest==false){
                 lotSizingRule = $('#lotSizingRule').val();
@@ -663,7 +706,6 @@
             + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost;
             
         }
-
         function constructRequestStringAll() {
             /*
             var lotSizingRule = document.getElementById('lotSizingRule');
@@ -672,7 +714,6 @@
                 if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
                     result[i] = construcRequestCommon()+"&lotSizingRule=" + lotSizingRule.childNodes.item(i).value;
                 }
-
             }
             return result;*/
             var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
@@ -685,7 +726,6 @@
             
         }
         function deleteAllTables(){
-
             tabla = document.getElementById("tableDataAll");
             while(tabla){
                 if(tabla){
@@ -695,10 +735,7 @@
                 tabla = document.getElementById("tableDataAll");
             }
              
-
         }
-
-
         function addDataAll(lotSizingMethod,data){    
                         for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
                                 t =document.getElementById("availableInventoryProgrammedId"+lotSizingMethod.replace(/ /g, ""));
@@ -726,8 +763,6 @@
                                 td.textContent=data.scheduledAvailableStock[i];
                                 td.style ="width: 8%; height: 100%";
                                 availableInventoryProgrammed.appendChild(td);
-
-
                                 Netrequirements=document.getElementById("Netrequirements"+lotSizingMethod.replace(/ /g, ""));      
                                 td1 = document.createElement("td");
                                 td1.id="NetrequirementsId"+lotSizingMethod.replace(/ /g, "");
@@ -735,7 +770,6 @@
                                 td1.textContent=data.netRequirements[i] ;
                                 td1.style ="width: 8%; height: 100%";
                                 Netrequirements.appendChild(td1);
-
                                 ReceptionsOfPlannedOrders=document.getElementById("Receptionsofplannedorders"+lotSizingMethod.replace(/ /g, ""));
                                 td2 = document.createElement("td");
                                 td2.id="ReceptionsOfPlannedOrdersId"+lotSizingMethod.replace(/ /g, "");
@@ -743,7 +777,6 @@
                                 td2.textContent=data.planOrders[i] ;
                                 td2.style ="width: 8%; height: 100%";
                                 ReceptionsOfPlannedOrders.appendChild(td2);
-
                                 Releaseofplannedorders=document.getElementById("Releaseofplannedorders"+lotSizingMethod.replace(/ /g, ""));                      
                                 td3 = document.createElement("td");
                                 td3.id="releasedPlanOrdersId"+lotSizingMethod.replace(/ /g, "");
@@ -757,7 +790,6 @@
                                
                         }    
         }   
-
                         function addData(data){    
                         for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
                                 t =document.getElementById("availableInventoryProgrammedId");
@@ -789,8 +821,6 @@
                                 td.textContent=data.scheduledAvailableStock[i];
                                 td.style ="width: 8%; height: 100%";
                                 availableInventoryProgrammed.appendChild(td);
-
-
                                 Netrequirements=document.getElementById("Netrequirements");      
                                 td1 = document.createElement("td");
                                 td1.id="NetrequirementsId";
@@ -798,7 +828,6 @@
                                 td1.textContent=data.netRequirements[i] ;
                                 td1.style ="width: 8%; height: 100%";
                                 Netrequirements.appendChild(td1);
-
                                 ReceptionsOfPlannedOrders=document.getElementById("ReceptionsOfPlannedOrders");  
                                 td2 = document.createElement("td");
                                 td2.id="ReceptionsOfPlannedOrdersId";
@@ -806,7 +835,6 @@
                                 td2.textContent=data.planOrders[i] ;
                                 td2.style ="width: 8%; height: 100%";
                                 ReceptionsOfPlannedOrders.appendChild(td2);
-
                                 Releaseofplannedorders=document.getElementById("releasedPlanOrders");
                                 td3 = document.createElement("td");
                                 td3.id="releasedPlanOrdersId";
@@ -820,8 +848,6 @@
                                // $("#Releaseofplannedorders").append("<td  class='text-dark Releaseofplannedorders' style='width: 8%; height: 100%';>" + data.releasedPlanOrders[i] + "</td>");
          
                         }       
-
-
         }
         function solveModel(all) {
             $(".cover").toggle(400);    
@@ -854,7 +880,6 @@
                         Netrequirements = data.netRequirements;
                         ReceptionsOfPlannedOrders = data.planOrders;
                         ReleaseOfPlannedOrders = data.releasedPlanOrders;
-
                         if(!all){
                             addData(data);                            
                          }else{
@@ -866,11 +891,8 @@
                         $(".cover").toggle(400);
                         console.log(error);
                     })
-
                 }
             }
-
-
         }
         function solveModelC(index) {
             $(".cover").toggle(400);
