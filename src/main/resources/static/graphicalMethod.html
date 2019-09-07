@@ -23,6 +23,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
@@ -946,8 +947,8 @@ function solveModel() {
                             mode: 'xy',
                             rangeMin: {
                                 // Format of min pan range depends on scale type
-                                x: 0,
-                                y: 0
+                                x: null,
+                                y: null
                             },
                             rangeMax: {
                                 // Format of max pan range depends on scale type
@@ -980,8 +981,8 @@ function solveModel() {
 
                             rangeMin: {
                                 // Format of min zoom range depends on scale type
-                                x: 0,
-                                y: 0
+                                x: null,
+                                y: null
                             },
                             rangeMax: {
                                 // Format of max zoom range depends on scale type
