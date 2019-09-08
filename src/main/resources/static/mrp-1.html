@@ -194,12 +194,17 @@
 									<tr class='bg-primary'>
 										<th scope='col'>Id</th>
 										<th scope='col'>Product Name</th>
-										<th scope='col'>Level</th>
 										<th scope='col'>Available Inventory</th>
 										<th scope='col'>Security Inventory</th>
-										<th scope='col'>Parent Product Name</th>
+										<th scope='col'>Parent Product Id</th>
 										<th scope='col'>Amount to Manufacture Parent</th>
 										<th scope='col'>Lead time</th>
+										<th scope='col'>Cost of the article</th>
+										<th scope='col'>Maintenance cost</th>
+										<th scope='col'>Cost of ordering</th>
+										<th scope='col'>Lot sizing rule</th>
+										
+										
 									</tr>
 								</thead>
 								<tbody>
@@ -210,23 +215,50 @@
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='text' min='0'
 											style='width: 100%' id='iNomb'></td>
-										<td style='width: 9%; height: 100%;'><input
-											class='form-control border-0' type='number' min='0'
-											style='width: 100%' id='iNive'></td>
+										
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iInve'></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iSecu'></td>
-										<td style='width: 9%; height: 100%;' id='iElem'></td>
+										<td style='width: 9%; height: 100%;'> id='iElem'></td>
 										<td style='width: 9%; height: 100%;' id='iCant'></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iLead'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' type='number' min='0'
+											style='width: 100%' id='iCostArticle'></td>
+									    <td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' type='number' min='0'
+											style='width: 100%' id='iMaintenance'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' type='number' min='0'
+											style='width: 100%' id='iCostOrdering'></td>
+										<td style='width: 100%; height: 100%;'>	
+											<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>
+												<option name="Lot for Lot">Lot for Lot</option>
+												<option name="Economic Order Quantity">Economic Order Quantity</option>
+												<option name="Periods Of Suply">Periods Of Suply</option>
+												<option name="Period Order Quantity">Period Order Quantity</option>
+												<option name="Least Unit Cost">Least Unit Cost</option>
+												<option name="Least Total Cost">Least Total Cost</option>
+											</select>
+										</td>
 									</tr>
 								</tbody>
 							</table>
+						</div>
+						<div class="input-periodicity-mrp">
+							Periodicity:	
+							<select class="col-sm-3 text-light custom-select bg-primary" id="periodicity" required>
+								<option value="" name="periodicity" disabled selected hidden></option>
+								<option name="Annual">Annual</option>
+								<option name="Monthly">Monthly</option>
+								<option name="Weekly">Weekly</option>
+								<option name="Daily">Daily</option>
+							</select>
 						</div>
 						<div class='text-white' class='form-control form-control-user'>
 							<div class='form-group row'>
@@ -551,7 +583,7 @@
 		
 		function addConstraint() {
             console.log('Added contraint');
-            $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td></tr>");
+           $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCostArticle'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iMaintenance'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCostOrdering'></td></td></tr>");
 
 			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
 			

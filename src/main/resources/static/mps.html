@@ -279,54 +279,67 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="itemName" type="text" name="itemName"
-                                        placeholder="Name of the item" required>
+                                <div class="input-group mb-2 flex-nowrap ">
+                                    <label class="col-sm-3" for="itemName">Item Name: </label>
+                                    <input class="col-sm-6 form-control" id="itemName" type="text" name="itemName">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="levelCode" type="text" name="levelCode"
-                                        placeholder="Level code" required>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-3" for="levelCode">Level Code: </label>
+                                    <input class="col-sm-4 form-control" id="levelCode" type="text" name="levelCode">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="initialInventory" type="number" min="0"
-                                        name="initialInventory" placeholder="Initial inventory" required>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-3" for="leadTime">Lead Time: </label>
+                                    <input class="col-sm-4 form-control" id="leadTime" type="number" min="0" name="leadTime">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="leadTime" type="number" min="0" name="leadTime"
-                                        placeholder="Lead time" required>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-3" for="costArticle">Cost Article: </label>
+                                    <input class="col-sm-4 form-control" id="costArticle" type="text" name="costArticle">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="securityStock" type="number" min="0"
-                                        name="securityStock" placeholder="Security stock" required>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-3" for="securityStock">Security Stock: </label>
+                                    <input class="col-sm-4 form-control" id="securityStock" type="number" min="0"
+                                        name="securityStock">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="costArticle" type="text" name="costArticle"
-                                        placeholder="Cost of the article" required>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-3" for="orderCost">Ordering Cost: </label>
+                                    <input class="col-sm-4 form-control" id="orderingCost" type="text" name="orderingCost">
                                 </div>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-4" for="initialInventory">Initial Inventory: </label>
+                                    <input class="col-sm-3 form-control" id="initialInventory" type="number" min="0"
+                                        name="initialInventory">
+                                </div>
+                                
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-4" for="maintenanceCost">Maintenance Cost: </label>
+                                    <input class="col-sm-3 form-control" id="maintenanceCost" type="text" name="maintenanceCost">
+                                </div>
+                                
                             </div>
                             <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="maintenanceCost" type="text" name="maintenanceCost"
-                                        placeholder="Maintenance cost" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="orderingCost" type="text" name="orderingCost"
-                                        placeholder="Cost of ordering" required>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-light custom-select bg-primary" id="periodicity" required>
-                                        <option value="" name="periodicity" disabled selected hidden>Time between
-                                            periods (periodicity)
-                                        </option>
+                                
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label  class="col-sm-4" for="periodicity">Periodicity: </label>
+                                    <select class="col-sm-3 text-light custom-select bg-primary" id="periodicity" required>
+                                        <option value="" name="periodicity" disabled selected hidden></option>
                                         <option name="Annual">Annual</option>
                                         <option name="Monthly">Monthly</option>
                                         <option name="Weekly">Weekly</option>
                                         <option name="Daily">Daily</option>
                                     </select>
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="text-light custom-select bg-primary" id="lotSizingRule" required>
-                                        <option value="" name="lotSizingRule" disabled selected hidden>Lot sizing rule</option>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-4" for="levelOfDetail">Level Of Detail: </label>
+                                    <select class="col-sm-3 custom-select bg-primary text-light" id="levelOfDetail">
+                                        <option value="" name="levelOfDetail" disabled selected hidden></option>
+                                        <option name="High">High</option>
+                                        <option name="Low">Low</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-4" for="lotSizingRule">Lot Sizing Rule: </label>
+                                    <select class="col-sm-4 text-light  custom-select bg-primary" id="lotSizingRule" required>
+                                        <option value="" name="lotSizingRule" disabled selected hidden></option>
                                         <option name="Lot for Lot">Lot for Lot</option>
                                         <option name="Economic Order Quantity">Economic Order Quantity</option>
                                         <option name="Periods Of Suply">Periods Of Suply</option>
@@ -335,24 +348,17 @@
                                         <option name="Least Total Cost">Least Total Cost</option>
                                     </select>
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <input class="form-control" id="TPeriodOFSupply" type="number" min="0"
-                                        name="TPeriodOFSupply" placeholder="Period of supply">
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="col-sm-4" for="TPeriodOFSupply">(T)Period of Supply: </label>
+                                    <input class="col-sm-4 form-control" id="TPeriodOFSupply" type="number" min="0"
+                                        name="TPeriodOFSupply">
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <select class="custom-select bg-primary text-light" id="levelOfDetail" required>
-                                        <option value="" name="levelOfDetail" disabled selected hidden>Level of detail
-                                        </option>
-                                        <option name="High">High</option>
-                                        <option name="Low">Low</option>
-                                    </select>
+                                
+                                <hr>
+                                <div class="col-sm-4 input-group mb-2 flex-nowrap">
+                                    <label>Others options: </label>
                                 </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3 flex-nowrap">
-                                    <label>Others options:</label>
-                                </div>
-                                <div class="input-group mb-3 flex-nowrap">
+                                <div class="col-sm-4 input-group mb-2 flex-nowrap">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <input id="makeTotalCosts" name="otherOptions" type="checkbox"
@@ -362,7 +368,7 @@
                                     <input type="text" class="text-light form-control bg-primary" value="Total costs"
                                         readonly>
                                 </div>
-                                <div class="input-group mb-3 flex-nowrap">
+                                <div class="col-sm-7 input-group mb-2 flex-nowrap">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <input id="makePerformanceIndicators" name="otherOptions" type="checkbox"
@@ -372,15 +378,14 @@
                                     <input type="text" class="text-light form-control bg-primary"
                                         value="Indicators of performance" readonly>
                                 </div>
-                                <div class="input-group-append mb-3 flex-nowrap justify-content-end">
-                                    <input class="btn btn-outline-primary" id="calculate" type="submit" name="calculate"
-                                        value="Calculate">
-                                        <input class="btn btn-outline-primary" id="calculateAll" type="button" name="calculateAll"
-                                        value="CalculateAll"   onclick="solveModel(true)">
-                                        <input class="btn btn-outline-primary" id="compareResults" type="button" name="compareResults"
-                                        value="Compare Results" onclick="addTableComparison()">
+                                <hr>
+                                <div class="input-group-append mb-2 flex-nowrap justify-content-end">
+                                        <input class="col-sm-2 btn btn-outline-primary expand " id="calculate" type="submit" name="calculate" value="Calculate"><div class="col-sm-1"> </div>
+                                        <input class="col-sm-3  btn btn-outline-success expand" id="calculateAll" type="button" name="calculateAll"value="CalculateAll"   onclick="solveModel(true)"><div class="col-sm-1"> </div>
+                                        <input class="col-sm-4 btn btn-outline-danger expand" id="compareResults" type="button" name="compareResults" value="Compare Results" onclick="addTableComparison()"><div class="col-sm-1"> </div>
                                 </div>
                             </div>
+
                         </div>
                     </form>
                 </div>
