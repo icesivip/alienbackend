@@ -38,12 +38,10 @@
             text-align: center;
             min-width: 150px;
         }
-
         .expand {
             width: 100%;
             height: 100%;
         }
-
         .white-text {
             color: white;
         }
@@ -51,14 +49,12 @@
         input[type=number] {
             width: 100%;
         }
-
 /*         
         table,
         th,
         td {
             border: 1px solid black;
         } */
-
         /* .image {
             display: inline;
             margin-left: auto;
@@ -66,7 +62,6 @@
             margin-top: auto;
             vertical-align: center;
         } */
-
         .cover {
             opacity: 0.8;
             background-color: #ccc;
@@ -401,6 +396,7 @@
                     <br>
                     <hr>
                     <h2 class="text-center"> Basic Feasible Solutions</h2>
+                    <div id="solution"></div>
                     <div id="resultTable-cont" class="table-responsive">
 
                             <table class="table table-bordered" width="100%" cellspacing="0" id="result">
@@ -475,30 +471,24 @@
 
     <script>
         // JavaScript source code
-
 var varCount = 2;
 var consCount = 1;
-
 $(document).ready(function () {
     $("#result").DataTable();
-
     $("#chart").hide();
 });
 document.getElementById("upload-form").addEventListener("submit", function (e) {
     e.preventDefault();
-
     var file = document.getElementById("fileUpload").files[0];
     urlFile = window.URL.createObjectURL(file);
     $.ajax({
         url: urlFile
     }).then(function (data) {
-
         console.log(data);
         var split = data.data.split('&');
         var obj = split[2].split(',');
         var c = 0;
         var vars = split[1].split(',');
-
         $('#of-body td').each(function (index) {
             if (index == 0) {
                 if (split[0].substring(6, 14) == 'MAXIMIZE') {
@@ -517,10 +507,7 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
                 c++;
             }
         });
-
-
         var cons = split[3].split(';');
-
         if (cons.length - 1 > consCount - 1) {
             for (i = 0; i < cons.length - 1; i++) {
                 if (consCount < cons.length - 1) {
@@ -534,15 +521,11 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
                 removeCons();
             }
         }
-
         var ins = split[3].split(',');
-
         var countRequest = 0;
         var aux = 0;
-
         // {"data":"?type=MAXIMIZE&vars=X1:C,X2:C&objectiveFunction=2,2&constraints=2,2,<=,2;3,3,<=,3;2,2,>=,22;2,,<=,2;"}
         //                  0             1                   2                                   3
-
         $('#table-body tr').each(function (i) {
             $(this).find('td').each(function (j) {
                 if (i == 0 && j == 0) {
@@ -566,7 +549,6 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
                             }
                         }
                     } else {
-
                         if (ins[countRequest] == '<=') $(this).find('select').val("<=");
                         else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
                         else $(this).find('select').val("=");
@@ -575,10 +557,7 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
                 }
             });
         });
-
-
     }, function (error) {
-
         console.log(error);
     });
     $('#uploadModal').modal('hide');
@@ -590,9 +569,6 @@ document.getElementById("submit-form").addEventListener("submit", function (e) {
     e.preventDefault();
     solveModel();
 });
-
-
-
 function addCons() {
     $("#table-body").append(generateNewConsRow(varCount));
     consCount++;
@@ -601,12 +577,10 @@ function generateNewConsRow(count) {
     var st = "<tr>";
     for (let index = 0; index < count; index++) {
         st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
-
     }
     st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
     return st;
 }
-
 function removeCons() {
     if (consCount > 1) {
         $("#table-body tr").last().remove();
@@ -621,7 +595,6 @@ function insertAtIndex(i) {
     consCount--;
     $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
 }
-
 function constructQueryString() {
     type = "";
     obfun = "";
@@ -630,7 +603,6 @@ function constructQueryString() {
     $('#of-body td').each(function (index) {
         if (index == 0) {
             type = ($(this).find('select').val());
-
         } else {
             obfun += $(this).find('input').val() + ",";
         }
@@ -638,46 +610,95 @@ function constructQueryString() {
     for (i = 0; i < varCount; i++) {
         vars += "X" + (i + 1) + ":C" + ",";
     }
-
     $('#table-body tr').each(function (i) {
         $(this).find('td').each(function (j) {
-
             if (j < varCount || j == varCount + 1) {
-
                 if (j == varCount + 1) {
                     constraints += $(this).find('input').val() + ";";
                 } else {
-
                     constraints += $(this).find('input').val() + ",";
                 }
             } else {
                 constraints += $(this).find('select').val() + ",";
             }
-
-
             // Get the output text
             // If the checkbox is checked, display the output text
-
-
         });
-
     });
     var checkBox = document.getElementById("cbox1");
     if (checkBox.checked == true) {
         constraints += "1,0,>=,0;";
         constraints += "0,1,>=,0;";
-
     }
     vars = vars.substring(0, vars.length - 1);
     obfun = obfun.substring(0, obfun.length - 1);
     //console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
     return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+}
+function constructQueryStringSolver() {
+            type = "";
+            obfun = "";
+
+            constraints = "";
+            count = 1;
+            $('#of-body td').each(function (index) {
+                if (index == 0) {
+                    type = ($(this).find('select').val());
+
+                } else {
+                    obfun += (- ($(this).find('input').val())) + " X" + count + " ";
+                    count++;
+                }
+            });
+
+
+
+            $('#table-body tr').each(function (i) {
+                constraints += "n0 Z ";
+                $(this).find('td').each(function (j) {
+                    if (j < varCount || j == varCount + 1) {
+                        if (j == varCount + 1) {
+                            constraints += " " + $(this).find('input').val();
+                        } else {
+                            constraints += $(this).find('input').val() + " X" + (j + 1) + " ";
+                        }
+                    } else {
+                        constraints += $(this).find('select').val();
+                    }
+
+
+                    // Get the output text
+                    // If the checkbox is checked, display the output text
+
+
+                });
+
+            });
+            var checkBox = document.getElementById("cbox1");
+            if (checkBox.checked == true) {
+                constraints += "n0 Z 1 X1 0 X2 <= 0";
+                constraints += "n0 Z 0 X1 1 X2 <= 0";
+
+            }
+            vars = vars.substring(0, vars.length - 1);
+            obfun = obfun.substring(0, obfun.length - 1);
+            return "?type=" + type + "&equations=1 Z " + obfun + " = 0" + constraints;
 
 }
 var myChart = null;
 function solveModel() {
     $(".cover").toggle(400);
     var string = constructQueryString();
+
+    var stringDos = constructQueryStringSolver();
+    var messageSol ="";
+    $.ajax({ 
+      url: "https://icesiviptest.herokuapp.com/simplexMethod" + stringDos
+                //url: "http://localhost:8080/simplexMethod" + string
+    }).then(function (data) {
+      console.log(data)
+      messageSol=  data.messageSol;
+    });
     $.ajax({
         url: "https://viptest1.herokuapp.com/graphicalMethod" + string
     }).then(function (data) {
@@ -688,14 +709,11 @@ function solveModel() {
         var solList = data.solutionList;
         var solX = [];
         var solY = [];
-
         $("#result").DataTable().clear();
         solList.forEach(element => {
             $("#result").DataTable().row.add(
                 [element.variables.X1, element.variables.X2, element.z]
             ).draw();
-
-
         });
         type = $("#type").val();
         if (type == "MAXIMIZE") {
@@ -703,7 +721,7 @@ function solveModel() {
         } else {
             $("#result").DataTable().order([2, 'asc']).draw();
         }
-
+        $("#solution").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
         constraints.forEach(element => {
             // Esto fue lo que cambie para graficar las restricciones de no negatividad
             if (element.xValue == 0) {
@@ -716,8 +734,6 @@ function solveModel() {
                 cx = element.rightValue / element.xValue;
                 cy = element.rightValue / element.yValue;
             }
-
-
             if (cx != Infinity && cx != -Infinity) {
                 solX.push(cx);
             }
@@ -729,18 +745,13 @@ function solveModel() {
             solX.push(element.variables.X1);
             solY.push(element.variables.X2);
         });
-
-
         minX = Math.min.apply(Math, solX);
         maxX = Math.max.apply(Math, solX);
-
-
         if (minX > 0) {
             minX = 0;
         }
         minX = minX - 1;
         maxX = maxX + 1;
-
         constraints.forEach(element => {
             if (element.xValue != 0 && element.yValue != 0) {
                 solY.push((element.rightValue - (element.xValue * minX + 1)) / element.yValue);
@@ -749,13 +760,11 @@ function solveModel() {
         });
         minY = Math.min.apply(Math, solY);
         maxY = Math.max.apply(Math, solY);
-
         if (minY > 0) {
             minY = 0;
         }
         minY = minY - 1;
         maxY = maxY + 1;
-
         if (minX == 0 && maxX == 0) {
             maxX = 1;
         }
@@ -771,11 +780,8 @@ function solveModel() {
         });
         console.log(dataAux);
         dataframe.push({
-
             label: 'y ',
-
             data: dataAux,
-
             backgroundColor: [
                 'rgba(255, 255, 0, 1)'
             ],
@@ -788,11 +794,6 @@ function solveModel() {
             showLine: false,
             steppedLine: false,
             lineTension: 0,
-
-
-
-
-
         });
         //console.log(dataframe);
         count = 1;
@@ -877,24 +878,18 @@ function solveModel() {
                 fill: area,
                 steppedLine: false,
                 lineTension: 0,
-
                 //fillBetweenSet: 1,
                 //fillBetweenColor: "rgba(255,0,0, 0.2)"
             });
-
             count++;
         });
-
         var ctx = document.getElementById("chart-area");
         if (myChart != null) { myChart.destroy() }
         myChart = new Chart(ctx, {
             //type: 'scatter',
-
             type: 'line',
             data: {
-
                 datasets: dataframe
-
             },
             options: {
                 scales: {
@@ -907,7 +902,6 @@ function solveModel() {
                         scaleLabel: {
                             display: true,
                             labelString: 'X2',
-
                         },
                         gridLines: {
                             // You can change the color, the dash effect, the main axe color, etc.
@@ -931,7 +925,6 @@ function solveModel() {
                             // You can change the color, the dash effect, the main axe color, etc.
                             borderDash: [1, 2],
                             zeroLineColor: 'rgba(0,0,0,1)'
-
                         }
                     }]
                 },
@@ -941,7 +934,6 @@ function solveModel() {
                         pan: {
                             // Boolean to enable panning
                             enabled: true,
-
                             // Panning directions. Remove the appropriate direction to disable
                             // Eg. 'y' would only allow panning in the y direction
                             mode: 'xy',
@@ -959,26 +951,21 @@ function solveModel() {
                             // Useful for dynamic data loading
                             onPan: function ({ chart }) { console.log(`I was panned!!!`); }
                         },
-
                         // Container for zoom options
                         zoom: {
                             // Boolean to enable zooming
                             enabled: true,
-
                             // Enable drag-to-zoom behavior
                             drag: false,
-
                             // Drag-to-zoom rectangle style can be customized
                             // drag: {
                             // 	 borderColor: 'rgba(225,225,225,0.3)'
                             // 	 borderWidth: 5,
                             // 	 backgroundColor: 'rgb(225,225,225)'
                             // },
-
                             // Zooming directions. Remove the appropriate direction to disable
                             // Eg. 'y' would only allow zooming in the y direction
                             mode: 'xy',
-
                             rangeMin: {
                                 // Format of min zoom range depends on scale type
                                 x: null,
@@ -989,18 +976,15 @@ function solveModel() {
                                 x: null,
                                 y: null
                             },
-
                             // Speed of zoom via mouse wheel
                             // (percentage of zoom on a wheel event)
                             speed: 0.1,
-
                             // Function called once zooming is completed
                             // Useful for dynamic data loading
                             onZoom: function ({ chart }) { console.log(`I was zoomed!!!`); }
                         }
                     }
                 }
-
             }
         });
     }, function (error) {
@@ -1025,15 +1009,10 @@ function exportToJson(objectData) {
         document.body.removeChild(a);
     }
 }
-
-
 function saveProblem() {
     object = { data: constructQueryString() };
     exportToJson(object);
 }
-
-
-
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -1056,3 +1035,15 @@ function saveProblem() {
 </body>
 
 </html>
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
