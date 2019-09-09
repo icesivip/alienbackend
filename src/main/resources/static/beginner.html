@@ -277,6 +277,7 @@
 
           .table {
             color: black;
+            text-align: center;
 
           }
 
@@ -572,6 +573,91 @@
               <div id="mensajeS">
 
               </div>
+              
+              <div class="table-responsive" id = "tableReducedCosts">
+
+                <h2 class="text-center">Reduced costs table</h2>
+               
+                <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
+
+                      
+                    <thead class="bg-gradient-primary">
+                        
+                        <tr id="thead-RC">
+                            <th>
+                              <font color='#fff'>Name</font>
+                            </th>
+                            <th>
+                              <font color='#fff'>Final value</font>
+                            </th>
+                          <th>
+                                <font color="#fff">Reduced costs</font>
+                            </th>
+                            <th>
+                                <font color="#fff">Coefficient Objective</font>
+                            </th>
+                            <th>
+                                <font color="#fff">Permissible to reduce</font>
+                            </th>
+                            <th>
+                                <font color="#fff">Permissible to increase</font>
+                            </th>
+                        </tr>
+                        
+                    </thead>
+                   
+                    <tbody id="tbody-RC">
+                      
+    
+                    </tbody>
+    
+                 
+    
+    
+                </table>
+                </div>
+
+                <div  class="table-responsive" id = "tableShadowPrices">
+
+                  <h2 class="text-center">Shadow prices table</h2>
+                 
+                  <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
+  
+                        
+                      <thead class="bg-gradient-primary">
+                          
+                          <tr id="thead-SP">
+                              <th>
+                                <font color='#fff'>Name</font>
+                              </th>
+                              <th>
+                                <font color='#fff'>Final value</font>
+                              </th>
+                            <th>
+                                  <font color="#fff">Shadow prices</font>
+                              </th>
+                              <th>
+                                  <font color="#fff">RHS Constraint</font>
+                              </th>
+                              <th>
+                                  <font color="#fff">Permissible to reduce</font>
+                              </th>
+                              <th>
+                                  <font color="#fff">Permissible to increase</font>
+                              </th>
+                          </tr>
+                          
+                      </thead>
+                     
+                      <tbody id="tbody-SP">
+                          
+                      </tbody>
+      
+                   
+      
+      
+                  </table>
+                  </div>
               <hr>
 
 
@@ -757,7 +843,7 @@
           $('.modal-backdrop').remove();
           
         });
-
+       
         function addCons() {
           $("#table-body").append(generateNewConsRow(varCount));
           consCount++;
@@ -902,27 +988,36 @@
           return "?type=" + type + "&" + "equations=" + obfun + menObj;
         }
         var analysis;
+        var solutionValues;
+        var nVarDeci;
+        var rhsInitM;
+        var shadowPrices;
+        var fobjective;
+        var variableNames
         function finalSolution() {
           $(".cover").toggle(400);
           $("#menIteration").empty();
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
              
           }).then(function (data) {
 
             $(".cover").toggle(600);
-            var variableNames = data.everyVariableName;
+            variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
             var messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            var solutionValues = data.varsValuesSolution;
+            solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            rhsInitM = data.rhsinitialM;
+            nVarDeci = data.nVarDecision;
             analysis = data.analysis;
-
+            shadowPrices = analysis.shadowPrice;
+            fobjective = data.fobj;
             $("#resultTable thead").empty();
             $("#resultTable tbody").empty();
             console.log(data)
@@ -986,38 +1081,28 @@
           });
         }
 
-        function addSolutionInTable(variableNames){
-         
-      }
+        function toInfinity(numberI) {
+          if (numberI < -999999999999999999)
+          return "-Infinity";
+          else if (numberI > 999999999999999999)
+          return "Infinity";
+          else return numberI;
+        }
 
         function analysisS() {
       $("#Analysis").remove();
+      $("#tbody-RC").empty();
+      $("#tbody-SP").empty();
           $("#mensajeS").append("<h3 class = 'text-center'>Sensitivity Analysis:</h3>");
-          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Equations for Constraints D's intervals</font></h4><h4 class='col-sm-6'><font color='black'>Equations for shadow price D's intervals</font></h4></div>");
+          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Equations for Shadow prices intervals</font></h4><h4 class='col-sm-6'><font color='black'>Equations for reduced costs intervals</font></h4></div>");
           $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>"+analysis.equationsConstraints+"</font></h5><h5 class='col-sm-6'><font color='black'>"+analysis.equationsFO+"</font></h5></div>");
-          $("#mensajeS").append("<div class='row'><h4 class='col-sm-6'><font color='black'>Constraints intervals</font></h4><h4 class='col-sm-6'><font color='black'>Shadow price intervals</font></h4></div>");
-          var intervalsCons = "<div class='col-sm-6'>";
+          //llena las tablas del analisis
           for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
-            if(analysis.intervalsDConstraints[index][0] < -999999999999999999)
-            intervalsCons += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
-            else intervalsCons += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDConstraints[index][0];
-            if(analysis.intervalsDConstraints[index][1] > 999999999999999999)
-            intervalsCons += " <= Infinity</font></h5>";
-            else intervalsCons += " <= "+ analysis.intervalsDConstraints[index][1] +"</font></h5>"
+            $("#tbody-SP").append('<tr><th id="nameSP0">Constraint '+(index+1)+'</th><td id="fValueSP0">'+ solutionValues[nVarDeci + index] +'</td><td id="sPrice0">'+ shadowPrices[0][index] +'</td><td id="rhsCons0">'+rhsInitM[index + 1]+'</td><td id="pReduceSP0">'+toInfinity(analysis.intervalsDConstraints[index][0])+'</td><td id="pIncreaseSP0">'+toInfinity(analysis.intervalsDConstraints[index][1])+'</td></tr>')
           }
-          intervalsCons += "</div>";
-          var intervalsVars = "<div class='col-sm-6'>";
             for (let index = 0; index < analysis.intervalsDFO.length; index++) {
-              if(analysis.intervalsDFO[index][0] < -999999999999999999)
-              intervalsVars += "<h5 class='col-sm-6'><font color='black'>Infinity <= D"+(index+1);
-              else intervalsVars += "<h5 class='col-sm-6'><font color='black'>"+analysis.intervalsDFO[index][0]
-              if (analysis.intervalsDFO[index][1] > 999999999999999999)
-              intervalsVars +=" <= Infinity</font></h5>";
-              else intervalsVars +=" <= "+ analysis.intervalsDFO[index][1] +"</font></h5>";
+              $("#tbody-RC").append('<tr><th id="nameRC0">'+variableNames[index]+'</th><td id="fValueRC0">'+ solutionValues[index] +'</td><td id="rCost0">'+ "por llenar"+'</td><td id="cObj0">'+fobjective[index]+'</td><td id="pReduceRC0">'+toInfinity(analysis.intervalsDFO[index][0])+'</td><td id="pIncreaseRC0">'+toInfinity(analysis.intervalsDFO[index][1])+'</td></tr>')
           }
-          intervalsVars += "</div>";
-          $("#mensajeS").append("<div class='row'>" +intervalsCons + intervalsVars + "</div>");
-      //$("#mensajeS").append(analysis.equationsConstraints);
      }
 
 
@@ -1076,14 +1161,14 @@
 
 
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
-            var variableNames = data.everyVariableName;
+            variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
             var messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            var solutionValues = data.varsValuesSolution;
+            solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
             analysis = data.analysis;

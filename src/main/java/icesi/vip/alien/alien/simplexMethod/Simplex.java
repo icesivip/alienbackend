@@ -9,55 +9,100 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.databind.deser.BuilderBasedDeserializer;
+
 import model.*;
 
 public class Simplex implements Solver {
-
+	/**
+	 * The M represents the coeficient of the artifical variables in the objective
+	 * function to penalize the solution.
+	 */
 	public static final int BIG_M = 1000000;
-
+	/**
+	 * Indicates the model that is being used so far
+	 */
 	private Model model;
+	/**
+	 * Represents the sensitivity analysis that has been obtained
+	 */
 	private SensivilityAnalysis analysis;
 	/**
-	 * matriz interna, solo variables y sin la columna y fila del Z, tampoco tiene
-	 * la fila de las igualdades
+	 * Matrix with variables, without the Z row, the basic variables column non thw
+	 * equalities row.
 	 */
 	private Matrix ConsLeft;
 	/**
-	 * matriz identidad antes de convertirse
+	 * Identity matrix before its conversion
 	 */
 	private Matrix MId;
 	/**
-	 * matriz con la función objetivo dada en la primera columna
+	 * Matrix that contains the objective function in the first column
 	 */
 	private Matrix FObj;
 	/**
-	 * matriz que representa las variables de holgura que acompañan a la función
-	 * objetivo (primera columna)
+	 * Matrix that contains the representation of the slack variables in the column
+	 * of Basic Variables
 	 */
 	private Matrix SlackOF;
 	/**
-	 * matriz de igualdades en la primera columna
+	 * Matrix that represents the right side of the constraints.
 	 */
 	private Matrix equalities;
 	/**
-	 * indices que forman la matriz identidad
+	 * Position of the variables contained in the base.
 	 */
 	private int[] Base;
-	private String[] varsBase;
-
 	/**
-	 * matriz que representa la matriz final de una iteración (sin la columna del Z)
+	 * Name of the variables contained in base.
+	 */
+	private String[] varsBase;
+	/**
+	 * Matrix that represents the Identity matrix inverted
+	 */
+	private Matrix B_inv;
+	/**
+	 * Matrix that represents the result of an iteration (without the z column).
 	 */
 	private Matrix Final;
-
+	/**
+	 * Number of decision variables.
+	 */
 	private int nVarDecision;
+	/**
+	 * Represents the value of the solution.
+	 */
 	private Solution solution;
+	/**
+	 * Indicates if the problem has a solution or not.
+	 */
 	private String messageSolution;
+	/**
+	 * Defines the number of the actual iteration.
+	 */
 	private int iterationID;
+	/**
+	 * Represents the initial matrix of the problem.
+	 */
 	private String[] initialM;
+	/**
+	 * Defines the operations that have already been done.
+	 */
 	private String operationsDone;
+	/**
+	 * Represents the ratio test.
+	 */
 	private double[] theta;
 
+	/**
+	 * Creates the constructor of the Simplex class
+	 * 
+	 * @param opti      Indica si se quiere maximizar o minimizar el problema
+	 * @param equations Representa un conjunto de ecuaciones
+	 * @throws Exception especificar cual método arroja la excepcion "se presenta
+	 *                   una excepcion cuando o porque"
+	 */
 	public Simplex(String opti, String[] equations) throws Exception {
 		initialM = equations;
 		iterationID = 0;
@@ -68,23 +113,32 @@ public class Simplex implements Solver {
 			generateEquaAndFOMatries(equations, opti);
 
 			generateConstraintsLeftMatrix(equations, model.getType().equals(Model.MAXIMIZE));
-			solve(model);
+
+			calculateInitialBase();
+			internalteration(model.getType().equals(Model.MAXIMIZE));
+
+//            solve(model);
+            
 		} catch (Exception e) {
 //            throw new Exception("Characters not allowed");
 			e.printStackTrace();
 		}
-//            System.out.print(isMaximization);
 	}
 
+	/**
+	 * Returns the variables contained in the base.
+	 * 
+	 * @return
+	 */
 	public String[] getVarsBase() {
 		return varsBase;
 	}
 
 	/**
-	 * Cambia a la siguiente matriz de la iteración correspondiente (no contiene la
-	 * columna del Z)
+	 * Changes to the next matrix of the iteration (without the basic variables
+	 * column).
 	 * 
-	 * @return Una matriz completa que corresponde al resultado de la iteración
+	 * @return Complete matrix that represents the results of the iteration
 	 */
 	public double[][] nextIteration() {
 		operationsDone = "";
@@ -118,6 +172,15 @@ public class Simplex implements Solver {
 		return Final.getArray();
 	}
 
+	public double[][] getFObj() {
+		return FObj.getArray();
+	}
+	/**
+	 * Rounds the values of the entire matrix to numbers of two decimal places
+	 * 
+	 * @param array Represents a set of values
+	 * @return A set of values with the desired format
+	 */
 	public static double[][] roundMatrix(double[][] array) {
 		double[][] toConvert = new double[array.length][array[0].length];
 		for (int i = 0; i < array.length; i++) {
@@ -128,15 +191,21 @@ public class Simplex implements Solver {
 		return toConvert;
 	}
 
+	/**
+	 * Rounds a number to two decimal places
+	 * 
+	 * @param d The number to be rounded
+	 * @return Rounded value with the desired format
+	 */
 	public static double roundDouble(double d) {
 		DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
 		separadoresPersonalizados.setDecimalSeparator('.');
-		DecimalFormat df = new DecimalFormat("#.##", separadoresPersonalizados);
+		DecimalFormat df = new DecimalFormat("#.###", separadoresPersonalizados);
 		return Double.parseDouble(df.format(d));
 	}
 
 	/**
-	 * Calcula la base inicial del problema
+	 * Calculate the initial base of the problem
 	 */
 	private void calculateInitialBase() {
 		double[][] array = ConsLeft.getArray();
@@ -165,42 +234,42 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Crea una matriz que compone todas las matrices de entrada
+	 * Creates an array that composes all input matrix
 	 * 
-	 * @param TAB    lado izquierdo de la igualdad
-	 * @param X_B    don know
-	 * @param Fila_z ecuación objetivo
-	 * @param z_v    don know
-	 * @return matriz completa dados los parámetros
+	 * @param TAB    Represents the left side of equality
+	 * @param X_B    Represents the matrix where the left side of the equality will be calculated in each iteration.
+	 * @param Fila_z Represents the coeficients of the objective function 
+	 * @param z_v    Represents the coeficients of the objective function in each interation
+	 * @return       Full array given the parameters
 	 */
 	public static Matrix CrearTabla(Matrix TAB, Matrix X_B, Matrix Fila_z, Matrix z_v) {
 
 		double[][] Tabla = new double[TAB.getRowDimension() + 1][TAB.getColumnDimension() + 1];
 
 		for (int j = 0; j < TAB.getColumnDimension(); j++) {
-			Tabla[0][j] = Math.round(Fila_z.getArray()[0][j] * 100d) / 100d;
+			Tabla[0][j] = Fila_z.getArray()[0][j];
 		}
 		Tabla[0][TAB.getColumnDimension()] = z_v.getArray()[0][0];
 
 		for (int i = 0; i < TAB.getRowDimension(); i++) {
 			for (int j = 0; j < TAB.getColumnDimension(); j++) {
-				Tabla[i + 1][j] = Math.round(TAB.getArray()[i][j] * 100d) / 100d;
+				Tabla[i + 1][j] = TAB.getArray()[i][j];
 			}
 		}
 
 		for (int i = 0; i < TAB.getRowDimension(); i++) {
-			Tabla[i + 1][TAB.getColumnDimension()] = Math.round(X_B.getArray()[i][0] * 100d) / 100d;
+			Tabla[i + 1][TAB.getColumnDimension()] = X_B.getArray()[i][0];
 		}
 		Matrix Tabla1 = new Matrix(Tabla);
 		return Tabla1;
 	}
 
 	/**
-	 * Crea la matriz don know
+	 * Create the matrix with the coefficients of the basic variables of the initial matrix
 	 * 
-	 * @param A
-	 * @param Base
-	 * @return
+	 * @param A    Current matrix of the actual iteration 
+	 * @param Base Basic values of the initial matrix
+	 * @return The set of matrix coefficients
 	 */
 	public static Matrix CreaB(Matrix A, int[] Base) {
 
@@ -218,6 +287,13 @@ public class Simplex implements Solver {
 		return B;
 	}
 
+	/**
+	 * Returns the slack variables of the objective function
+	 * 
+	 * @param ObjF Rpresents the objective function 
+	 * @param Base Set of basic variables
+	 * @return Set of slack variables
+	 */
 	private Matrix takeSlackOF(Matrix ObjF, int[] Base) {
 		double[][] C_B1 = new double[Base.length][1];
 
@@ -231,6 +307,13 @@ public class Simplex implements Solver {
 		return C_B;
 	}
 
+	/**
+	 * Generates the constraints of the matrix without their equalities
+	 * 
+	 * @param equations Problem equation set
+	 * @param isMax    Indicates whether this problem is being maximized or not
+	 * @return  Indication that the constraints were created successfully or not
+	 */
 	private boolean generateConstraintsLeftMatrix(String[] equations, boolean isMax) {
 		double[][] matr = new double[equations.length - 1][];
 		int slackPos = 1;
@@ -299,6 +382,12 @@ public class Simplex implements Solver {
 		return isBigM;
 	}
 
+	/**
+	 * Generates the matrix of the objective function and constraints
+	 * 
+	 * @param equations Represents the set of equations of the problem
+	 * @param opti      Indicates whether this problem is being maximized or not.
+	 */
 	private void generateEquaAndFOMatries(String[] equations, String opti) {
 		String[] objective = equations[0].split(" ");
 		double[][] toFO = new double[equations.length - 1 + nVarDecision][1];
@@ -329,6 +418,11 @@ public class Simplex implements Solver {
 //        equalities.print(2, 2);
 	}
 
+	/**
+	 * Validates that the ratio rule is being fulfilled
+	 * 
+	 * @return Indication that the method was performed correctly or not.
+	 */
 	private boolean quotientTest() {
 		Matrix leftC = Final.getMatrix(1, Final.getRowDimension() - 1, 0, Final.getColumnDimension() - 2);
 		double[][] matr = leftC.getArray();
@@ -376,6 +470,15 @@ public class Simplex implements Solver {
 		return procd;
 	}
 
+	public int getnVarDecision() {
+		return nVarDecision;
+	}
+	/**
+	 * Method in charge of conducting class tests
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 //        Problema normi
 //        Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -5 X2 = 0",
@@ -383,8 +486,10 @@ public class Simplex implements Solver {
 //                                           "0 Z 0 X1 2 X2 <= 12",
 //                                           "0 Z 3 X1 2 X2 <= 18"});
 //           Gran M method
-		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0", "0 Z 0.5 X1 0.25 X2 <= 4",
-				"0 Z 1 X1 3 X2 >= 20", "0 Z 1 X1 1 X2 = 10" });
+		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0",
+														   "0 Z 0.5 X1 0.25 X2 <= 4",
+														   "0 Z 1 X1 3 X2 >= 20",
+														   "0 Z 1 X1 1 X2 = 10" });
 //          Solución no factible
 //          Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
 //                                           "0 Z 0.5 X1 0.25 X2 <= 4",
@@ -400,8 +505,16 @@ public class Simplex implements Solver {
 //                                           "0 Z 4 X1 2 X2 1.5 X3 <= 20",
 //                                           "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
 //                                            "0 Z 0 X1 1 X2 0 X3 <= 5"});
+		s.buildAnalysis();
+		s.getIntervals();
 	}
 
+	/**
+	 * Calculates the positions of the excess variables
+	 * 
+	 * @param equations Represents the equations of the problem
+	 * @return Set of numbers
+	 */
 	private ArrayList<Integer> calculatePosExcess(String[] equations) {
 		ArrayList<Integer> resultado = new ArrayList();
 		for (int i = 0; i < equations.length; i++) {
@@ -412,6 +525,12 @@ public class Simplex implements Solver {
 		return resultado;
 	}
 
+	/**
+	 * Calculates the positions of the equalities of the restrictions
+	 * 
+	 * @param equations Represents the set of equations of the problem.
+	 * @return Set of calculated numbers
+	 */
 	private ArrayList<Integer> calculatePosEqualities(String[] equations) {
 		ArrayList<Integer> resultado = new ArrayList();
 		for (int i = 1; i < equations.length; i++) {
@@ -422,6 +541,12 @@ public class Simplex implements Solver {
 		return resultado;
 	}
 
+	/**
+	 * Method in charge of modifying the matrix with the Big M
+	 * 
+	 * @param emes      Indicates the value of the M
+	 * @param equations Set of equations 
+	 */
 	private void normalizeBigM(int emes, String[] equations) {
 		System.out.println("emes " + emes);
 		double[][] aNormalizar = ConsLeft.getArray();
@@ -430,6 +555,10 @@ public class Simplex implements Solver {
 		Final.print(2, 2);
 	}
 
+	/**
+	 * Method responsible of representing the new objective function
+	 * @param excess Indicates the value of the excess variable
+	 */
 	private void enlargeFO(int excess) {
 		double[][] newFO = new double[FObj.getRowDimension() + excess][1];
 		double[][] oldFO = FObj.getArray();
@@ -441,10 +570,13 @@ public class Simplex implements Solver {
 //        FObj.print(2, 2);
 	}
 
+	/**
+	 * Method in charge of controlling the internal iterations of the problem.
+	 */
 	private void internalteration(boolean isMax) {
 		MId = CreaB(ConsLeft, Base);
 		SlackOF = takeSlackOF(FObj, Base);
-		Matrix B_inv = MId.inverse();
+		B_inv = MId.inverse();
 		Matrix X_B = B_inv.times(equalities);
 		Matrix TAB = B_inv.times(ConsLeft);
 		Matrix Fila_z = ((SlackOF.transpose()).times(TAB)).minus(FObj.transpose());
@@ -452,13 +584,26 @@ public class Simplex implements Solver {
 		Final = CrearTabla(TAB, X_B, Fila_z, z_v);
 	}
 
+	/**
+	 * Method in charge of solving a problem based on the model
+	 */
 	@Override
 	public Solution solve(Model model) {
-		calculateInitialBase();
-		internalteration(model.getType().equals(Model.MAXIMIZE));
+		double[][] finalFinal = null;
+		double[][] sig = nextIteration();
+		while (!sig.equals(finalFinal)) {
+			finalFinal = sig;
+			sig = nextIteration();
+		}
 		return solution;
 	}
 
+	/**
+	 * Method in charge of indicating the type of solution of the problem.
+	 *
+	 * @return A message indicating the type of solution
+	 * @throws Exception Indicates if a problem was obtained by performing these operations
+	 */
 	private String findKindOfSolution() throws Exception {
 		model.isFeasibleSolution(solution);
 		for (int i = 0; i < FObj.getArray().length; i++) {
@@ -477,14 +622,33 @@ public class Simplex implements Solver {
 		return "Problem finished";
 	}
 
+	/**
+	 * Returns a message indicating whether the problem has a solution or not.
+	 * 
+	 * @return
+	 */
 	public String getMessageSol() {
 		return messageSolution;
 	}
 
-	public String[] getInitialM() {
-		return initialM;
+	/**
+	 * Returns the values of the initial M
+	 * 
+	 * @return
+	 */
+	public double[] getRHSInitialM() {
+		double[] rhs = new double[initialM.length];
+		for (int i = 0; i < initialM.length; i++) {
+			rhs[i] = Double.parseDouble(initialM[i].split(" ")[nVarDecision*2 + 3]);
+		}
+		return rhs;
 	}
 
+	/**
+	 * Returns the name of the variables
+	 * 
+	 * @return Set of the variable names
+	 */
 	public String[] getEveryVariableName() {
 		String[] vars = new String[model.getVariableCount()];
 		for (int i = 0; i < model.getVariableCount(); i++)
@@ -492,6 +656,11 @@ public class Simplex implements Solver {
 		return vars;
 	}
 
+	/**
+	 * Returns the values of the solution
+	 * 
+	 * @return Set of results
+	 */
 	public double[] getVarsValuesSolution() {
 		double[] sb = new double[getEveryVariableName().length + 1];
 		if (solution != null && model != null) {
@@ -510,39 +679,82 @@ public class Simplex implements Solver {
 
 	}
 
+	/**
+	 * Indicates the criteria with which the problem is handled
+	 * 
+	 * @return Message representing the criteria of the model
+	 */
 	public String getCriterion() {
 		return model.getType();
 	}
 
+	/**
+	 * Indicates the number of the actual iteration 
+	 * 
+	 * @return Number of the actual iteration
+	 */
 	public int getIterationID() {
 		return iterationID;
 	}
 
+	/**
+	 * Returns the current matrix of the problem
+	 * 
+	 * @return Current matrix
+	 */
 	public double[][] getActualMatrix() {
 		return roundMatrix(Final.getArray());
 	}
 
+	/**
+	 * Returns a message indicating whether the iterations were terminated or not.
+	 * 
+	 * @return Message with the indication
+	 */
 	public String getOperationsDone() {
 		return operationsDone;
 	}
 
+	/**
+	 * Returns the theta values of the iteration
+	 * 
+	 * @return
+	 */
 	public double[] getTheta() {
 		return theta;
 	}
 
+	/**
+	 * Method responsible of building sensitivity analysis
+	 */
 	public void buildAnalysis() {
-		analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, SlackOF, equalities, Final);
+		SlackOF = SlackOF.transpose();
+    	Matrix shadowPrice = SlackOF.times(B_inv);
+    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, shadowPrice, equalities, Final);
 	}
 
+	/**
+	 * Method responsible of assigning intervals to sensitivity analysis
+	 */
 	public void getIntervals() {
 		analysis.getIntervalsDConstraints();
 		analysis.getIntervalsDFO();
 	}
 
+	/**
+	 * Method in charge of delivering the sensitivity analysis
+	 * 
+	 * @return Sensitivity analysis to be obtained
+	 */
 	public SensivilityAnalysis getAnalysis() {
 		return analysis;
 	}
 
+	/**
+	 * Method in charge of modifying the sensitivity analysis
+	 * 
+	 * @param analysis Mdified sensitivity analysis
+	 */
 	public void setAnalysis(SensivilityAnalysis analysis) {
 		this.analysis = analysis;
 	}

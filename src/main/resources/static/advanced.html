@@ -242,6 +242,7 @@
 
                     .table {
                         color: black;
+                        text-align: center;
                     }
 
                     .cover {
@@ -558,6 +559,102 @@
                                 </div>
                             </form>
 
+                    <div class="text-black">
+                      <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                              <button onclick="addVar()" class="btn btn-outline-success btn-user btn-block" type='button'>
+                                  Add Variable
+  
+                              </button>
+                          </div>
+                          <div class="col-sm-6">
+                              <button onclick="removeVar()" class="btn btn-outline-danger btn-user btn-block" type='button'>
+                                  Remove Variable
+                              </button>
+                          </div>
+                      </div>
+                    
+
+                      
+
+
+                  </div>
+                    <br>
+
+                    
+                    <div class="solution">
+                        <div class="text-black">
+                            <div class="botonsitos">
+                                   
+                                    <button onclick=" finalSolution()" href="#mensajeS" id="but2" class="btn btn-outline-secondary btn-icon-split" type="button">
+                             
+                                        <span class="text" id = "finalS">Final Solution</span>
+                                      </button>
+                              
+                               
+                            </div>
+                    </div>
+                    <hr>
+                    <br>
+
+                    <div style="display: none" class="table-responsive" id = "tableSolution">
+
+                        <h2 class="text-center">Solution</h2>
+                        <div id="menIteration"> </div>
+                       
+                        <table class="table table-bordered" id="result" width="100%" cellspacing="0">
+       
+                              
+                            <thead class="bg-gradient-primary">
+                                
+                                <tr id="thead-ans">
+                                    <th>
+                                      <font color='#fff'>BV</font>
+                                    </th>
+                                  <th>
+                                        <font color="#fff">Z</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X1</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">X2</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">RHS</font>
+                                    </th>
+                                    <th>
+                                        <font color="#fff">Theta</font>
+                                    </th>
+                                </tr>
+                                
+                            </thead>
+                           
+                            <tbody id="table-body">
+                                <tr id ="tr0">
+                                    <th><font>Z</font></th>
+                                     <td id="val00"></td>
+                                     <td id="val01"></td>
+                                     <td id="val02"></td>
+                                     <td id="valR0"></td>
+                                     <td id="valT0"></td>
+                                </tr>
+            
+            
+                            </tbody>
+            
+                         
+            
+            
+                        </table>
+                        </div>
+                        <br>
+                        <div id="mensajeS">
+  
+                        </div>
+                        
+                    <hr>
+                        
                         </div>
                     </div>
                 </div>
@@ -886,8 +983,8 @@
             var otherVars = varCount + 1
             var string = constructRequestString();
             $.ajax({
-                url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-                //url: "http://localhost:8080/simplexMethod" + string
+                //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+                url: "http://localhost:8080/simplexMethod" + string
             }).then(function (data) {
                 $("#tableSolution").show();
                 $(".cover").toggle(1000);

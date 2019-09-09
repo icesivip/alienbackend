@@ -29,7 +29,6 @@
             -webkit-appearance: none;
             margin: 0;
         }
-
         input[type="number"] {
             -moz-appearance: textfield;
         }
@@ -435,7 +434,6 @@
     <script src="js/demo/chart-pie-demo.js"></script>
 
     <script>
-
         document.getElementById("user").addEventListener("submit", function (e) {
             e.preventDefault();
             solveModel();
@@ -565,9 +563,7 @@
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
-
         }
-
         function getScheduledReceptions() {
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount + 1];
             var cellsOfRow = "";
@@ -579,11 +575,7 @@
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
             console.log(dataOfTable);
-
         }
-
-
-
         function generateTables(){
            // var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
             var lotSizingRule = document.getElementById('lotSizingRule');
@@ -619,7 +611,6 @@
               
             }
         }
-
         function createBodyTable(lotSizingRule,tblBody){
     
             var texts = ["Available Inventory Programmed", "Net requirements", "Receptions of planned orders","Release of planned orders"];
@@ -635,7 +626,6 @@
                 tblBody.appendChild(Tr);
             }
             //tblBody.appendChild(bodyTr);
-
           
         }
         function createHeadTable(lotSizingRule,tblHead){
@@ -674,7 +664,6 @@
                     tblHead.appendChild(headTr);
                     tblHead.appendChild(headTr2);
         }
-
         function constructRequestString(compareRequest,index) {
             if(compareRequest==false){
                 lotSizingRule = $('#lotSizingRule').val();
@@ -718,7 +707,6 @@
             + "&securityStock=" + securityStock + "&costArticle=" + costArticle + "&periodicity=" + periodicity + "&TPeriodOFSupply=" + TPeriodOFSupply + "&maintenanceCost=" + maintenanceCost + "&orderingCost=" + orderingCost;
             
         }
-
         function constructRequestStringAll() {
             /*
             var lotSizingRule = document.getElementById('lotSizingRule');
@@ -727,7 +715,6 @@
                 if(i!=1&&lotSizingRule.childNodes.item(i).value!=null){
                     result[i] = construcRequestCommon()+"&lotSizingRule=" + lotSizingRule.childNodes.item(i).value;
                 }
-
             }
             return result;*/
             var tec = ["Lot for Lot", "Economic Order Quantity", "Periods Of Suply","Period Order Quantity","Least Unit Cost","Least Total Cost"]; 
@@ -740,7 +727,6 @@
             
         }
         function deleteAllTables(){
-
             tabla = document.getElementById("tableDataAll");
             while(tabla){
                 if(tabla){
@@ -750,10 +736,7 @@
                 tabla = document.getElementById("tableDataAll");
             }
              
-
         }
-
-
         function addDataAll(lotSizingMethod,data){    
                         for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
                                 t =document.getElementById("availableInventoryProgrammedId"+lotSizingMethod.replace(/ /g, ""));
@@ -781,8 +764,6 @@
                                 td.textContent=data.scheduledAvailableStock[i];
                                 td.style ="width: 8%; height: 100%";
                                 availableInventoryProgrammed.appendChild(td);
-
-
                                 Netrequirements=document.getElementById("Netrequirements"+lotSizingMethod.replace(/ /g, ""));      
                                 td1 = document.createElement("td");
                                 td1.id="NetrequirementsId"+lotSizingMethod.replace(/ /g, "");
@@ -790,7 +771,6 @@
                                 td1.textContent=data.netRequirements[i] ;
                                 td1.style ="width: 8%; height: 100%";
                                 Netrequirements.appendChild(td1);
-
                                 ReceptionsOfPlannedOrders=document.getElementById("Receptionsofplannedorders"+lotSizingMethod.replace(/ /g, ""));
                                 td2 = document.createElement("td");
                                 td2.id="ReceptionsOfPlannedOrdersId"+lotSizingMethod.replace(/ /g, "");
@@ -798,7 +778,6 @@
                                 td2.textContent=data.planOrders[i] ;
                                 td2.style ="width: 8%; height: 100%";
                                 ReceptionsOfPlannedOrders.appendChild(td2);
-
                                 Releaseofplannedorders=document.getElementById("Releaseofplannedorders"+lotSizingMethod.replace(/ /g, ""));                      
                                 td3 = document.createElement("td");
                                 td3.id="releasedPlanOrdersId"+lotSizingMethod.replace(/ /g, "");
@@ -812,7 +791,6 @@
                                
                         }    
         }   
-
                         function addData(data){    
                         for (var i = 0; +i < AvailableInventoryProgrammed.length; i++) {
                                 t =document.getElementById("availableInventoryProgrammedId");
@@ -844,8 +822,6 @@
                                 td.textContent=data.scheduledAvailableStock[i];
                                 td.style ="width: 8%; height: 100%";
                                 availableInventoryProgrammed.appendChild(td);
-
-
                                 Netrequirements=document.getElementById("Netrequirements");      
                                 td1 = document.createElement("td");
                                 td1.id="NetrequirementsId";
@@ -853,7 +829,6 @@
                                 td1.textContent=data.netRequirements[i] ;
                                 td1.style ="width: 8%; height: 100%";
                                 Netrequirements.appendChild(td1);
-
                                 ReceptionsOfPlannedOrders=document.getElementById("ReceptionsOfPlannedOrders");  
                                 td2 = document.createElement("td");
                                 td2.id="ReceptionsOfPlannedOrdersId";
@@ -861,7 +836,6 @@
                                 td2.textContent=data.planOrders[i] ;
                                 td2.style ="width: 8%; height: 100%";
                                 ReceptionsOfPlannedOrders.appendChild(td2);
-
                                 Releaseofplannedorders=document.getElementById("releasedPlanOrders");
                                 td3 = document.createElement("td");
                                 td3.id="releasedPlanOrdersId";
@@ -875,8 +849,6 @@
                                // $("#Releaseofplannedorders").append("<td  class='text-dark Releaseofplannedorders' style='width: 8%; height: 100%';>" + data.releasedPlanOrders[i] + "</td>");
          
                         }       
-
-
         }
         function solveModel(all) {
             $(".cover").toggle(400);    
@@ -909,7 +881,6 @@
                         Netrequirements = data.netRequirements;
                         ReceptionsOfPlannedOrders = data.planOrders;
                         ReleaseOfPlannedOrders = data.releasedPlanOrders;
-
                         if(!all){
                             addData(data);                            
                          }else{
@@ -921,11 +892,8 @@
                         $(".cover").toggle(400);
                         console.log(error);
                     })
-
                 }
             }
-
-
         }
         function solveModelC(index) {
             $(".cover").toggle(400);

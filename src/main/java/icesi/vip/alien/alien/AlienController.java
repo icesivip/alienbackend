@@ -264,7 +264,13 @@ public class AlienController {
 			@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
 			@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
 
+
 		try {
+			switch (lotSizingRule) {
+			case ("1"):
+				lotSizingRule = MasterPlanSchedule.LOTXLOT;
+				break;
+			}
 
 			MasterPlanSchedule MPS = new MasterPlanSchedule(lotSizingRule, Integer.parseInt(leadTime),
 					Integer.parseInt(initialInventory), Integer.parseInt(securityStock), levelCode, name,
@@ -284,7 +290,7 @@ public class AlienController {
 			MPS.createMPS();
 			return MPS;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception(e.getStackTrace().toString());
 		}
 
 	}
