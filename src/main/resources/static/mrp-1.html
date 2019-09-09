@@ -203,8 +203,6 @@
 										<th scope='col'>Maintenance cost</th>
 										<th scope='col'>Cost of ordering</th>
 										<th scope='col'>Lot sizing rule</th>
-										
-										
 									</tr>
 								</thead>
 								<tbody>
@@ -215,26 +213,29 @@
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='text' min='0'
 											style='width: 100%' id='iNomb'></td>
-										
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iInve'></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iSecu'></td>
-										<td style='width: 9%; height: 100%;'> id='iElem'></td>
-										<td style='width: 9%; height: 100%;' id='iCant'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' value='none' disabled
+											style='width: 100%' id='iElem'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' type='number' min='1' disabled value=1
+											style='width: 100%' id='iCant'></td></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iLead'></td>
 										<td style='width: 9%; height: 100%;'><input
-											class='form-control border-0' type='number' min='0'
+											class='form-control border-0'
 											style='width: 100%' id='iCostArticle'></td>
 									    <td style='width: 9%; height: 100%;'><input
-											class='form-control border-0' type='number' min='0'
+											class='form-control border-0'
 											style='width: 100%' id='iMaintenance'></td>
 										<td style='width: 9%; height: 100%;'><input
-											class='form-control border-0' type='number' min='0'
+											class='form-control border-0'
 											style='width: 100%' id='iCostOrdering'></td>
 										<td style='width: 100%; height: 100%;'>	
 											<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>
@@ -583,11 +584,18 @@
 		
 		function addConstraint() {
             console.log('Added contraint');
-           $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCostArticle'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iMaintenance'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCostOrdering'></td></td></tr>");
+		   $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostArticle'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iMaintenance'><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostOrdering'></td><td style='width: 100%; height: 100%;'>"
+			+ "<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>"
+			+ "<option name='Lot for Lot'>Lot for Lot</option>"
+			+ "<option name='Economic Order Quantity'>Economic Order Quantity</option>"
+			+ "<option name='Periods Of Suply'>Periods Of Suply</option>"
+			+ "<option name='Period Order Quantity'>Period Order Quantity</option>"
+			+ "<option name='Least Unit Cost'>Least Unit Cost</option>"
+			+ "<option name='Least Total Cost'>Least Total Cost</option></select></td></tr>");
 
 			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
 			
-			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
 			globaladd++;
         }
 		
@@ -623,23 +631,32 @@
 		
         function constructRequestString() {
 			
-			fatherNames = "";
+			fatherIds = "";
 			id = "";
 			name = "";
 			amount = "";
 			leadTime = "";
 			initialInv = "";
 			securityInv = "";
+			articleCost = "";
+			maintenanceCost = "";
+			orderingCost = "";
+			lotSizingRule = "";
+			periodicity = $('#periodicity').val();
 			date = "10";
 			
 			$(".inputss").each(function(index){
-				fatherNames += $(this).find("#iElem").val()+";";
 				id += $(this).find("#iCodi").val()+";";
 				name += $(this).find("#iNomb").val()+";";
-				amount += $(this).find("#iCant").val()+";";
-				leadTime += $(this).find("#iLead").val()+";";
 				initialInv += $(this).find("#iInve").val()+";";
 				securityInv += $(this).find("#iSecu").val()+";";
+				fatherIds += $(this).find("#iElem").val()+";";
+				amount += $(this).find("#iCant").val()+";";
+				leadTime += $(this).find("#iLead").val()+";";
+				articleCost += $(this).find("#iCostArticle").val()+";";
+				maintenanceCost += $(this).find("#iMaintenance").val()+";";
+				orderingCost += $(this).find("#iCostOrdering").val()+";";
+				lotSizingRule += $(this).find("#iLotSizingRule").val()+";";
 			});
 			
 			scheduledReceptions = "";
@@ -688,9 +705,17 @@
 			
 			rqbDate = rqbDate.replace(/undefined/g, "");
 					
-            console.log('?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate);
+            console.log('?fatherIds=' + fatherIds + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount='
+			+ amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date
+			+ '&articleCost=' + articleCost + '&maintenanceCost=' + maintenanceCost + '&maintenanceCost=' + orderingCost
+			+ '&lotSizingRule=' + lotSizingRule + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate
+			+ '&periodicity=' + periodicity);
 			
-            return '?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate;
+			return '?fatherIds=' + fatherIds + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount='
+			+ amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date
+			+ '&articleCost=' + articleCost + '&maintenanceCost=' + maintenanceCost + '&orderingCost=' + orderingCost
+			+ '&lotSizingRule=' + lotSizingRule + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate
+			+ '&periodicity=' + periodicity;
         }
         
 		function pintarArbol() {
@@ -768,8 +793,8 @@
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        //url: 'http://localhost:8080/pruebaMRP' + request
-                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                        //url: 'https://icesiviptest.herokuapp.com/pruebaMRP' + request
+                        url: "http://localhost:8080/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
