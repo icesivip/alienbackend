@@ -799,61 +799,59 @@
                      $('.cover').toggle(400);
                         console.log('Funciona');
                         console.log(data);
-						theMRP = data.mrp;
 						
-						productos = data.n_Ary_Tree.byLevels;
-						
-						var valor = "";															
-						$('.contenedor').each(function(index) {
-							
-							$(this).text(productos[index].name);
-							
-						});
+						products = data.roots;
 
-						console.log(productos);
-						
-						console.log(theMRP.length);
-						console.log(theMRP[0].length);
-						console.log(theMRP[0][0].length);
-						var auxiliar1 = 0;
-						for(var k = 0; k < theMRP.length; k++) {
-							var i = 0;
-							if(k == 0) {
-								i = 2;
-							}
-							for (; i < theMRP[k].length; i++){
-								
-								if(i == 0) {
-									$('.iGross').parent("tr").find("td").find("#g"+auxiliar1).each(function(indexa) {
-										$(this).text(theMRP[k][i][indexa]);
-									});
-								} 
-								
-								if(i == 2) {
-									$('.iAvaila').parent("tr").find("td").find("#b"+auxiliar1).each(function(indexb) {
-										$(this).text(theMRP[k][i][indexb]);
-									});
-								}
+						console.log(products);
 
-								if(i == 3) {
-									$('.iNetR').parent("tr").find("td").find("#n"+auxiliar1).each(function(indexc) {
-										$(this).text(theMRP[k][i][indexc]);
-									});
-								}
+						var tableIndex = 0;
+
+						for(var i = 0; i < products.length; i++){
+
+							console.log(products[i]);
+
+							$('.iGross').parent("tr").find("td").find("#g"+tableIndex).each(function(indexa) {
+								$(this).text(products[i].mps.bruteRequirements[indexa]);
+							});
+							$('.iAvaila').parent("tr").find("td").find("#b"+tableIndex).each(function(indexb) {
+								$(this).text(products[i].mps.scheduledAvailableStock[indexb]);
+							});
+							$('.iNetR').parent("tr").find("td").find("#n"+tableIndex).each(function(indexc) {
+								$(this).text(products[i].mps.netRequirements[indexc]);
+							});
+							$('.iReception').parent("tr").find("td").find("#r"+tableIndex).each(function(indexd) {
+								$(this).text(products[i].mps.planOrders[indexd]);
+							});
+							$('.iRelease').parent("tr").find("td").find("#p"+tableIndex).each(function(indexe) {
+								$(this).text(products[i].mps.releasedPlanOrders[indexe]);
+							});
+
+							var list = []
+
+							tableIndex++;
+
+							for(var k = 0; k < products[i].subProducts.length; k++){
 								
-								if(i == 4) {
-									$('.iReception').parent("tr").find("td").find("#r"+auxiliar1).each(function(indexd) {
-										$(this).text(theMRP[k][i][indexd]);
-									});
-								}
-								
-								if(i == 5) {
-									$('.iRelease').parent("tr").find("td").find("#p"+auxiliar1).each(function(indexe) {
-										$(this).text(theMRP[k][i][indexe]);
-									});
-								}
+								$('.iGross').parent("tr").find("td").find("#g"+tableIndex).each(function(indexa) {
+									$(this).text(products[i].subProducts[k].mps.bruteRequirements[indexa]);
+								});
+								$('.iAvaila').parent("tr").find("td").find("#b"+tableIndex).each(function(indexb) {
+									$(this).text(products[i].subProducts[k].mps.scheduledAvailableStock[indexb]);
+								});
+								$('.iNetR').parent("tr").find("td").find("#n"+tableIndex).each(function(indexc) {
+									$(this).text(products[i].subProducts[k].mps.netRequirements[indexc]);
+								});
+								$('.iReception').parent("tr").find("td").find("#r"+tableIndex).each(function(indexd) {
+									$(this).text(products[i].subProducts[k].mps.planOrders[indexd]);
+								});
+								$('.iRelease').parent("tr").find("td").find("#p"+tableIndex).each(function(indexe) {
+									$(this).text(products[i].subProducts[k].mps.releasedPlanOrders[indexe]);
+								});
+
+								tableIndex++;
+
 							}
-							auxiliar1++;
+
 						}
 					
                     }, function (error) {

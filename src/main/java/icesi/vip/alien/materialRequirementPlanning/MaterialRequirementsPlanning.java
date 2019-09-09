@@ -1,6 +1,7 @@
 package icesi.vip.alien.materialRequirementPlanning;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class MaterialRequirementsPlanning {
@@ -41,8 +42,8 @@ public class MaterialRequirementsPlanning {
 		
 	}
 	
-	public HashMap<String, Product> getRoots(){
-		return roots;
+	public Collection<Product> getRoots(){
+		return roots.values();
 	}
 	
 	
