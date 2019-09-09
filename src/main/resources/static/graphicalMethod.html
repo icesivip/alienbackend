@@ -23,6 +23,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -36,12 +38,10 @@
             text-align: center;
             min-width: 150px;
         }
-
         .expand {
             width: 100%;
             height: 100%;
         }
-
         .white-text {
             color: white;
         }
@@ -49,14 +49,12 @@
         input[type=number] {
             width: 100%;
         }
-
 /*         
         table,
         th,
         td {
             border: 1px solid black;
         } */
-
         /* .image {
             display: inline;
             margin-left: auto;
@@ -64,7 +62,6 @@
             margin-top: auto;
             vertical-align: center;
         } */
-
         .cover {
             opacity: 0.8;
             background-color: #ccc;
@@ -91,79 +88,78 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+              <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+              </div>
+              <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
             </a>
-
+      
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard >
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
-                            <i class="fas fa-fw fa-tachometer-alt"></i>
-                            <span>Dashboard</span></a>
-                    </li-->
-
+      
+            <!-- inútil por ahora -->
+            <!-- Nav Item - Dashboard -->
+            <!--li class="nav-item active">
+              <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li-->
+      
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+      
             <!-- Heading -->
             <div class="sidebar-heading">
-                Modules
+              Modules
             </div>
-
             <!-- PL -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span> Linear Programming </span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Programs</h6>
-                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER</a>
-                    </div>
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span> Linear Programming </span>
+              </a>
+              <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Programs</h6>
+                  <a class="collapse-item" href="interiorPoint.html">Interior Point</a>
+                  <a class="collapse-item" href="graphicalMethod.html">Graphical Method</a>
+                  <a class="collapse-item" href="branchAndBound.html">Branch & Bound</a>
+                  <a class="collapse-item" href="homeSimplex.html">Simplex Algorithm </a>
+                  <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS Server</a>
                 </div>
+              </div>
             </li>
             <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
             <!-- MPS -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
-                    aria-expanded="true" aria-controls="collapseMPS">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span> Master Plan Schedule </span>
-                </a>
-                <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Programs</h6>
-                        <!-- cambiar href -->
-                        <a class="collapse-item" href="mps.html">MPS</a>
-                        <a class="collapse-item" href="mrp-1.html">MRP</a>
-                    </div>
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS" aria-expanded="true"
+                aria-controls="collapseMPS">
+                <i class="fas fa-fw fa-folder"></i>
+                <span> Master Plan Schedule </span>
+              </a>
+              <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Programs</h6>
+                  <!-- cambiar href -->
+                  <a class="collapse-item" href="mps.html">MPS</a>
+                  <a class="collapse-item" href="mrp-1.html">MRP</a>
                 </div>
+              </div>
             </li>
-
+      
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+      
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
+      
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+              <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-        </ul>
+      
+          </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -400,6 +396,7 @@
                     <br>
                     <hr>
                     <h2 class="text-center"> Basic Feasible Solutions</h2>
+                    <div id="solution"></div>
                     <div id="resultTable-cont" class="table-responsive">
 
                             <table class="table table-bordered" width="100%" cellspacing="0" id="result">
@@ -473,498 +470,549 @@
     </div>
 
     <script>
-
-
-        var varCount = 2;
-        var consCount = 1;
-
-        $(document).ready(function () {
-            $("#result").DataTable();
-          
-            $("#chart").hide();
+        // JavaScript source code
+var varCount = 2;
+var consCount = 1;
+$(document).ready(function () {
+    $("#result").DataTable();
+    $("#chart").hide();
+});
+document.getElementById("upload-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var file = document.getElementById("fileUpload").files[0];
+    urlFile = window.URL.createObjectURL(file);
+    $.ajax({
+        url: urlFile
+    }).then(function (data) {
+        console.log(data);
+        var split = data.data.split('&');
+        var obj = split[2].split(',');
+        var c = 0;
+        var vars = split[1].split(',');
+        $('#of-body td').each(function (index) {
+            if (index == 0) {
+                if (split[0].substring(6, 14) == 'MAXIMIZE') {
+                    $(this).find('select').val("MAXIMIZE");
+                }
+                else {
+                    $(this).find('select').val("MINIMIZE");
+                }
+            } else {
+                if (c == 0) {
+                    $(this).find('input').val(obj[0].substring(18, obj[0].length));
+                }
+                else {
+                    $(this).find('input').val(obj[c]);
+                }
+                c++;
+            }
         });
-      document.getElementById("upload-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            var file = document.getElementById("fileUpload").files[0];
-            urlFile = window.URL.createObjectURL(file);
-            $.ajax({
-                url: urlFile
-            }).then(function (data) {
-
-                console.log(data);
-                var split = data.data.split('&');
-                var obj = split[2].split(',');
-                var c = 0;
-                var vars = split[1].split(',');
-
-                $('#of-body td').each(function (index) {
-                    if (index == 0) {
-                        if (split[0].substring(6, 14) == 'MAXIMIZE') {
-                            $(this).find('select').val("MAXIMIZE");
-                        }
-                        else {
-                            $(this).find('select').val("MINIMIZE");
-                        }
-                    } else {
-                        if (c == 0) {
-                            $(this).find('input').val(obj[0].substring(18, obj[0].length));
-                        }
-                        else {
-                            $(this).find('input').val(obj[c]);
-                        }
-                        c++;
-                    }
-                });
-
-
-                var cons = split[3].split(';');
-
-                if (cons.length - 1 > consCount - 1) {
-                    for (i = 0; i < cons.length - 1; i++) {
-                        if (consCount < cons.length - 1) {
-                            addCons();
-                            if (consCount == cons.length - 1) break;
-                        }
-                    }
+        var cons = split[3].split(';');
+        if (cons.length - 1 > consCount - 1) {
+            for (i = 0; i < cons.length - 1; i++) {
+                if (consCount < cons.length - 1) {
+                    addCons();
+                    if (consCount == cons.length - 1) break;
                 }
-                else if (cons.length - 1 < consCount) {
-                    while(consCount > cons.length - 1){
-                        removeCons();
-                    }
+            }
+        }
+        else if (cons.length - 1 < consCount) {
+            while (consCount > cons.length - 1) {
+                removeCons();
+            }
+        }
+        var ins = split[3].split(',');
+        var countRequest = 0;
+        var aux = 0;
+        // {"data":"?type=MAXIMIZE&vars=X1:C,X2:C&objectiveFunction=2,2&constraints=2,2,<=,2;3,3,<=,3;2,2,>=,22;2,,<=,2;"}
+        //                  0             1                   2                                   3
+        $('#table-body tr').each(function (i) {
+            $(this).find('td').each(function (j) {
+                if (i == 0 && j == 0) {
+                    $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
+                    countRequest++;
                 }
-
-                var ins = split[3].split(',');
-
-                var countRequest = 0;
-                var aux = 0;
-
-                // {"data":"?type=MAXIMIZE&vars=X1:C,X2:C&objectiveFunction=2,2&constraints=2,2,<=,2;3,3,<=,3;2,2,>=,22;2,,<=,2;"}
-                //                  0             1                   2                                   3
-
-                $('#table-body tr').each(function (i) {
-                    $(this).find('td').each(function (j) {
-                        if (i == 0 && j == 0) {
-                            $(this).find('input').val(ins[0].substring(12, (ins[0].length)));
-                            countRequest++;
-                        }
-                        else {
-                            if (j < varCount || j == varCount + 1) {
-                                if (j == varCount + 1) {
-                                    var nothing = ins[countRequest].split(';');
-                                    $(this).find('input').val(nothing[0]);
-                                } else {
-                                    if (j == 0) {
-                                        var nothing = ins[countRequest].split(';');
-                                        $(this).find('input').val(nothing[1]);
-                                        countRequest++;
-                                    }
-                                    else {
-                                        $(this).find('input').val(ins[countRequest]);
-                                        countRequest++;
-                                    }
-                                }
-                            } else {
-                        
-                                  if (ins[countRequest] == '<=') $(this).find('select').val("<=");
-                                  else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
-                                  else $(this).find('select').val("=");
-                                  countRequest++;
+                else {
+                    if (j < varCount || j == varCount + 1) {
+                        if (j == varCount + 1) {
+                            var nothing = ins[countRequest].split(';');
+                            $(this).find('input').val(nothing[0]);
+                        } else {
+                            if (j == 0) {
+                                var nothing = ins[countRequest].split(';');
+                                $(this).find('input').val(nothing[1]);
+                                countRequest++;
+                            }
+                            else {
+                                $(this).find('input').val(ins[countRequest]);
+                                countRequest++;
                             }
                         }
-                    });
-                });
-                
-
-            }, function (error) {
-
-                console.log(error);
+                    } else {
+                        if (ins[countRequest] == '<=') $(this).find('select').val("<=");
+                        else if (ins[countRequest] == '>=') $(this).find('select').val(">=");
+                        else $(this).find('select').val("=");
+                        countRequest++;
+                    }
+                }
             });
-            $('#uploadModal').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-            // alert("Esta funcion aun no esta implementada.");
         });
-        document.getElementById("submit-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            solveModel();
+    }, function (error) {
+        console.log(error);
+    });
+    $('#uploadModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    // alert("Esta funcion aun no esta implementada.");
+});
+document.getElementById("submit-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    solveModel();
+});
+function addCons() {
+    $("#table-body").append(generateNewConsRow(varCount));
+    consCount++;
+}
+function generateNewConsRow(count) {
+    var st = "<tr>";
+    for (let index = 0; index < count; index++) {
+        st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
+    }
+    st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
+    return st;
+}
+function removeCons() {
+    if (consCount > 1) {
+        $("#table-body tr").last().remove();
+        consCount--;
+    }
+}
+function insertAtIndex(i) {
+    if (i === 0) {
+        $("#controller").prepend("<div>okay things</div>");
+        return;
+    }
+    consCount--;
+    $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
+}
+function constructQueryString() {
+    type = "";
+    obfun = "";
+    vars = "";
+    constraints = "";
+    $('#of-body td').each(function (index) {
+        if (index == 0) {
+            type = ($(this).find('select').val());
+        } else {
+            obfun += $(this).find('input').val() + ",";
+        }
+    });
+    for (i = 0; i < varCount; i++) {
+        vars += "X" + (i + 1) + ":C" + ",";
+    }
+    $('#table-body tr').each(function (i) {
+        $(this).find('td').each(function (j) {
+            if (j < varCount || j == varCount + 1) {
+                if (j == varCount + 1) {
+                    constraints += $(this).find('input').val() + ";";
+                } else {
+                    constraints += $(this).find('input').val() + ",";
+                }
+            } else {
+                constraints += $(this).find('select').val() + ",";
+            }
+            // Get the output text
+            // If the checkbox is checked, display the output text
         });
-
-        
-
-        function addCons() {
-            $("#table-body").append(generateNewConsRow(varCount));
-            consCount++;
-        }
-        function generateNewConsRow(count) {
-            var st = "<tr>";
-            for (let index = 0; index < count; index++) {
-                st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
-
-            }
-            st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
-            return st;
-        }
-
-        function removeCons() {
-            if (consCount > 1) {
-                $("#table-body tr").last().remove();
-                consCount--;
-            }
-        }
-        function insertAtIndex(i) {
-            if (i === 0) {
-                $("#controller").prepend("<div>okay things</div>");
-                return;
-            }
-            consCount--;
-            $("#controller > div:nth-child(" + (i) + ")").after("<div>great things</div>");
-        }
-
-        function constructQueryString() {
+    });
+    var checkBox = document.getElementById("cbox1");
+    if (checkBox.checked == true) {
+        constraints += "1,0,>=,0;";
+        constraints += "0,1,>=,0;";
+    }
+    vars = vars.substring(0, vars.length - 1);
+    obfun = obfun.substring(0, obfun.length - 1);
+    //console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
+    return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+}
+function constructQueryStringSolver() {
             type = "";
             obfun = "";
-            vars = "";
+
             constraints = "";
+            count = 1;
             $('#of-body td').each(function (index) {
                 if (index == 0) {
                     type = ($(this).find('select').val());
 
                 } else {
-                    obfun += $(this).find('input').val() + ",";
+                    obfun += (- ($(this).find('input').val())) + " X" + count + " ";
+                    count++;
                 }
             });
-            for (i = 0; i < varCount; i++) {
-                vars += "X" + (i + 1) + ":C" + ",";
-            }
+
+
 
             $('#table-body tr').each(function (i) {
+                constraints += "n0 Z ";
                 $(this).find('td').each(function (j) {
-
                     if (j < varCount || j == varCount + 1) {
-
                         if (j == varCount + 1) {
-                            constraints += $(this).find('input').val() + ";";
+                            constraints += " " + $(this).find('input').val();
                         } else {
-
-                            constraints += $(this).find('input').val() + ",";
+                            constraints += $(this).find('input').val() + " X" + (j + 1) + " ";
                         }
                     } else {
-                        constraints += $(this).find('select').val() + ",";
+                        constraints += $(this).find('select').val();
                     }
 
-                   
+
                     // Get the output text
                     // If the checkbox is checked, display the output text
 
-        
+
                 });
 
             });
-             var checkBox = document.getElementById("cbox1");
-            if (checkBox.checked == true){
-                        constraints +=  "1,0,>=,0;";
-                        constraints +=  "0,1,>=,0;";
-                        
-            }   
+            var checkBox = document.getElementById("cbox1");
+            if (checkBox.checked == true) {
+                constraints += "n0 Z 1 X1 0 X2 <= 0";
+                constraints += "n0 Z 0 X1 1 X2 <= 0";
+
+            }
             vars = vars.substring(0, vars.length - 1);
             obfun = obfun.substring(0, obfun.length - 1);
-            //console.log("?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints);
-            return "?type=" + type + "&vars=" + vars + "&objectiveFunction=" + obfun + "&constraints=" + constraints;
+            return "?type=" + type + "&equations=1 Z " + obfun + " = 0" + constraints;
 
+}
+var myChart = null;
+function solveModel() {
+    $(".cover").toggle(400);
+    var string = constructQueryString();
+
+    var stringDos = constructQueryStringSolver();
+    var messageSol ="";
+    $.ajax({ 
+      url: "https://icesiviptest.herokuapp.com/simplexMethod" + stringDos
+                //url: "http://localhost:8080/simplexMethod" + string
+    }).then(function (data) {
+      console.log(data)
+      messageSol=  data.messageSol;
+    });
+    $.ajax({
+        url: "https://viptest1.herokuapp.com/graphicalMethod" + string
+    }).then(function (data) {
+        $(".cover").toggle(400);
+        console.log(data);
+        var constraints = data.constraints;
+        var optimal = data.optimalSolution;
+        var solList = data.solutionList;
+        var solX = [];
+        var solY = [];
+        $("#result").DataTable().clear();
+        solList.forEach(element => {
+            $("#result").DataTable().row.add(
+                [element.variables.X1, element.variables.X2, element.z]
+            ).draw();
+        });
+        type = $("#type").val();
+        if (type == "MAXIMIZE") {
+            $("#result").DataTable().order([2, 'desc']).draw();
+        } else {
+            $("#result").DataTable().order([2, 'asc']).draw();
         }
-        var myChart = null;
-        function solveModel() {
-            $(".cover").toggle(400);
-            var string = constructQueryString();
-            $.ajax({
-                url: "https://viptest1.herokuapp.com/graphicalMethod" + string
-            }).then(function (data) {
-                $(".cover").toggle(400);
-                console.log(data);
-                var constraints = data.constraints;
-                var optimal = data.optimalSolution;
-                var solList = data.solutionList;
-                var solX = [];
-                var solY = [];
-
-                $("#result").DataTable().clear();
-                solList.forEach(element => {
-                    $("#result").DataTable().row.add(
-                        [element.variables.X1, element.variables.X2, element.z]
-                    ).draw();
-
-
-                });
-                type = $("#type").val();
-                if (type == "MAXIMIZE") {
-                    $("#result").DataTable().order([2, 'desc']).draw();
-                } else {
-                    $("#result").DataTable().order([2, 'asc']).draw();
-                }
-
-                constraints.forEach(element => {
-                    // Esto fue lo que cambie para graficar las restricciones de no negatividad
-                    if (element.xValue == 0){
-                        cx = 0
-                        cy = element.rightValue / element.yValue;
-                    } else if (element.yValue == 0){
-                        cy = 0
-                        cx = element.rightValue / element.xValue;
-                    }else{   
-                        cx = element.rightValue / element.xValue;
-                        cy = element.rightValue / element.yValue;
-                    }
-
-
-                    if (cx != Infinity && cx != -Infinity) {
-                        solX.push(cx);
-                    }
-                    if (cy != Infinity && cy != -Infinity) {
-                        solY.push(cy);
-                    }
-                });
-                solList.forEach(element => {
-                    solX.push(element.variables.X1);
-                    solY.push(element.variables.X2);
-                });
-
-
-                minX = Math.min.apply(Math, solX);
-                maxX = Math.max.apply(Math, solX);
-
-
-                if(minX>0){
-                    minX = 0;                  
-                }
-                minX = minX - 1;
-                maxX = maxX + 1;
-
-                constraints.forEach(element => {
-                    if (element.xValue != 0 && element.yValue != 0) {
-                        solY.push((element.rightValue - (element.xValue * minX+1)) / element.yValue);
-                        solY.push((element.rightValue - (element.xValue * maxX-1)) / element.yValue);
-                    }
-                });
-                minY = Math.min.apply(Math, solY);
-                maxY = Math.max.apply(Math, solY);
-
-                if(minY>0){
-                    minY = 0;
-                }
-                minY= minY-1;
-                maxY = maxY +1;
-                
-                if (minX == 0 && maxX == 0) {
-                    maxX = 1;
-                }
-                if (minY == 0 && maxY == 0) {
-                    maxY = 1;
-                }
-                console.log(minX, maxX, minY, maxY);
-                constCount = constraints.length;
-                dataframe = [];
-                dataAux = [];
-                solList.forEach(element => {
-                    dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
-                });
-                console.log(dataAux);
-                dataframe.push({
-                   
-                    label: 'y ',
-                  
-                    data: dataAux,
-
-                    backgroundColor: [
-                        'rgba(255, 255, 0, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(100, 100, 0, 1)'
-                    ], 
-                    borderWidth: 1,
-                    fill: false,
-                    pointRadius: 5,
-                    showLine: false,
-                    steppedLine: false,
-                    lineTension: 0,
- 
-                
-
-
-
-                });
-                //console.log(dataframe);
-                count = 1;
-                constraints.forEach(element => {
-                    dataAux = [];
-                    area = "start";
-                    if (element.xValue == 0 || element.yValue == 0) {
-                        if (element.xValue == 0) {
-                            dataAux.push({ x: minX, y: (element.rightValue) / element.yValue });
-                            dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
-                            if (element.type == "<=") {
-                                if (element.yValue < 0) {
-                                    area = "end";
-                                } else {
-                                    area = "start";
-                                }
-                            } else if (element.type == ">=") {
-                                if (element.yValue < 0) {
-                                    area = "start";
-                                } else {
-                                    area = "end";
-                                }
-                            } else {
-                                area = false;
-                            }
+        $("#solution").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+        constraints.forEach(element => {
+            // Esto fue lo que cambie para graficar las restricciones de no negatividad
+            if (element.xValue == 0) {
+                cx = 0
+                cy = element.rightValue / element.yValue;
+            } else if (element.yValue == 0) {
+                cy = 0
+                cx = element.rightValue / element.xValue;
+            } else {
+                cx = element.rightValue / element.xValue;
+                cy = element.rightValue / element.yValue;
+            }
+            if (cx != Infinity && cx != -Infinity) {
+                solX.push(cx);
+            }
+            if (cy != Infinity && cy != -Infinity) {
+                solY.push(cy);
+            }
+        });
+        solList.forEach(element => {
+            solX.push(element.variables.X1);
+            solY.push(element.variables.X2);
+        });
+        minX = Math.min.apply(Math, solX);
+        maxX = Math.max.apply(Math, solX);
+        if (minX > 0) {
+            minX = 0;
+        }
+        minX = minX - 1;
+        maxX = maxX + 1;
+        constraints.forEach(element => {
+            if (element.xValue != 0 && element.yValue != 0) {
+                solY.push((element.rightValue - (element.xValue * minX + 1)) / element.yValue);
+                solY.push((element.rightValue - (element.xValue * maxX - 1)) / element.yValue);
+            }
+        });
+        minY = Math.min.apply(Math, solY);
+        maxY = Math.max.apply(Math, solY);
+        if (minY > 0) {
+            minY = 0;
+        }
+        minY = minY - 1;
+        maxY = maxY + 1;
+        if (minX == 0 && maxX == 0) {
+            maxX = 1;
+        }
+        if (minY == 0 && maxY == 0) {
+            maxY = 1;
+        }
+        console.log(minX, maxX, minY, maxY);
+        constCount = constraints.length;
+        dataframe = [];
+        dataAux = [];
+        solList.forEach(element => {
+            dataAux.push({ x: element.variables.X1, y: element.variables.X2 });
+        });
+        console.log(dataAux);
+        dataframe.push({
+            label: 'y ',
+            data: dataAux,
+            backgroundColor: [
+                'rgba(255, 255, 0, 1)'
+            ],
+            borderColor: [
+                'rgba(100, 100, 0, 1)'
+            ],
+            borderWidth: 1,
+            fill: false,
+            pointRadius: 5,
+            showLine: false,
+            steppedLine: false,
+            lineTension: 0,
+        });
+        //console.log(dataframe);
+        count = 1;
+        constraints.forEach(element => {
+            dataAux = [];
+            area = "start";
+            if (element.xValue == 0 || element.yValue == 0) {
+                if (element.xValue == 0) {
+                    dataAux.push({ x: minX, y: (element.rightValue) / element.yValue });
+                    dataAux.push({ x: maxX, y: (element.rightValue) / element.yValue });
+                    if (element.type == "<=") {
+                        if (element.yValue < 0) {
+                            area = "end";
                         } else {
-                            dataAux.push({ x: (element.rightValue) / element.xValue, y: minY });
-                            dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
-                            if (element.type == "<=") {
-                                if (element.yValue < 0) {
-                                    area = "start";
-                                    dataAux.push({ x: maxX, y: maxY });
-                                } else {
-                                    area = "start";
-                                    dataAux.push({ x: minX, y: maxY });
-                                }
-                            } else if (element.type == ">=") {
-                                if (element.yValue < 0) {
-                                    area = "start";
-                                    dataAux.push({ x: minX, y: maxY });
-                                } else {
-                                    area = "start";
-                                    dataAux.push({ x: maxX, y: maxY });
-                                }
-                            } else {
-                                area = false;
-                            }
+                            area = "start";
+                        }
+                    } else if (element.type == ">=") {
+                        if (element.yValue < 0) {
+                            area = "start";
+                        } else {
+                            area = "end";
                         }
                     } else {
-                        if (element.type == "<=") {
-                            if (element.yValue < 0) {
-                                area = "end";
-                            } else {
-                                area = "start";
-                            }
-                        } else if (element.type == ">=") {
-                            if (element.yValue < 0) {
-                                area = "start";
-                            } else {
-                                area = "end";
-                            }
+                        area = false;
+                    }
+                } else {
+                    dataAux.push({ x: (element.rightValue) / element.xValue, y: minY });
+                    dataAux.push({ x: (element.rightValue) / element.xValue, y: maxY });
+                    if (element.type == "<=") {
+                        if (element.yValue < 0) {
+                            area = "start";
+                            dataAux.push({ x: maxX, y: maxY });
                         } else {
-                            area = false;
+                            area = "start";
+                            dataAux.push({ x: minX, y: maxY });
                         }
-                        dataAux.push({ x: minX, y: (element.rightValue - (element.xValue * minX)) / element.yValue });
-                        dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
+                    } else if (element.type == ">=") {
+                        if (element.yValue < 0) {
+                            area = "start";
+                            dataAux.push({ x: minX, y: maxY });
+                        } else {
+                            area = "start";
+                            dataAux.push({ x: maxX, y: maxY });
+                        }
+                    } else {
+                        area = false;
                     }
-                    //console.log(dataframe);
-                    dataframe.push({
-                        label: 'C' + count,
-                        //showLine = 'true',
-                        data: dataAux,
-                        pointRadius: 0,
-                        borderDash: [10, 5],
-                         backgroundColor: [
-                            'rgba(0, 255, 0, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(0,100, 0, 1)'
-                        ], 
-                        borderWidth: 1,
-                        fill: area,
-                        steppedLine: false,
-                        lineTension: 0,
-
-                        //fillBetweenSet: 1,
-                        //fillBetweenColor: "rgba(255,0,0, 0.2)"
-                    });
-
-                    count++;
-                });
-
-                var ctx = document.getElementById("chart-area");
-                if (myChart != null) { myChart.destroy() }
-                myChart = new Chart(ctx, {
-                    //type: 'scatter',
-                    
-                    type: 'line',
-                    data: {
-
-                        datasets: dataframe
-                        
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: false,
-                                    //min: minY,
-                                    //max: maxY
-                                },
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'X2',
-
-                                },
-                                gridLines: {
-                                    // You can change the color, the dash effect, the main axe color, etc.
-                                    borderDash: [1, 2],
-                                    zeroLineColor: 'rgba(0,0,0,1)'
-                                }
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: false,
-                                    min: minX,
-                                    max: maxX
-                                },
-                                type: "linear",
-                                position: "bottom",
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'X1'
-                                },
-                                gridLines: {
-                                    // You can change the color, the dash effect, the main axe color, etc.
-                                    borderDash: [1, 2],
-                                    zeroLineColor: 'rgba(0,0,0,1)'
-
-                                }
-                            }]
-                        },
-
-                    }
-                });
-            }, function (error) {
-                alert("Failed to process request, model may be unsolvable.")
-                $(".cover").toggle(400);
-                console.log(error);
-            });
-        }
-        function exportToJson(objectData) {
-            let filename = "saved_problem.json";
-            let contentType = "application/json;charset=utf-8;";
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
-                navigator.msSaveOrOpenBlob(blob, filename);
+                }
             } else {
-                var a = document.createElement('a');
-                a.download = filename;
-                a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
-                a.target = '_blank';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                if (element.type == "<=") {
+                    if (element.yValue < 0) {
+                        area = "end";
+                    } else {
+                        area = "start";
+                    }
+                } else if (element.type == ">=") {
+                    if (element.yValue < 0) {
+                        area = "start";
+                    } else {
+                        area = "end";
+                    }
+                } else {
+                    area = false;
+                }
+                dataAux.push({ x: minX, y: (element.rightValue - (element.xValue * minX)) / element.yValue });
+                dataAux.push({ x: maxX, y: (element.rightValue - (element.xValue * maxX)) / element.yValue });
             }
-        }
-
-
-        function saveProblem() {
-            object = { data: constructQueryString() };
-            exportToJson(object);
-        }
+            //console.log(dataframe);
+            dataframe.push({
+                label: 'C' + count,
+                //showLine = 'true',
+                data: dataAux,
+                pointRadius: 0,
+                borderDash: [10, 5],
+                backgroundColor: [
+                    'rgba(0, 255, 0, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(0,100, 0, 1)'
+                ],
+                borderWidth: 1,
+                fill: area,
+                steppedLine: false,
+                lineTension: 0,
+                //fillBetweenSet: 1,
+                //fillBetweenColor: "rgba(255,0,0, 0.2)"
+            });
+            count++;
+        });
+        var ctx = document.getElementById("chart-area");
+        if (myChart != null) { myChart.destroy() }
+        myChart = new Chart(ctx, {
+            //type: 'scatter',
+            type: 'line',
+            data: {
+                datasets: dataframe
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                            //min: minY,
+                            //max: maxY
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'X2',
+                        },
+                        gridLines: {
+                            // You can change the color, the dash effect, the main axe color, etc.
+                            borderDash: [1, 2],
+                            zeroLineColor: 'rgba(0,0,0,1)'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                            min: minX,
+                            max: maxX
+                        },
+                        type: "linear",
+                        position: "bottom",
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'X1'
+                        },
+                        gridLines: {
+                            // You can change the color, the dash effect, the main axe color, etc.
+                            borderDash: [1, 2],
+                            zeroLineColor: 'rgba(0,0,0,1)'
+                        }
+                    }]
+                },
+                plugins: {
+                    zoom: {
+                        // Container for pan options
+                        pan: {
+                            // Boolean to enable panning
+                            enabled: true,
+                            // Panning directions. Remove the appropriate direction to disable
+                            // Eg. 'y' would only allow panning in the y direction
+                            mode: 'xy',
+                            rangeMin: {
+                                // Format of min pan range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            rangeMax: {
+                                // Format of max pan range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            // Function called once panning is completed
+                            // Useful for dynamic data loading
+                            onPan: function ({ chart }) { console.log(`I was panned!!!`); }
+                        },
+                        // Container for zoom options
+                        zoom: {
+                            // Boolean to enable zooming
+                            enabled: true,
+                            // Enable drag-to-zoom behavior
+                            drag: false,
+                            // Drag-to-zoom rectangle style can be customized
+                            // drag: {
+                            // 	 borderColor: 'rgba(225,225,225,0.3)'
+                            // 	 borderWidth: 5,
+                            // 	 backgroundColor: 'rgb(225,225,225)'
+                            // },
+                            // Zooming directions. Remove the appropriate direction to disable
+                            // Eg. 'y' would only allow zooming in the y direction
+                            mode: 'xy',
+                            rangeMin: {
+                                // Format of min zoom range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            rangeMax: {
+                                // Format of max zoom range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            // Speed of zoom via mouse wheel
+                            // (percentage of zoom on a wheel event)
+                            speed: 0.1,
+                            // Function called once zooming is completed
+                            // Useful for dynamic data loading
+                            onZoom: function ({ chart }) { console.log(`I was zoomed!!!`); }
+                        }
+                    }
+                }
+            }
+        });
+    }, function (error) {
+        alert("Failed to process request, model may be unsolvable.")
+        $(".cover").toggle(400);
+        console.log(error);
+    });
+}
+function exportToJson(objectData) {
+    let filename = "saved_problem.json";
+    let contentType = "application/json;charset=utf-8;";
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        var blob = new Blob([decodeURIComponent(encodeURI(JSON.stringify(objectData)))], { type: contentType });
+        navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = 'data:' + contentType + ',' + encodeURIComponent(JSON.stringify(objectData));
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+}
+function saveProblem() {
+    object = { data: constructQueryString() };
+    exportToJson(object);
+}
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -987,3 +1035,15 @@
 </body>
 
 </html>
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About

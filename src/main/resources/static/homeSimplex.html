@@ -1,198 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>LINEAR - OPTIMIZATION</title>
+    <title>VIP-ALIEN</title>
 
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-</head>
 
-<body id="page-top">
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+    <style>
+        .row_body {
+            display: table;
+        }
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        .column_body {
+            display: table-cell;
+        }
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">VIP ALIEN</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Modules
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-            aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Linear Programming </span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-             <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Programs</h6>
-                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER</a>
-                    </div>
-        </div>
-    </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS"
-            aria-expanded="true" aria-controls="collapseMPS">
-            <i class="fas fa-fw fa-folder"></i>
-            <span> Master Plan Schedule </span>
-        </a>
-        <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Programs</h6>
-                <!-- cambiar href -->
-                <a class="collapse-item" href="mps.html">MPS</a>
-                <a class="collapse-item" href="mrp-1.html">MRP</a>
-            </div>
-        </div>
-    </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              
-              </a>
-              <!-- Dropdown - Alerts -->
-              
-
-            <!-- Nav Item - Messages -->
-            
-
-            
-
-            <!-- Nav Item - User Information -->
-            
-
-          </ul>
-
-        </nav>
-        <!-- End of Topbar -->
-<style>
- 
-  .solution{
-    text-align: center;
-  }
- .botonsitos{
-  
-align-content: center;
- }
-.btn-icon-split{
-  width:100%;
-}
-  
-    
-  
- 
-</style>
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-  
-           
-            <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <style>
-              div {
+        .cuadrito {
                 margin-bottom: 15px;
                 padding: 4px 12px;
               }
@@ -212,110 +50,225 @@ align-content: center;
                 background-color: #ffffcc;
                 border-left: 6px solid #ffeb3b;
               }
-              </style>
-              </head>
-              <body>
-              
-            <div class="text-center"> <h1>Simplex Method</h1></div>
-               
+    </style>
+</head>
 
-              
-              
-              <div class="success">
-                <p><strong>What is it?</strong> <br>It is an analytic method for solving problems of linear programming using algebraic operations. This method provides a strategy for evaluating the feasible results finding the optimal value of the objective function.</p>
-              </div>
-              
-              <div class="info">
-                <p><strong>When to use it?</strong> <br>This method can be applied for problems of linear programming that use two or more variables.</p>
-              </div>
-              
-              <div class="warning">
-                <p><strong>Instructions</strong> <br> For using the program you will need an objective function and the respective constraints. As a result, the program is going 
-              to show the type and value of the optimal solution (if there is one)and the values of the basic and non basic variables.</p>
-              </div>
-              
-              </body>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- inútil por ahora -->
+            <!-- Nav Item - Dashboard -->
+            <!--li class="nav-item active">
+              <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li-->
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Modules
+            </div>
+            <!-- PL -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                   aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Linear Programming </span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <a class="collapse-item" href="interiorPoint.html">Interior Point</a>
+                        <a class="collapse-item" href="graphicalMethod.html">Graphical Method</a>
+                        <a class="collapse-item" href="branchAndBound.html">Branch & Bound</a>
+                        <a class="collapse-item" href="homeSimplex.html">Simplex Algorithm </a>
+                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS Server</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
+            <!-- MPS -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS" aria-expanded="true"
+                   aria-controls="collapseMPS">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span> Master Plan Schedule </span>
+                </a>
+                <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Programs</h6>
+                        <!-- cambiar href -->
+                        <a class="collapse-item" href="mps.html">MPS</a>
+                        <a class="collapse-item" href="mrp-1.html">MRP</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container">
+
+                    <!-- Page Heading -->
+                    <div class="text-center cuadrito"> <h1>Simplex Method</h1></div>
+
+
+
+
+                    <div class="success cuadrito">
+                        <p><strong>What is it?</strong> <br>It is an analytic method for solving problems of linear programming using algebraic operations. This method provides a strategy for evaluating the feasible results finding the optimal value of the objective function.</p>
+                    </div>
+
+                    <div class="info cuadrito">
+                        <p><strong>When to use it?</strong> <br>This method can be applied for problems of linear programming that use two or more variables.</p>
+                    </div>
+
+                    <div class="warning cuadrito">
+                        <p>
+                            <strong>Instructions</strong> <br> For using the program you will need an objective function and the respective constraints. As a result, the program is going
+                            to show the type and value of the optimal solution (if there is one)and the values of the basic and non basic variables.
+                        </p>
+                    </div>
+
+
+
+
+
+                    <hr>
+                    <!-- /.container-fluid --->
+                    <div class="container text-center">
+                        <p>Choose your category: </p>
+
+                        <div class="text-black">
+                            <div class="form-group row">
+
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <a href="beginner.html" class="btn btn-outline-info btn-icon-split">
+
+                                        <span class="text">Step by step mode</span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a href="advanced.html" class="btn btn-outline-info btn-icon-split">
+
+                                        <span class="text">Fast-track mode</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>
+                                Copyright &copy; Also see our work at: <a target="_blank" rel="nofollow" href="https://github.com/icesivip">https://github.com/icesivip</a> - 2019
+                                <br><br>If you want further information feel free to contact us at vip@icesi.edu.co
+                            </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+
+
+
+            </div>
+            <!-- End of Content Wrapper -->
 
         </div>
-        
-    <hr>
-     <!-- /.container-fluid --->
-     <div class="container text-center">
-      <p >Choose your category: </p>
-    
-    <div class="text-black">
-        <div class="form-group row">
-          
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <a href="beginner.html" class="btn btn-outline-info btn-icon-split" >
-                    
-                    <span class="text">Step by step mode</span>
-                  </a>
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <!--div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+              </div>
             </div>
-            <div class="col-sm-6" >
-                <a href="advanced.html" class="btn btn-outline-info btn-icon-split" >
-                   
-                    <span class="text">Fast-track mode</span>
-                  </a>
-            </div>
-        </div>
-      
-      
-  
-
-
-      
-      <!-- End of Main Content --------->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
           </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+        </div-->
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    </div>
-    <!-- End of Content Wrapper -->
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  </div>
-  <!-- End of Page Wrapper -->
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

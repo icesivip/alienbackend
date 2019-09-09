@@ -45,78 +45,82 @@
 	<div id='wrapper'>
 
 		<!-- Sidebar -->
-		<ul
-			class='navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
-			id='accordionSidebar'>
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a
-				class='sidebar-brand d-flex align-items-center justify-content-center'
-				href='index.html'>
-				<div class='sidebar-brand-icon rotate-n-15'>
-					<i class='fas fa-laugh-wink'></i>
-				</div>
-				<div class='sidebar-brand-text mx-3'>
-					VIP ALIEN <sup></sup>
-				</div>
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+			  <div class="sidebar-brand-icon rotate-n-15">
+				<i class="fas fa-laugh-wink"></i>
+			  </div>
+			  <div class="sidebar-brand-text mx-3">VIP ALIEN <sup></sup></div>
 			</a>
-
+	  
 			<!-- Divider -->
-			<hr class='sidebar-divider my-0'>
-
+			<hr class="sidebar-divider my-0">
+	  
+			<!-- inútil por ahora -->
+			<!-- Nav Item - Dashboard -->
+			<!--li class="nav-item active">
+			  <a class="nav-link" href="index.html">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+			</li-->
+	  
 			<!-- Divider -->
-			<hr class='sidebar-divider'>
-
+			<hr class="sidebar-divider">
+	  
 			<!-- Heading -->
-			<div class='sidebar-heading'>Modules</div>
+			<div class="sidebar-heading">
+			  Modules
+			</div>
 			<!-- PL -->
-			<li class='nav-item'><a class='nav-link collapsed' href='#'
-				data-toggle='collapse' data-target='#collapsePages'
-				aria-expanded='true' aria-controls='collapsePages'> <i
-					class='fas fa-fw fa-folder'></i> <span> Linear Programming </span>
-			</a>
-				<div id='collapsePages' class='collapse'
-					aria-labelledby='headingPages' data-parent='#accordionSidebar'>
-					<div class='bg-white py-2 collapse-inner rounded'>
-						<h6 class='collapse-header'>Programs</h6>
-                        <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-                        <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-                        <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-                        <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-                        <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
-                        <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS SERVER </a>
-					</div>
-				</div></li>
+			<li class="nav-item">
+			  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+				aria-controls="collapsePages">
+				<i class="fas fa-fw fa-folder"></i>
+				<span> Linear Programming </span>
+			  </a>
+			  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+				  <h6 class="collapse-header">Programs</h6>
+				  <a class="collapse-item" href="interiorPoint.html">Interior Point</a>
+				  <a class="collapse-item" href="graphicalMethod.html">Graphical Method</a>
+				  <a class="collapse-item" href="branchAndBound.html">Branch & Bound</a>
+				  <a class="collapse-item" href="homeSimplex.html">Simplex Algorithm </a>
+				  <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS Server</a>
+				</div>
+			  </div>
+			</li>
 			<!-- Es necesario entender cómo funcion el #collapse, parece un id, pero no lo encuentro en css-->
 			<!-- MPS -->
-			<li class='nav-item'><a class='nav-link collapsed' href='#'
-				data-toggle='collapse' data-target='#collapseMPS'
-				aria-expanded='true' aria-controls='collapseMPS'> <i
-					class='fas fa-fw fa-folder'></i> <span> Master Plan Schedule
-				</span>
-			</a>
-				<div id='collapseMPS' class='collapse' aria-labelledby='headingMPS'
-					data-parent='#accordionSidebar'>
-					<div class='bg-white py-2 collapse-inner rounded'>
-						<h6 class='collapse-header'>Programs</h6>
-						<!-- cambiar href -->
-						<a class='collapse-item' href='mps.html'>MPS</a> <a
-							class='collapse-item' href='mrp.html'>MRP </a>
-					</div>
-				</div></li>
-
+			<li class="nav-item">
+			  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMPS" aria-expanded="true"
+				aria-controls="collapseMPS">
+				<i class="fas fa-fw fa-folder"></i>
+				<span> Master Plan Schedule </span>
+			  </a>
+			  <div id="collapseMPS" class="collapse" aria-labelledby="headingMPS" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+				  <h6 class="collapse-header">Programs</h6>
+				  <!-- cambiar href -->
+				  <a class="collapse-item" href="mps.html">MPS</a>
+				  <a class="collapse-item" href="mrp-1.html">MRP</a>
+				</div>
+			  </div>
+			</li>
+	  
 			<!-- Divider -->
-			<hr class='sidebar-divider'>
-
+			<hr class="sidebar-divider">
+	  
 			<!-- Divider -->
-			<hr class='sidebar-divider d-none d-md-block'>
-
+			<hr class="sidebar-divider d-none d-md-block">
+	  
 			<!-- Sidebar Toggler (Sidebar) -->
-			<div class='text-center d-none d-md-inline'>
-				<button class='rounded-circle border-0' id='sidebarToggle'></button>
+			<div class="text-center d-none d-md-inline">
+			  <button class="rounded-circle border-0" id="sidebarToggle"></button>
 			</div>
-
-		</ul>
+	  
+		  </ul>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
