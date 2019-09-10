@@ -698,8 +698,9 @@ function solveModel() {
     }).then(function (data) {
       console.log(data)
       messageSol=  data.messageSol;
-    });
-    $.ajax({
+
+
+      $.ajax({
         url: "https://viptest1.herokuapp.com/graphicalMethod" + string
     }).then(function (data) {
         $(".cover").toggle(400);
@@ -709,6 +710,20 @@ function solveModel() {
         var solList = data.solutionList;
         var solX = [];
         var solY = [];
+
+        var names =data.solutionList;
+        var uniqueNames = [];
+        $.each(names, function(i, el){
+            // $.each(names, function(i, la){
+            //     if($.inArray(el.variables.X1, uniqueNames) === -1 && $.inArray(la, uniqueNames.variables.X2)== -1) uniqueNames.push(el);
+            // });
+            $.each(uniqueNames, function(i, la){
+                if(el.variables.X1!=la.variables.X1 && el.variables.X2!=la.variables.X2) uniqueNames.push(el);
+            });
+        });
+        console.log(names)
+        console.log(uniqueNames)
+        
         $("#result").DataTable().clear();
         solList.forEach(element => {
             $("#result").DataTable().row.add(
@@ -993,6 +1008,9 @@ function solveModel() {
         $(".cover").toggle(400);
         console.log(error);
     });
+
+    });
+    
 }
 function exportToJson(objectData) {
     let filename = "saved_problem.json";
