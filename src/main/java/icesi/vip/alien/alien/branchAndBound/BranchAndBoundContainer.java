@@ -15,6 +15,7 @@ public class BranchAndBoundContainer {
 
 		try {
 			BarrierMethod bm=new BarrierMethod();
+			
 			BranchAndBound bb=new BranchAndBound(bm);
 			this.optimalSolution=bb.solve(m).exportFormat();
 			ModelNode st=bb.giveSolutionTree();

@@ -36,7 +36,7 @@ public class AlienController {
 	private final AtomicLong counter = new AtomicLong();
 
 	@CrossOrigin
-	@RequestMapping("/simplexMethod")
+	@RequestMapping(value="/simplexMethod",method=RequestMethod.GET)
 	public Simplex simplexMethod(@RequestParam(value = "type", required = true) String opti,
 			@RequestParam(value = "iteration", defaultValue = "F") String iteration,
 			@RequestParam(value = "equations", required = true) String equations) throws Exception {
@@ -63,54 +63,49 @@ public class AlienController {
 	}
 
 	@CrossOrigin
-	@RequestMapping("/greeting")
+	@RequestMapping(value="/greeting",method=RequestMethod.GET)
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 
-	@CrossOrigin
-	@RequestMapping("/tutorial")
-	public Tutorial tutorial(@RequestParam(value = "nombre", defaultValue = "Tutorial") String nombre,
-			@RequestParam(value = "fecha", defaultValue = "18/03/2019") String fecha) {
-		return new Tutorial(fecha, nombre);
-	}
+
+
+//	@CrossOrigin
+//	@RequestMapping("/test")
+//	public Solution.ExportSolution test(@RequestParam(value = "type", required = true) String type,
+//			@RequestParam(value = "vars", required = true) String vars,
+//			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
+//			@RequestParam(value = "constraints", defaultValue = "") String constraints) throws Exception {
+//
+//		Model m = new Model(type);
+//		String[] varsS = vars.split(",");
+//		String[] coef = objectiveFunction.split(",");
+//		String[] cons = constraints.split(";");
+//		for (int i = 0; i < varsS.length; i++) {
+//			m.addVariable(varsS[i].split(":")[0], varsS[i].split(":")[1], Double.parseDouble(coef[i]));
+//		}
+//		int varcount = varsS.length;
+//		for (int i = 0; i < cons.length; i++) {
+//			double[] c = new double[varcount];
+//			String[] cons2 = cons[i].split(",");
+//			for (int j = 0; j < c.length; j++) {
+//				c[j] = Double.parseDouble(cons2[j]);
+//			}
+//			m.addConstraint(c, cons2[cons2.length - 2], Double.parseDouble(cons2[cons2.length - 1]), "C" + i);
+//		}
+////	        m.addVariable("X1", Variable.CONTINUOUS, 2);
+////	        m.addVariable("X2", Variable.CONTINUOUS, -1);
+////	        m.addVariable("X3", Variable.CONTINUOUS, 2);
+////	        m.addConstraint(new double[]{2,1,0}, Constraint.LESS_OR_EQUAL, 10, "");
+////	        m.addConstraint(new double[]{1,2,-2}, Constraint.LESS_OR_EQUAL, 20, "");
+////	        m.addConstraint(new double[]{0,1,2}, Constraint.LESS_OR_EQUAL, 5, "");
+//		BarrierMethod bm = new BarrierMethod();
+//		return bm.solve(m).exportFormat();
+//
+//	}
 
 	@CrossOrigin
-	@RequestMapping("/test")
-	public Solution.ExportSolution test(@RequestParam(value = "type", required = true) String type,
-			@RequestParam(value = "vars", required = true) String vars,
-			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
-			@RequestParam(value = "constraints", defaultValue = "") String constraints) throws Exception {
-
-		Model m = new Model(type);
-		String[] varsS = vars.split(",");
-		String[] coef = objectiveFunction.split(",");
-		String[] cons = constraints.split(";");
-		for (int i = 0; i < varsS.length; i++) {
-			m.addVariable(varsS[i].split(":")[0], varsS[i].split(":")[1], Double.parseDouble(coef[i]));
-		}
-		int varcount = varsS.length;
-		for (int i = 0; i < cons.length; i++) {
-			double[] c = new double[varcount];
-			String[] cons2 = cons[i].split(",");
-			for (int j = 0; j < c.length; j++) {
-				c[j] = Double.parseDouble(cons2[j]);
-			}
-			m.addConstraint(c, cons2[cons2.length - 2], Double.parseDouble(cons2[cons2.length - 1]), "C" + i);
-		}
-//	        m.addVariable("X1", Variable.CONTINUOUS, 2);
-//	        m.addVariable("X2", Variable.CONTINUOUS, -1);
-//	        m.addVariable("X3", Variable.CONTINUOUS, 2);
-//	        m.addConstraint(new double[]{2,1,0}, Constraint.LESS_OR_EQUAL, 10, "");
-//	        m.addConstraint(new double[]{1,2,-2}, Constraint.LESS_OR_EQUAL, 20, "");
-//	        m.addConstraint(new double[]{0,1,2}, Constraint.LESS_OR_EQUAL, 5, "");
-		BarrierMethod bm = new BarrierMethod();
-		return bm.solve(m).exportFormat();
-
-	}
-
-	@CrossOrigin
-	@RequestMapping("/graphicalMethod")
+	@RequestMapping(value="/graphicalMethod",method=RequestMethod.GET)
 	public GraphicalMethodContainer graphicalMethod(@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "vars", required = true) String vars,
 			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
@@ -154,7 +149,6 @@ public class AlienController {
 	      
 	      NeosJobXml exJob = new NeosJobXml("milp", "CPLEX", "AMPL"); 
 
-			FileUtils fileUtils = FileUtils.getInstance(FileUtils.APPLICATION_MODE);
 
 			String example = model;
 
@@ -193,7 +187,7 @@ public class AlienController {
 	
 
 	@CrossOrigin
-	@RequestMapping(value="/interiorPoint")
+	@RequestMapping(value="/interiorPoint",method=RequestMethod.GET)
 	public InteriorPointContainer interiorPoint(@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "vars", required = true) String vars,
 			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
@@ -220,7 +214,7 @@ public class AlienController {
 	}
 
 	@CrossOrigin
-	@RequestMapping("/branchAndBound")
+	@RequestMapping(value="/branchAndBound",method=RequestMethod.GET)
 	public BranchAndBoundContainer branchAndBound(@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "vars", required = true) String vars,
 			@RequestParam(value = "objectiveFunction", required = true) String objectiveFunction,
@@ -247,7 +241,7 @@ public class AlienController {
 	}
 
 	@CrossOrigin
-	@RequestMapping("/master")
+	@RequestMapping(value="/master",method=RequestMethod.GET)
 	public MasterPlanSchedule solucion(
 
 			@RequestParam(value = "scheduledReceptions", defaultValue = "1") String scheduledReceptions,
@@ -297,7 +291,7 @@ public class AlienController {
 
 	@JsonIgnore()
 	@CrossOrigin()
-	@RequestMapping("/pruebaMRP")
+	@RequestMapping(value="/pruebaMRP",method=RequestMethod.GET)
 	public MaterialRequirementsPlanning showMRP(@RequestParam(value = "fatherIds") String paramFatherId,
 			@RequestParam(value = "id") String paramId, @RequestParam(value = "name") String paramName,
 			@RequestParam(value = "leadTime") String paramLeadTime, @RequestParam(value = "amount") String paramAmount,
