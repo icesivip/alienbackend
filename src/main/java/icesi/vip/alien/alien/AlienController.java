@@ -20,7 +20,7 @@ import icesi.vip.alien.alien.neosServer.NeosJob;
 import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
-import icesi.vip.alien.materialRequirementPlanning.MRP;
+import icesi.vip.alien.materialRequirementPlanning.MaterialRequirementsPlanning;
 import lombok.extern.log4j.Log4j2;
 import model.Constraint;
 import model.Model;
@@ -298,19 +298,22 @@ public class AlienController {
 	@JsonIgnore()
 	@CrossOrigin()
 	@RequestMapping("/pruebaMRP")
-	public MRP showMRP(@RequestParam(value = "fatherNames") String paramFatherName,
+	public MaterialRequirementsPlanning showMRP(@RequestParam(value = "fatherIds") String paramFatherId,
 			@RequestParam(value = "id") String paramId, @RequestParam(value = "name") String paramName,
 			@RequestParam(value = "leadTime") String paramLeadTime, @RequestParam(value = "amount") String paramAmount,
 			@RequestParam(value = "initialInv") String paramInitialInv,
 			@RequestParam(value = "securityInv") String paramSecuriInv, @RequestParam(value = "date") String paramDate,
+			@RequestParam(value = "articleCost") String paramArticleCost, @RequestParam(value = "maintenanceCost") String paramMaintenanceCost,
+			@RequestParam(value = "orderingCost") String paramOrderingCost, @RequestParam(value = "lotSizingRule") String paramLotSizingRule,
 			@RequestParam(value = "programDelivery") String paramProgramDelivery,
-			@RequestParam(value = "rqB") String paramRqB, @RequestParam(value = "rqBDates") String paramRqBDates) {
+			@RequestParam(value = "rqB") String paramRqB, @RequestParam(value = "rqBDates") String paramRqBDates, 
+			@RequestParam(value = "periodicity") String paramPeriodicity) {
 
-		MRP m = new MRP();
+		MaterialRequirementsPlanning mrp = new MaterialRequirementsPlanning();
 
 		String[] id = paramId.split(";");
 
-		String[] fatherName = paramFatherName.split(";");
+		String[] fatherId = paramFatherId.split(";");
 
 		String[] name = paramName.split(";");
 
@@ -323,9 +326,23 @@ public class AlienController {
 		String[] securiInv = paramSecuriInv.split(";");
 
 		String[] dates = new String[Integer.parseInt(paramDate)];
+		
+		String[] articleCost = paramArticleCost.split(";");
+		
+		String[] maintenanceCost = paramMaintenanceCost.split(";");
+		
+		String[] orderingCost = paramOrderingCost.split(";");
+		
+		String[] lotSizingRule = paramLotSizingRule.split(";");
 
 		for (int i = 0; i < dates.length; i++) {
 			dates[i] = (i + 1 + "");
+		}
+		
+		for(int i = 0; i < fatherId.length; i++) {
+			if(fatherId[i].equals("none")) {
+				fatherId[i] = null;
+			}
 		}
 
 		System.out.println(paramProgramDelivery);
@@ -334,7 +351,7 @@ public class AlienController {
 
 		String[] programDelivery = paramProgramDelivery.split("-");
 		String[] reqBrutos = paramRqB.split(";");
-		String[] reqBrutosDates = paramRqBDates.split("-");
+//		String[] reqBrutosDates = paramRqBDates.split("-");
 
 		ArrayList<String> datesAr = new ArrayList<String>();
 
@@ -373,10 +390,10 @@ public class AlienController {
 			}
 		}
 
-		int[] leadTimeInteger = new int[fatherName.length];
-		int[] amountInteger = new int[fatherName.length];
-		int[] initialInvInteger = new int[fatherName.length];
-		int[] securyInvInteger = new int[fatherName.length];
+		int[] leadTimeInteger = new int[fatherId.length];
+		int[] amountInteger = new int[fatherId.length];
+		int[] initialInvInteger = new int[fatherId.length];
+		int[] securyInvInteger = new int[fatherId.length];
 
 		for (int i = 0; i < securiInv.length; i++) {
 			if (!amount[i].equals("")) {
@@ -388,28 +405,31 @@ public class AlienController {
 			securyInvInteger[i] = Integer.parseInt(securiInv[i]);
 		}
 
-		for (int i = 0; i < fatherName.length; i++) {
+		for (int i = 0; i < fatherId.length; i++) {
 			System.out.println(maestro.get(i));
 			int amount_1 = !amount[i].equals("") ? Integer.parseInt(amount[i]) : 0;
-			m.inserProductMRP(fatherName[i], id[i], name[i], Integer.parseInt(leadTime[i]), amount_1,
-					Integer.parseInt(initialInv[i]), Integer.parseInt(securiInv[i]), datesAr, maestro.get(i));
+			mrp.addProduct(id[i], name[i], fatherId[i], amount_1, lotSizingRule[i], Integer.parseInt(leadTime[i]), Integer.parseInt(initialInv[i]), 
+					Integer.parseInt(securiInv[i]), Double.parseDouble(articleCost[i]), Double.parseDouble(orderingCost[i]), Double.parseDouble(maintenanceCost[i]), 
+					paramPeriodicity, 1, rqBAr, maestro.get(i));
+//			mrp.inserProductMRP(fatherId[i], id[i], name[i], Integer.parseInt(leadTime[i]), amount_1,
+//					Integer.parseInt(initialInv[i]), Integer.parseInt(securiInv[i]), datesAr, maestro.get(i));
 		}
 
-		ArrayList<Integer[][]> a = m.allProductsMRP(m.getN_Ary_Tree(), rqBAr, rqBDatesAr);
+//		ArrayList<Integer[][]> a = m.allProductsMRP(m.getN_Ary_Tree(), rqBAr, rqBDatesAr);
 
-		System.out.println();
-		System.out.println("=======Nuevo MRP=======");
-		System.out.println();
-		for (int i = 0; i < a.size(); i++) {
-			for (int j = 0; j < a.get(i).length; j++) {
-				for (int k = 0; k < a.get(i)[0].length; k++) {
-					System.out.print(a.get(i)[j][k] + " ");
-				}
-				System.out.println();
-			}
-		}
+//		System.out.println();
+//		System.out.println("=======Nuevo MRP=======");
+//		System.out.println();
+//		for (int i = 0; i < a.size(); i++) {
+//			for (int j = 0; j < a.get(i).length; j++) {
+//				for (int k = 0; k < a.get(i)[0].length; k++) {
+//					System.out.print(a.get(i)[j][k] + " ");
+//				}
+//				System.out.println();
+//			}
+//		}
 
-		return m;
+		return mrp;
 
 	}
 
