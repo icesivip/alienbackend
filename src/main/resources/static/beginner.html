@@ -236,7 +236,9 @@
             align-items: stretch;
             width: 100%;
           }
-
+          input[type=number] {
+            width: 100%;
+        }
           .container1 {
             position: relative;
             text-align: center;
@@ -257,18 +259,35 @@
 
           }
 
-          form.user .form-control-user {
+          form.user .form-control-user{
+            font-size: larger;
+            border-radius: .35rem;
+            padding: 1.5rem 1rem;
+             width: 100%;
+          }
+         
+          #cTitle{
             font-size: larger;
             border-radius: 10rem;
             padding: 1.5rem 1rem;
           }
-
+          #cVariable{
+            font-size: larger;
+            border-radius: 10rem;
+            padding: 1.5rem 1rem;
+          }
+          #goConstraint{
+            font-size: larger;
+            border-radius: 10rem;
+            padding: 1.5rem 1rem;
+          }
           .btn-icon-split {
 
             position: relative;
 
 
           }
+
 
           #but2 {
 
@@ -391,7 +410,7 @@
               <div class="table-responsive">
                 <h2 class="text-center">Objective Function</h2>
                 <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
                     <tr class="text-center" id="of-head">
                       <th>
                         <font color="#fff">Type</font>
@@ -418,9 +437,9 @@
 
                         </select>
                       </td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
 
 
                     </tr>
@@ -443,7 +462,7 @@
               <div class="table-responsive">
                 <h2 class="text-center">Constraint Table</h2>
                 <table class="table table-bordered" width="100%" cellspacing="0">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
                     <tr class="text-center" id="thead-tr">
                       <th>
                         <font color="#fff">X1</font>
@@ -464,16 +483,16 @@
                   </thead>
                   <tbody id="table-body">
                     <tr>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01"  required class="form-control form-control-user" ></td>
                       <td> <select>
                           <option>&lt=</option>
                           <option>&gt=</option>
                           <option>=</option>
                         </select>
                       </td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01"  required class="form-control form-control-user"></td>
                     </tr>
 
 
@@ -554,7 +573,7 @@
                 <h2 class="text-center">Data Table</h2>
                 <div id="menIteration"> </div>
                 <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
 
 
                   </thead>
@@ -581,7 +600,7 @@
                 <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
 
                       
-                    <thead class="bg-gradient-primary">
+                    <thead class="white-text bg-primary">
                         
                         <tr id="thead-RC">
                             <th>
@@ -624,7 +643,7 @@
                   <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
   
                         
-                      <thead class="bg-gradient-primary">
+                      <thead class="white-text bg-primary">
                           
                           <tr id="thead-SP">
                               <th>
@@ -865,10 +884,10 @@
         function generateNewConsRow(count) {
           var st = "<tr>";
           for (let index = 0; index < count; index++) {
-            st += "<td><input type='number' step='0.01' required></td>";
+            st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
 
           }
-          st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required></td></tr>"
+          st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
           return st;
         }
 
@@ -885,10 +904,10 @@
         function addVar() {
           $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
           for (let i = 0; i < consCount; i++) {
-              $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' required></td>");
+              $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
               }
           $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
-          $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
+          $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
 
 
           varCount++;
@@ -1066,7 +1085,7 @@
           tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
           $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
           +'<table class="table table-bordered" width="100%" cellspacing="0">'
-          +'<thead class="bg-gradient-primary">'
+          +'<thead class="white-text bg-primary">'
           +'<tr> <th> <font color="#fff">Var</font></th>'
           +'<th> <font color="#fff">Value</font></th>'
           +'</tr> </thead> <tbody>' + tableContent
@@ -1172,7 +1191,7 @@
             var theta = data.theta;
             var varsBase = data.varsBase;
             analysis = data.analysis;
-
+            pointRadius: 5;
             if (analysis == null) {
               $("#mensajeS").empty();
               console.log("entro:" + data.messageSol)
@@ -1236,7 +1255,7 @@
           tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
           $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
           +'<table class="table table-bordered" width="100%" cellspacing="0">'
-          +'<thead class="bg-gradient-primary">'
+          +'<thead class="white-text bg-primary">'
           +'<tr> <th> <font color="#fff">Var</font></th>'
           +'<th> <font color="#fff">Value</font></th>'
           +'</tr> </thead> <tbody>' + tableContent
