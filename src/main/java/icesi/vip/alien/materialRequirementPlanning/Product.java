@@ -94,6 +94,8 @@ public class Product {
 		
 		this.name = name;
 		this.id = id;
+		this.amounts = new ArrayList<Integer>();
+		this.amounts.add(1);
 		this.mps = new MasterPlanSchedule(lotSizingMethod, leadTime, initialStock, securityStock, id, name,
 				costArticle, preparationCost, maintenanceCost, periodicity, TPeriodOFSupply);
 		this.mps.setBruteRequirements(bruteRequirements);

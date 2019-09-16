@@ -288,7 +288,7 @@
 								<article>
 									<button id="btn-abrir-popup"
 										class="btn btn-success btn-user btn-block"
-										onclick='pintarArbol()'>SHOW PRODUCT TREE</button>
+										onclick='paintTree()'>SHOW PRODUCT TREE</button>
 								</article>
 								<hr>
 								<div class='overlay' id="overlay">
@@ -599,7 +599,7 @@
 
 			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
 			
-			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
 			globaladd++;
         }
 
@@ -722,60 +722,7 @@
 			+ '&periodicity=' + periodicity;
         }
         
-		function pintarArbol() {
-        	
-			var nodes;
-        	
-			nodes = new vis.DataSet([]);
-        	
-        	for (var i = 0; i < productos.length; i++) {
-        			nodes.add([
-        			{id: i, label: productos[i].name + "  (" + productos[i].amount + ")"}
-					]);
-        	}	
-			//		{id: i, label: productos[i].name + "  (" + productos[i].amount + ")", title: "Name: " + productos[i].name + "<br>ID: " + productos[i].id + "<br>Amount: " + productos[i].amount}
-				//	]);
-        	//}
 		
-        	var edges;
-        	
-        	edges = new vis.DataSet ([]);
-        	
-        	for (var i = 0; i < productos.length; i++) {
-        		
-        		var nombrePadre = productos[i].name;
-        		
-        		for (var k = i+1; k < productos.length; k++) {
-        			        			
-        			var nombreHijo = productos[k].fatherName;
-        			
-        			if (nombrePadre === nombreHijo) {
-        				
-        				edges.add([
-        					{from: i, to: k}
-        				]);
-        			}
-        		}
-        	}
-        	
-        	var container = document.getElementById('mynetwork');
-        	var data = {
-        	    nodes: nodes,
-        	    edges: edges
-        	};
-        	
-        	var options = {
-        			layout: {
-        	            hierarchical: {
-        	                direction: "UD",
-        	                sortMethod: "directed"
-        	            }
-        	        }
-        	};
-        	
-        	var network = new vis.Network(container, data, options);     	
-        	
-        }
 		
 	 	/* function resize() {
 			
@@ -790,15 +737,15 @@
 			
 		} */
 		
-        var productos;
+        var products;
         
         function solveModel(){
             $('.cover').toggle(400);
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        //url: 'http://localhost:8080/pruebaMRP' + request
-                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                        //url: 'https://icesiviptest.herokuapp.com/pruebaMRP' + request
+                        url: "http://localhost:8080/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
                         console.log('Funciona');
@@ -864,6 +811,63 @@
                         console.log(error);
                         console.log('no funciona');
                     })
+        }
+
+		function paintTree() {
+        	
+			var nodes;
+        	
+			nodes = new vis.DataSet([]);
+        	
+        	for (var i = 0; i < products.length; i++) {
+        			nodes.add([
+        			{id: i, label: products[i].name + "  (" + products[i].amount[i] + ")"}
+					]);
+        	}	
+			//		{id: i, label: productos[i].name + "  (" + productos[i].amount + ")", title: "Name: " + productos[i].name + "<br>ID: " + productos[i].id + "<br>Amount: " + productos[i].amount}
+				//	]);
+        	//}
+		
+        	var edges;
+        	
+        	edges = new vis.DataSet ([]);
+
+			
+        	
+        	for (var i = 0; i < products.length; i++) {
+        		
+        		var fatherName = products[i].name;
+        		
+        		for (var k = i+1; k < products.length; k++) {
+        			        			
+        			var sonName = products[k].fatherName;
+        			
+        			if (fatherName === sonName) {
+        				
+        				edges.add([
+        					{from: i, to: k}
+        				]);
+        			}
+        		}
+        	}
+        	
+        	var container = document.getElementById('mynetwork');
+        	var data = {
+        	    nodes: nodes,
+        	    edges: edges
+        	};
+        	
+        	var options = {
+        			layout: {
+        	            hierarchical: {
+        	                direction: "UD",
+        	                sortMethod: "directed"
+        	            }
+        	        }
+        	};
+        	
+        	var network = new vis.Network(container, data, options);     	
+        	
         }
         
     </script>

@@ -204,6 +204,9 @@ public class LotSizingMethods {
 		double frequencyRequested = demand
 				/ calculateEconomicOrderQuantity(periodicity, requiredArticlesBrutes, itemCost, preparationCost, maintenanceCost);
 		int optimalPeriodRequested = (int)Math.round((requiredArticlesLxL.size() * 1.0) / frequencyRequested);
+		if(optimalPeriodRequested == 0) {
+			optimalPeriodRequested = 1;
+		}
 		int quantity = 0;
 		for (int j = requiredArticlesLxL.size() - 1; j >= 0; j--) {
 			quantity += requiredArticlesLxL.get(j);
