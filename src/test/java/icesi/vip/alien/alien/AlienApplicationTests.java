@@ -16,7 +16,7 @@ public class AlienApplicationTests {
 		
 		
 		
-		assertTrue(true);
+		assertTrue(false);
 	}
 
 }
