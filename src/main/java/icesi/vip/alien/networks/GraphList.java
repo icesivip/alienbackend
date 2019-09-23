@@ -8,118 +8,118 @@ import java.util.Stack;
 
 public class GraphList<T> implements GraphListInterface<T> {
 	
-	private boolean esDirigido;
-	private boolean esPonderado;
+	private boolean isDirected;
+	private boolean isWeighted;
 	private ArrayList<Vertex<T>> vertices;
-	private HashMap<T, Vertex<T>> hashVertexs;
-	private String caminos;
+	private HashMap<T, Vertex<T>> hashVertex;
+	private String paths;
 	
-	private int contador;
+	private int counter;
 	
 	private int time;
 	
-	public GraphList(boolean esDirigido, boolean esPonderado){
-		this.esDirigido = esDirigido;
-		this.esPonderado = esPonderado;
+	public GraphList(boolean isDirected, boolean isWeighted){
+		this.isDirected = isDirected;
+		this.isWeighted = isWeighted;
 		vertices = new ArrayList<Vertex<T>>();
-		hashVertexs = new HashMap<T, Vertex<T>>();
+		hashVertex = new HashMap<T, Vertex<T>>();
 	}
 	
 	public ArrayList<Vertex<T>> getVertices(){
 		return vertices;
 	}
 
-	public String getCaminos() {
-		return caminos;
+	public String getPaths() {
+		return paths;
 	}
 
-	public void setCaminos(String caminos) {
-		this.caminos = caminos;
+	public void setPaths(String paths) {
+		this.paths = paths;
 	}
 
 	@Override
-	public void agregarVertex(T dato) {
-		if(!hashVertexs.containsKey(dato)){
-			Vertex<T> agregar = new Vertex<T>(dato);
-			vertices.add(agregar);
-			hashVertexs.put(dato, agregar);
+	public void addVertex(T data) {
+		if(!hashVertex.containsKey(data)){
+			Vertex<T> add = new Vertex<T>(data);
+			vertices.add(add);
+			hashVertex.put(data, add);
 		}
 	}
 
-	public void agregarArista(T datoV1, T datoV2) {
-		if(!hashVertexs.containsKey(datoV1)){
-			agregarVertex(datoV1);
+	public void addEdge(T dataV1, T dataV2) {
+		if(!hashVertex.containsKey(dataV1)){
+			addVertex(dataV1);
 		}
-		if(!hashVertexs.containsKey(datoV2)){
-			agregarVertex(datoV2);
+		if(!hashVertex.containsKey(dataV2)){
+			addVertex(dataV2);
 		}
-		if(esDirigido){
-			hashVertexs.get(datoV1).agregarTerna(""+contador, -1, hashVertexs.get(datoV2));
-			contador++;
+		if(isDirected){
+			hashVertex.get(dataV1).addTriple(""+counter, -1, hashVertex.get(dataV2));
+			counter++;
 		}else{
-			hashVertexs.get(datoV1).agregarTerna(""+contador, -1, hashVertexs.get(datoV2));
-			contador++;
-			hashVertexs.get(datoV2).agregarTerna(""+contador, -1, hashVertexs.get(datoV1));
-			contador++;
+			hashVertex.get(dataV1).addTriple(""+contador, -1, hashVertex.get(dataV2));
+			counter++;
+			hashVertex.get(dataV2).addTriple(""+contador, -1, hashVertex.get(dataV1));
+			counter++;
 		}
 	}
 
 	@Override
-	public void agregarArista(T datoV1, T datoV2, double peso, String nombre) {
-		if(!hashVertexs.containsKey(datoV1)){
-			agregarVertex(datoV1);
+	public void addEdge(T dataV1, T dataV2, double weight, String name) {
+		if(!hashVertex.containsKey(dataV1)){
+			agregarVertex(dataV1);
 		}
-		if(!hashVertexs.containsKey(datoV2)){
-			agregarVertex(datoV2);
+		if(!hashVertex.containsKey(dataV2)){
+			agregarVertex(dataV2);
 		}
-		if(esDirigido){
-			hashVertexs.get(datoV1).agregarTerna(nombre, peso, hashVertexs.get(datoV2));
+		if(isDirected){
+			hashVertex.get(dataV1).addTriple(name, weight, hashVertex.get(dataV2));
 		}else{
-			hashVertexs.get(datoV1).agregarTerna(nombre, peso, hashVertexs.get(datoV2));
-			hashVertexs.get(datoV2).agregarTerna(nombre, peso, hashVertexs.get(datoV1));
+			hashVertex.get(dataV1).addTriple(name, weight, hashVertex.get(dataV2));
+			hashVertex.get(dataV2).addTriple(name, weight, hashVertex.get(dataV1));
 		}
 	}
 
 	@Override
-	public void eliminarVertex(T dato)  {
-		Vertex<T> Vertex = hashVertexs.get(dato);
-		if(Vertex == null){
+	public void removeVertex(T data)  {
+		Vertex<T> vertex = hashVertex.get(data);
+		if(vertex == null){
 			// lanzar excepción
 		}else {
 			for(int i = 0; i < vertices.size(); i++){
-	//			if(Vertexs.get(i).getHashTernas().containsKey(dato)) {
-	//				Vertexs.get(i).getTernas().remove(Vertexs.get(i).getTernas().indexOf(Vertexs.get(i).getHashTernas().get(dato)));
-	//				Vertexs.get(i).getVertexs().remove(Vertexs.get(i).getVertexs().indexOf(dato));
-	//				Vertexs.get(i).getHashTernas().remove(dato);
+	//			if(Vertexs.get(i).getHashTernas().containsKey(data)) {
+	//				Vertexs.get(i).getTriples().remove(Vertexs.get(i).getTriples().indexOf(Vertexs.get(i).getHashTernas().get(data)));
+	//				Vertexs.get(i).getVertexs().remove(Vertexs.get(i).getVertexs().indexOf(data));
+	//				Vertexs.get(i).getHashTernas().remove(data);
 	//			}
-				for(int j = 0; j < vertices.get(i).getTernas().size(); j++){
-					if(vertices.get(i).getTernas().get(j).getVertex().equals(Vertex)){
-						vertices.get(i).getTernas().remove(j);
-						vertices.get(i).getHashTernas().remove(vertices.get(i).getTernas().get(j).getNombre());
+				for(int j = 0; j < vertices.get(i).getTriples().size(); j++){
+					if(vertices.get(i).getTriples().get(j).getVertex().equals(vertex)){
+						vertices.get(i).getTriples().remove(j);
+						vertices.get(i).getHashTernas().remove(vertices.get(i).getTriples().get(j).getname());
 						vertices.get(i).getVertices().remove(j);
 						j--;
 					}
 				}
 			}
-			hashVertexs.remove(dato);
-			vertices.remove(Vertex);
+			hashVertex.remove(data);
+			vertices.remove(vertex);
 		}
 	}
 	
-	public void eliminarArista(T datoV1, T datoV2)  {
-		Vertex<T> VertexV1 = buscarVertex(datoV1);
-		for(int i = 0; i < VertexV1.getTernas().size(); i++){
-			if(VertexV1.getTernas().get(i).getVertex().getDato().equals(datoV2)){
-				VertexV1.getTernas().remove(i);
+	public void removeEdge(T dataV1, T dataV2)  {
+		Vertex<T> VertexV1 = searchVertex(dataV1);
+		for(int i = 0; i < VertexV1.getTriples().size(); i++){
+			if(VertexV1.getTriples().get(i).getVertex().getdata().equals(dataV2)){
+				VertexV1.getTriples().remove(i);
 				VertexV1.getVertices().remove(i);
 				i--;
 			}
 		}
-		if(!esDirigido){
-			Vertex<T> VertexV2 = buscarVertex(datoV2);
-			for(int i = 0; i < VertexV2.getTernas().size(); i++){
-				if(VertexV2.getTernas().get(i).getVertex().getDato().equals(datoV1)){
-					VertexV2.getTernas().remove(i);
+		if(!isDirected){
+			Vertex<T> VertexV2 = searchVertex(dataV2);
+			for(int i = 0; i < VertexV2.getTriples().size(); i++){
+				if(VertexV2.getTriples().get(i).getVertex().getdata().equals(dataV1)){
+					VertexV2.getTriples().remove(i);
 					VertexV2.getVertices().remove(i);
 					i--;
 				}
@@ -127,96 +127,96 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 	}
 
-	public void eliminarArista(T datoV1, T datoV2, String nombre)   {
-		Vertex<T> VertexV1 = buscarVertex(datoV1);
-		VertexV1.getVertices().remove(VertexV1.getHashTernas().get(nombre).getVertex());
-		VertexV1.getTernas().remove(VertexV1.getHashTernas().get(nombre));
-		VertexV1.getHashTernas().remove(nombre);
-		if(!esDirigido){
-			Vertex<T> VertexV2 = buscarVertex(datoV2);
-			VertexV2.getVertices().remove(VertexV2.getHashTernas().get(nombre).getVertex());
-			VertexV2.getTernas().remove(VertexV2.getHashTernas().get(nombre));
-			VertexV2.getHashTernas().remove(nombre);
+	public void eliminarArista(T dataV1, T dataV2, String name)   {
+		Vertex<T> VertexV1 = searchVertex(dataV1);
+		VertexV1.getVertices().remove(VertexV1.getHashTernas().get(name).getVertex());
+		VertexV1.getTriples().remove(VertexV1.getHashTernas().get(name));
+		VertexV1.getHashTernas().remove(name);
+		if(!isDirected){
+			Vertex<T> VertexV2 = searchVertex(dataV2);
+			VertexV2.getVertices().remove(VertexV2.getHashTernas().get(name).getVertex());
+			VertexV2.getTriples().remove(VertexV2.getHashTernas().get(name));
+			VertexV2.getHashTernas().remove(name);
 		}
 	}
 
 	@Override
-	public Vertex<T> buscarVertex(T dato)  {
-		Vertex<T> Vertex = hashVertexs.get(dato);
-		if(Vertex == null){
-			//throw new (dato);
+	public Vertex<T> searchVertex(T data)  {
+		Vertex<T> vertex = hashVertex.get(data);
+		if(vertex == null){
+			//throw new (data);
 			return null;
 		}else {
-			return Vertex;
+			return vertex;
 		}
 	}
 	
-	public void BFS(T dato) {
-		Vertex<T> s = buscarVertex(dato);
+	public void BFS(T data) {
+		Vertex<T> s = searchVertex(data);
 		BFS(s);
 	}
 	
 	private void BFS(Vertex<T> s){
 		for(int i = 0; i < vertices.size(); i++){
 			if(!vertices.get(i).equals(s)){
-				vertices.get(i).setColor(Vertex.BLANCO);
-				vertices.get(i).setDistancia(Integer.MAX_VALUE);
-				vertices.get(i).setPredecesor(null);
+				vertices.get(i).setColor(Vertex.WHITE);
+				vertices.get(i).setDistance(Integer.MAX_VALUE);
+				vertices.get(i).setPredecessor(null);
 			}
 		}
-		s.setColor(Vertex.GRIS);
-		s.setDistancia(0);
-		s.setPredecesor(null);
-		Queue<Vertex<T>> cola = new ArrayDeque<Vertex<T>>();
-		cola.offer(s);
-		while(!cola.isEmpty()){
-			Vertex<T> u = cola.poll();
-			for(int i = 0; i < u.getTernas().size(); i++){
-				Vertex<T> v = u.getTernas().get(i).getVertex();
-				if(v.getColor().equals(Vertex.BLANCO)){
-					v.setColor(Vertex.GRIS);
-					v.setDistancia(u.getTernas().get(i).getVertex().getDistancia() + 1);
-					v.setPredecesor(u);
-					cola.offer(u.getTernas().get(i).getVertex());
+		s.setColor(Vertex.GREY);
+		s.setDistance(0);
+		s.setPredecessor(null);
+		Queue<Vertex<T>> queue = new ArrayDeque<Vertex<T>>();
+		queue.offer(s);
+		while(!queue.isEmpty()){
+			Vertex<T> u = queue.poll();
+			for(int i = 0; i < u.getTriples().size(); i++){
+				Vertex<T> v = u.getTriples().get(i).getVertex();
+				if(v.getColor().equals(Vertex.WHITE)){
+					v.setColor(Vertex.GREY);
+					v.setDistance(u.getTriples().get(i).getVertex().getDistance() + 1);
+					v.setPredecessor(u);
+					queue.offer(u.getTriples().get(i).getVertex());
 				}
 			}
-			u.setColor(Vertex.NEGRO);
+			u.setColor(Vertex.BLACK);
 			//Solo añadir "u" a arraylist
 		}
 	}
 	
 	//--------------------------- DFS con Pila -------------------------------------
 	
-	public void DFS(T dato)  {
-		Vertex<T> s = buscarVertex(dato);
+	public void DFS(T data)  {
+		Vertex<T> s = searchVertex(data);
 		DFS(s);
 	}
 	
 	private void DFS(Vertex<T> s){
 		for(int i = 0; i < vertices.size(); i++){
 			if(!vertices.get(i).equals(s)){
-				vertices.get(i).setColor(Vertex.BLANCO);
-				vertices.get(i).setDistancia(Integer.MAX_VALUE);
-				vertices.get(i).setPredecesor(null);
+				vertices.get(i).setColor(Vertex.WHITE);
+				vertices.get(i).setDistance(Integer.MAX_VALUE);
+				vertices.get(i).setPredecessor(null);
 			}
 		}
-		s.setColor(Vertex.GRIS);
-		s.setDistancia(0);
-		s.setPredecesor(null);
-		Stack<Vertex<T>> cola = new Stack<Vertex<T>>();
-		cola.push(s);
-		while(!cola.isEmpty()){
-			Vertex<T> u = cola.pop();
-			for(int i = 0; i < u.getTernas().size(); i++){
-				Vertex<T> v = u.getTernas().get(i).getVertex();
-				if(v.getColor().equals(Vertex.BLANCO)){
-					v.setColor(Vertex.GRIS);
-					v.setDistancia(u.getTernas().get(i).getVertex().getDistancia() + 1);
-					v.setPredecesor(u);
-					cola.push(u.getTernas().get(i).getVertex());
+		s.setColor(Vertex.GREY);
+		s.setDistance(0);
+		s.setPredecessor(null);
+		Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
+		stack.push(s);
+		while(!stack.isEmpty()){
+			Vertex<T> u = queue.pop();
+			for(int i = 0; i < u.getTriples().size(); i++){
+				Vertex<T> v = u.getTriples().get(i).getVertex();
+				if(v.getColor().equals(Vertex.WHITE)){
+					v.setColor(Vertex.GREY);
+					v.setDistance(u.getTriples().get(i).getVertex().getdistance() + 1);
+					v.setPredecessor(u);
+					stack.push(u.getTriples().get(i).getVertex());
 				}
 			}
-			u.setColor(Vertex.NEGRO);
+			u.setColor(Vertex.BLACK);
 			//Solo añadir "u" a arraylist
 		}
 	}
@@ -227,30 +227,30 @@ public class GraphList<T> implements GraphListInterface<T> {
 	
 	public void DFS(){
 		for(int i = 0; i < vertices.size(); i++){
-			vertices.get(i).setColor(Vertex.BLANCO);
-			vertices.get(i).setPredecesor(null);
+			vertices.get(i).setColor(Vertex.WHITE);
+			vertices.get(i).setPredecessor(null);
 		}
 		time = 0;
 		for(int i = 0; i < vertices.size(); i++){
-			if(vertices.get(i).getColor().equals(Vertex.BLANCO)){
-				visitaDFS(vertices.get(i));
+			if(vertices.get(i).getColor().equals(Vertex.WHITE)){
+				visitDFS(vertices.get(i));
 			}
 		}
 	}
 	
-	public void visitaDFS(Vertex<T> u){
+	public void visitDFS(Vertex<T> u){
 		time = time + 1;
-		u.setDescubierto(time);
-		u.setColor(Vertex.GRIS);
-		for(int i = 0; i < u.getTernas().size(); i++){
-			if(u.getTernas().get(i).getVertex().getColor().equals(Vertex.BLANCO)){
-				u.getTernas().get(i).getVertex().setPredecesor(u);
-				visitaDFS(u.getTernas().get(i).getVertex());
+		u.setDiscovered(time);
+		u.setColor(Vertex.GREY);
+		for(int i = 0; i < u.getTriples().size(); i++){
+			if(u.getTriples().get(i).getVertex().getColor().equals(Vertex.WHITE)){
+				u.getTriples().get(i).getVertex().setPredecessor(u);
+				visitDFS(u.getTriples().get(i).getVertex());
 			}
 		}
-		u.setColor(Vertex.NEGRO);
+		u.setColor(Vertex.BLACK);
 		time = time + 1;
-		u.setFinalizado(time);
+		u.setEnded(time);
 	}
 	
 	//----------------------- Fin DFS sin Pila -------------------------------------
@@ -277,9 +277,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 				if(!S.contains(Vertexs.get(i))){
 					if(u.getVertexs().contains(Vertexs.get(i))){
 						int j = u.getVertexs().indexOf(Vertexs.get(i));
-						double peso = u.getTernas().get(j).getPeso();
-						if(L[Vertexs.indexOf(u)] + peso < L[Vertexs.indexOf(Vertexs.get(i))]){
-							L[Vertexs.indexOf(Vertexs.get(i))] = L[Vertexs.indexOf(u)] + peso;
+						double weight = u.getTriples().get(j).getweight();
+						if(L[Vertexs.indexOf(u)] + weight < L[Vertexs.indexOf(Vertexs.get(i))]){
+							L[Vertexs.indexOf(Vertexs.get(i))] = L[Vertexs.indexOf(u)] + weight;
 						}
 					}
 				}
@@ -293,82 +293,82 @@ public class GraphList<T> implements GraphListInterface<T> {
 	@SuppressWarnings("unchecked")
 	private Vertex<T>[] dijkstra(Vertex<T> a) {
 
-		boolean[] visitado = new boolean[vertices.size()];
-		int[] distancia = new int[vertices.size()];
-		Vertex<T>[] previo = new Vertex[vertices.size()];
+		boolean[] visited = new boolean[vertices.size()];
+		int[] distance = new int[vertices.size()];
+		Vertex<T>[] parents = new Vertex[vertices.size()];
 		
 		for (int i = 0; i < vertices.size(); i++) {
-			distancia[i] = Integer.MAX_VALUE;
-			previo[i] = null;
+			distance[i] = Integer.MAX_VALUE;
+			parents[i] = null;
 		}
 		
-		Queue<Vertex<T>> cola = new ArrayDeque<>();
+		Queue<Vertex<T>> queue = new ArrayDeque<>();
 
 		int j = vertices.indexOf(a);
-		distancia[j] = 0;
-		cola.add(a);
+		distance[j] = 0;
+		queue.add(a);
 
-		while (!cola.isEmpty()) {
-			Vertex<T> u = cola.poll();
+		while (!queue.isEmpty()) {
+			Vertex<T> u = queue.poll();
 			int k = vertices.indexOf(u);
 
-			if (!visitado[k]) {
-				visitado[k] = true;
+			if (!visited[k]) {
+				visited[k] = true;
 				for (int i = 0; i < vertices.size(); i++) {
 					if (vertices.get(k).getVertices().contains(vertices.get(i))){
-						int w = (int) vertices.get(k).getTernas().get(vertices.get(k).getVertices().indexOf(vertices.get(i))).getPeso();
-						if (!visitado[i]) {
-							relajacion(k, i, w, distancia, cola, previo);
+						int w = (int) vertices.get(k).getTriples().get(vertices.get(k).getVertices().indexOf(vertices.get(i))).getweight();
+						if (!visited[i]) {
+							relax(k, i, w, distance, queue, parents);
 						}
 					}
 				}
 			}
 		}
-		return previo;
+		return parents;
 	}
 
-	private void relajacion (int actual, int adyacente, int peso, int []distancia, Queue<Vertex<T>> cola, Vertex<T>[] previo) {
+	private void relax (int current, int adjacent, int weight, int []distance, Queue<Vertex<T>> queue, Vertex<T>[] parents) {
 		
-		if (distancia[actual] + peso < distancia[adyacente]) {
-			distancia[adyacente] = distancia[actual] +peso;
-			previo[adyacente] = vertices.get(actual);
-			cola.add(vertices.get(adyacente));
+		if (distance[current] + weight < distance[adjacent]) {
+			distance[adjacent] = distance[current] +weight;
+			parents[adjacent] = vertices.get(current);
+			queue.add(vertices.get(adjacent));
 		}
 		
 	}
 	
-	public void caminoPorDijkstra (T inicio, T destino)  {
-		int fin = vertices.indexOf(buscarVertex(destino));
+	public void pathByDijkstra (T start, T end)  {
+		int goal = vertices.indexOf(searchVertex(end));
 		
-		caminos = "";
-		Vertex<T> VertexInicio = buscarVertex(inicio);
+		paths = "";
+		Vertex<T> Vertexstart = searchVertex(start);
 		
-		Vertex<T>[] previo = dijkstra(VertexInicio);
+		Vertex<T>[] parents = dijkstra(Vertexstart);
 		
-		if (previo[vertices.indexOf(vertices.get(fin))] != null) {
-			caminoPorDijkstra(inicio, previo[vertices.indexOf(vertices.get(fin))].getDato());
+		if (parents[vertices.indexOf(vertices.get(fin))] != null) {
+			pathByDijkstra(start, parents[vertices.indexOf(vertices.get(fin))].getdata());
 		}
-		caminos += vertices.get(fin).getDato()+",";
+		paths += vertices.get(goal).getdata()+",";
 	}
 	//----------------------------------------------------------------------
 	
 	public String[][] floydWarshall(){
 		
 		double[][] dist = new double[vertices.size()][vertices.size()];
-		String[][] retorno = new String[vertices.size()][vertices.size()];
+		String[][] pathBack = new String[vertices.size()][vertices.size()];
 				
 		for(int i = 0; i < dist.length; i++){
 			for(int j = 0; j < dist[0].length; j++){
 				if(j == i){
 					dist[i][j] = 0;
-					retorno[i][j] = vertices.get(i).getDato() + "";
+					pathBack[i][j] = vertices.get(i).getdata() + "";
 				}else if(vertices.get(i).getVertices().contains(vertices.get(j))){
-					dist[i][j] = vertices.get(i).getTernas().get(vertices.get(i).getVertices().indexOf(vertices.get(j))).getPeso();
-					retorno[i][j] = vertices.get(i).getDato() + "," + vertices.get(j).getDato();
+					dist[i][j] = vertices.get(i).getTriples().get(vertices.get(i).getVertices().indexOf(vertices.get(j))).getWeight();
+					pathBack[i][j] = vertices.get(i).getdata() + "," + vertices.get(j).getdata();
 				}
 				else{
 					dist[i][j] = Double.MAX_VALUE;
-					retorno[i][j] = "";
+					pathBack[i][j] = "";
 				}
 			}
 		}
@@ -377,53 +377,53 @@ public class GraphList<T> implements GraphListInterface<T> {
 				for(int j = 0; j < dist[0].length; j++){
 					if(dist[i][j] > dist[i][k] + dist[k][j]){
 						dist[i][j] = dist[i][k] + dist[k][j];
-						retorno[i][j] = retorno[i][k].substring(0, retorno[i][k].length()) + "," + retorno[k][j];
+						pathBack[i][j] = pathBack[i][k].substring(0, pathBack[i][k].length()) + "," + pathBack[k][j];
 					}					
 				}
 			}
 		}
-		return retorno;
+		return pathBack;
 	}
 	
-	private String sinRepetir(String arr){
+	private String noRepetitions(String arr){
 
-		String[] arreglo = arr.split(",");
+		String[] arr = arr.split(",");
 
-		for (int i = 0; i < arreglo.length; i++) {
-			for (int j = 0; j < arreglo.length; j++) {
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
 				if (i != j) {
-					if (arreglo[i] != null && arreglo[j] != null) {
-						if (arreglo[i].equals(arreglo[j])) {
-							arreglo[j] = null;
+					if (arr[i] != null && arr[j] != null) {
+						if (arr[i].equals(arr[j])) {
+							arr[j] = null;
 						}
 					}
 				}
 			}
 		}
 
-		for (int i = 0; i < arreglo.length; i++) {
-			if (arreglo[i] != null) {
-				caminos += arreglo[i] + ",";
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] != null) {
+				paths += arr[i] + ",";
 			}
 		}
-		return caminos;
+		return paths;
 	}
 	
-	public void caminoPorFloyd(T inicio, T destino) {
-		int i = vertices.indexOf(buscarVertex(inicio));
-		int j = vertices.indexOf(buscarVertex(destino));;
-		caminos = "";
-		caminos = sinRepetir(floydWarshall()[i][j]);
+	public void pathByFloyd(T start, T end) {
+		int i = vertices.indexOf(searchVertex(start));
+		int j = vertices.indexOf(searchVertex(end));;
+		paths = "";
+		paths = noRepetitions(floydWarshall()[i][j]);
 	}
 
-	public void imprimirCamino(Vertex<T> s, Vertex<T> v){
+	public void printPath(Vertex<T> s, Vertex<T> v){
 		if(s == v){
-			System.out.println(s.getDato());
+			System.out.println(s.getdata());
 		}else if(v.getPredecesor() == null){
-			System.out.println("No hay camino de " + s.getDato() + " hasta " + v.getDato());
+			System.out.println("No hay camino de " + s.getdata() + " hasta " + v.getdata());
 		}else{
-			imprimirCamino(s, v.getPredecesor());
-			System.out.println(v.getDato());
+			printPath(s, v.getPredecesor());
+			System.out.println(v.getdata());
 		}
 	}
 

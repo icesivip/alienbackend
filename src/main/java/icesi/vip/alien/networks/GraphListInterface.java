@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public interface GraphListInterface<T> {
 	
-	public void agregarVertex(T dato);
+	public void addVertex(T data);
 	
-	public void eliminarVertex(T dato);
+	public void removeVertex(T data);
 	
-	public void agregarArista(T datoV1, T datoV2, double peso, String nombre);
+	public void addEdge(T dataV1, T dataV2, double weight, String name);
 	
-	public Vertex<T> buscarVertex(T dato) ;
+	public Vertex<T> searchVertex(T data) ;
 	
-	public void BFS(T dato) ;
+	public void BFS(T data) ;
 	
-	public void DFS(T dato) ;
+	public void DFS(T data) ;
 	
-	public void caminoPorDijkstra (T inicio, T destino) ;
+	public void pathByDijkstra (T start, T end) ;
 	
-	public void caminoPorFloyd (T inicio, T destino) ;
+	public void pathByFloyd (T start, T end) ;
 	
-	public void eliminarArista(T datoV1, T datoV2) ;
+	public void removeEdge(T dataV1, T dataV2) ;
 	
 	public ArrayList<Vertex<T>> getVertices();
 

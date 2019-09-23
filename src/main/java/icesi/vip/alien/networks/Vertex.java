@@ -5,34 +5,34 @@ import java.util.HashMap;
 
 public class Vertex<T> {
 	
-	public static final String GRIS = "Gris";
-	public static final String BLANCO = "Blanco";
-	public static final String NEGRO = "Negro";
+	public static final String GREY = "Grey";
+	public static final String WHITE = "White";
+	public static final String BLACK = "Black";
 	
 	private String color;
-	private int distancia;
-	private int descubierto;
-	private int finalizado;
-	private Vertex<T> predecesor;
-	private T dato;
-	private ArrayList<Terna<T>> ternas;
-	private HashMap<String, Terna<T>> hashTernas;
+	private int distance;
+	private int discovered;
+	private int ended;
+	private Vertex<T> predecessor;
+	private T data;
+	private ArrayList<Triple<T>> triples;
+	private HashMap<String, Triple<T>> hashTriples;
 	
 	private ArrayList<Vertex<T>> vertices;
 	
-	public Vertex(T dato){
-		this.dato = dato;
-		ternas = new ArrayList<Terna<T>>();
-		hashTernas = new HashMap<String, Terna<T>>();
+	public Vertex(T data){
+		this.data = data;
+		triples = new ArrayList<triple<T>>();
+		hashTriples = new HashMap<String, Triple<T>>();
 		vertices = new ArrayList<Vertex<T>>();
 	}
 	
-	public void agregarTerna(String nombre, double peso, Vertex<T> vertice){
-		Terna<T> terna = new Terna<T>(nombre, peso, vertice);
-//		if(!(hashTernas.containsKey(nombre))){
-			ternas.add(terna);
-			hashTernas.put(nombre, terna);
-			vertices.add(vertice);			
+	public void addTriple(String name, double weight, Vertex<T> vertex){
+		Triple<T> triple = new Triple<T>(name, weight, vertex);
+//		if(!(hashTriples.containsKey(nombre))){
+			triples.add(triple);
+			hashTriples.put(name, triple);
+			vertices.add(vertex);			
 //		}
 	}
 	
@@ -40,28 +40,28 @@ public class Vertex<T> {
 		return vertices;
 	}
 	
-	public T getDato(){
-		return dato;
+	public T getdata(){
+		return data;
 	}
 	
-	public void setDato(T dato){
-		this.dato = dato;
+	public void setdata(T data){
+		this.data = data;
 	}
 	
-	public int getDescubierto() {
-		return descubierto;
+	public int getDiscovered() {
+		return discovered;
 	}
 
-	public void setDescubierto(int descubierto) {
-		this.descubierto = descubierto;
+	public void setDiscovered(int discovered) {
+		this.discovered = discovered;
 	}
 
-	public int getFinalizado() {
-		return finalizado;
+	public int getEnded() {
+		return ended;
 	}
 
-	public void setFinalizado(int finalizado) {
-		this.finalizado = finalizado;
+	public void setEnded(int ended) {
+		this.ended = ended;
 	}
 
 	public String getColor() {
@@ -72,35 +72,35 @@ public class Vertex<T> {
 		this.color = color;
 	}
 
-	public int getDistancia() {
-		return distancia;
+	public int getDistance() {
+		return distance;
 	}
 
-	public void setDistancia(int distancia) {
-		this.distancia = distancia;
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
-	public Vertex<T> getPredecesor() {
-		return predecesor;
+	public Vertex<T> getPredecessor() {
+		return predecessor;
 	}
 
-	public void setPredecesor(Vertex<T> predecesor) {
-		this.predecesor = predecesor;
+	public void setPredecessor(Vertex<T> predecessor) {
+		this.predecessor = predecessor;
 	}
 
-	public ArrayList<Terna<T>> getTernas() {
-		return ternas;
+	public ArrayList<Triple<T>> getTriples() {
+		return triples;
 	}
 
-	public void setTernas(ArrayList<Terna<T>> ternas) {
-		this.ternas = ternas;
+	public void setTriples(ArrayList<Triple<T>> triples) {
+		this.triples = triples;
 	}
 
-	public HashMap<String, Terna<T>> getHashTernas() {
-		return hashTernas;
+	public HashMap<String, triple<T>> getHashTriples() {
+		return hashTriples;
 	}
 
-	public void setHashTernas(HashMap<String, Terna<T>> hashTernas) {
-		this.hashTernas = hashTernas;
+	public void setHashTriples(HashMap<String, Triple<T>> hashTriples) {
+		this.hashTriples = hashTriples;
 	}
 }
