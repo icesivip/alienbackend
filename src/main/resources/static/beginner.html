@@ -1013,6 +1013,8 @@
         var shadowPrices;
         var fobjective;
         var variableNames
+        var constraintValues
+
         function finalSolution() {
           $(".cover").toggle(400);
           $("#menIteration").empty();
@@ -1037,6 +1039,8 @@
             analysis = data.analysis;
             shadowPrices = analysis.shadowPrice;
             fobjective = data.fobj;
+            constraintValues = data.finalValuesConstraints;
+            reducedC = data.reducedCosts;
             $("#resultTable thead").empty();
             $("#resultTable tbody").empty();
             console.log(data)
@@ -1102,9 +1106,9 @@
 
         function toInfinity(numberI) {
           if (numberI < -999999999999999999)
-          return "-Infinity";
+          return "-&#8734";
           else if (numberI > 999999999999999999)
-          return "Infinity";
+          return "&#8734";
           else return numberI;
         }
 
@@ -1117,10 +1121,10 @@
           $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>"+analysis.equationsConstraints+"</font></h5><h5 class='col-sm-6'><font color='black'>"+analysis.equationsFO+"</font></h5></div>");
           //llena las tablas del analisis
           for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
-            $("#tbody-SP").append('<tr><th id="nameSP0">Constraint '+(index+1)+'</th><td id="fValueSP0">'+ solutionValues[nVarDeci + index] +'</td><td id="sPrice0">'+ shadowPrices[0][index] +'</td><td id="rhsCons0">'+rhsInitM[index + 1]+'</td><td id="pReduceSP0">'+toInfinity(analysis.intervalsDConstraints[index][0])+'</td><td id="pIncreaseSP0">'+toInfinity(analysis.intervalsDConstraints[index][1])+'</td></tr>')
+            $("#tbody-SP").append('<tr><th id="nameSP0">Constraint '+(index+1)+'</th><td id="fValueSP0">'+ constraintValues[index] +'</td><td id="sPrice0">'+ shadowPrices[0][index] +'</td><td id="rhsCons0">'+rhsInitM[index + 1]+'</td><td id="pReduceSP0">'+toInfinity(analysis.intervalsDConstraints[index][0])+'</td><td id="pIncreaseSP0">'+toInfinity(analysis.intervalsDConstraints[index][1])+'</td></tr>')
           }
             for (let index = 0; index < analysis.intervalsDFO.length; index++) {
-              $("#tbody-RC").append('<tr><th id="nameRC0">'+variableNames[index]+'</th><td id="fValueRC0">'+ solutionValues[index] +'</td><td id="rCost0">'+ "por llenar"+'</td><td id="cObj0">'+fobjective[index]+'</td><td id="pReduceRC0">'+toInfinity(analysis.intervalsDFO[index][0])+'</td><td id="pIncreaseRC0">'+toInfinity(analysis.intervalsDFO[index][1])+'</td></tr>')
+              $("#tbody-RC").append('<tr><th id="nameRC0">'+variableNames[index]+'</th><td id="fValueRC0">'+ solutionValues[index] +'</td><td id="rCost0">'+ toInfinity(reducedC[index])+'</td><td id="cObj0">'+fobjective[index]+'</td><td id="pReduceRC0">'+toInfinity(analysis.intervalsDFO[index][0])+'</td><td id="pIncreaseRC0">'+toInfinity(analysis.intervalsDFO[index][1])+'</td></tr>')
           }
      }
 
@@ -1187,10 +1191,18 @@
             var actualMatrix = data.actualMatrix;
             var messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            solutionValues = data.varsValuesSolution;
+            rhsInitM = data.rhsinitialM;
+            nVarDeci = data.nVarDecision;
             analysis = data.analysis;
+            fobjective = data.fobj;
+            reducedC = data.reducedCosts;
+            if(analysis != null)
+            shadowPrices = analysis.shadowPrice;
+            constraintValues = data.finalValuesConstraints;
+
             pointRadius: 5;
             if (analysis == null) {
               $("#mensajeS").empty();

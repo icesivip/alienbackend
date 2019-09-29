@@ -98,16 +98,19 @@ public class Simplex implements Solver {
 	/**
 	 * Creates the constructor of the Simplex class
 	 * 
-	 * @param opti      Indica si se quiere maximizar o minimizar el problema
-	 * @param equations Representa un conjunto de ecuaciones
-	 * @throws Exception especificar cual método arroja la excepcion "se presenta
-	 *                   una excepcion cuando o porque"
+	 * @param opti
+	 *            Indica si se quiere maximizar o minimizar el problema
+	 * @param equations
+	 *            Representa un conjunto de ecuaciones
+	 * @throws Exception
+	 *             especificar cual método arroja la excepcion "se presenta una
+	 *             excepcion cuando o porque"
 	 */
 	public Simplex(String opti, String[] equations) throws Exception {
 		initialM = equations;
 		iterationID = 0;
 		String[] caracteres = equations[0].split(" ");
-//      -2 del 1 z y -2 del = C. No se divide entre 2 por las variables de holgura
+		// -2 del 1 z y -2 del = C. No se divide entre 2 por las variables de holgura
 		nVarDecision = caracteres.length / 2 - 2;
 		try {
 			generateEquaAndFOMatries(equations, opti);
@@ -117,10 +120,10 @@ public class Simplex implements Solver {
 			calculateInitialBase();
 			internalteration(model.getType().equals(Model.MAXIMIZE));
 
-//            solve(model);
-            
+			// solve(model);
+
 		} catch (Exception e) {
-//            throw new Exception("Characters not allowed");
+			// throw new Exception("Characters not allowed");
 			e.printStackTrace();
 		}
 	}
@@ -145,7 +148,7 @@ public class Simplex implements Solver {
 		if (quotientTest()) {
 			internalteration(model.getType().equals(Model.MAXIMIZE));
 			iterationID++;
-//             Final.print(2,2);
+			// Final.print(2,2);
 		} else {
 			double[][] array = Final.getMatrix(0, Final.getRowDimension() - 1, 0, Final.getColumnDimension() - 2)
 					.getArray();
@@ -163,7 +166,7 @@ public class Simplex implements Solver {
 			solution = new Solution(model, valuesSolution);
 			try {
 				messageSolution = findKindOfSolution();
-//            System.out.println(messageSolution);
+				// System.out.println(messageSolution);
 			} catch (Exception ex) {
 				Logger.getLogger(Simplex.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -175,10 +178,12 @@ public class Simplex implements Solver {
 	public double[][] getFObj() {
 		return FObj.getArray();
 	}
+
 	/**
 	 * Rounds the values of the entire matrix to numbers of two decimal places
 	 * 
-	 * @param array Represents a set of values
+	 * @param array
+	 *            Represents a set of values
 	 * @return A set of values with the desired format
 	 */
 	public static double[][] roundMatrix(double[][] array) {
@@ -194,7 +199,8 @@ public class Simplex implements Solver {
 	/**
 	 * Rounds a number to two decimal places
 	 * 
-	 * @param d The number to be rounded
+	 * @param d
+	 *            The number to be rounded
 	 * @return Rounded value with the desired format
 	 */
 	public static double roundDouble(double d) {
@@ -228,19 +234,25 @@ public class Simplex implements Solver {
 				}
 			}
 		}
-//           for (int i = 0; i < Base.length; i++) {
-//                System.out.println(Base[i]);
-//            }
+		// for (int i = 0; i < Base.length; i++) {
+		// System.out.println(Base[i]);
+		// }
 	}
 
 	/**
 	 * Creates an array that composes all input matrix
 	 * 
-	 * @param TAB    Represents the left side of equality
-	 * @param X_B    Represents the matrix where the left side of the equality will be calculated in each iteration.
-	 * @param Fila_z Represents the coeficients of the objective function 
-	 * @param z_v    Represents the coeficients of the objective function in each interation
-	 * @return       Full array given the parameters
+	 * @param TAB
+	 *            Represents the left side of equality
+	 * @param X_B
+	 *            Represents the matrix where the left side of the equality will be
+	 *            calculated in each iteration.
+	 * @param Fila_z
+	 *            Represents the coeficients of the objective function
+	 * @param z_v
+	 *            Represents the coeficients of the objective function in each
+	 *            interation
+	 * @return Full array given the parameters
 	 */
 	public static Matrix CrearTabla(Matrix TAB, Matrix X_B, Matrix Fila_z, Matrix z_v) {
 
@@ -265,10 +277,13 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Create the matrix with the coefficients of the basic variables of the initial matrix
+	 * Create the matrix with the coefficients of the basic variables of the initial
+	 * matrix
 	 * 
-	 * @param A    Current matrix of the actual iteration 
-	 * @param Base Basic values of the initial matrix
+	 * @param A
+	 *            Current matrix of the actual iteration
+	 * @param Base
+	 *            Basic values of the initial matrix
 	 * @return The set of matrix coefficients
 	 */
 	public static Matrix CreaB(Matrix A, int[] Base) {
@@ -282,16 +297,18 @@ public class Simplex implements Solver {
 		}
 
 		Matrix B = new Matrix(B1);
-//             System.out.println("B: ");
-//             B.print(2, 2);
+		// System.out.println("B: ");
+		// B.print(2, 2);
 		return B;
 	}
 
 	/**
 	 * Returns the slack variables of the objective function
 	 * 
-	 * @param ObjF Rpresents the objective function 
-	 * @param Base Set of basic variables
+	 * @param ObjF
+	 *            Rpresents the objective function
+	 * @param Base
+	 *            Set of basic variables
 	 * @return Set of slack variables
 	 */
 	private Matrix takeSlackOF(Matrix ObjF, int[] Base) {
@@ -302,17 +319,19 @@ public class Simplex implements Solver {
 		}
 
 		Matrix C_B = new Matrix(C_B1);
-//             System.out.println("C_B:");
-//             C_B.print(2, 2);
+		// System.out.println("C_B:");
+		// C_B.print(2, 2);
 		return C_B;
 	}
 
 	/**
 	 * Generates the constraints of the matrix without their equalities
 	 * 
-	 * @param equations Problem equation set
-	 * @param isMax    Indicates whether this problem is being maximized or not
-	 * @return  Indication that the constraints were created successfully or not
+	 * @param equations
+	 *            Problem equation set
+	 * @param isMax
+	 *            Indicates whether this problem is being maximized or not
+	 * @return Indication that the constraints were created successfully or not
 	 */
 	private boolean generateConstraintsLeftMatrix(String[] equations, boolean isMax) {
 		double[][] matr = new double[equations.length - 1][];
@@ -327,7 +346,7 @@ public class Simplex implements Solver {
 			double[] equation = new double[nVarDecision + equations.length - 1 + ExcessVarsPos.size()];
 			int j;
 			for (j = 0; j < nVarDecision; j++) {
-//                  el +2 omite la Z que le entra por parámetro  
+				// el +2 omite la Z que le entra por parámetro
 				equation[j] = Double.parseDouble(caracteres[j * 2 + 2]);
 			}
 			try {
@@ -370,23 +389,26 @@ public class Simplex implements Solver {
 			model.addConstraint(matr[i], caracteres[caracteres.length - 2],
 					Double.parseDouble(caracteres[caracteres.length - 1]), "name?");
 		}
-//            System.out.println("cantidad de variables"+toEnter.size() + " <- holgura negativos" + model.getVariableCount());
+		// System.out.println("cantidad de variables"+toEnter.size() + " <- holgura
+		// negativos" + model.getVariableCount());
 		ConsLeft = new Matrix(matr);
 		if (isBigM) {
 			enlargeFO(ExcessVarsPos.size());
 			normalizeBigM(ExcessVarsPos.size() + EqualityConstPos.size(), equations);
 		}
 		System.out.println(model.toString());
-//            System.out.println("Constantes izquierda");
-//            ConsLeft.print(2,2);
+		// System.out.println("Constantes izquierda");
+		// ConsLeft.print(2,2);
 		return isBigM;
 	}
 
 	/**
 	 * Generates the matrix of the objective function and constraints
 	 * 
-	 * @param equations Represents the set of equations of the problem
-	 * @param opti      Indicates whether this problem is being maximized or not.
+	 * @param equations
+	 *            Represents the set of equations of the problem
+	 * @param opti
+	 *            Indicates whether this problem is being maximized or not.
 	 */
 	private void generateEquaAndFOMatries(String[] equations, String opti) {
 		String[] objective = equations[0].split(" ");
@@ -406,7 +428,7 @@ public class Simplex implements Solver {
 			model = new Model(vars, pesos, Model.MINIMIZE);
 
 		FObj = new Matrix(toFO);
-//        FObj.print(2, 2);
+		// FObj.print(2, 2);
 		double[][] toEqua = new double[equations.length - 1][1];
 
 		for (int i = 1; i < equations.length; i++) {
@@ -414,8 +436,8 @@ public class Simplex implements Solver {
 			toEqua[i - 1][0] = Double.parseDouble(caracteres[caracteres.length - 1]);
 		}
 		equalities = new Matrix(toEqua);
-//        System.out.println("igualdades:");
-//        equalities.print(2, 2);
+		// System.out.println("igualdades:");
+		// equalities.print(2, 2);
 	}
 
 	/**
@@ -435,8 +457,8 @@ public class Simplex implements Solver {
 		double masGrande = 0;
 		int posMasG = -1;
 		for (int i = 0; i < eObjec.length; i++) {
-			if ((eObjec[i][0] < 0 && model.getType().equals(Model.MAXIMIZE) && eObjec[i][0] < masGrande)
-					|| (eObjec[i][0] > 0 && !model.getType().equals(Model.MAXIMIZE) && eObjec[i][0] > masGrande)) {
+			if ((roundDouble(eObjec[i][0]) < 0 && model.getType().equals(Model.MAXIMIZE) && eObjec[i][0] < masGrande)
+					|| (roundDouble(eObjec[i][0]) >= 0 && !model.getType().equals(Model.MAXIMIZE) && eObjec[i][0] > masGrande)) {
 				masGrande = eObjec[i][0];
 				posMasG = i;
 			}
@@ -473,6 +495,7 @@ public class Simplex implements Solver {
 	public int getnVarDecision() {
 		return nVarDecision;
 	}
+
 	/**
 	 * Method in charge of conducting class tests
 	 * 
@@ -480,31 +503,31 @@ public class Simplex implements Solver {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-//        Problema normi
-//        Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -5 X2 = 0",
-//                                           "0 Z 1 X1 0 X2 <= 4",
-//                                           "0 Z 0 X1 2 X2 <= 12",
-//                                           "0 Z 3 X1 2 X2 <= 18"});
-//           Gran M method
-		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0",
-														   "0 Z 0.5 X1 0.25 X2 <= 4",
-														   "0 Z 1 X1 3 X2 >= 20",
-														   "0 Z 1 X1 1 X2 = 10" });
-//          Solución no factible
-//          Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
-//                                           "0 Z 0.5 X1 0.25 X2 <= 4",
-//                                           "0 Z 1 X1 3 X2 >= 36",
-//                                           "0 Z 1 X1 1 X2 = 10"});
-//            Problema no acotado
-//              Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -36 X1 -30 X2 3 X3 4 X4 = 0",
-//                                           "0 Z 1 X1 1 X2 -1 X3 0 X4 <= 5",
-//                                           "0 Z 6 X1 5 X2 0 X3 -1 X4 <= 10"});
-//             Infinitas soluciones
-//            Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -60 X1 -35 X2 -20 X3 = 0",
-//                                           "0 Z 8 X1 6 X2 1 X3 <= 48",
-//                                           "0 Z 4 X1 2 X2 1.5 X3 <= 20",
-//                                           "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
-//                                            "0 Z 0 X1 1 X2 0 X3 <= 5"});
+		// Problema normi
+		// Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -3 X1 -5 X2 = 0",
+		// "0 Z 1 X1 0 X2 <= 4",
+		// "0 Z 0 X1 2 X2 <= 12",
+		// "0 Z 3 X1 2 X2 <= 18"});
+		// Gran M method
+		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0", "0 Z 0.5 X1 0.25 X2 <= 4",
+				"0 Z 1 X1 3 X2 >= 20", "0 Z 1 X1 1 X2 = 10" });
+		// Solución no factible
+		// Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
+		// "0 Z 0.5 X1 0.25 X2 <= 4",
+		// "0 Z 1 X1 3 X2 >= 36",
+		// "0 Z 1 X1 1 X2 = 10"});
+		// Problema no acotado
+		// Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -36 X1 -30 X2 3 X3 4
+		// X4 = 0",
+		// "0 Z 1 X1 1 X2 -1 X3 0 X4 <= 5",
+		// "0 Z 6 X1 5 X2 0 X3 -1 X4 <= 10"});
+		// Infinitas soluciones
+		// Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -60 X1 -35 X2 -20 X3 =
+		// 0",
+		// "0 Z 8 X1 6 X2 1 X3 <= 48",
+		// "0 Z 4 X1 2 X2 1.5 X3 <= 20",
+		// "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
+		// "0 Z 0 X1 1 X2 0 X3 <= 5"});
 		s.buildAnalysis();
 		s.getIntervals();
 	}
@@ -512,7 +535,8 @@ public class Simplex implements Solver {
 	/**
 	 * Calculates the positions of the excess variables
 	 * 
-	 * @param equations Represents the equations of the problem
+	 * @param equations
+	 *            Represents the equations of the problem
 	 * @return Set of numbers
 	 */
 	private ArrayList<Integer> calculatePosExcess(String[] equations) {
@@ -528,7 +552,8 @@ public class Simplex implements Solver {
 	/**
 	 * Calculates the positions of the equalities of the restrictions
 	 * 
-	 * @param equations Represents the set of equations of the problem.
+	 * @param equations
+	 *            Represents the set of equations of the problem.
 	 * @return Set of calculated numbers
 	 */
 	private ArrayList<Integer> calculatePosEqualities(String[] equations) {
@@ -544,8 +569,10 @@ public class Simplex implements Solver {
 	/**
 	 * Method in charge of modifying the matrix with the Big M
 	 * 
-	 * @param emes      Indicates the value of the M
-	 * @param equations Set of equations 
+	 * @param emes
+	 *            Indicates the value of the M
+	 * @param equations
+	 *            Set of equations
 	 */
 	private void normalizeBigM(int emes, String[] equations) {
 		System.out.println("emes " + emes);
@@ -557,7 +584,9 @@ public class Simplex implements Solver {
 
 	/**
 	 * Method responsible of representing the new objective function
-	 * @param excess Indicates the value of the excess variable
+	 * 
+	 * @param excess
+	 *            Indicates the value of the excess variable
 	 */
 	private void enlargeFO(int excess) {
 		double[][] newFO = new double[FObj.getRowDimension() + excess][1];
@@ -566,8 +595,8 @@ public class Simplex implements Solver {
 			newFO[i][0] = oldFO[i][0];
 		}
 		FObj = new Matrix(newFO);
-//        System.out.println("FO expandido:");
-//        FObj.print(2, 2);
+		// System.out.println("FO expandido:");
+		// FObj.print(2, 2);
 	}
 
 	/**
@@ -602,7 +631,9 @@ public class Simplex implements Solver {
 	 * Method in charge of indicating the type of solution of the problem.
 	 *
 	 * @return A message indicating the type of solution
-	 * @throws Exception Indicates if a problem was obtained by performing these operations
+	 * @throws Exception
+	 *             Indicates if a problem was obtained by performing these
+	 *             operations
 	 */
 	private String findKindOfSolution() throws Exception {
 		model.isFeasibleSolution(solution);
@@ -613,7 +644,7 @@ public class Simplex implements Solver {
 				}
 			if (model.getVariableAt(i).getName().startsWith("X"))
 				if (solution.getVariableValue(model.getVariableAt(i)) == 0)
-					if (Final.getArray()[0][i] == 0)
+					if (roundDouble(Final.getArray()[0][i]) == 0)
 						return "Infinite solutions!";
 			if ((model.getType().equals(Model.MAXIMIZE) && Final.getArray()[0][i] < 0)
 					|| (model.getType().equals(Model.MINIMIZE) && Final.getArray()[0][i] > 0))
@@ -639,9 +670,30 @@ public class Simplex implements Solver {
 	public double[] getRHSInitialM() {
 		double[] rhs = new double[initialM.length];
 		for (int i = 0; i < initialM.length; i++) {
-			rhs[i] = Double.parseDouble(initialM[i].split(" ")[nVarDecision*2 + 3]);
+			rhs[i] = Double.parseDouble(initialM[i].split(" ")[nVarDecision * 2 + 3]);
 		}
 		return rhs;
+	}
+
+	public double[] getFinalValuesConstraints() {
+		double[] values = new double[initialM.length - 1];
+		if (solution != null) {
+			for (int i = 1; i < initialM.length; i++) {
+				String[] restr = initialM[i].split(" ");
+				double val = 0;
+				for (int j = 2; j < restr.length - 2; j += 2) {
+					try {
+						val += Double.parseDouble(restr[j]) * solution.getVariableValue(model.getVariableAt(j / 2 - 1));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				values[i - 1] = roundDouble(val);
+			}
+		}
+		return values;
 	}
 
 	/**
@@ -679,6 +731,25 @@ public class Simplex implements Solver {
 
 	}
 
+	public double[] getReducedCosts() {
+		double[] reducedCosts = new double[nVarDecision];
+		if (solution != null) {
+			double[][] intervals = analysis.getIntervalsDFO();
+			for (int i = 0; i < nVarDecision; i++) {
+				 try {
+					if(solution.getVariableValue(model.getVariableAt(i)) == 0) {
+						 if(model.getType().equals(model.MAXIMIZE))
+							 reducedCosts[i] = intervals[i][1];
+						 else reducedCosts[i] = -intervals[i][0];
+					 } else reducedCosts[i] = 0;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return reducedCosts;
+	}
+
 	/**
 	 * Indicates the criteria with which the problem is handled
 	 * 
@@ -689,7 +760,7 @@ public class Simplex implements Solver {
 	}
 
 	/**
-	 * Indicates the number of the actual iteration 
+	 * Indicates the number of the actual iteration
 	 * 
 	 * @return Number of the actual iteration
 	 */
@@ -729,8 +800,9 @@ public class Simplex implements Solver {
 	 */
 	public void buildAnalysis() {
 		SlackOF = SlackOF.transpose();
-    	Matrix shadowPrice = SlackOF.times(B_inv);
-    	analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, shadowPrice, equalities, Final);
+		Matrix shadowPrice = SlackOF.times(B_inv);
+		analysis = new SensivilityAnalysis(Base, getEveryVariableName(), model, solution, shadowPrice, equalities,
+				Final);
 	}
 
 	/**
@@ -753,7 +825,8 @@ public class Simplex implements Solver {
 	/**
 	 * Method in charge of modifying the sensitivity analysis
 	 * 
-	 * @param analysis Mdified sensitivity analysis
+	 * @param analysis
+	 *            Mdified sensitivity analysis
 	 */
 	public void setAnalysis(SensivilityAnalysis analysis) {
 		this.analysis = analysis;
