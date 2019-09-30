@@ -21,11 +21,10 @@ public class Triple<T> {
 	/**
 	 * 
 	 */
-	private double weight;
+	private int weight;
 	/**
 	 * 
 	 */
-	private String name;
 	/**
 	 * 
 	 */
@@ -40,8 +39,8 @@ public class Triple<T> {
 	 * @param weight
 	 * @param vertex
 	 */
-	public Triple(String name, double weight, Vertex<T> vertex){
-		this.name = name;
+	public Triple(int weight, Vertex<T> vertex){
+
 		this.weight = weight;
 		this.vertex = vertex;
 	}
@@ -59,23 +58,10 @@ public class Triple<T> {
 	 * 
 	 * @param weight
 	 */
-	public void setWeight(double weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * 
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	/**
 	 * 
 	 * @return

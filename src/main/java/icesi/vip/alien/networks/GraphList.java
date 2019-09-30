@@ -11,9 +11,15 @@
  */
 package icesi.vip.alien.networks;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 /**
@@ -26,29 +32,29 @@ public class GraphList<T> implements GraphListInterface<T> {
     // Attributes
     // -----------------------------------------------------------------
 	/**
-	 * 
+	 * This attribute tells whether or not the graph is directed.
 	 */
 	private boolean isDirected;
 	/**
-	 * 
+	 * This attribute tells whether or not the graph is weighted.
 	 */
 	private boolean isWeighted;
 	/**
-	 * 
+	 * The adjacency list of the graph.
 	 */
 	private ArrayList<Vertex<T>> vertices;
 	/**
-	 * 
+	 * The hash map of vertices which key is the element and the value is the vertex itself.
 	 */
 	private HashMap<T, Vertex<T>> hashVertex;
 	/**
-	 * 
+	 * This String shows the paths taken by the dijkstra's algorithm when it is executed.
 	 */
 	private String paths;
 	/**
 	 * 
 	 */
-	private int counter;
+	private int numEdges;
 	/**
 	 * 
 	 */
@@ -68,7 +74,32 @@ public class GraphList<T> implements GraphListInterface<T> {
 		vertices = new ArrayList<Vertex<T>>();
 		hashVertex = new HashMap<T, Vertex<T>>();
 	}
-	
+	public GraphList(String path) throws IOException {
+		File file = new File(path);
+		FileReader reader = new FileReader(file);
+		BufferedReader in = new BufferedReader(reader);
+		
+		String line = in.readLine();
+		int node = 0;
+		while(line!=null) {
+			Vertex<Integer> nodeA = new Vertex<>(node);
+			vertices.add((Vertex<T>) nodeA);
+			
+			String[] parts = line.split(";");
+			
+			for (int i = 0; i < parts.length; i++) {
+				int weight = Integer.parseInt(parts[i]);
+				if(weight!=-1) {
+					Vertex<Integer> nodeB = new Vertex<>(node);
+					nodeA.addTriple(weight, nodeB);
+				}
+			}
+			
+			line = in.readLine();
+			
+			node++;
+		}
+	}
 	// -----------------------------------------------------------------
     // Methods for add Vertex
     // -----------------------------------------------------------------
@@ -89,7 +120,7 @@ public class GraphList<T> implements GraphListInterface<T> {
     // Methods for add Edge
     // -----------------------------------------------------------------
 	/**
-	 * 
+	 *  añadir sin peso
 	 * @param dataV1
 	 * @param dataV2
 	 */
@@ -101,21 +132,21 @@ public class GraphList<T> implements GraphListInterface<T> {
 			addVertex(dataV2);
 		}
 		if(isDirected){
-			hashVertex.get(dataV1).addTriple(""+counter, -1, hashVertex.get(dataV2));
-			counter++;
+			hashVertex.get(dataV1).addTriple(-1, hashVertex.get(dataV2));
+			numEdges++;
 		}else{
-			hashVertex.get(dataV1).addTriple(""+counter, -1, hashVertex.get(dataV2));
-			counter++;
-			hashVertex.get(dataV2).addTriple(""+counter, -1, hashVertex.get(dataV1));
-			counter++;
+			hashVertex.get(dataV1).addTriple( -1, hashVertex.get(dataV2));
+			numEdges++;
+			hashVertex.get(dataV2).addTriple( -1, hashVertex.get(dataV1));
+			numEdges++;
 		}
 	}
 	
 	@Override
 	/**
-	 * 
+	 * añadir con peso
 	 */
-	public void addEdge(T dataV1, T dataV2, double weight, String name) {
+	public void addEdge(T dataV1, T dataV2, int weight) {
 		if(!hashVertex.containsKey(dataV1)){
 			addVertex(dataV1);
 		}
@@ -123,85 +154,14 @@ public class GraphList<T> implements GraphListInterface<T> {
 			addVertex(dataV2);
 		}
 		if(isDirected){
-			hashVertex.get(dataV1).addTriple(name, weight, hashVertex.get(dataV2));
+			hashVertex.get(dataV1).addTriple(weight, hashVertex.get(dataV2));
 		}else{
-			hashVertex.get(dataV1).addTriple(name, weight, hashVertex.get(dataV2));
-			hashVertex.get(dataV2).addTriple(name, weight, hashVertex.get(dataV1));
+			hashVertex.get(dataV1).addTriple(weight, hashVertex.get(dataV2));
+			hashVertex.get(dataV2).addTriple(weight, hashVertex.get(dataV1));
 		}
 	}
 
-	@Override
-	/**
-	 * 
-	 */
-	public void removeVertex(T data)  {
-		Vertex<T> vertex = hashVertex.get(data);
-		if(vertex == null){
-			// lanzar excepción
-		}else {
-			for(int i = 0; i < vertices.size(); i++){
-	//			if(Vertexs.get(i).getHashTernas().containsKey(data)) {
-	//				Vertexs.get(i).getTriples().remove(Vertexs.get(i).getTriples().indexOf(Vertexs.get(i).getHashTernas().get(data)));
-	//				Vertexs.get(i).getVertexs().remove(Vertexs.get(i).getVertexs().indexOf(data));
-	//				Vertexs.get(i).getHashTernas().remove(data);
-	//			}
-				for(int j = 0; j < vertices.get(i).getTriples().size(); j++){
-					if(vertices.get(i).getTriples().get(j).getVertex().equals(vertex)){
-						vertices.get(i).getTriples().remove(j);
-						vertices.get(i).getHashTriples().remove(vertices.get(i).getTriples().get(j).getName());
-						vertices.get(i).getVertices().remove(j);
-						j--;
-					}
-				}
-			}
-			hashVertex.remove(data);
-			vertices.remove(vertex);
-		}
-	}
 	
-	/**
-	 * 
-	 */
-	public void removeEdge(T dataV1, T dataV2)  {
-		Vertex<T> VertexV1 = searchVertex(dataV1);
-		for(int i = 0; i < VertexV1.getTriples().size(); i++){
-			if(VertexV1.getTriples().get(i).getVertex().getdata().equals(dataV2)){
-				VertexV1.getTriples().remove(i);
-				VertexV1.getVertices().remove(i);
-				i--;
-			}
-		}
-		if(!isDirected){
-			Vertex<T> VertexV2 = searchVertex(dataV2);
-			for(int i = 0; i < VertexV2.getTriples().size(); i++){
-				if(VertexV2.getTriples().get(i).getVertex().getdata().equals(dataV1)){
-					VertexV2.getTriples().remove(i);
-					VertexV2.getVertices().remove(i);
-					i--;
-				}
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * @param dataV1
-	 * @param dataV2
-	 * @param name
-	 */
-	public void eliminarArista(T dataV1, T dataV2, String name)   {
-		Vertex<T> VertexV1 = searchVertex(dataV1);
-		VertexV1.getVertices().remove(VertexV1.getHashTriples().get(name).getVertex());
-		VertexV1.getTriples().remove(VertexV1.getHashTriples().get(name));
-		VertexV1.getHashTriples().remove(name);
-		if(!isDirected){
-			Vertex<T> VertexV2 = searchVertex(dataV2);
-			VertexV2.getVertices().remove(VertexV2.getHashTriples().get(name).getVertex());
-			VertexV2.getTriples().remove(VertexV2.getHashTriples().get(name));
-			VertexV2.getHashTriples().remove(name);
-		}
-	}
-
 	@Override
 	/**
 	 * 
@@ -355,20 +315,27 @@ public class GraphList<T> implements GraphListInterface<T> {
 	
 	//----------------------------------------------------------------------
 
+	/**
+	 * This function utilizes dijkstra's algorithm in order to find the shortest route from a source vertex to all other vertices.
+	 * <b>Pre:</b> The graph must not have negative cycles.
+	 * @param a The source vertex.
+	 * @return An array of integers that represents the distances from the source vertex to every other one.
+	 */
 	@SuppressWarnings("unchecked")
-	private Vertex<T>[] dijkstra(Vertex<T> a) {
+	public int[] dijkstra(Vertex<T> a) {
 
 		boolean[] visited = new boolean[vertices.size()];
 		int[] distance = new int[vertices.size()];
 		Vertex<T>[] parents = new Vertex[vertices.size()];
 		
+		PriorityQueue<Vertex<T>> queue = new PriorityQueue<>();
+		
 		for (int i = 0; i < vertices.size(); i++) {
+			queue.add(vertices.get(i));
 			distance[i] = Integer.MAX_VALUE;
 			parents[i] = null;
 		}
 		
-		Queue<Vertex<T>> queue = new ArrayDeque<>();
-
 		int j = vertices.indexOf(a);
 		distance[j] = 0;
 		queue.add(a);
@@ -379,17 +346,17 @@ public class GraphList<T> implements GraphListInterface<T> {
 
 			if (!visited[k]) {
 				visited[k] = true;
-				for (int i = 0; i < vertices.size(); i++) {
-					if (vertices.get(k).getVertices().contains(vertices.get(i))){
-						int w = (int) vertices.get(k).getTriples().get(vertices.get(k).getVertices().indexOf(vertices.get(i))).getWeight();
+				for (int i = 0; i < u.getTriples().size(); i++) {
+					Vertex<T> adj = u.getTriples().get(i).getVertex();
+						int weight = (int) u.getTriples().get(i).getWeight();
 						if (!visited[i]) {
-							relax(k, i, w, distance, queue, parents);
+							relax(k, i, weight, distance, parents);
 						}
 					}
-				}
+				
 			}
 		}
-		return parents;
+		return distance;
 	}
 	/**
 	 * 
@@ -400,12 +367,12 @@ public class GraphList<T> implements GraphListInterface<T> {
 	 * @param queue
 	 * @param parents
 	 */
-	private void relax (int current, int adjacent, int weight, int []distance, Queue<Vertex<T>> queue, Vertex<T>[] parents) {
+	private void relax(int current, int adjacent, int weight, int []distance, Vertex<T>[] parents) {
 		
 		if (distance[current] + weight < distance[adjacent]) {
 			distance[adjacent] = distance[current] +weight;
 			parents[adjacent] = vertices.get(current);
-			queue.add(vertices.get(adjacent));
+			vertices.get(adjacent).setDistance(distance[adjacent]);
 		}
 		
 	}
@@ -413,7 +380,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 	 * 
 	 */
 	public void pathByDijkstra (T start, T end)  {
-		int goal = vertices.indexOf(searchVertex(end));
+		/*int goal = vertices.indexOf(searchVertex(end));
 		
 		paths = "";
 		Vertex<T> Vertexstart = searchVertex(start);
@@ -423,13 +390,13 @@ public class GraphList<T> implements GraphListInterface<T> {
 		if (parents[vertices.indexOf(vertices.get((int) end))] != null) {
 			pathByDijkstra(start, parents[vertices.indexOf(vertices.get((int) end))].getdata());
 		}
-		paths += vertices.get(goal).getdata()+",";
+		paths += vertices.get(goal).getdata()+",";*/
 	}
 	//----------------------------------------------------------------------
 	/**
 	 * 
 	 * @return
-	 */
+	 *//*
 	public String[][] floydWarshall(){
 		
 		double[][] dist = new double[vertices.size()][vertices.size()];
@@ -461,7 +428,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 			}
 		}
 		return pathBack;
-	}
+	}*/
 	/**
 	 * 
 	 * @param arre
@@ -497,7 +464,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 		int i = vertices.indexOf(searchVertex(start));
 		int j = vertices.indexOf(searchVertex(end));;
 		paths = "";
-		paths = noRepetitions(floydWarshall()[i][j]);
+		//paths = noRepetitions(floydWarshall()[i][j]);
 	}
 
 	/**
