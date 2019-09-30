@@ -20,6 +20,10 @@ public class Simplex implements Solver {
 	 * function to penalize the solution.
 	 */
 	public static final int BIG_M = 1000000;
+	public static final String NOT_FEASIBLE = "Solution not feasible";
+	public static final String INFINITE_SOLUTIONS = "Infinite solutions!";
+	public static final String NOT_BOUNDED = "Solution not bounded";
+	public static final String SOLVED = "Problem finished";
 	/**
 	 * Indicates the model that is being used so far
 	 */
@@ -204,6 +208,8 @@ public class Simplex implements Solver {
 	 * @return Rounded value with the desired format
 	 */
 	public static double roundDouble(double d) {
+		if(Math.abs(d)<0.0001)
+			return 0;
 		DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
 		separadoresPersonalizados.setDecimalSeparator('.');
 		DecimalFormat df = new DecimalFormat("#.###", separadoresPersonalizados);
@@ -512,22 +518,22 @@ public class Simplex implements Solver {
 		Simplex s = new Simplex("MINIMIZE", new String[] { "1 Z -2 X1 -3 X2 = 0", "0 Z 0.5 X1 0.25 X2 <= 4",
 				"0 Z 1 X1 3 X2 >= 20", "0 Z 1 X1 1 X2 = 10" });
 		// Solución no factible
-		// Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
-		// "0 Z 0.5 X1 0.25 X2 <= 4",
-		// "0 Z 1 X1 3 X2 >= 36",
-		// "0 Z 1 X1 1 X2 = 10"});
+//		 Simplex s = new Simplex("MINIMIZE", new String[] {"1 Z -2 X1 -3 X2 = 0",
+//		 "0 Z 0.5 X1 0.25 X2 <= 4",
+//		 "0 Z 1 X1 3 X2 >= 36",
+//		 "0 Z 1 X1 1 X2 = 10"});
 		// Problema no acotado
-		// Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -36 X1 -30 X2 3 X3 4
-		// X4 = 0",
-		// "0 Z 1 X1 1 X2 -1 X3 0 X4 <= 5",
-		// "0 Z 6 X1 5 X2 0 X3 -1 X4 <= 10"});
+//		 Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -36 X1 -30 X2 3 X3 4
+//		 X4 = 0",
+//		 "0 Z 1 X1 1 X2 -1 X3 0 X4 <= 5",
+//		 "0 Z 6 X1 5 X2 0 X3 -1 X4 <= 10"});
 		// Infinitas soluciones
-		// Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -60 X1 -35 X2 -20 X3 =
-		// 0",
-		// "0 Z 8 X1 6 X2 1 X3 <= 48",
-		// "0 Z 4 X1 2 X2 1.5 X3 <= 20",
-		// "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
-		// "0 Z 0 X1 1 X2 0 X3 <= 5"});
+//		 Simplex s = new Simplex("MAXIMIZE", new String[] {"1 Z -60 X1 -35 X2 -20 X3 =
+//		 0",
+//		 "0 Z 8 X1 6 X2 1 X3 <= 48",
+//		 "0 Z 4 X1 2 X2 1.5 X3 <= 20",
+//		 "0 Z 2 X1 1.5 X2 0.5 X3 <= 8",
+//		 "0 Z 0 X1 1 X2 0 X3 <= 5"});
 		s.buildAnalysis();
 		s.getIntervals();
 	}
@@ -640,17 +646,17 @@ public class Simplex implements Solver {
 		for (int i = 0; i < FObj.getArray().length; i++) {
 			if (model.getVariableAt(i).getName().startsWith("A"))
 				if (solution.getVariableValue(model.getVariableAt(i)) != 0) {
-					return "Solution not feasible";
+					return NOT_FEASIBLE;
 				}
 			if (model.getVariableAt(i).getName().startsWith("X"))
 				if (solution.getVariableValue(model.getVariableAt(i)) == 0)
 					if (roundDouble(Final.getArray()[0][i]) == 0)
-						return "Infinite solutions!";
+						return INFINITE_SOLUTIONS;
 			if ((model.getType().equals(Model.MAXIMIZE) && Final.getArray()[0][i] < 0)
 					|| (model.getType().equals(Model.MINIMIZE) && Final.getArray()[0][i] > 0))
-				return "Solution not bounded";
+				return NOT_BOUNDED;
 		}
-		return "Problem finished";
+		return SOLVED;
 	}
 
 	/**

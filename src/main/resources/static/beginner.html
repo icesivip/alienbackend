@@ -1021,8 +1021,8 @@
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
              
           }).then(function (data) {
 
@@ -1095,7 +1095,7 @@
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
+        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+messageSol+"</font></h3>")
           }, function (error) {
             $(".cover").toggle(900);
             alert("Failed to process requests.")
@@ -1184,8 +1184,8 @@
 
 
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
@@ -1273,7 +1273,6 @@
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")  
 
             }
 
