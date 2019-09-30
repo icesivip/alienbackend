@@ -57,9 +57,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 			hashVertex.get(dataV1).addTriple(""+counter, -1, hashVertex.get(dataV2));
 			counter++;
 		}else{
-			hashVertex.get(dataV1).addTriple(""+contador, -1, hashVertex.get(dataV2));
+			hashVertex.get(dataV1).addTriple(""+counter, -1, hashVertex.get(dataV2));
 			counter++;
-			hashVertex.get(dataV2).addTriple(""+contador, -1, hashVertex.get(dataV1));
+			hashVertex.get(dataV2).addTriple(""+counter, -1, hashVertex.get(dataV1));
 			counter++;
 		}
 	}
@@ -67,10 +67,10 @@ public class GraphList<T> implements GraphListInterface<T> {
 	@Override
 	public void addEdge(T dataV1, T dataV2, double weight, String name) {
 		if(!hashVertex.containsKey(dataV1)){
-			agregarVertex(dataV1);
+			addVertex(dataV1);
 		}
 		if(!hashVertex.containsKey(dataV2)){
-			agregarVertex(dataV2);
+			addVertex(dataV2);
 		}
 		if(isDirected){
 			hashVertex.get(dataV1).addTriple(name, weight, hashVertex.get(dataV2));
@@ -95,7 +95,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 				for(int j = 0; j < vertices.get(i).getTriples().size(); j++){
 					if(vertices.get(i).getTriples().get(j).getVertex().equals(vertex)){
 						vertices.get(i).getTriples().remove(j);
-						vertices.get(i).getHashTernas().remove(vertices.get(i).getTriples().get(j).getname());
+						vertices.get(i).getHashTriples().remove(vertices.get(i).getTriples().get(j).getName());
 						vertices.get(i).getVertices().remove(j);
 						j--;
 					}
@@ -129,14 +129,14 @@ public class GraphList<T> implements GraphListInterface<T> {
 
 	public void eliminarArista(T dataV1, T dataV2, String name)   {
 		Vertex<T> VertexV1 = searchVertex(dataV1);
-		VertexV1.getVertices().remove(VertexV1.getHashTernas().get(name).getVertex());
-		VertexV1.getTriples().remove(VertexV1.getHashTernas().get(name));
-		VertexV1.getHashTernas().remove(name);
+		VertexV1.getVertices().remove(VertexV1.getHashTriples().get(name).getVertex());
+		VertexV1.getTriples().remove(VertexV1.getHashTriples().get(name));
+		VertexV1.getHashTriples().remove(name);
 		if(!isDirected){
 			Vertex<T> VertexV2 = searchVertex(dataV2);
-			VertexV2.getVertices().remove(VertexV2.getHashTernas().get(name).getVertex());
-			VertexV2.getTriples().remove(VertexV2.getHashTernas().get(name));
-			VertexV2.getHashTernas().remove(name);
+			VertexV2.getVertices().remove(VertexV2.getHashTriples().get(name).getVertex());
+			VertexV2.getTriples().remove(VertexV2.getHashTriples().get(name));
+			VertexV2.getHashTriples().remove(name);
 		}
 	}
 
@@ -206,12 +206,12 @@ public class GraphList<T> implements GraphListInterface<T> {
 		Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
 		stack.push(s);
 		while(!stack.isEmpty()){
-			Vertex<T> u = queue.pop();
+			Vertex<T> u = stack.pop();
 			for(int i = 0; i < u.getTriples().size(); i++){
 				Vertex<T> v = u.getTriples().get(i).getVertex();
 				if(v.getColor().equals(Vertex.WHITE)){
 					v.setColor(Vertex.GREY);
-					v.setDistance(u.getTriples().get(i).getVertex().getdistance() + 1);
+					v.setDistance(u.getTriples().get(i).getVertex().getDistance() + 1);
 					v.setPredecessor(u);
 					stack.push(u.getTriples().get(i).getVertex());
 				}
@@ -316,7 +316,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 				visited[k] = true;
 				for (int i = 0; i < vertices.size(); i++) {
 					if (vertices.get(k).getVertices().contains(vertices.get(i))){
-						int w = (int) vertices.get(k).getTriples().get(vertices.get(k).getVertices().indexOf(vertices.get(i))).getweight();
+						int w = (int) vertices.get(k).getTriples().get(vertices.get(k).getVertices().indexOf(vertices.get(i))).getWeight();
 						if (!visited[i]) {
 							relax(k, i, w, distance, queue, parents);
 						}
@@ -345,8 +345,8 @@ public class GraphList<T> implements GraphListInterface<T> {
 		
 		Vertex<T>[] parents = dijkstra(Vertexstart);
 		
-		if (parents[vertices.indexOf(vertices.get(fin))] != null) {
-			pathByDijkstra(start, parents[vertices.indexOf(vertices.get(fin))].getdata());
+		if (parents[vertices.indexOf(vertices.get((int) end))] != null) {
+			pathByDijkstra(start, parents[vertices.indexOf(vertices.get((int) end))].getdata());
 		}
 		paths += vertices.get(goal).getdata()+",";
 	}
@@ -385,9 +385,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 		return pathBack;
 	}
 	
-	private String noRepetitions(String arr){
+	private String noRepetitions(String arre){
 
-		String[] arr = arr.split(",");
+		String[] arr = arre.split(",");
 
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr.length; j++) {
@@ -419,10 +419,10 @@ public class GraphList<T> implements GraphListInterface<T> {
 	public void printPath(Vertex<T> s, Vertex<T> v){
 		if(s == v){
 			System.out.println(s.getdata());
-		}else if(v.getPredecesor() == null){
+		}else if(v.getPredecessor() == null){
 			System.out.println("No hay camino de " + s.getdata() + " hasta " + v.getdata());
 		}else{
-			printPath(s, v.getPredecesor());
+			printPath(s, v.getPredecessor());
 			System.out.println(v.getdata());
 		}
 	}

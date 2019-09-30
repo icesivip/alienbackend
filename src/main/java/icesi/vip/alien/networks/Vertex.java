@@ -22,7 +22,7 @@ public class Vertex<T> {
 	
 	public Vertex(T data){
 		this.data = data;
-		triples = new ArrayList<triple<T>>();
+		triples = new ArrayList<Triple<T>>();
 		hashTriples = new HashMap<String, Triple<T>>();
 		vertices = new ArrayList<Vertex<T>>();
 	}
@@ -96,7 +96,7 @@ public class Vertex<T> {
 		this.triples = triples;
 	}
 
-	public HashMap<String, triple<T>> getHashTriples() {
+	public HashMap<String, Triple<T>> getHashTriples() {
 		return hashTriples;
 	}
 
