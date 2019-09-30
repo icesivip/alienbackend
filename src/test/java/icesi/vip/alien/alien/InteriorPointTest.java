@@ -12,7 +12,7 @@ import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
 import model.Model;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class InteriorPointTest {
+public class InteriorPointTest {
 
 	
 	

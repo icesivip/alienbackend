@@ -11,7 +11,7 @@ import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
 import model.Model;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class BranchAndBoundTest {
+public class BranchAndBoundTest {
 
 	private Model model;
 	
