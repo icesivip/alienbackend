@@ -1,7 +1,21 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * $Id$
+ * Icesi University (Cali - Colombia)
+ * VIP ALLIEN 
+ * @Author: Christian Flor christian.flor1@correo.icesi.edu.co>
+ * @Author: Carlos Restrepo carlos.restrepo5@correo.icesi.edu.co>
+ * @Author: Cesar Canales cesarcanales80@gmail.com
+ * @Date: 23 September 2019
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 package icesi.vip.alien.networks;
 
 import java.util.ArrayList;
-
+/**
+ *
+ * @param <T>
+ */
 public interface GraphListInterface<T> {
 	
 	public void addVertex(T data);

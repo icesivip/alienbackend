@@ -1,3 +1,14 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * $Id$
+ * Icesi University (Cali - Colombia)
+ * VIP ALLIEN 
+ * @Author: Christian Flor christian.flor1@correo.icesi.edu.co>
+ * @Author: Carlos Restrepo carlos.restrepo5@correo.icesi.edu.co>
+ * @Author: Cesar Canales cesarcanales80@gmail.com
+ * @Date: 23 September 2019
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 package icesi.vip.alien.networks;
 
 import java.util.ArrayDeque;
@@ -5,19 +16,52 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 import java.util.Stack;
-
+/**
+ *
+ * @param <T>
+ */
 public class GraphList<T> implements GraphListInterface<T> {
 	
+	// -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+	/**
+	 * 
+	 */
 	private boolean isDirected;
+	/**
+	 * 
+	 */
 	private boolean isWeighted;
+	/**
+	 * 
+	 */
 	private ArrayList<Vertex<T>> vertices;
+	/**
+	 * 
+	 */
 	private HashMap<T, Vertex<T>> hashVertex;
+	/**
+	 * 
+	 */
 	private String paths;
-	
+	/**
+	 * 
+	 */
 	private int counter;
-	
+	/**
+	 * 
+	 */
 	private int time;
 	
+	// -----------------------------------------------------------------
+    // Builder
+    // -----------------------------------------------------------------
+	/**
+	 * 
+	 * @param isDirected
+	 * @param isWeighted
+	 */
 	public GraphList(boolean isDirected, boolean isWeighted){
 		this.isDirected = isDirected;
 		this.isWeighted = isWeighted;
@@ -25,19 +69,14 @@ public class GraphList<T> implements GraphListInterface<T> {
 		hashVertex = new HashMap<T, Vertex<T>>();
 	}
 	
-	public ArrayList<Vertex<T>> getVertices(){
-		return vertices;
-	}
-
-	public String getPaths() {
-		return paths;
-	}
-
-	public void setPaths(String paths) {
-		this.paths = paths;
-	}
-
+	// -----------------------------------------------------------------
+    // Methods for add Vertex
+    // -----------------------------------------------------------------
 	@Override
+	/**
+	 * 
+	 * @param data
+	 */
 	public void addVertex(T data) {
 		if(!hashVertex.containsKey(data)){
 			Vertex<T> add = new Vertex<T>(data);
@@ -45,7 +84,15 @@ public class GraphList<T> implements GraphListInterface<T> {
 			hashVertex.put(data, add);
 		}
 	}
-
+	
+	// -----------------------------------------------------------------
+    // Methods for add Edge
+    // -----------------------------------------------------------------
+	/**
+	 * 
+	 * @param dataV1
+	 * @param dataV2
+	 */
 	public void addEdge(T dataV1, T dataV2) {
 		if(!hashVertex.containsKey(dataV1)){
 			addVertex(dataV1);
@@ -63,8 +110,11 @@ public class GraphList<T> implements GraphListInterface<T> {
 			counter++;
 		}
 	}
-
+	
 	@Override
+	/**
+	 * 
+	 */
 	public void addEdge(T dataV1, T dataV2, double weight, String name) {
 		if(!hashVertex.containsKey(dataV1)){
 			addVertex(dataV1);
@@ -81,6 +131,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void removeVertex(T data)  {
 		Vertex<T> vertex = hashVertex.get(data);
 		if(vertex == null){
@@ -106,6 +159,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void removeEdge(T dataV1, T dataV2)  {
 		Vertex<T> VertexV1 = searchVertex(dataV1);
 		for(int i = 0; i < VertexV1.getTriples().size(); i++){
@@ -127,6 +183,12 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 	}
 
+	/**
+	 * 
+	 * @param dataV1
+	 * @param dataV2
+	 * @param name
+	 */
 	public void eliminarArista(T dataV1, T dataV2, String name)   {
 		Vertex<T> VertexV1 = searchVertex(dataV1);
 		VertexV1.getVertices().remove(VertexV1.getHashTriples().get(name).getVertex());
@@ -141,6 +203,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public Vertex<T> searchVertex(T data)  {
 		Vertex<T> vertex = hashVertex.get(data);
 		if(vertex == null){
@@ -326,7 +391,15 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 		return parents;
 	}
-
+	/**
+	 * 
+	 * @param current
+	 * @param adjacent
+	 * @param weight
+	 * @param distance
+	 * @param queue
+	 * @param parents
+	 */
 	private void relax (int current, int adjacent, int weight, int []distance, Queue<Vertex<T>> queue, Vertex<T>[] parents) {
 		
 		if (distance[current] + weight < distance[adjacent]) {
@@ -336,7 +409,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 */
 	public void pathByDijkstra (T start, T end)  {
 		int goal = vertices.indexOf(searchVertex(end));
 		
@@ -351,7 +426,10 @@ public class GraphList<T> implements GraphListInterface<T> {
 		paths += vertices.get(goal).getdata()+",";
 	}
 	//----------------------------------------------------------------------
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String[][] floydWarshall(){
 		
 		double[][] dist = new double[vertices.size()][vertices.size()];
@@ -384,7 +462,11 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 		return pathBack;
 	}
-	
+	/**
+	 * 
+	 * @param arre
+	 * @return
+	 */
 	private String noRepetitions(String arre){
 
 		String[] arr = arre.split(",");
@@ -408,7 +490,9 @@ public class GraphList<T> implements GraphListInterface<T> {
 		}
 		return paths;
 	}
-	
+	/**
+	 * 
+	 */
 	public void pathByFloyd(T start, T end) {
 		int i = vertices.indexOf(searchVertex(start));
 		int j = vertices.indexOf(searchVertex(end));;
@@ -416,6 +500,11 @@ public class GraphList<T> implements GraphListInterface<T> {
 		paths = noRepetitions(floydWarshall()[i][j]);
 	}
 
+	/**
+	 * 
+	 * @param s
+	 * @param v
+	 */
 	public void printPath(Vertex<T> s, Vertex<T> v){
 		if(s == v){
 			System.out.println(s.getdata());
@@ -426,7 +515,31 @@ public class GraphList<T> implements GraphListInterface<T> {
 			System.out.println(v.getdata());
 		}
 	}
+	
+	// -----------------------------------------------------------------
+    // Methods Atributes
+    // -----------------------------------------------------------------
+	/**
+	 * 
+	 */
+	public ArrayList<Vertex<T>> getVertices(){
+		return vertices;
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPaths() {
+		return paths;
+	}
+	/**
+	 * 
+	 * @param paths
+	 */
+	public void setPaths(String paths) {
+		this.paths = paths;
+	}
 	
 	
 }
