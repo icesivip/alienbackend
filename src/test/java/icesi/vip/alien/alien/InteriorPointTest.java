@@ -1,8 +1,9 @@
 package icesi.vip.alien.alien;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -186,7 +187,7 @@ public class InteriorPointTest {
 	
 	
 	@Test
-	void interiorPointMaxinimize() {
+	public void interiorPointMaxinimize() {
 			StageOne();
 			try {
 			InteriorPointContainer jar= new InteriorPointContainer(model);
@@ -205,7 +206,7 @@ public class InteriorPointTest {
 			}
 	}
 	@Test
-	void interiorPointMinimize() {
+	public void interiorPointMinimize() {
 			StageTwo();
 			try {
 			InteriorPointContainer jar= new InteriorPointContainer(model);
@@ -221,7 +222,7 @@ public class InteriorPointTest {
 			}
 	}
 	@Test
-	void interiorPointNotFasible() {
+	public void interiorPointNotFasible() {
 		StageThree();
 		try {
 		InteriorPointContainer jar= new InteriorPointContainer(model);
@@ -237,7 +238,7 @@ public class InteriorPointTest {
 		}
 	}
 	@Test
-	void interiorPointNotAcotated() {
+	public void interiorPointNotAcotated() {
 		StageFour();
 		try {
 		InteriorPointContainer jar= new InteriorPointContainer(model);
@@ -253,7 +254,7 @@ public class InteriorPointTest {
 		}
 	}
 	@Test
-	void interiorPointInfiniteSolution() {
+	public void interiorPointInfiniteSolution() {
 		StageFive();
 		try {
 			// z 31 x1 8 x2 3 x3 3 x4 9
