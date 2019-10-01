@@ -798,11 +798,13 @@ public class Simplex implements Solver {
 	 * @return
 	 */
 	public double[] getTheta() {
+		if(theta!= null) {
 		double[] thetaCopy = new double[theta.length];
 		for (int i = 0; i < thetaCopy.length; i++) {
 			thetaCopy[i] = roundDouble(theta[i]);
 		}
 		return thetaCopy;
+		} else return null;
 	}
 
 	/**
