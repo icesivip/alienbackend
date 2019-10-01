@@ -331,7 +331,7 @@
           <!-- Page Heading -->
           <div class="text-center">
             <h1>Simplex Method </h1>
-            <h2>Step by step mode </h2>
+            <h2>Solver </h2>
           </div>
 
         </div>
@@ -569,7 +569,7 @@
 
 
 
-              <div id="resultTable-cont" class="table-responsive">
+              <div style="display: none" id="resultTable-cont" class="table-responsive">
                 <h2 class="text-center">Data Table</h2>
                 <div id="menIteration"> </div>
                 <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
@@ -587,13 +587,33 @@
                 </table>
 
                 <br>
+                <div class="row">
 
-              </div>
-              <div id="mensajeS">
+                  <div class="col">
+                    <button onclick=" back()" id="but2" class="btn btn-outline-secondary btn-icon-split"
+                      type="button">
+
+                      <span class="text" id="finalS">Last step</span>
+                    </button>
+
+                  </div>
+
+                  <div class="col">
+                    <button onclick="nextSolution()" id="but2" class="btn btn-outline-secondary btn-icon-split"
+                      type="button">
+
+                      <span class="text" id="StepB">Next step</span>
+                    </button>
+                  </div>
+                </div>
+
+                <br>
+                <div id="mensajeS">
+                </div>
 
               </div>
               
-              <div class="table-responsive" id = "tableReducedCosts">
+              <div style="display: none" class="table-responsive" id = "tableReducedCosts">
 
                 <h2 class="text-center">Reduced costs table</h2>
                
@@ -636,7 +656,7 @@
                 </table>
                 </div>
 
-                <div  class="table-responsive" id = "tableShadowPrices">
+                <div style="display: none" class="table-responsive" id = "tableShadowPrices">
 
                   <h2 class="text-center">Shadow prices table</h2>
                  
@@ -676,8 +696,8 @@
       
       
                   </table>
+                  <hr>
                   </div>
-              <hr>
 
 
             </form>
@@ -745,6 +765,7 @@
           $.ajax({
             url: urlFile
           }).then(function (data) {
+            
             console.log(data);
             var split = data.data.split('|');
             var title = split[0]
@@ -1012,8 +1033,9 @@
         var rhsInitM;
         var shadowPrices;
         var fobjective;
-        var variableNames
-        var constraintValues
+        var variableNames;
+        var constraintValues;
+        var messageSol;
 
         function finalSolution() {
           $(".cover").toggle(400);
@@ -1021,15 +1043,15 @@
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
-            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            url: "http://localhost:8080/simplexMethod" + string
+            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            //url: "http://localhost:8080/simplexMethod" + string
              
           }).then(function (data) {
-
+            $("#resultTable-cont").show();
             $(".cover").toggle(600);
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
-            var messageSol = data.messageSol;
+            messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
             solutionValues = data.varsValuesSolution;
             var theta = data.theta;
@@ -1080,22 +1102,7 @@
                 }
               }
             }
-            $("#mensajeS").empty();
-          $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
-          var tableContent = "";
-          for (let index = 0; index < variableNames.length; index++) {
-          tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
-          }
-          tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
-          $("#mensajeS").append("<h3 class = 'text-center'>Results</h3>"
-          +'<table class="table table-bordered" width="100%" cellspacing="0">'
-          +'<thead class="white-text bg-primary">'
-          +'<tr> <th> <font color="#fff">Var</font></th>'
-          +'<th> <font color="#fff">Value</font></th>'
-          +'</tr> </thead> <tbody>' + tableContent
-          +'</tbody></table>');
-        $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+messageSol+"</font></h3>")
+            showSolution();
           }, function (error) {
             $(".cover").toggle(900);
             alert("Failed to process requests.")
@@ -1113,6 +1120,8 @@
         }
 
         function analysisS() {
+        $("#tableReducedCosts").show();
+        $("#tableShadowPrices").show();
       $("#Analysis").remove();
       $("#tbody-RC").empty();
       $("#tbody-SP").empty();
@@ -1172,24 +1181,25 @@
 
           return "?type=" + type + "&" + "iteration=" + iteration + "&" + "equations=" + obfun + menObj;
         }
-        veces = 0;
+        
+        veces = -1;
         termino = false;
-        function nextSolution() {
-          $("#menIteration").empty();
 
-          $("#menIteration").text("Iteration: " + veces);
+        function back() {
+          if(veces>0)
+          veces--;
           console.log(veces)
           var rest = varCount + 1
           var string = constructRequestString2(veces);
 
-
           $.ajax({
-            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            url: "http://localhost:8080/simplexMethod" + string
+            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            //url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
+            $("#resultTable-cont").show();
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
-            var messageSol = data.messageSol;
+            messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
             var theta = data.theta;
             var varsBase = data.varsBase;
@@ -1202,7 +1212,10 @@
             if(analysis != null)
             shadowPrices = analysis.shadowPrice;
             constraintValues = data.finalValuesConstraints;
-
+            if(operationsDone != null)
+            $("#menIteration").text("Iteration: " + veces + " " + operationsDone);
+            else
+            $("#menIteration").text("Iteration: " + veces);
             pointRadius: 5;
             if (analysis == null) {
               $("#mensajeS").empty();
@@ -1252,14 +1265,121 @@
                 }
 
               }
-              veces++;
+
+            }
+              $("#mensajeS").empty();
+              $("#tableShadowPrices").hide();
+              $("#tableReducedCosts").hide();
+          }, function (error) {
+            $(".cover").toggle(900);
+            alert("Failed to process requests.")
+
+            console.log(error);
+          });
+        }
+        function nextSolution() {
+          veces++;
+          console.log(veces)
+          var rest = varCount + 1
+          var string = constructRequestString2(veces);
+
+
+          $.ajax({
+            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            //url: "http://localhost:8080/simplexMethod" + string
+          }).then(function (data) {
+            $("#resultTable-cont").show();
+            variableNames = data.everyVariableName;
+            var actualMatrix = data.actualMatrix;
+            messageSol = data.messageSol;
+            var operationsDone = data.operationsDone;
+            var theta = data.theta;
+            var varsBase = data.varsBase;
+            solutionValues = data.varsValuesSolution;
+            rhsInitM = data.rhsinitialM;
+            nVarDeci = data.nVarDecision;
+            analysis = data.analysis;
+            fobjective = data.fobj;
+            reducedC = data.reducedCosts;
+            if(analysis != null){
+            shadowPrices = analysis.shadowPrice;
+            veces--;
+            }
+            constraintValues = data.finalValuesConstraints;
+            if(operationsDone != null)
+            $("#menIteration").text("Iteration: " + veces + " " + operationsDone);
+            else
+            $("#menIteration").text("Iteration: " + veces);
+            pointRadius: 5;
+            if (analysis == null) {
+              $("#mensajeS").empty();
+              console.log("entro:" + data.messageSol)
+
+              $("#resultTable thead").empty();
+              $("#resultTable tbody").empty();
+              console.log(data)
+
+              var p1 = new Promise((resolve, reject) => {
+                $("#resultTable thead").append("<tr></tr>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Basics Variables</font></th>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Z</font></th>");
+                for (index = 0; index < variableNames.length; index++) {
+                  $("#resultTable thead").find("tr").append("<th><font color='#fff'>" + variableNames[index] + "</font></th>");
+
+                }
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>RHS</font></th>");
+                $("#resultTable thead").find("tr").append("<th><font color='#fff'>Theta</font></th>");
+
+                resolve();
+              });
+
+              for (let index = 0; index < actualMatrix.length; index++) {
+
+                if (index == 0) {
+                  $("#resultTable tbody").append("<tr></tr>");
+                  $("#resultTable tbody").find("tr").append("<td>Z</td>");
+                  $("#resultTable tbody").find("tr").append("<td>1</td>");
+                  for (let j = 0; j < actualMatrix[0].length; j++) {
+                    $("#resultTable tbody").find("tr").append("<td>" + actualMatrix[0][j] + "</td>");
+                  }
+                  $("#resultTable tbody").find("tr").append("<td></td>");
+                } else if (index > 0) {
+
+                  console.log("index:" + index + " valor:" + varsBase[index - 1])
+                  $("#resultTable tbody").append("<tr id='row" + index + "'></tr>");
+                  $("#resultTable tbody").find("#row" + index).append("<td>" + varsBase[index - 1] + "</td>");
+                  $("#resultTable tbody").find("#row" + index).append("<td>0</td>");
+                  for (let j = 0; j < actualMatrix[0].length; j++) {
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
+                  }
+                  if (theta != null) {
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                  }
+
+                }
+
+              }
 
             }
             if (analysis != null) {
               termino = true;
+             showSolution();
              
-              $("#mensajeS").empty();
-          $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>")
+            }
+
+
+          }, function (error) {
+            $(".cover").toggle(900);
+            alert("Failed to process requests.")
+
+            console.log(error);
+          });
+        }
+
+        function showSolution() {
+          $("#mensajeS").empty();
+          $("#mensajeS").append("<h3><font color= #1cc88a >" + messageSol + "</font></h3>");
+          if(messageSol=="Problem finished" || messageSol=="Infinite solutions!"){
           var tableContent = "";
           for (let index = 0; index < variableNames.length; index++) {
           tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
@@ -1273,18 +1393,8 @@
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-
-            }
-
-
-          }, function (error) {
-            $(".cover").toggle(900);
-            alert("Failed to process requests.")
-
-            console.log(error);
-          });
+          }
         }
-
         function exportToJson(objectData) {
           let filename = "Problem_" + document.getElementById("cTitle").value + ".json";
           let contentType = "application/json;charset=utf-8;";
