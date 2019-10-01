@@ -1,6 +1,7 @@
 package icesi.vip.alien.alien;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,12 +45,7 @@ public class AlienController {
 		String[] equas = equations.split("n");
 		Simplex simplex = new Simplex(opti, equas);
 		if (iteration.equals("F")) {
-			double[][] finalFinal = null;
-			double[][] sig = simplex.nextIteration();
-			while (!sig.equals(finalFinal)) {
-				finalFinal = sig;
-				sig = simplex.nextIteration();
-			}
+			simplex.solve(null);
 		} else {
 			for (int i = 0; i < Integer.parseInt(iteration); i++) {
 				simplex.nextIteration();

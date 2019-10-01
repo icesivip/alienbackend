@@ -236,7 +236,9 @@
             align-items: stretch;
             width: 100%;
           }
-
+          input[type=number] {
+            width: 100%;
+        }
           .container1 {
             position: relative;
             text-align: center;
@@ -257,18 +259,35 @@
 
           }
 
-          form.user .form-control-user {
+          form.user .form-control-user{
+            font-size: larger;
+            border-radius: .35rem;
+            padding: 1.5rem 1rem;
+             width: 100%;
+          }
+         
+          #cTitle{
             font-size: larger;
             border-radius: 10rem;
             padding: 1.5rem 1rem;
           }
-
+          #cVariable{
+            font-size: larger;
+            border-radius: 10rem;
+            padding: 1.5rem 1rem;
+          }
+          #goConstraint{
+            font-size: larger;
+            border-radius: 10rem;
+            padding: 1.5rem 1rem;
+          }
           .btn-icon-split {
 
             position: relative;
 
 
           }
+
 
           #but2 {
 
@@ -391,7 +410,7 @@
               <div class="table-responsive">
                 <h2 class="text-center">Objective Function</h2>
                 <table class="table table-bordered" id="result" width="100%" cellspacing="0">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
                     <tr class="text-center" id="of-head">
                       <th>
                         <font color="#fff">Type</font>
@@ -418,9 +437,9 @@
 
                         </select>
                       </td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
 
 
                     </tr>
@@ -443,7 +462,7 @@
               <div class="table-responsive">
                 <h2 class="text-center">Constraint Table</h2>
                 <table class="table table-bordered" width="100%" cellspacing="0">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
                     <tr class="text-center" id="thead-tr">
                       <th>
                         <font color="#fff">X1</font>
@@ -464,16 +483,16 @@
                   </thead>
                   <tbody id="table-body">
                     <tr>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01" required class="form-control form-control-user"></td>
+                      <td><input type="number" step="0.01"  required class="form-control form-control-user" ></td>
                       <td> <select>
                           <option>&lt=</option>
                           <option>&gt=</option>
                           <option>=</option>
                         </select>
                       </td>
-                      <td><input type="number" step="0.01" required></td>
+                      <td><input type="number" step="0.01"  required class="form-control form-control-user"></td>
                     </tr>
 
 
@@ -554,7 +573,7 @@
                 <h2 class="text-center">Data Table</h2>
                 <div id="menIteration"> </div>
                 <table class="table table-bordered" width="100%" cellspacing="0" id="resultTable">
-                  <thead class="bg-gradient-primary">
+                  <thead class="white-text bg-primary">
 
 
                   </thead>
@@ -581,7 +600,7 @@
                 <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
 
                       
-                    <thead class="bg-gradient-primary">
+                    <thead class="white-text bg-primary">
                         
                         <tr id="thead-RC">
                             <th>
@@ -624,7 +643,7 @@
                   <table class="table table-bordered" id="tReduced" width="100%" cellspacing="0">
   
                         
-                      <thead class="bg-gradient-primary">
+                      <thead class="white-text bg-primary">
                           
                           <tr id="thead-SP">
                               <th>
@@ -865,10 +884,10 @@
         function generateNewConsRow(count) {
           var st = "<tr>";
           for (let index = 0; index < count; index++) {
-            st += "<td><input type='number' step='0.01' required></td>";
+            st += "<td><input type='number' step='0.01' required class='form-control form-control-user'></td>";
 
           }
-          st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required></td></tr>"
+          st += "<td> <select><option>&lt=</option><option>&gt=</option><option>=</option></select></td><td><input type='number' step='0.01' required class='form-control form-control-user'></td></tr>"
           return st;
         }
 
@@ -885,10 +904,10 @@
         function addVar() {
           $("#thead-tr th:nth-child(" + (varCount) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
           for (let i = 0; i < consCount; i++) {
-              $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' required></td>");
+              $("#table-body tr:nth-child("+(i+1)+") td:nth-child("+varCount+")").after("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
               }
           $("#of-head th:nth-child(" + (varCount + 1) + ")").after("<th><font color='#fff'>X" + (varCount + 1) + "</font></th>");
-          $("#of-body tr").append("<td><input type='number' step='0.01' required></td>");
+          $("#of-body tr").append("<td><input type='number' step='0.01' required class='form-control form-control-user'></td>");
 
 
           varCount++;
@@ -994,14 +1013,16 @@
         var shadowPrices;
         var fobjective;
         var variableNames
+        var constraintValues
+
         function finalSolution() {
           $(".cover").toggle(400);
           $("#menIteration").empty();
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
              
           }).then(function (data) {
 
@@ -1018,6 +1039,8 @@
             analysis = data.analysis;
             shadowPrices = analysis.shadowPrice;
             fobjective = data.fobj;
+            constraintValues = data.finalValuesConstraints;
+            reducedC = data.reducedCosts;
             $("#resultTable thead").empty();
             $("#resultTable tbody").empty();
             console.log(data)
@@ -1064,15 +1087,15 @@
           tableContent +='<tr><th><font>'+variableNames[index]+'</font></th><td>'+solutionValues[index]+'</td></tr>';
           }
           tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
-          $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
+          $("#mensajeS").append("<h3 class = 'text-center'>Results</h3>"
           +'<table class="table table-bordered" width="100%" cellspacing="0">'
-          +'<thead class="bg-gradient-primary">'
+          +'<thead class="white-text bg-primary">'
           +'<tr> <th> <font color="#fff">Var</font></th>'
           +'<th> <font color="#fff">Value</font></th>'
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")
+        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+messageSol+"</font></h3>")
           }, function (error) {
             $(".cover").toggle(900);
             alert("Failed to process requests.")
@@ -1083,9 +1106,9 @@
 
         function toInfinity(numberI) {
           if (numberI < -999999999999999999)
-          return "-Infinity";
+          return "-&#8734";
           else if (numberI > 999999999999999999)
-          return "Infinity";
+          return "&#8734";
           else return numberI;
         }
 
@@ -1098,10 +1121,10 @@
           $("#mensajeS").append("<div class='row'><h5 class='col-sm-6'><font color='black'>"+analysis.equationsConstraints+"</font></h5><h5 class='col-sm-6'><font color='black'>"+analysis.equationsFO+"</font></h5></div>");
           //llena las tablas del analisis
           for (let index = 0; index < analysis.intervalsDConstraints.length; index++) {
-            $("#tbody-SP").append('<tr><th id="nameSP0">Constraint '+(index+1)+'</th><td id="fValueSP0">'+ solutionValues[nVarDeci + index] +'</td><td id="sPrice0">'+ shadowPrices[0][index] +'</td><td id="rhsCons0">'+rhsInitM[index + 1]+'</td><td id="pReduceSP0">'+toInfinity(analysis.intervalsDConstraints[index][0])+'</td><td id="pIncreaseSP0">'+toInfinity(analysis.intervalsDConstraints[index][1])+'</td></tr>')
+            $("#tbody-SP").append('<tr><th id="nameSP0">Constraint '+(index+1)+'</th><td id="fValueSP0">'+ constraintValues[index] +'</td><td id="sPrice0">'+ shadowPrices[0][index] +'</td><td id="rhsCons0">'+rhsInitM[index + 1]+'</td><td id="pReduceSP0">'+toInfinity(analysis.intervalsDConstraints[index][0])+'</td><td id="pIncreaseSP0">'+toInfinity(analysis.intervalsDConstraints[index][1])+'</td></tr>')
           }
             for (let index = 0; index < analysis.intervalsDFO.length; index++) {
-              $("#tbody-RC").append('<tr><th id="nameRC0">'+variableNames[index]+'</th><td id="fValueRC0">'+ solutionValues[index] +'</td><td id="rCost0">'+ "por llenar"+'</td><td id="cObj0">'+fobjective[index]+'</td><td id="pReduceRC0">'+toInfinity(analysis.intervalsDFO[index][0])+'</td><td id="pIncreaseRC0">'+toInfinity(analysis.intervalsDFO[index][1])+'</td></tr>')
+              $("#tbody-RC").append('<tr><th id="nameRC0">'+variableNames[index]+'</th><td id="fValueRC0">'+ solutionValues[index] +'</td><td id="rCost0">'+ toInfinity(reducedC[index])+'</td><td id="cObj0">'+fobjective[index]+'</td><td id="pReduceRC0">'+toInfinity(analysis.intervalsDFO[index][0])+'</td><td id="pIncreaseRC0">'+toInfinity(analysis.intervalsDFO[index][1])+'</td></tr>')
           }
      }
 
@@ -1161,18 +1184,26 @@
 
 
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
             var messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            solutionValues = data.varsValuesSolution;
             var theta = data.theta;
             var varsBase = data.varsBase;
+            solutionValues = data.varsValuesSolution;
+            rhsInitM = data.rhsinitialM;
+            nVarDeci = data.nVarDecision;
             analysis = data.analysis;
+            fobjective = data.fobj;
+            reducedC = data.reducedCosts;
+            if(analysis != null)
+            shadowPrices = analysis.shadowPrice;
+            constraintValues = data.finalValuesConstraints;
 
+            pointRadius: 5;
             if (analysis == null) {
               $("#mensajeS").empty();
               console.log("entro:" + data.messageSol)
@@ -1236,13 +1267,12 @@
           tableContent += '<tr><th><font>Z</font></th><td>'+solutionValues[variableNames.length]+'</td></tr>';
           $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
           +'<table class="table table-bordered" width="100%" cellspacing="0">'
-          +'<thead class="bg-gradient-primary">'
+          +'<thead class="white-text bg-primary">'
           +'<tr> <th> <font color="#fff">Var</font></th>'
           +'<th> <font color="#fff">Value</font></th>'
           +'</tr> </thead> <tbody>' + tableContent
           +'</tbody></table>');
         $("#mensajeS").append('<div class="row"><div class="col-sm-5"></div><div class="col"><button onclick="analysisS()" id = "Analysis" class="btn btn-outline-success btn-icon-split" type="button"><span class="text">Sensitivity Analysis</span> </button></div><div class="col"></div></div>');
-        $("#mensajeS").prepend("<h3><font color= #1cc88a >"+mensajeSol+"</font></h3>")  
 
             }
 

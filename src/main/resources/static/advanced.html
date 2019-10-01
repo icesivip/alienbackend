@@ -245,6 +245,27 @@
                         text-align: center;
                     }
 
+                    form.user .form-control-user{
+                        font-size: larger;
+                        border-radius: .35rem;
+                        padding: 1.5rem 1rem;
+                        width: 100%;
+                    }
+                    #cTitle{
+                        font-size: larger;
+                        border-radius: 10rem;
+                        padding: 1.5rem 1rem;
+                    }
+                    #nVariable{
+                        font-size: larger;
+                        border-radius: 10rem;
+                        padding: 1.5rem 1rem;
+                    }
+                    #nConstraints{
+                        font-size: larger;
+                        border-radius: 10rem;
+                        padding: 1.5rem 1rem;
+                    }
                     .cover {
                         opacity: 0.8;
                         background-color: #ccc;
@@ -315,7 +336,7 @@
 
                                         <div class="form-group2">
                                             <div class="col-sm-14 ">
-                                                <input type="text" class="form-control form-control-user" id="cTitle" required="">
+                                                <input type="text" class="form-control form-control-user" id="cTitle" required class="form-control form-control-user">
                                             </div>
                                         </div>
 
@@ -342,7 +363,7 @@
 
                                         <div class="form-group row ">
                                             <div class="col-sm-10 mb-3 mb-sm-0">
-                                                <input type="number" class="form-control form-control-user" id="nVariable">
+                                                <input type="number" class="form-control form-control-user" id="nVariable" >
                                             </div>
 
                                         </div>
@@ -386,7 +407,7 @@
                                     <table class="table table-bordered" id="result" width="100%" cellspacing="0">
 
 
-                                        <thead class="bg-gradient-primary">
+                                        <thead class="white-text bg-primary">
 
                                             <tr id="thead-tr">
                                                 <th>
@@ -410,15 +431,15 @@
                                         <tbody id="table-entries">
                                             <tr>
                                                 <td>1</td>
-                                                <td><input type="number" step="0.01" id="cX1" required></td>
-                                                <td><input type="number" step="0.01" id="cX2" required></td>
+                                                <td><input type="number" step="0.01" id="cX1" required class="form-control form-control-user"></td>
+                                                <td><input type="number" step="0.01" id="cX2" required class="form-control form-control-user"></td>
                                                 <td>=</td>
                                                 <td>0</td>
                                             </tr>
                                             <tr>
                                                 <td>0</td>
-                                                <td><input type="number" step="0.01" id="X11" required></td>
-                                                <td><input type="number" step="0.01" id="X12" required></td>
+                                                <td><input type="number" step="0.01" id="X11" required class="form-control form-control-user"></td>
+                                                <td><input type="number" step="0.01" id="X12" required class="form-control form-control-user"></td>
                                                 <td>
                                                     <select id="r1">
                                                         <option>&lt;=</option>
@@ -426,7 +447,7 @@
                                                         <option>=</option>
                                                     </select>
                                                 </td>
-                                                <td><input type='number' step='0.01' id="rv1" required></td>
+                                                <td><input type='number' step='0.01' id="rv1" required class="form-control form-control-user"></td>
                                             </tr>
 
 
@@ -506,7 +527,7 @@
                                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
 
 
-                                            <thead class="bg-gradient-primary">
+                                            <thead class="white-text bg-primary">
 
                                                 <tr id="thead-ans">
                                                     <th>
@@ -605,7 +626,7 @@
                         <table class="table table-bordered" id="result" width="100%" cellspacing="0">
        
                               
-                            <thead class="bg-gradient-primary">
+                            <thead class="white-text bg-primary">
                                 
                                 <tr id="thead-ans">
                                     <th>
@@ -881,10 +902,10 @@
         function generateNewConsRow(count) {
             var st = "<tr><td>0</td>";
             for (let index = 1; index <= count; index++) {
-                st += "<td><input type='number' step='0.01' id='X" + consCount + index + "'required></td>";
+                st += "<td><input type='number' step='0.01' id='X" + consCount + index + "'required class='form-control form-control-user'></td>";
 
             }
-            st += "<td> <select id='r" + consCount + "'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv" + consCount + "'required></td></tr>"
+            st += "<td> <select id='r" + consCount + "'><option>&lt;=</option><option>&gt;=</option><option>=</option></select></td><td><input type='number' step='0.01'id='rv" + consCount + "'required class='form-control form-control-user'></td></tr>"
             return st;
         }
         function removeCons() {
@@ -899,10 +920,10 @@
 
             varCount++;
             $("#thead-tr th:nth-child(" + varCount + ")").after("<th> <font color='#fff'>X" + varCount + "</font></th>");
-            $("#table-entries tr:nth-child(" + 1 + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='cX" + varCount + "'required></td>");
+            $("#table-entries tr:nth-child(" + 1 + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='cX" + varCount + "'required class='form-control form-control-user'></td>");
             for (let i = 1; i <= consCount; i++) {
 
-                $("#table-entries tr:nth-child(" + (i + 1) + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='X" + i + varCount + "'required></td>");
+                $("#table-entries tr:nth-child(" + (i + 1) + ") td:nth-child(" + varCount + ")").after("<td><input type='number' step='0.01' id='X" + i + varCount + "'required class='form-control form-control-user'></td>");
 
             }
             addVarSolution();
@@ -1046,9 +1067,9 @@
                         tableContent += '<tr><th><font>' + variableNames[index] + '</font></th><td>' + solutionValues[index] + '</td></tr>';
                     }
                     tableContent += '<tr><th><font>Z</font></th><td>' + solutionValues[variableNames.length] + '</td></tr>';
-                    $("#mensajeS").append("<h3 class = 'text-center'>Results per variable</h3>"
+                    $("#mensajeS").append("<h3 class = 'text-center'>Results</h3>"
                         + '<table class="table table-bordered" width="100%" cellspacing="0">'
-                        + '<thead class="bg-gradient-primary">'
+                        + '<thead class="white-text bg-primary">'
                         + '<tr> <th> <font color="#fff">Var</font></th>'
                         + '<th> <font color="#fff">Value</font></th>'
                         + '</tr> </thead> <tbody>' + tableContent

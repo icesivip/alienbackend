@@ -138,6 +138,7 @@ public class SensivilityAnalysis {
             }
         }
         Matrix alv = new Matrix(intervals);
+        toPositiveIntervals(intervals);
         intervalsConstraints = Simplex.roundMatrix(intervals);
         alv.print(2, 2);
         return intervals;
@@ -180,11 +181,20 @@ public class SensivilityAnalysis {
 			}
 		}
 		Matrix alv = new Matrix(intervals);
+		toPositiveIntervals(intervals);
 		intervalsFO = Simplex.roundMatrix(intervals);
 		alv.print(2, 2);
 		return intervals;
 	}
 
+	private void toPositiveIntervals(double[][] intervals) {
+		for (int x = 0; x < intervals.length; x++) {
+			for (int y = 0; y < intervals[x].length; y++) {
+				if (y == 0)
+					intervals[x][y]*= -1;
+			}
+		}
+	}
 	private int getInitialVars() {
 		int count = 0;
 		for (int i = 0; i < modeloS.getVariableCount(); i++) {
