@@ -36,6 +36,13 @@ public interface TaskService
 	 */
 	Task add(Task task);
 
+	
+	/**
+	 * Add a lists of task to the project
+	 * @param tasks
+	 * @return
+	 */
+	List<Task> add(List<Task> tasks);
 	/**
 	 * @param task
 	 * @return
@@ -112,4 +119,5 @@ public interface TaskService
 	 */
 	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios, double param1, double param2,
 			DistributionType distType);
+
 }

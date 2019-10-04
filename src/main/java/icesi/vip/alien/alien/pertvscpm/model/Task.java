@@ -35,10 +35,10 @@ public class Task
 	
 	private Boolean isCritical;
 
-	@JsonBackReference
+	@JsonBackReference("Successors")
 	private List<Transition> Successors;
 	
-	@JsonBackReference
+	@JsonBackReference("predecessors")
 	private List<Transition> predecessors;
 
 	public Task()

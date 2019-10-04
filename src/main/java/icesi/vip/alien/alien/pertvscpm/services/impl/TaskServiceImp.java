@@ -1,5 +1,6 @@
 package icesi.vip.alien.alien.pertvscpm.services.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -260,6 +261,20 @@ public class TaskServiceImp implements TaskService
 			
 		}
 
+		return tasks;
+	}
+
+	@Override
+	public List<Task> add(List<Task> tasks)
+	{
+		if(!tasks.isEmpty())
+		{
+			for (Task task : tasks)
+			{
+//				repo.save(task);
+				LOG.debug("saved the task " + task.getName());
+			}
+		}
 		return tasks;
 	}
 

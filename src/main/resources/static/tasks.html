@@ -103,7 +103,7 @@
             <h6 class="collapse-header">components</h6>
             <a class="collapse-item active" href="tasks.html">TASKS</a>
             <a class="collapse-item" href="cpm.html">CPM</a>
-            <a class="collapse-item" href="mcs.html">MCS</a>
+            <a class="collapse-item" href="mcs.html">PERT</a>
           </div>
         </div>
       </li>
@@ -151,61 +151,40 @@
               <h6 class="m-0 font-weight-bold text-primary">TASKS </h6>
             </div>
             <div class="card-body">
-              <form>
+              <form id="tasksForm">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="tasksTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered display" id="tasksTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Duration</th>
+                        <th>successors</th>
                         </tr>
                     </thead>
                     <tfoot>
-                      <th colspan="1" class="text-center">
-                          <button onclick="loadTasks()" class="btn btn-primary">
-                              Load Sample tasks
-                          </button>
-                      </th>
-                      <th colspan="1" class="text-center">
-                            <button onclick="addTask()" class="btn btn-primary">
-                                Add tasks
-                            </button>
-                      </th>
+                    <th colspan="1" class="text-center">
+                        <button onclick="submitTasks()" class="btn btn-primary">
+                          submit
+                      </button>
+                    </th>
+                    <th colspan="1" class="text-center">
+                      <button onclick="loadTasks()" class="btn btn-primary">
+                          Load Sample tasks
+                      </button>
+                    </th>
+                    <th colspan="1" class="text-center">
+                      <button onclick="addTask()" class="btn btn-primary">
+                          Add tasks
+                      </button>
+                    </th>
                       <th colspan="1" class="text-center">
                         <button onclick="delTask()" class="btn btn-primary">
                             Remove Tasks
                         </button>
-                  </th>
+                      </th>
                     </tfoot>
-                    <tbody id="tasksPanel">
-                      <!--<tr>
-                        <td>1</td>
-                        <td><input type="text" class="form-control" min="0" max="any" value="Start"></td>
-                        <td><input type="number" class="form-control " min="0" max="any" value="0.0" step="0.01"></input>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td><input type="text" class="form-control" min="0" max="any" value="A"></td>
-                        <td>
-                          <input type="number" class="form-control" min="0" max="any" value="0.0" step="0.01"></input>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td><input type="text" class="form-control" min="0" max="any" value="B" step="0.01"></td>
-                        <td>
-                            <input type="number" class="form-control" min="0" max="any" value="0.0" step="0.01"></input>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td><input type="text" class="form-control" min="0" max="any" value="C" step="0.01"></td>
-                        <td>
-                            <input type="number" class="form-control" min="0" max="any" value="0.0" step="0.01"></input>
-                        </td>
-                      </tr-->
+                    <tbody>
                     </tbody>
                   </table>
                 </div>
@@ -275,7 +254,7 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/tasks.js"></script>
+  <script src="js/taskService.js"></script>
 
 </body>
 

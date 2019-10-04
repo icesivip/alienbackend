@@ -12,10 +12,10 @@ public class Transition implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@JsonBackReference
+	@JsonBackReference("predecessors")
 	private Task predecesor;
 
-	@JsonBackReference
+	@JsonBackReference("Successors")
 	private Task succesor;
 
 	private String type;
