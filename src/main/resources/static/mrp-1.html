@@ -37,8 +37,8 @@
 	src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
 <script
 	src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
-</head>
 
+</head>
 <body id='page-top'>
 
 	<!-- Page Wrapper -->
@@ -139,20 +139,7 @@
 						<i class='fa fa-bars'></i>
 					</button>
 
-					<!-- Topbar Search -->
-					<form
-						class='d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search'>
-						<div class='input-group'>
-							<input type='text' class='form-control bg-light border-0 small'
-								placeholder='Search for...' aria-label='Search'
-								aria-describedby='basic-addon2'>
-							<div class='input-group-append'>
-								<button class='btn btn-primary' type='button'>
-									<i class='fas fa-search fa-sm'></i>
-								</button>
-							</div>
-						</div>
-					</form>
+				
 
 					<!-- Topbar Navbar -->
 					<ul class='navbar-nav ml-auto'>
@@ -198,12 +185,15 @@
 									<tr class='bg-primary'>
 										<th scope='col'>Id</th>
 										<th scope='col'>Product Name</th>
-										<th scope='col'>Level</th>
 										<th scope='col'>Available Inventory</th>
 										<th scope='col'>Security Inventory</th>
-										<th scope='col'>Parent Product Name</th>
+										<th scope='col'>Parent Product Id</th>
 										<th scope='col'>Amount to Manufacture Parent</th>
 										<th scope='col'>Lead time</th>
+										<th scope='col'>Cost of the article</th>
+										<th scope='col'>Maintenance cost</th>
+										<th scope='col'>Cost of ordering</th>
+										<th scope='col'>Lot sizing rule</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -216,21 +206,51 @@
 											style='width: 100%' id='iNomb'></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
-											style='width: 100%' id='iNive'></td>
-										<td style='width: 9%; height: 100%;'><input
-											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iInve'></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iSecu'></td>
-										<td style='width: 9%; height: 100%;' id='iElem'></td>
-										<td style='width: 9%; height: 100%;' id='iCant'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' value='none' disabled
+											style='width: 100%' id='iElem'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0' type='number' min='1' disabled value=1
+											style='width: 100%' id='iCant'></td></td>
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0' type='number' min='0'
 											style='width: 100%' id='iLead'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0'
+											style='width: 100%' id='iCostArticle'></td>
+									    <td style='width: 9%; height: 100%;'><input
+											class='form-control border-0'
+											style='width: 100%' id='iMaintenance'></td>
+										<td style='width: 9%; height: 100%;'><input
+											class='form-control border-0'
+											style='width: 100%' id='iCostOrdering'></td>
+										<td style='width: %; height: 100%;'>	
+											<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>
+												<option name="Lot for Lot">Lot for Lot</option>
+												<option name="Economic Order Quantity">Economic Order Quantity</option>
+												<option  name="Periods Of Suply">Periods Of Suply</option>
+												<option name="Period Order Quantity">Period Order Quantity</option>
+												<option name="Least Unit Cost">Least Unit Cost</option>
+												<option name="Least Total Cost">Least Total Cost</option>
+											</select>
+										</td>
 									</tr>
 								</tbody>
 							</table>
+						</div>
+						<div class="input-periodicity-mrp">
+							Periodicity:	
+							<select class="col-sm-3 text-light custom-select bg-primary" id="periodicity" required>
+								<option value="" name="periodicity" disabled selected hidden></option>
+								<option name="Annual">Annual</option>
+								<option name="Monthly">Monthly</option>
+								<option name="Weekly">Weekly</option>
+								<option name="Daily">Daily</option>
+							</select>
 						</div>
 						<div class='text-white' class='form-control form-control-user'>
 							<div class='form-group row'>
@@ -552,17 +572,24 @@
             e.preventDefault();
             solveModel();
         });
-		
+	
 		function addConstraint() {
             console.log('Added contraint');
-            $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iNive'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td></tr>");
+		   $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostArticle'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iMaintenance'><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostOrdering'></td><td style='width: 100%; height: 100%;'>"
+			+ "<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>"
+			+ "<option name='Lot for Lot'>Lot for Lot</option>"
+			+ "<option name='Economic Order Quantity'>Economic Order Quantity</option>"
+			+ "<option name='Periods Of Suply'>Periods Of Suply</option>"
+			+ "<option name='Period Order Quantity'>Period Order Quantity</option>"
+			+ "<option name='Least Unit Cost'>Least Unit Cost</option>"
+			+ "<option name='Least Total Cost'>Least Total Cost</option></select></td></tr>");
 
 			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
 			
-			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
 			globaladd++;
         }
-		
+
         function removeConstraint() {
             var n = $('.inputss').length;
             console.log(n);
@@ -595,23 +622,32 @@
 		
         function constructRequestString() {
 			
-			fatherNames = "";
+			fatherIds = "";
 			id = "";
 			name = "";
 			amount = "";
 			leadTime = "";
 			initialInv = "";
 			securityInv = "";
+			articleCost = "";
+			maintenanceCost = "";
+			orderingCost = "";
+			lotSizingRule = "";
+			periodicity = $('#periodicity').val();
 			date = "10";
 			
 			$(".inputss").each(function(index){
-				fatherNames += $(this).find("#iElem").val()+";";
 				id += $(this).find("#iCodi").val()+";";
 				name += $(this).find("#iNomb").val()+";";
-				amount += $(this).find("#iCant").val()+";";
-				leadTime += $(this).find("#iLead").val()+";";
 				initialInv += $(this).find("#iInve").val()+";";
 				securityInv += $(this).find("#iSecu").val()+";";
+				fatherIds += $(this).find("#iElem").val()+";";
+				amount += $(this).find("#iCant").val()+";";
+				leadTime += $(this).find("#iLead").val()+";";
+				articleCost += $(this).find("#iCostArticle").val()+";";
+				maintenanceCost += $(this).find("#iMaintenance").val()+";";
+				orderingCost += $(this).find("#iCostOrdering").val()+";";
+				lotSizingRule += $(this).find("#iLotSizingRule").val()+";";
 			});
 			
 			scheduledReceptions = "";
@@ -660,9 +696,17 @@
 			
 			rqbDate = rqbDate.replace(/undefined/g, "");
 					
-            console.log('?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate);
+            console.log('?fatherIds=' + fatherIds + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount='
+			+ amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date
+			+ '&articleCost=' + articleCost + '&maintenanceCost=' + maintenanceCost + '&maintenanceCost=' + orderingCost
+			+ '&lotSizingRule=' + lotSizingRule + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate
+			+ '&periodicity=' + periodicity);
 			
-            return '?fatherNames=' + fatherNames + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount=' + amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate;
+			return '?fatherIds=' + fatherIds + '&id=' + id + '&name=' + name + '&leadTime=' + leadTime+'&amount='
+			+ amount + '&initialInv=' + initialInv + '&securityInv=' + securityInv + '&date=' + date
+			+ '&articleCost=' + articleCost + '&maintenanceCost=' + maintenanceCost + '&orderingCost=' + orderingCost
+			+ '&lotSizingRule=' + lotSizingRule + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate
+			+ '&periodicity=' + periodicity;
         }
         
 		function pintarArbol() {
@@ -746,61 +790,59 @@
                      $('.cover').toggle(400);
                         console.log('Funciona');
                         console.log(data);
-						theMRP = data.mrp;
 						
-						productos = data.n_Ary_Tree.byLevels;
-						
-						var valor = "";															
-						$('.contenedor').each(function(index) {
-							
-							$(this).text(productos[index].name);
-							
-						});
+						products = data.roots;
 
-						console.log(productos);
-						
-						console.log(theMRP.length);
-						console.log(theMRP[0].length);
-						console.log(theMRP[0][0].length);
-						var auxiliar1 = 0;
-						for(var k = 0; k < theMRP.length; k++) {
-							var i = 0;
-							if(k == 0) {
-								i = 2;
-							}
-							for (; i < theMRP[k].length; i++){
-								
-								if(i == 0) {
-									$('.iGross').parent("tr").find("td").find("#g"+auxiliar1).each(function(indexa) {
-										$(this).text(theMRP[k][i][indexa]);
-									});
-								} 
-								
-								if(i == 2) {
-									$('.iAvaila').parent("tr").find("td").find("#b"+auxiliar1).each(function(indexb) {
-										$(this).text(theMRP[k][i][indexb]);
-									});
-								}
+						console.log(products);
 
-								if(i == 3) {
-									$('.iNetR').parent("tr").find("td").find("#n"+auxiliar1).each(function(indexc) {
-										$(this).text(theMRP[k][i][indexc]);
-									});
-								}
+						var tableIndex = 0;
+
+						for(var i = 0; i < products.length; i++){
+
+							console.log(products[i]);
+
+							$('.iGross').parent("tr").find("td").find("#g"+tableIndex).each(function(indexa) {
+								$(this).text(products[i].mps.bruteRequirements[indexa]);
+							});
+							$('.iAvaila').parent("tr").find("td").find("#b"+tableIndex).each(function(indexb) {
+								$(this).text(products[i].mps.scheduledAvailableStock[indexb]);
+							});
+							$('.iNetR').parent("tr").find("td").find("#n"+tableIndex).each(function(indexc) {
+								$(this).text(products[i].mps.netRequirements[indexc]);
+							});
+							$('.iReception').parent("tr").find("td").find("#r"+tableIndex).each(function(indexd) {
+								$(this).text(products[i].mps.planOrders[indexd]);
+							});
+							$('.iRelease').parent("tr").find("td").find("#p"+tableIndex).each(function(indexe) {
+								$(this).text(products[i].mps.releasedPlanOrders[indexe]);
+							});
+
+							var list = []
+
+							tableIndex++;
+
+							for(var k = 0; k < products[i].subProducts.length; k++){
 								
-								if(i == 4) {
-									$('.iReception').parent("tr").find("td").find("#r"+auxiliar1).each(function(indexd) {
-										$(this).text(theMRP[k][i][indexd]);
-									});
-								}
-								
-								if(i == 5) {
-									$('.iRelease').parent("tr").find("td").find("#p"+auxiliar1).each(function(indexe) {
-										$(this).text(theMRP[k][i][indexe]);
-									});
-								}
+								$('.iGross').parent("tr").find("td").find("#g"+tableIndex).each(function(indexa) {
+									$(this).text(products[i].subProducts[k].mps.bruteRequirements[indexa]);
+								});
+								$('.iAvaila').parent("tr").find("td").find("#b"+tableIndex).each(function(indexb) {
+									$(this).text(products[i].subProducts[k].mps.scheduledAvailableStock[indexb]);
+								});
+								$('.iNetR').parent("tr").find("td").find("#n"+tableIndex).each(function(indexc) {
+									$(this).text(products[i].subProducts[k].mps.netRequirements[indexc]);
+								});
+								$('.iReception').parent("tr").find("td").find("#r"+tableIndex).each(function(indexd) {
+									$(this).text(products[i].subProducts[k].mps.planOrders[indexd]);
+								});
+								$('.iRelease').parent("tr").find("td").find("#p"+tableIndex).each(function(indexe) {
+									$(this).text(products[i].subProducts[k].mps.releasedPlanOrders[indexe]);
+								});
+
+								tableIndex++;
+
 							}
-							auxiliar1++;
+
 						}
 					
                     }, function (error) {

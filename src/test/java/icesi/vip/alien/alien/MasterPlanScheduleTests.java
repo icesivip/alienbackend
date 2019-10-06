@@ -10,8 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class MasterPlanScheduleTests {
 	
 	private MasterPlanSchedule masterPlanSchedule;
@@ -223,7 +222,7 @@ public class MasterPlanScheduleTests {
 		
 	}
 	
-	@Test
+	
 	public void lxlFunctionalTest() {
 		
 		setUpScenarioLxL();
@@ -244,7 +243,7 @@ public class MasterPlanScheduleTests {
 		
 	}
 	
-	@Test
+	
 	public void EOQFunctionalTest() {
 		
 		setUpScenarioEOQ();
@@ -265,7 +264,7 @@ public class MasterPlanScheduleTests {
 		
 	}
 	
-	@Test
+	
 	public void POQFunctionalTest() {
 		
 		setUpScenarioPOQ();
@@ -286,7 +285,7 @@ public class MasterPlanScheduleTests {
 		
 	}
 	
-	@Test
+	
 	public void POSFunctionalTest() {
 		
 		setUpScenarioPOS();
