@@ -20,9 +20,9 @@ public interface GraphListInterface<T> {
 	
 	public void addVertex(T data);
 	
-	public void removeVertex(T data);
+
 	
-	public void addEdge(T dataV1, T dataV2, double weight, String name);
+	public void addEdge(T dataV1, T dataV2, int weight);
 	
 	public Vertex<T> searchVertex(T data) ;
 	
@@ -34,7 +34,7 @@ public interface GraphListInterface<T> {
 	
 	public void pathByFloyd (T start, T end) ;
 	
-	public void removeEdge(T dataV1, T dataV2) ;
+
 	
 	public ArrayList<Vertex<T>> getVertices();
 

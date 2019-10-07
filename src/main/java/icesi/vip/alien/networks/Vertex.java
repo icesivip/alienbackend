@@ -17,7 +17,7 @@ import java.util.HashMap;
  *  This class represents the vertex of the graph
  * @param <T>
  */
-public class Vertex<T> {
+public class Vertex<T> implements Comparable<Vertex<T>> {
 	// -----------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------
@@ -64,11 +64,7 @@ public class Vertex<T> {
 	/**
 	 * 
 	 */
-	private HashMap<String, Triple<T>> hashTriples;
-	/**
-	 * 
-	 */
-	private ArrayList<Vertex<T>> vertices;
+	
 	
 	// -----------------------------------------------------------------
     // Builder
@@ -80,8 +76,7 @@ public class Vertex<T> {
 	public Vertex(T data){
 		this.data = data;
 		triples = new ArrayList<Triple<T>>();
-		hashTriples = new HashMap<String, Triple<T>>();
-		vertices = new ArrayList<Vertex<T>>();
+		distance = Integer.MAX_VALUE;
 	}
 	// -----------------------------------------------------------------
     // Methods for add ...
@@ -92,25 +87,25 @@ public class Vertex<T> {
 	 * @param weight
 	 * @param vertex
 	 */
-	public void addTriple(String name, double weight, Vertex<T> vertex){
-		Triple<T> triple = new Triple<T>(name, weight, vertex);
+	public void addTriple(int weight, Vertex<T> vertex){
+		Triple<T> triple = new Triple<T>(weight, vertex);
 //		if(!(hashTriples.containsKey(nombre))){
 			triples.add(triple);
-			hashTriples.put(name, triple);
-			vertices.add(vertex);			
+				
 //		}
 	}
 	
 	// -----------------------------------------------------------------
     // Methods Atributes
     // -----------------------------------------------------------------
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Vertex<T>> getVertices(){
-		return vertices;
+	
+	
+	@Override
+	public int compareTo(Vertex<T> other) {
+		
+		return this.distance-other.distance;
 	}
+	
 	/**
 	 * 
 	 * @return
@@ -209,18 +204,6 @@ public class Vertex<T> {
 	public void setTriples(ArrayList<Triple<T>> triples) {
 		this.triples = triples;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public HashMap<String, Triple<T>> getHashTriples() {
-		return hashTriples;
-	}
-	/**
-	 * 
-	 * @param hashTriples
-	 */
-	public void setHashTriples(HashMap<String, Triple<T>> hashTriples) {
-		this.hashTriples = hashTriples;
-	}
+	
+	
 }
