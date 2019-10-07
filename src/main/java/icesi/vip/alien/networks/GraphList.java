@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.*;
 /**
  *
  * @param <T>
@@ -52,7 +53,7 @@ public class GraphList<T> implements GraphListInterface<T> {
 	 */
 	private String paths;
 	/**
-	 * 
+	 * This attribute contains the number of edges in the graph.
 	 */
 	private int numEdges;
 	/**
@@ -75,6 +76,8 @@ public class GraphList<T> implements GraphListInterface<T> {
 		hashVertex = new HashMap<T, Vertex<T>>();
 	}
 	public GraphList(String path) throws IOException {
+		vertices = new ArrayList<Vertex<T>>();
+		hashVertex = new HashMap<T, Vertex<T>>();
 		File file = new File(path);
 		FileReader reader = new FileReader(file);
 		BufferedReader in = new BufferedReader(reader);
@@ -83,22 +86,24 @@ public class GraphList<T> implements GraphListInterface<T> {
 		int node = 0;
 		while(line!=null) {
 			Vertex<Integer> nodeA = new Vertex<>(node);
-			vertices.add((Vertex<T>) nodeA);
+			
 			
 			String[] parts = line.split(";");
 			
 			for (int i = 0; i < parts.length; i++) {
 				int weight = Integer.parseInt(parts[i]);
 				if(weight!=-1) {
-					Vertex<Integer> nodeB = new Vertex<>(node);
+					Vertex<Integer> nodeB = new Vertex<>(i);
 					nodeA.addTriple(weight, nodeB);
 				}
 			}
-			
 			line = in.readLine();
-			
+
+			vertices.add((Vertex<T>) nodeA);
 			node++;
 		}
+		reader.close();
+		in.close();
 	}
 	// -----------------------------------------------------------------
     // Methods for add Vertex
@@ -324,37 +329,39 @@ public class GraphList<T> implements GraphListInterface<T> {
 	@SuppressWarnings("unchecked")
 	public int[] dijkstra(Vertex<T> a) {
 
-		boolean[] visited = new boolean[vertices.size()];
+		
 		int[] distance = new int[vertices.size()];
 		Vertex<T>[] parents = new Vertex[vertices.size()];
 		
-		PriorityQueue<Vertex<T>> queue = new PriorityQueue<>();
+		PriorityQueue<Vertex<T>> queue = new PriorityQueue<>(new Comparator<Vertex<T>>() {
+
+			@Override
+			public int compare(Vertex<T> o1, Vertex<T> o2) {
+				return Integer.compare(distance[(int) o1.getdata()], distance[(int) o2.getdata()]);
+			}
+			
+		});
 		
 		for (int i = 0; i < vertices.size(); i++) {
-			queue.add(vertices.get(i));
 			distance[i] = Integer.MAX_VALUE;
 			parents[i] = null;
+			queue.add(vertices.get(i));
 		}
 		
 		int j = vertices.indexOf(a);
 		distance[j] = 0;
-		queue.add(a);
 
 		while (!queue.isEmpty()) {
 			Vertex<T> u = queue.poll();
-			int k = vertices.indexOf(u);
-
-			if (!visited[k]) {
-				visited[k] = true;
+			int k = (int) u.getdata();
+			
 				for (int i = 0; i < u.getTriples().size(); i++) {
 					Vertex<T> adj = u.getTriples().get(i).getVertex();
-						int weight = (int) u.getTriples().get(i).getWeight();
-						if (!visited[i]) {
-							relax(k, i, weight, distance, parents);
-						}
-					}
-				
-			}
+					int weight = (int) u.getTriples().get(i).getWeight();
+					relax(k, (int)adj.getdata(), weight, distance, parents);
+						
+				}
+			
 		}
 		return distance;
 	}
@@ -368,13 +375,10 @@ public class GraphList<T> implements GraphListInterface<T> {
 	 * @param parents
 	 */
 	private void relax(int current, int adjacent, int weight, int []distance, Vertex<T>[] parents) {
-		
 		if (distance[current] + weight < distance[adjacent]) {
 			distance[adjacent] = distance[current] +weight;
 			parents[adjacent] = vertices.get(current);
-			vertices.get(adjacent).setDistance(distance[adjacent]);
 		}
-		
 	}
 	/**
 	 * 

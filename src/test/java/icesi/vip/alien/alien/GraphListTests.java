@@ -18,7 +18,7 @@ import icesi.vip.alien.networks.Vertex;
 
 //mvnw test
 
-class GraphListTests {
+public class GraphListTests {
 	
 	private GraphList graphList;
 	
@@ -30,7 +30,7 @@ class GraphListTests {
 	 * 
 	 */
 	public void setUpScenary1() throws IOException {
-		graphList = new GraphList("test1");
+		graphList = new GraphList("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt");
 	}
 	/**
 	 *
@@ -44,18 +44,27 @@ class GraphListTests {
 	public void setUpScenary() {
 		
 	}
+	
 	@Test
-	public void dijkstraTest() {
-		int[][] correctDistances= {};
-		
+	public void dijkstraTest() throws IOException {
+		setUpScenary1();
+		int[] correctDistances= {0,4,3,0,0,0,0};
 		boolean correct = true;
-		for (int i = 0; i < graphList.getVertices().size() && correct; i++) {
+		/*for (int i = 0; i < graphList.getVertices().size() && correct; i++) {
 			int[] dijkstraDistances = graphList.dijkstra((Vertex) graphList.getVertices().get(i));
 			if(!Arrays.equals(correctDistances[i], dijkstraDistances)) {
 				correct = false;
 			}
 			
+		}*/
+		
+		int[] dijkstraDistances = graphList.dijkstra((Vertex) graphList.getVertices().get(0));
+		for (int i = 0; i < dijkstraDistances.length; i++) {
+			System.out.print(dijkstraDistances[i]);
 		}
+		System.out.println();
+		if(!Arrays.equals(correctDistances, dijkstraDistances))
+			correct = false;
 		
 		assertTrue("Dijkstra's algorithm is not implemented correctly", correct);
 	}
