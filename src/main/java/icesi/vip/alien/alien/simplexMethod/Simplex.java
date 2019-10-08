@@ -208,7 +208,7 @@ public class Simplex implements Solver {
 	 * @return Rounded value with the desired format
 	 */
 	public static double roundDouble(double d) {
-		if(Math.abs(d)<0.0001)
+		if(Math.abs(d)<0.0000001)
 			return 0;
 		DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
 		separadoresPersonalizados.setDecimalSeparator('.');
@@ -801,7 +801,11 @@ public class Simplex implements Solver {
 		if(theta!= null) {
 		double[] thetaCopy = new double[theta.length];
 		for (int i = 0; i < thetaCopy.length; i++) {
+			if(theta[i]!= Double.POSITIVE_INFINITY && theta[i]!= Double.NEGATIVE_INFINITY)
 			thetaCopy[i] = roundDouble(theta[i]);
+			else if(theta[i]== Double.POSITIVE_INFINITY)
+				thetaCopy[i] = 99999999999999999999.0;
+			else thetaCopy[i] = -99999999999999999999.0;
 		}
 		return thetaCopy;
 		} else return null;

@@ -1036,15 +1036,15 @@
         var variableNames;
         var constraintValues;
         var messageSol;
-
+        var theta;
         function finalSolution() {
           $(".cover").toggle(400);
           $("#menIteration").empty();
           var rest = varCount + 1
           var string = constructRequestString();
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
              
           }).then(function (data) {
             $("#resultTable-cont").show();
@@ -1054,7 +1054,6 @@
             messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
             solutionValues = data.varsValuesSolution;
-            var theta = data.theta;
             var varsBase = data.varsBase;
             rhsInitM = data.rhsinitialM;
             nVarDeci = data.nVarDecision;
@@ -1193,15 +1192,15 @@
           var string = constructRequestString2(veces);
 
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
             $("#resultTable-cont").show();
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
             messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            var theta = data.theta;
+            theta = data.theta;
             var varsBase = data.varsBase;
             solutionValues = data.varsValuesSolution;
             rhsInitM = data.rhsinitialM;
@@ -1259,7 +1258,7 @@
                     $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                   }
                   if (theta != null) {
-                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + toInfinity(theta[index - 1]) + "</td>");
                   }
 
                 }
@@ -1285,15 +1284,15 @@
 
 
           $.ajax({
-            url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
-            //url: "http://localhost:8080/simplexMethod" + string
+            //url: "https://icesiviptest.herokuapp.com/simplexMethod" + string
+            url: "http://localhost:8080/simplexMethod" + string
           }).then(function (data) {
             $("#resultTable-cont").show();
             variableNames = data.everyVariableName;
             var actualMatrix = data.actualMatrix;
             messageSol = data.messageSol;
             var operationsDone = data.operationsDone;
-            var theta = data.theta;
+            theta = data.theta;
             var varsBase = data.varsBase;
             solutionValues = data.varsValuesSolution;
             rhsInitM = data.rhsinitialM;
@@ -1353,7 +1352,7 @@
                     $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                   }
                   if (theta != null) {
-                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + toInfinity(theta[index - 1]) + "</td>");
                   }
 
                 }
