@@ -1,11 +1,13 @@
 package icesi.vip.alien.alien.pertvscpm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.MediaType;
 
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
@@ -37,12 +38,23 @@ public class TaskController
 
 		return service.list();
 	}
-
-	@PostMapping(value = "/add",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Task> addTask(@RequestBody(required = true) List<Task> tasks)
+	
+	@GetMapping(value="/sample")
+	public List<Task> loadSampleTasks()
 	{
-		LOG.debug("getting into the addtasks method");
-		return service.add(tasks);
+		
+		return service.loadSampleTaks();
+	}
+
+	@PostMapping(value = "/add")
+	public List<Task> addTask(@RequestBody(required = true) ArrayList<Task> taskList)
+	{
+		 List<Task> activities=service.buildGraph(taskList);
+		 Task start = activities.get(1);
+		 Task finish =activities.get(activities.size()-1);
+		 List<Task> cpm=service.executeCPM(activities, start, finish);
+		 
+		return cpm;
 	}
 
 	@GetMapping(path =
@@ -69,4 +81,10 @@ public class TaskController
 			Task finish =service.findById(endId);
 			return service.executeCPM(tasks, start, finish);
 		}
+	
+	@DeleteMapping(value="/delete/{delId}")
+	public Task deleteTask(@PathVariable("delId") int delId)
+	{
+		return service.delete(delId);
+	}
 }

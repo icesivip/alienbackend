@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-AlienApplication<alien>",
+            "request": "launch",
+            "mainClass": "icesi.vip.alien.alien.AlienApplication",
+            "projectName": "alien"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Controladora<alien>",
+            "request": "launch",
+            "mainClass": "icesi.vip.alien.alien.ruteo.Controladora",
+            "projectName": "alien"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Simplex<alien>",
+            "request": "launch",
+            "mainClass": "icesi.vip.alien.alien.simplexMethod.Simplex",
+            "projectName": "alien"
+        }
+    ]
+}

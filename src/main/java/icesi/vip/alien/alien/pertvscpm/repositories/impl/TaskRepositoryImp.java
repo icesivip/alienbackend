@@ -1,12 +1,9 @@
 package icesi.vip.alien.alien.pertvscpm.repositories.impl;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,21 +34,18 @@ public class TaskRepositoryImp implements TaskRepository
 	@Override
 	public List<Task> findAll()
 	{
-		loadTasksFromFile();
-
 		return tasks.values().stream().collect(Collectors.toList());
 	}
 
-	
-	public void loadTasksFromFile()
+	@Override
+	public List<Task> loadTasksFromFile()
 	{
-		// TODO Auto-generated method stub
+		tasks.clear();
 		Resource graph = resourceLoader.getResource("classpath:static/graph.txt");
-		if (tasks.isEmpty())
-		{
+		
+		
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(graph.getInputStream())))
 			{
-
 				String line;
 
 				while ((line = reader.readLine()) != null && !line.startsWith("-"))
@@ -62,6 +56,7 @@ public class TaskRepositoryImp implements TaskRepository
 					double duration = Double.valueOf(data[2]);
 					Task task = new Task(id, name, duration);
 					tasks.put(id, task);
+					LOG.info("Successfully loaded the task "+task.getName());
 				}
 
 				while ((line = reader.readLine()) != null)
@@ -78,7 +73,7 @@ public class TaskRepositoryImp implements TaskRepository
 						taskSuccessor.getPredecessors().add(edge);
 					}
 				}
-
+				
 			}
 			catch (FileNotFoundException e)
 			{
@@ -88,58 +83,33 @@ public class TaskRepositoryImp implements TaskRepository
 			{
 				e.printStackTrace();
 			}
+			
+			return tasks.values().stream().collect(Collectors.toList()); 
 		}
-	}
+		
+	
 
 	@Override
 	public Task findById(int id)
 	{
 		if (tasks.isEmpty())
-			findAll();
-		
-			return tasks.get(id);
+			return null;
+
+		return tasks.get(id);
 	}
 
 	@Override
 	public Task save(Task task)
 	{
-		if (tasks.isEmpty())
-			findAll();
-
-		if (tasks.containsKey(task.getId()))
-		{
-			tasks.replace(task.getId(), task);
-		}
-		else
-		{
-			Integer lastId = Collections.max(tasks.keySet(), null);
-			task.setId(lastId + 1);
+		if (!tasks.containsKey(task.getId()))
 			tasks.put(task.getId(), task);
-		}
-		Resource graph = resourceLoader.getResource("classpath:graph.txt");
-
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(graph.getFile(), true)))
-		{
-			String taskString = "" + task.getId() + ":" + task.getName() + ":" + task.getDuration() + ":";
-			writer.write(taskString);
-			writer.flush();
-			LOG.info("Added the task" + task.toString());
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
 		return task;
 	}
 
 	@Override
-	public void delete(Task task)
+	public Task delete(Task task)
 	{
-
+		return tasks.remove(task.getId());
 	}
 
 }

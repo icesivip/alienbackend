@@ -1,6 +1,5 @@
 package icesi.vip.alien.alien.pertvscpm.services.impl;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,17 +83,16 @@ public class TaskServiceImp implements TaskService
 		Queue<Task> taskQueue = new LinkedList<Task>();
 		start.setEarliestStart(0.0);
 		start.setEarliestFinish(start.getDuration());
-		List<Transition> lv1Edges = start.getSuccessors();
-		queueSuccessors(taskQueue, lv1Edges);
+		queueSuccessors(taskQueue, start.getId());
 
 		while (taskQueue.peek() != null)
 		{
 			Task cursor = taskQueue.poll();
+			
 			double maxPredecesorDuration = getMaxPredecesorES(cursor.getPredecessors());
 			cursor.setEarliestStart(maxPredecesorDuration);
 			cursor.setEarliestFinish(maxPredecesorDuration + cursor.getDuration());
-			List<Transition> nextLevel = cursor.getSuccessors();
-			queueSuccessors(taskQueue, nextLevel);
+			queueSuccessors(taskQueue, cursor.getId());
 		}
 		return tasks;
 	}
@@ -107,8 +105,7 @@ public class TaskServiceImp implements TaskService
 		finish.setLatestStart(finish.getLatestFinish() - finish.getDuration());
 		finish.setSlack(finish.getLatestFinish() - finish.getEarliestFinish());
 		finish.setIsCritical(true);
-		List<Transition> lv1Edges = finish.getPredecessors();
-		queuePredecessors(taskQueue, lv1Edges);
+		queuePredecessors(taskQueue, finish.getId());
 
 		while (taskQueue.peek() != null)
 		{
@@ -118,8 +115,7 @@ public class TaskServiceImp implements TaskService
 			cursor.setLatestStart(minSuccessorDuration - cursor.getDuration());
 			cursor.setSlack(cursor.getLatestFinish() - cursor.getEarliestFinish());
 			cursor.setIsCritical(cursor.getSlack() == 0.0);
-			List<Transition> nextLevel = cursor.getPredecessors();
-			queuePredecessors(taskQueue, nextLevel);
+			queuePredecessors(taskQueue, cursor.getId());
 		}
 		return tasks;
 	}
@@ -155,8 +151,8 @@ public class TaskServiceImp implements TaskService
 	{
 		Task minTask = sucessors.get(0).getSuccessor();
 		double min;
-		if(minTask.getLatestFinish()!=null)
-		min= minTask.getLatestFinish() - minTask.getDuration();
+		if (minTask.getLatestFinish() != null)
+			min = minTask.getLatestFinish() - minTask.getDuration();
 		else
 			min = getMinSuccessorLS(minTask.getSuccessors());
 
@@ -174,19 +170,22 @@ public class TaskServiceImp implements TaskService
 	}
 
 	/**
-	 * Add the list of successors to the task queue
+	 * Add the list of successors of the task with the given Id to the task queue
 	 * 
 	 * @param taskQueue - the queue containing the tasks
-	 * @param toBeAdded - the list with the transitions pointing to the successors
+	 * @param next      - the list with the transitions pointing to the successors
 	 *                  to be added
 	 * @return - the same task queue in case of no successors
 	 */
-	private Queue<Task> queueSuccessors(Queue<Task> taskQueue, List<Transition> toBeAdded)
+	private Queue<Task> queueSuccessors(Queue<Task> taskQueue, int next)
 	{
-		for (Transition edge : toBeAdded)
+		Task successor = repo.findById(next);
+
+		successor.getSuccessors().forEach(nextLv ->
 		{
-			taskQueue.add(edge.getSuccessor());
-		}
+			Task toAdd = repo.findById(nextLv.getSuccessor().getId());
+			taskQueue.add(toAdd);
+		});
 
 		return taskQueue;
 	}
@@ -195,16 +194,18 @@ public class TaskServiceImp implements TaskService
 	 * Add the list of predecessors to the task queue
 	 * 
 	 * @param taskQueue - the queue containing the tasks
-	 * @param toBeAdded - the list with the transitions pointing to the successors
-	 *                  to be added
+	 * @param next      - the task which will queue the successors
 	 * @return - the same task queue in case of no successors
 	 */
-	private Queue<Task> queuePredecessors(Queue<Task> taskQueue, List<Transition> toBeAdded)
+	private Queue<Task> queuePredecessors(Queue<Task> taskQueue, int next)
 	{
-		for (Transition edge : toBeAdded)
+		Task nextTask = repo.findById(next);
+
+		nextTask.getPredecessors().forEach(predecessorEdge ->
 		{
-			taskQueue.add(edge.getPredecesor());
-		}
+			Task toAdd = repo.findById(predecessorEdge.getPredecesor().getId());
+			taskQueue.add(toAdd);
+		});
 
 		return taskQueue;
 	}
@@ -258,24 +259,36 @@ public class TaskServiceImp implements TaskService
 
 		for (Task task : tasks)
 		{
-			
+
 		}
 
 		return tasks;
 	}
 
 	@Override
-	public List<Task> add(List<Task> tasks)
+	public List<Task> buildGraph(List<Task> tasks)
 	{
-		if(!tasks.isEmpty())
+		if (!tasks.isEmpty())
 		{
-			for (Task task : tasks)
+			tasks.forEach(task ->
 			{
-//				repo.save(task);
-				LOG.debug("saved the task " + task.getName());
-			}
+				repo.save(task);
+				List<Transition> trans = task.getSuccessors();
+
+				trans.forEach(transition ->
+				{
+					Task successor = transition.getSuccessor();
+					repo.save(successor);
+					successor.getPredecessors().add(transition);
+				});
+			});
 		}
-		return tasks;
+		return repo.findAll();
+	}
+
+	public List<Task> loadSampleTaks()
+	{
+		return repo.loadTasksFromFile();
 	}
 
 }

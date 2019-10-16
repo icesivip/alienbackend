@@ -6,8 +6,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Executed Critical Path Method">
+  <meta name="author" content="Julio Campaz">
 
   <title>VIP Alien - CPM</title>
 
@@ -20,6 +20,9 @@
 
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="vendor/datatables/jquery.dataTables.min.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -145,14 +148,13 @@
           <h1 class="h3 mb-2 text-gray-800">Critical Path Method</h1>
           <p class="mb-4">CPM (Critical Path method) is used to determine the total duration of a whole project based on the activities.</p>
 
-          <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">TASKS </h6>
+              <h6 class="m-0 font-weight-bold text-primary">Critical path Method </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table id="CPMTable" class="table table-bordered" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -166,112 +168,12 @@
                       <th>IS CRITICAL</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>START</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>A</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>B</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>C</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>D</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>E</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>F</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>G</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>END</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>0.0</td>
-                      <td>FALSE</td>
-                    </tr>
+                  <tbody>    
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-
         </div>
         <!-- /.container-fluid -->
 
@@ -331,9 +233,12 @@
   <!-- Page level plugins -->
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="vendor/datatables/dataTables.select.min.js"></script>
+
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/cpmService.js"></script>
 
 </body>
 

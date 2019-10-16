@@ -1,5 +1,4 @@
 
-
 const Url = "http://localhost:8080/tasks";
 
 /* Global var for counter */
@@ -11,7 +10,7 @@ var lastDuration =0.0;
 $(document).ready(function() 
 {
 	
-	var table =$('#tasksTable').dataTable( {
+	var table =$('#tasksTable').dataTable({
 		select: true
 	});
 
@@ -30,7 +29,7 @@ $(document).ready(function()
 	})
 });
 
-function addTask() 
+function addPertTask() 
 {
 	event.preventDefault();
 
@@ -39,54 +38,23 @@ function addTask()
 	$('#tasksTable').dataTable().fnAddData( [
 		lastId,
 		"<tr><input required placeholder=\"Type the task name\" type=\"text\" name=\"task"+lastId+"Name\" class=\"form-control\"></tr>",
-		"<tr><input type=\"number\" class=\"form-control\" name=\"task"+lastId+"Duration\" min=\"0\" max=\"any\" value=0 step=\"0.01\"><tr>","<tr><input required placeholder=\"Type the task Successors\" type=\"text\" name=\"task"+lastId+"Successor\" class=\"form-control\"></tr>" ] );
+		"<tr><input type=\"number\" class=\"form-control\" name=\"task"+lastId+"Duration\" min=\"0\" max=\"any\" value=0 step=\"0.01\"><tr>","<tr><input required placeholder=\"Type the task Successors\" type=\"text\" name=\"task"+lastId+"Successor\" class=\"form-control\"></tr>","<tr><input type=\"text\" name=\"task"+lastId+"distribution\" class=\"form-control\" placeholder=\"Type the task name\"><tr>","<tr><input type=\"number\" class=\"form-control\" name=\"task"+lastId+"param1\" min=\"0\" max=\"any\" step=\"0.01\" value=\"0\"></tr><tr><input type=\"number\" class=\"form-control\" name=\"task"+lastId+"param2\" min=\"0\" max=\"any\" step=\"0.01\" value=\"0\"></tr>" ] );
 }
-
 
 function delTask() {
 	event.preventDefault();
 	
 		var table = $('#tasksTable').DataTable();
-		
 		$(this).addClass('selected');
-		
-		var toDel =table.row('.selected').data();
-		if(data!=null)
-		{
-
-			console.log(toDel[0]);
-		
-		var delTaskUrl=Url+'/delete/'+toDel[0];
-
-		console.log(delTaskUrl);
-		
-		$.ajax({
-
-			url:delTaskUrl,
-			type: 'DELETE',
-			data: JSON.stringify(toDel),
-			contentType: 'application/json'
-			
-		}).then(function (data) {
-			console.log(data);
-
-		}, function (error) {
-			console.log(error);
-		});
-	
 		$('#tasksTable').DataTable().row('.selected').remove().draw( false );
-		
-		}
-		
-		
 	}
 
 
-function loadTasks() 
+function loadPertTasks() 
 {
 	event.preventDefault();
-
-	fetch(Url+"/sample").then( res=>{
+	// console.log("Loading the tasks");
+	fetch(Url).then( res=>{
 		res.json().then(tasks=> {
 			console.log(tasks);
 			tasks.forEach(toLoad => {
@@ -103,24 +71,24 @@ function loadTasks()
 					{
 						taskSuccessors+=tran.successor.id
 					}
-
 				});
 				
 				$("#tasksTable").dataTable().fnAddData( [
 					taskId,
 					"<tr><input type=\"text\" name=\"task"+taskId+"Name\" class=\"form-control\" value=\""+taskName+"\"><tr>",
 					"<tr><input type=\"number\" class=\"form-control\" name=\"task"+taskId+"Duration\" min=\"0\" max=\"any\" step=\"0.01\" value=\""+taskDuration+"\"></tr>",
-					"<tr><input type=\"text\" name=\"task"+taskId+"Successors\" class=\"form-control\" value=\""+taskSuccessors+"\"><tr>"]);
+					"<tr><input placeholder=\"Distribution\" type=\"text\" name=\"task"+taskId+"Successors\" class=\"form-control\" value=\""+taskSuccessors+"\"><tr>","<tr><button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"task"+taskId+"distribution\" name=\"task"+taskId+"distribution\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> Distribution</button> <div class=\"dropdown-menu\" aria-labelledby=\"task"+taskId+"distribution\">\n<a class=\"dropdown-item\">Normal</a>\n<a class=\"dropdown-item\">Beta</a>\n<a class=\"dropdown-item\">Log Normal</a>\n<a class=\"dropdown-item\">Uniform</a>\n</div><tr>","<tr><input type=\"number\" class=\"form-control\" name=\"task"+taskId+"param1\" min=\"0\" max=\"any\" step=\"0.01\" value=\"0\"></tr><tr><input type=\"number\" class=\"form-control\" name=\"task"+taskId+"param2\" min=\"0\" max=\"any\" step=\"0.01\" value=\"0\"></tr>"]);
 					lastId++;
 					lastName=taskName;
 					lastDuration=taskDuration;
+					// console.log("loaded " + taskName);
 			});
 		})
 	})
 	
 }
 
-function submitTasks() 
+function submitPertTasks() 
 {
 	event.preventDefault();
 	console.log(" submit the tasks");
@@ -129,21 +97,7 @@ function submitTasks()
 
 	for(var i=1;i<=lastId;i++)
 	{
-		var tSuccessors=[];
-		var tPredecessors=[];
-		var currentTask=
-		{
-			id:i,
-			isCritical:false,
-			name:data.get("task"+i+"Name"),
-			duration:parseFloat(data.get("task"+i+"Duration")),
-			earliestStart:0.0,
-			earliestFinish:0.0,
-			latestStart:0.0,
-			latestFinish:0.0,
-			slack:0.0,
-			successors:tSuccessors,
-		};
+		var trans=[];
 		if(data.get("task"+i+"Successors")!=null)
 		{
 			var sucNames=data.get("task"+i+"Successors").split(",");
@@ -156,7 +110,7 @@ function submitTasks()
 					{
 						id:suc,
 						name:data.get("task"+suc+"Name"),
-						duration:parseFloat(data.get("task"+suc+"Duration")),
+						duration:data.get("task"+suc+"Duration"),
 						earliestStart:0.0,
 						earliestFinish:0.0,
 						latestStart:0.0,
@@ -165,59 +119,36 @@ function submitTasks()
 						isCritical:false
 					}
 				}
-				tSuccessors.push(transition);
+				trans.push(transition);
 			})
 		}
-
 		
+		var currentTask=
+		{
+			id:i,
+			name:data.get("task"+i+"Name"),
+			duration:data.get("task"+i+"Duration"),
+			earliestStart:0.0,
+			earliestFinish:0.0,
+			latestStart:0.0,
+			latestFinish:0.0,
+			slack:0.0,
+			isCritical:false,
+			successors:trans
+			
+		};
 		taskList.push(currentTask);
 	}
+	// console.log("final list is: ");
 	console.log(taskList);
-	
+	var postHeaders={
+		"Content-Type": "application/json",
+		"dataType": "json"
+	};
 	var addTasksUrl=Url+"/add"
-	$.ajax({
-		url:addTasksUrl,
-		type: "POST",
-		data: JSON.stringify(taskList),
-		
-		contentType: 'application/json'
-	}).then(function (data) {
-		displayCPMData(data);
-
-		
-	}, function (error) {
-		console.log(error);
-	});
-}
-
-function displayCPMData(data)
-{
-	$("#CPMTable").dataTable().fnClearTable();
-
-	console.log(data);
-	data.forEach(toLoad=> 
-		{
-			console.log(toLoad);
-			var taskId=toLoad.id;
-			var taskName=toLoad.name;
-			var taskDuration=toLoad.duration;
-			var es=toLoad.earliestStart;
-			var ef=toLoad.earliestFinish;
-			var ls=toLoad.latestStart;
-			var lf=toLoad.latestFinish;
-			var slack=toLoad.slack;
-			var critical=toLoad.isCritical;
-
-			$("#CPMTable").dataTable().fnAddData( [
-				taskId,
-				taskName,
-				taskDuration,
-				es,
-				ef,
-				ls,
-				lf,
-				slack,
-				critical
-			]);
-	})	
+	 fetch(addTasksUrl,{
+	 	method:'POST',
+		 body:JSON.stringify(taskList),
+		 headers:postHeaders
+	 });
 }

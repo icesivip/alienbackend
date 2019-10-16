@@ -36,13 +36,26 @@ public interface TaskService
 	 */
 	Task add(Task task);
 
-	
 	/**
 	 * Add a lists of task to the project
+	 * 
 	 * @param tasks
 	 * @return
 	 */
-	List<Task> add(List<Task> tasks);
+	List<Task> buildGraph(List<Task> tasks);
+
+	/**
+	 * Loads a sample set of tasks defined in a text file in the static resource
+	 * folder <br>
+	 * <b>Pre:</b> The file already exists and contains a connected graph with a set
+	 * of tasks that allows the execution of the CPM<br>
+	 * <b>Post:</b> Every task already existing and stored is removed and the new
+	 * set of tasks is stored in the task repository
+	 * 
+	 * @return the list of tasks with the respective predecessors and successors
+	 */
+	public List<Task> loadSampleTaks();
+
 	/**
 	 * @param task
 	 * @return

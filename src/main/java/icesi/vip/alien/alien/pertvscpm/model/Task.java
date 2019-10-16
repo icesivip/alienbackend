@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Task
 {
 
-	private int id;
+	private Integer id;
 
 	private String name;
 
