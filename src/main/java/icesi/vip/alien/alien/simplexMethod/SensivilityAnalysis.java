@@ -7,13 +7,13 @@ package icesi.vip.alien.alien.simplexMethod;
  */
 
 import Jama.Matrix;
+import icesi.vip.alien.modelLP.Model;
+import icesi.vip.alien.modelLP.Solution;
+import icesi.vip.alien.modelLP.Variable;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Model;
-import model.Solution;
-import model.Solver;
-import model.Variable;
 
 /**
  *

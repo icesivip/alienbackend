@@ -1,7 +1,7 @@
 package icesi.vip.alien.alien;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
-import model.Model;
+import icesi.vip.alien.modelLP.Model;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,7 +17,7 @@ public class BranchAndBoundTest {
 
 	private Model model;
 	
-	public final static double SIGMA_VALUE= 0.05;
+	public final static double SIGMA_VALUE= 0.01;
 	
 	public void stageOne() {
 		String type="MINIMIZE";
@@ -53,13 +53,41 @@ public class BranchAndBoundTest {
 		try {
 			BranchAndBoundContainer jar = new BranchAndBoundContainer(model);
 			assertTrue(jar.getOptimalSolution().feasible);
-			assertTrue(jar.getOptimalSolution().z> 12-(12*SIGMA_VALUE) && jar.getOptimalSolution().z< 12+(12*SIGMA_VALUE) );
 			
-			assertTrue(jar.getOptimalSolution().variables.get("X1")>1 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X1")<1 + (1*SIGMA_VALUE));
-			assertTrue(jar.getOptimalSolution().variables.get("X2")>0 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X2")<0 + (1*SIGMA_VALUE));
-			assertTrue(jar.getOptimalSolution().variables.get("X3")>1 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X3")<1 + (1*SIGMA_VALUE));
-			assertTrue(jar.getOptimalSolution().variables.get("X4")>0 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X4")<0 + (1*SIGMA_VALUE));
-			assertTrue(jar.getOptimalSolution().variables.get("X5")>2 - (2*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X5")<2 + (2*SIGMA_VALUE));
+			System.out.println("NOTHING");
+			System.out.println(jar.getOptimalSolution().z);
+			System.out.println(jar.getOptimalSolution().variables.get("X1"));
+			System.out.println(jar.getOptimalSolution().variables.get("X2"));
+			System.out.println(jar.getOptimalSolution().variables.get("X3"));
+			System.out.println(jar.getOptimalSolution().variables.get("X4"));
+			System.out.println(jar.getOptimalSolution().variables.get("X5"));
+			
+			double x1= jar.getOptimalSolution().variables.get("X1");
+			double result= Math.abs(1.0- x1)/ 1.0;
+			assertTrue(result< SIGMA_VALUE);
+			double x2= jar.getOptimalSolution().variables.get("X2");
+			result= Math.abs(0- x2);
+			assertTrue(result< SIGMA_VALUE);
+			double x3= jar.getOptimalSolution().variables.get("X3");
+			result= Math.abs(1.0- x3)/ 1.0;
+			assertTrue(result< SIGMA_VALUE);
+			double x4= jar.getOptimalSolution().variables.get("X4");
+			result= Math.abs(0- x4);
+			assertTrue(result< SIGMA_VALUE);
+			double x5= jar.getOptimalSolution().variables.get("X5");
+			result= Math.abs(2.0- x5)/ 2.0;
+			assertTrue(result< SIGMA_VALUE);
+			
+			double z= jar.getOptimalSolution().z;
+			result= Math.abs(12.0- z)/ 12.0;
+			assertTrue(result< SIGMA_VALUE);
+			
+//			assertTrue(jar.getOptimalSolution().z> 12-(12*SIGMA_VALUE) && jar.getOptimalSolution().z< 12+(12*SIGMA_VALUE) );
+//			assertTrue(jar.getOptimalSolution().variables.get("X1")>1 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X1")<1 + (1*SIGMA_VALUE));
+//			assertTrue(jar.getOptimalSolution().variables.get("X2")>0 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X2")<0 + (1*SIGMA_VALUE));
+//			assertTrue(jar.getOptimalSolution().variables.get("X3")>1 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X3")<1 + (1*SIGMA_VALUE));
+//			assertTrue(jar.getOptimalSolution().variables.get("X4")>0 - (1*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X4")<0 + (1*SIGMA_VALUE));
+//			assertTrue(jar.getOptimalSolution().variables.get("X5")>2 - (2*SIGMA_VALUE) && jar.getOptimalSolution().variables.get("X5")<2 + (2*SIGMA_VALUE));
 		} catch (Exception e) {
 			fail();
 		}

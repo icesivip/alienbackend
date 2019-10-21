@@ -1,6 +1,8 @@
 package icesi.vip.alien.alien;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
-import model.Model;
+import icesi.vip.alien.modelLP.Model;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -195,9 +197,21 @@ public class InteriorPointTest {
 			assertTrue(jar.getMaxY() == 9);
 			int lastSolution = jar.getSolutionPath().length - 1;
 			assertTrue(jar.getSolutionPath()[lastSolution].feasible == true);
-			assertTrue(jar.getSolutionPath()[lastSolution].z> 36 - (36*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].z< 36 + (36*SIGMA_VALUE));
-			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X1")> 2- ( 2*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X1")< 2+ ( 2*SIGMA_VALUE));
-			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X2")> 6- ( 6*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X2")< 6+ ( 6*SIGMA_VALUE));
+			
+			
+			double x1= jar.getSolutionPath()[lastSolution].variables.get("X1");
+			double result= Math.abs(2.0- x1)/ 2.0;
+			assertTrue(result< SIGMA_VALUE);
+			double x2= jar.getSolutionPath()[lastSolution].variables.get("X2");
+			result= Math.abs(6.0- x2)/ 6.0;
+			assertTrue(result< SIGMA_VALUE);
+			double z= jar.getSolutionPath()[lastSolution].z;
+			result= Math.abs(36.0- z)/ 36.0;
+			assertTrue(result< SIGMA_VALUE);
+			
+//			assertTrue(jar.getSolutionPath()[lastSolution].z> 36 - (36*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].z< 36 + (36*SIGMA_VALUE));
+//			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X1")> 2- ( 2*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X1")< 2+ ( 2*SIGMA_VALUE));
+//			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X2")> 6- ( 6*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X2")< 6+ ( 6*SIGMA_VALUE));
 		} catch (Exception e) {
 			fail();
 		}
@@ -212,9 +226,20 @@ public class InteriorPointTest {
 			assertTrue(jar.getMaxY() == 16);
 			int lastSolution = jar.getSolutionPath().length - 1;
 			assertTrue(jar.getSolutionPath()[lastSolution].feasible == true);
-			assertTrue(jar.getSolutionPath()[lastSolution].z> 25 - (25*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].z< 25 + (25*SIGMA_VALUE));
-			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X1")> 5- ( 5*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X1")< 5+ ( 5*SIGMA_VALUE));
-			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X2")> 5- ( 5*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X2")< 5+ ( 5*SIGMA_VALUE));
+
+			double x1= jar.getSolutionPath()[lastSolution].variables.get("X1");
+			double result= Math.abs(5.0- x1)/ 5.0;
+			assertTrue(result< SIGMA_VALUE);
+			double x2= jar.getSolutionPath()[lastSolution].variables.get("X2");
+			result= Math.abs(5.0- x2)/ 5.0;
+			assertTrue(result< SIGMA_VALUE);
+			double z= jar.getSolutionPath()[lastSolution].z;
+			result= Math.abs(25.0- z)/ 25.0;
+			assertTrue(result< SIGMA_VALUE);
+			
+//			assertTrue(jar.getSolutionPath()[lastSolution].z> 25 - (25*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].z< 25 + (25*SIGMA_VALUE));
+//			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X1")> 5- ( 5*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X1")< 5+ ( 5*SIGMA_VALUE));
+//			assertTrue(jar.getSolutionPath()[lastSolution].variables.get("X2")> 5- ( 5*SIGMA_VALUE) && jar.getSolutionPath()[lastSolution].variables.get("X2")< 5+ ( 5*SIGMA_VALUE));
 		} catch (Exception e) {
 			fail();
 		}
@@ -229,6 +254,7 @@ public class InteriorPointTest {
 			assertTrue(jar.getMaxY() == 16);
 			int lastSolution = jar.getSolutionPath().length - 1;
 			assertTrue(jar.getSolutionPath()[lastSolution].feasible == false);
+			
 			assertTrue(Double.isNaN(jar.getSolutionPath()[lastSolution].z));
 			assertTrue(Double.isNaN(jar.getSolutionPath()[lastSolution].variables.get("X1")));
 			assertTrue(Double.isNaN(jar.getSolutionPath()[lastSolution].variables.get("X2")));

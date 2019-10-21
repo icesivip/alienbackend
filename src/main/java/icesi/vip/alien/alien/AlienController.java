@@ -22,12 +22,8 @@ import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import icesi.vip.alien.materialRequirementPlanning.MaterialRequirementsPlanning;
+import icesi.vip.alien.modelLP.Model;
 import lombok.extern.log4j.Log4j2;
-import model.Constraint;
-import model.Model;
-import model.Solution;
-import model.Variable;
-import solver.interior_point.BarrierMethod;
 
 @RestController
 @Log4j2
