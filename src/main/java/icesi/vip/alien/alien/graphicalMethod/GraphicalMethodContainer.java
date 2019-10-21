@@ -2,18 +2,14 @@ package icesi.vip.alien.alien.graphicalMethod;
 
 import java.util.ArrayList;
 
-import model.Model;
-import model.Solution;
-import solver.graphical_method.GraphicalMethod;
+import icesi.vip.alien.modelLP.*;
+
 
 public class GraphicalMethodContainer {
 
 	public SimpleConstraint[] constraints;
 	public Solution.ExportSolution[] solutionList;
 	public Solution.ExportSolution optimalSolution;
-
-	
-	
 	
 	public GraphicalMethodContainer(Model m) {
 		GraphicalMethod solver = new GraphicalMethod();
@@ -23,7 +19,6 @@ public class GraphicalMethodContainer {
 			try {
 				solEx[i] = new Solution.ExportSolution(sol.get(i));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -39,9 +34,10 @@ public class GraphicalMethodContainer {
 		}
 		constraints = cons;
 		try {
+			if(solver.solve(m)!= null) {
 			optimalSolution = solver.solve(m).exportFormat();
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,6 +1,7 @@
 package icesi.vip.alien.alien.simplexMethod;
 
 import Jama.Matrix;
+import icesi.vip.alien.modelLP.*;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -12,7 +13,6 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.deser.BuilderBasedDeserializer;
 
-import model.*;
 
 public class Simplex implements Solver {
 	/**
