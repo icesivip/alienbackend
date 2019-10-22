@@ -1,6 +1,7 @@
 package icesi.vip.alien.alien;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.xml.SimpleSaxErrorHandler;
 
+import icesi.vip.alien.alien.simplexMethod.SensivilityAnalysis;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 
 @RunWith(SpringRunner.class)
@@ -109,7 +111,7 @@ public class SimplexTests {
 				e.printStackTrace();
 			}	
 		}	
-		
+
 		@Test
 		public void stepByStepTestNormal() {
 			setupScenarioNormal();
@@ -280,4 +282,54 @@ public class SimplexTests {
 						simplex.nextIteration();
 						assertEquals(Simplex.SOLVED, simplex.getMessageSol());
 		}
+		
+		@Test
+		public void sensitivityA1() {
+			setupScenarioNormal2();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.buildAnalysis();
+			simplex.getIntervals();
+			SensivilityAnalysis sA = simplex.getAnalysis();
+			double [][] interDCons = new double[][] {{200, 10},
+													{20, 400},
+													{20, Double.MAX_VALUE}};
+			double [][] interDFO = new double[][] {{Double.MAX_VALUE, 4},
+													{2, 8},
+													{simplex.roundDouble(2.66666), Double.MAX_VALUE}};										
+			assertEquals(sA.getIntervalsDConstraints(), interDCons);
+			assertEquals(sA.getIntervalsDFO(), interDFO);
+			assertEquals(sA.getShadowPrice(), new double[][] {{1, 2, 0}});
+			double[] exp = simplex.getReducedCosts();
+			double[] real = new double[] {4, 0, 0};//-4, 0, 0
+			for (int i = 0; i < 3; i++) {
+			assertTrue(exp[i]== real[i]);
+			}
+		}
+		@Test
+		public void sensitivityA2() {
+			setupScenarioNormal1();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.buildAnalysis();
+			simplex.getIntervals();
+			SensivilityAnalysis sA = simplex.getAnalysis();
+			double [][] interDCons = new double[][] {{simplex.roundDouble(2.66666), Double.MAX_VALUE},
+													{3, Double.MAX_VALUE}};
+			double [][] interDFO = new double[][] {{simplex.roundDouble(3.66666), Double.MAX_VALUE},
+													{Double.MAX_VALUE, 66},
+													{9, Double.MAX_VALUE},
+													{Double.MAX_VALUE, 42}};										
+			assertEquals(sA.getIntervalsDConstraints(), interDCons);
+			assertEquals(sA.getIntervalsDFO(), interDFO);
+			assertEquals(sA.getShadowPrice(), new double[][] {{11, 9}});
+			double[] exp = simplex.getReducedCosts();
+			double[] real = new double[] {0, 66, 0, 42}; //0, -66, 0, -42
+			for (int i = 0; i < 3; i++) {
+			assertTrue(exp[i]== real[i]);
+			}
+		}
+		
 }

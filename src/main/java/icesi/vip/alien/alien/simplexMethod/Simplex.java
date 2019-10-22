@@ -745,8 +745,8 @@ public class Simplex implements Solver {
 				 try {
 					if(solution.getVariableValue(model.getVariableAt(i)) == 0) {
 						 if(model.getType().equals(model.MAXIMIZE))
-							 reducedCosts[i] = intervals[i][1];
-						 else reducedCosts[i] = -intervals[i][0];
+							 reducedCosts[i] = roundDouble(intervals[i][1]);
+						 else reducedCosts[i] = -roundDouble(intervals[i][0]);
 					 } else reducedCosts[i] = 0;
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -804,8 +804,8 @@ public class Simplex implements Solver {
 			if(theta[i]!= Double.POSITIVE_INFINITY && theta[i]!= Double.NEGATIVE_INFINITY)
 			thetaCopy[i] = roundDouble(theta[i]);
 			else if(theta[i]== Double.POSITIVE_INFINITY)
-				thetaCopy[i] = 99999999999999999999.0;
-			else thetaCopy[i] = -99999999999999999999.0;
+				thetaCopy[i] = Double.MAX_VALUE;
+			else thetaCopy[i] = -Double.MAX_VALUE;
 		}
 		return thetaCopy;
 		} else return null;
