@@ -128,6 +128,7 @@ function submitTasks()
 		"Content-Type": "application/json",
 		"dataType": "json"
 	};
+	
 	var addTasksUrl=Url+"/add"
 	$.ajax({
 		url:addTasksUrl,

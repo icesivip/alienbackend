@@ -17,29 +17,79 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Task
 {
 
+	// General attributes for all tasks
+
+	/**
+	 * The identifier of the task, the identifier is not repeatable
+	 */
+
 	private Integer id;
+
+	/**
+	 * the name of the task
+	 */
 
 	private String name;
 
+	/**
+	 * the standard duration used to compute the earliest and latest times for the
+	 * CPM, in PERT this duration is computed using the distribution of the tasks
+	 * and its specific parameters
+	 */
+
 	private Double duration;
+
+	// CPM attributes
+
+	/**
+	 * The earliest start time of the task, for the starting task is 0, for the
+	 * other tasks is computed using the longest earliest finish time between the
+	 * predecessors 
+	 */
 
 	private Double earliestStart;
 
+	/**
+	 * The earliest finishing time of the task, for the starting task is the
+	 * starting time plus the duration, for the other tasks is computed using the
+	 * maximum earliest finish time between the predecessors  plus the duration of
+	 * the task
+	 */
+
 	private Double earliestFinish;
 
+	/**
+	 * The latest start time of the task, for the finishing task is the earliest
+	 * finishing time minus the duration, for the other tasks is computed using the
+	 * minimum latest start time between the successors plus the duration of
+	 * the taskla
+	 */
 	private Double latestStart;
 
+	/**
+	 * 
+	 */
 	private Double latestFinish;
 
+	/**
+	 * 
+	 */
 	private Double slack;
-	
+
+	/**
+	 * 
+	 */
 	private Boolean isCritical;
 
 	@JsonBackReference("Successors")
 	private List<Transition> Successors;
-	
+
 	@JsonBackReference("predecessors")
 	private List<Transition> predecessors;
+
+	// PERT attributes
+
+	private TaskDistribution distribution;
 
 	public Task()
 	{
@@ -176,8 +226,6 @@ public class Task
 		this.slack = slack;
 	}
 
-	
-
 	/**
 	 * @return the isCritical
 	 */
@@ -218,8 +266,6 @@ public class Task
 		return predecessors;
 	}
 
-	
-	
 	/**
 	 * @param predecessors the predecessors to set
 	 */
@@ -228,10 +274,34 @@ public class Task
 		this.predecessors = predecessors;
 	}
 
+	/**
+	 * @return the distribution
+	 */
+	public TaskDistribution getDistribution()
+	{
+		return distribution;
+	}
+
+	/**
+	 * @param distribution the distribution to set
+	 */
+	public void setDistribution(TaskDistribution distribution)
+	{
+		this.distribution = distribution;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id)
+	{
+		this.id = id;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Task [id=" + id +" name: "+ name+"]";
+		return "Task [id=" + id + " name: " + name + "]";
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package icesi.vip.alien.alien.pertvscpm.services.impl;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
+import icesi.vip.alien.alien.pertvscpm.model.TaskDistribution;
 import icesi.vip.alien.alien.pertvscpm.model.Transition;
 import icesi.vip.alien.alien.pertvscpm.repositories.TaskRepository;
 import icesi.vip.alien.alien.pertvscpm.services.TaskService;
@@ -30,11 +31,6 @@ public class TaskServiceImp implements TaskService
 {
 
 	static final Logger LOG = LoggerFactory.getLogger(TaskServiceImp.class);
-
-	public enum DistributionType
-	{
-		NORMAL_DISTRIBUTION, BETA_DISTRIBUTION, LOG_NORMAL_DISTRIBUTION, UNIFORM_DISTRIBUTION
-	}
 
 	@Autowired
 	private TaskRepository repo;
@@ -88,7 +84,7 @@ public class TaskServiceImp implements TaskService
 		while (taskQueue.peek() != null)
 		{
 			Task cursor = taskQueue.poll();
-			
+
 			double maxPredecesorDuration = getMaxPredecesorES(cursor.getPredecessors());
 			cursor.setEarliestStart(maxPredecesorDuration);
 			cursor.setEarliestFinish(maxPredecesorDuration + cursor.getDuration());
@@ -129,15 +125,20 @@ public class TaskServiceImp implements TaskService
 	private double getMaxPredecesorES(List<Transition> predecessors)
 	{
 		Task maxTask = predecessors.get(0).getPredecesor();
+
 		double max = maxTask.getEarliestStart() + maxTask.getDuration();
+
 		for (int i = 1; i < predecessors.size(); i++)
 		{
 			Task cursor = predecessors.get(i).getPredecesor();
+
 			double maxCursor = 0.0;
+
 			if (cursor.getEarliestStart() == null)
 				maxCursor = getMaxPredecesorES(cursor.getPredecessors()) + cursor.getDuration();
 			else
 				maxCursor = cursor.getEarliestStart() + cursor.getDuration();
+
 			max = (maxCursor > max) ? maxCursor : max;
 		}
 		return max;
@@ -220,49 +221,75 @@ public class TaskServiceImp implements TaskService
 	}
 
 	@Override
-	public Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int numberOfScenarios, double param1,
-			double param2, DistributionType distType)
+	public Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int numberOfScenarios)
 	{
-		Map<Integer, List<Task>> scenarios = new HashMap<Integer, List<Task>>(numberOfScenarios);
+		Map<Integer, List<Task>> scenarios = repo.initScenarios(numberOfScenarios);
 
-		AbstractRealDistribution distribution;
-
-		switch (distType)
-		{
-		case NORMAL_DISTRIBUTION:
-			distribution = new NormalDistribution(param1, param2);
-			break;
-		case BETA_DISTRIBUTION:
-			distribution = new BetaDistribution(param1, param2);
-			break;
-		case LOG_NORMAL_DISTRIBUTION:
-			distribution = new LogNormalDistribution(param1, param2);
-			break;
-		case UNIFORM_DISTRIBUTION:
-			distribution = new UniformRealDistribution(param1, param2);
-			break;
-		default:
-			distribution = new NormalDistribution();
-			break;
-		}
-
-		for (int i = 0; i < numberOfScenarios; i++)
-		{
-			generateScenario(tasks, distribution);
-		}
-
-		return scenarios;
-	}
-
-	private List<Task> generateScenario(List<Task> tasks, AbstractRealDistribution dist)
-	{
+		AbstractRealDistribution distribution = null;
 
 		for (Task task : tasks)
 		{
+			TaskDistribution taskDist = task.getDistribution();
 
+			switch (taskDist.getDistributionType())
+			{
+
+			case NORMAL:
+				distribution = new NormalDistribution(taskDist.getParam1(), taskDist.getParam2());
+				break;
+
+			case BETA:
+				distribution = new BetaDistribution(taskDist.getParam1(), taskDist.getParam2());
+				break;
+
+			case LOG_NORMAL:
+				distribution = new LogNormalDistribution(taskDist.getParam1(), taskDist.getParam2());
+				break;
+
+			case UNIFORM:
+				distribution = new UniformRealDistribution(taskDist.getParam1(), taskDist.getParam2());
+				break;
+
+			default:
+				distribution = new NormalDistribution();
+				break;
+			}
+
+			double[] durations = distribution.sample(numberOfScenarios);
+
+			for (int i = 0; i < durations.length; i++)
+			{
+				List<Task> scenario = repo.findScenarioById(i);
+				Task taskScenario = new Task(task.getId(), task.getName(), durations[i]);
+				if (scenario == null)
+				{
+					scenario = new ArrayList<Task>(tasks.size());
+					repo.addScenario(i, scenario);
+				}
+				scenario.add(taskScenario);
+			}
 		}
 
-		return tasks;
+		for (Task task : tasks)
+		{
+			for (int i = 0; i < numberOfScenarios; i++)
+			{
+				List<Task> scenario = scenarios.get(i);
+				Task cursor = scenario.get(task.getId());
+				List<Transition> successors = task.getSuccessors();
+				for (Transition transition : successors)
+				{
+					Task successor = scenario.get(transition.getSuccessor().getId());
+					Transition scenarioSuccessor = new Transition(cursor, successor);
+					cursor.getSuccessors().add(scenarioSuccessor);
+					successor.getPredecessors().add(scenarioSuccessor);
+
+				}
+
+			}
+		}
+
+		return scenarios;
 	}
 
 	@Override
@@ -270,18 +297,18 @@ public class TaskServiceImp implements TaskService
 	{
 		if (!tasks.isEmpty())
 		{
-			tasks.forEach(task ->
+			for (Task task : tasks)
 			{
 				repo.save(task);
-				List<Transition> trans = task.getSuccessors();
+				List<Transition> successors = task.getSuccessors();
 
-				trans.forEach(transition ->
+				for (Transition transition : successors)
 				{
 					Task successor = transition.getSuccessor();
 					repo.save(successor);
 					successor.getPredecessors().add(transition);
-				});
-			});
+				}
+			}
 		}
 		return repo.findAll();
 	}
@@ -291,4 +318,88 @@ public class TaskServiceImp implements TaskService
 		return repo.loadTasksFromFile();
 	}
 
+	@Override
+	public List<Task> loadPertSampleTasks()
+	{
+		return repo.loadPertTasksFromFile();
+	}
+
+	@Override
+	public List<Task> executePERTCPM(int scenarioId)
+	{
+
+		computeScenarioEarliestTimes(scenarioId);
+		computeScenarioLatestTimesAndSlack(scenarioId);
+
+		return repo.findScenarioById(scenarioId);
+	}
+
+	private List<Task> computeScenarioLatestTimesAndSlack(int scenarioId)
+	{
+		List<Task> scenario = repo.findScenarioById(scenarioId);
+		Task finish = scenario.get(scenario.size() - 1);
+		Queue<Task> taskQueue = new LinkedList<Task>();
+		finish.setLatestFinish(finish.getEarliestFinish());
+		finish.setLatestStart(finish.getLatestFinish() - finish.getDuration());
+		finish.setSlack(finish.getLatestFinish() - finish.getEarliestFinish());
+		finish.setIsCritical(true);
+		queueScenarioPredecessors(taskQueue, scenario, finish.getId());
+
+		while (taskQueue.peek() != null)
+		{
+			Task cursor = taskQueue.poll();
+			double minSuccessorDuration = getMinSuccessorLS(cursor.getSuccessors());
+			cursor.setLatestFinish(minSuccessorDuration);
+			cursor.setLatestStart(minSuccessorDuration - cursor.getDuration());
+			cursor.setSlack(cursor.getLatestFinish() - cursor.getEarliestFinish());
+			cursor.setIsCritical(cursor.getSlack() == 0.0);
+			queueScenarioPredecessors(taskQueue, scenario, cursor.getId());
+		}
+		return scenario;
+
+	}
+
+	private List<Task> queueScenarioPredecessors(Queue<Task> taskQueue, List<Task> scenario, int id)
+	{
+		Task current = scenario.get(id);
+
+		current.getPredecessors().forEach(predecessorEdge ->
+		{
+			Task toAdd = scenario.get(predecessorEdge.getPredecesor().getId());
+			taskQueue.add(toAdd);
+		});
+		return scenario;
+	}
+
+	private List<Task> computeScenarioEarliestTimes(int scenarioId)
+	{
+		List<Task> scenario = repo.findScenarioById(scenarioId);
+		Task start = scenario.get(0);
+		Queue<Task> taskQueue = new LinkedList<Task>();
+		start.setEarliestStart(0.0);
+		start.setEarliestFinish(start.getDuration());
+		queueScenarioSuccessors(taskQueue, scenario, start.getId());
+
+		while (taskQueue.peek() != null)
+		{
+			Task cursor = taskQueue.poll();
+
+			double maxPredecesorDuration = getMaxPredecesorES(cursor.getPredecessors());
+			cursor.setEarliestStart(maxPredecesorDuration);
+			cursor.setEarliestFinish(maxPredecesorDuration + cursor.getDuration());
+			queueScenarioSuccessors(taskQueue, scenario, cursor.getId());
+		}
+		return scenario;
+
+	}
+
+	private void queueScenarioSuccessors(Queue<Task> taskQueue, List<Task> scenario, int id)
+	{
+		Task current = scenario.get(id);
+		current.getSuccessors().forEach(nextLv ->
+		{
+			Task toAdd = scenario.get(nextLv.getSuccessor().getId());
+			taskQueue.add(toAdd);
+		});
+	}
 }

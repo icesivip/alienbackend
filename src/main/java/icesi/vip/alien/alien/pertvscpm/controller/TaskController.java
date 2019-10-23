@@ -2,6 +2,7 @@ package icesi.vip.alien.alien.pertvscpm.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
 import icesi.vip.alien.alien.pertvscpm.repositories.impl.TaskRepositoryImp;
@@ -38,23 +38,38 @@ public class TaskController
 
 		return service.list();
 	}
-	
-	@GetMapping(value="/sample")
+
+	@GetMapping(value = "/sample")
 	public List<Task> loadSampleTasks()
 	{
-		
+
 		return service.loadSampleTaks();
 	}
 
 	@PostMapping(value = "/add")
 	public List<Task> addTask(@RequestBody(required = true) ArrayList<Task> taskList)
 	{
-		 List<Task> activities=service.buildGraph(taskList);
-		 Task start = activities.get(1);
-		 Task finish =activities.get(activities.size()-1);
-		 List<Task> cpm=service.executeCPM(activities, start, finish);
-		 
+		List<Task> activities = service.buildGraph(taskList);
+		Task start = activities.get(0);
+		Task finish = activities.get(activities.size() - 1);
+		List<Task> cpm = service.executeCPM(activities, start, finish);
+
 		return cpm;
+	}
+
+	@PostMapping(value = "/pert/{scenarios}")
+	public Map<Integer, List<Task>> pert(@RequestBody List<Task> taskList, @PathVariable("scenarios") int scenarios)
+	{
+		List<Task> activities = service.loadPertSampleTasks();
+//		List<Task> activities = service.buildGraph(taskList);
+		Map<Integer, List<Task>> simulatedScenarios = service.generateScenarios(activities, scenarios);
+
+		for (int i=0;i<scenarios;i++)
+		{
+			service.executePERTCPM(i);
+		}
+
+		return simulatedScenarios;
 	}
 
 	@GetMapping(path =
@@ -71,18 +86,18 @@ public class TaskController
 		task.setId(id);
 		return service.edit(task);
 	}
-	
+
 	@GetMapping(path =
-		{ "/criticalPathMethod/{startId}/{endId}" })
-		public List<Task> criticalPathMethod(@PathVariable("startId") int startId,@PathVariable("endId") int endId)
-		{
-			List<Task> tasks = service.list();
-			Task start =service.findById(startId);
-			Task finish =service.findById(endId);
-			return service.executeCPM(tasks, start, finish);
-		}
-	
-	@DeleteMapping(value="/delete/{delId}")
+	{ "/criticalPathMethod/{startId}/{endId}" })
+	public List<Task> criticalPathMethod(@PathVariable("startId") int startId, @PathVariable("endId") int endId)
+	{
+		List<Task> tasks = service.list();
+		Task start = service.findById(startId);
+		Task finish = service.findById(endId);
+		return service.executeCPM(tasks, start, finish);
+	}
+
+	@DeleteMapping(value = "/delete/{delId}")
 	public Task deleteTask(@PathVariable("delId") int delId)
 	{
 		return service.delete(delId);

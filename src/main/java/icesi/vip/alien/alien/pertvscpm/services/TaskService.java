@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
-import icesi.vip.alien.alien.pertvscpm.services.impl.TaskServiceImp.DistributionType;
 
 /**
  * @author jcampaz
@@ -110,27 +109,20 @@ public interface TaskService
 	List<Task> executeCPM(List<Task> tasks, Task start, Task finish);
 
 	/**
-	 * Creates a determined number of scenarios using a probability distribution,
-	 * and the parameters of the distribution<br>
+	 * Creates a determined number of scenarios where the duration of a task is
+	 * computed using its probability distribution and parameters, to extract a
+	 * sample value of the probability<br>
 	 * 
 	 * @param tasks     the list with the tasks and precedences that will be used to
 	 *                  generate every scenario
 	 * @param scenarios is the total number of scenarios that will be generated
-	 * @param distType  - The real distribution type that will be used to generate
-	 *                  the variation of the task duration, it can be:
-	 *                  <ul>
-	 *                  Normal <br>
-	 *                  Log_Normal <br>
-	 *                  Beta <br>
-	 *                  Uniform
-	 *                  </ul>
-	 * @param param1    - is the first parameter needed to generate the variation
-	 *                  from the distribution type
-	 * @param param2    - is the second parameter needed to generate the variation
-	 *                  from the distribution type
+	 * 
 	 * @return return the set of scenarios with the randomly generated durations
 	 */
-	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios, double param1, double param2,
-			DistributionType distType);
+	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios);
+
+	List<Task> loadPertSampleTasks();
+
+	List<Task> executePERTCPM(int scenarioId);
 
 }

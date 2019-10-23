@@ -34,13 +34,13 @@ function addTask()
 {
 	event.preventDefault();
 
-	lastId++;
-
+	
 	$('#tasksTable').dataTable().fnAddData( [
 		lastId,
 		"<tr><input required placeholder=\"Type the task name\" type=\"text\" name=\"task"+lastId+"Name\" class=\"form-control\"></tr>",
 		"<tr><input type=\"number\" class=\"form-control\" name=\"task"+lastId+"Duration\" min=\"0\" max=\"any\" value=0 step=\"0.01\"><tr>","<tr><input required placeholder=\"Type the task Successors\" type=\"text\" name=\"task"+lastId+"Successor\" class=\"form-control\"></tr>" ] );
-}
+		lastId++;
+	}
 
 
 function delTask() {
@@ -56,25 +56,25 @@ function delTask() {
 
 			console.log(toDel[0]);
 		
-		var delTaskUrl=Url+'/delete/'+toDel[0];
+			var delTaskUrl=Url+'/delete/'+toDel[0];
 
-		console.log(delTaskUrl);
-		
-		$.ajax({
-
-			url:delTaskUrl,
-			type: 'DELETE',
-			data: JSON.stringify(toDel),
-			contentType: 'application/json'
+			console.log(delTaskUrl);
 			
-		}).then(function (data) {
-			console.log(data);
+			$.ajax({
 
-		}, function (error) {
-			console.log(error);
-		});
-	
-		$('#tasksTable').DataTable().row('.selected').remove().draw( false );
+				url:delTaskUrl,
+				type: 'DELETE',
+				data: JSON.stringify(toDel),
+				contentType: 'application/json'
+				
+			}).then(function (data) {
+				console.log(data);
+
+			}, function (error) {
+				console.log(error);
+			});
+		
+			$('#tasksTable').DataTable().row('.selected').remove().draw( false );
 		
 		}
 		
@@ -127,10 +127,10 @@ function submitTasks()
 	var data= new FormData(document.getElementById("tasksForm"));	
 	var taskList=[];
 
-	for(var i=1;i<=lastId;i++)
+	for(var i=0;i<lastId;i++)
 	{
 		var tSuccessors=[];
-		var tPredecessors=[];
+		
 		var currentTask=
 		{
 			id:i,
