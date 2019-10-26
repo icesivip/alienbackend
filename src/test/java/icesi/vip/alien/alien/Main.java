@@ -2,20 +2,32 @@ package icesi.vip.alien.alien;
 
 import java.io.IOException;
 
-import icesi.vip.alien.networks.GraphList;
-import icesi.vip.alien.networks.Vertex;
+import icesi.vip.alien.networks.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application{
 
 	public static void main(String[] args) throws IOException {
-		GraphList gr = new GraphList("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt");
+		//AdjListGraph<Integer> graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt", true);
+		launch(args);
 		
-		int[] arr = gr.dijkstra((Vertex) gr.getVertices().get(0));
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getResource("menu.FXML"));
+	
 		
-		for (int i = 0; i < arr.length; i++) {
-				System.out.print(arr[i]+" ");
-		}
-		System.out.println();
+		Scene scene = new Scene(root);
+		stage.setTitle("Menu");
+		stage.setScene(scene);
+		stage.show();
+		
+		
 	}
 
 }

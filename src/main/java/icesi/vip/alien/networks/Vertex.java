@@ -1,209 +1,80 @@
-/**
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * $Id$
- * Icesi University (Cali - Colombia)
- * VIP ALLIEN 
- * @Author: Christian Flor christian.flor1@correo.icesi.edu.co>
- * @Author: Carlos Restrepo carlos.restrepo5@correo.icesi.edu.co>
- * @Author: Cesar Canales cesarcanales80@gmail.com
- * @Date: 23 September 2019
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
 package icesi.vip.alien.networks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-/**
- *  This class represents the vertex of the graph
- * @param <T>
- */
-public class Vertex<T> implements Comparable<Vertex<T>> {
-	// -----------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------
-	/**
-	 * 
-	 */
-	public static final String GREY = "Grey";
-	/**
-	 * 
-	 */
-	public static final String WHITE = "White";
-	/**
-	 * 
-	 */
-	public static final String BLACK = "Black";
-	// -----------------------------------------------------------------
-    // Attributes
-    // -----------------------------------------------------------------
-	private String color;
-	/**
-	 * 
-	 */
-	private int distance;
-	/**
-	 * 
-	 */
-	private int discovered;
-	/**
-	 * 
-	 */
-	private int ended;
-	/**
-	 * 
-	 */
-	private Vertex<T> predecessor;
-	/**
-	 * 
-	 */
-	private T data;
-	/**
-	 * 
-	 */
-	private ArrayList<Triple<T>> triples;
-	/**
-	 * 
-	 */
+public class Vertex<T> implements Comparable<Vertex<T>>{
+
+	public static final int WHITE = 0;
+	public static final int GRAY = 1;
+	public static final int BLACK = 2;
 	
+	private T value;
+	//Distance
+	private double d;
+	//IDK
+	private int f;
 	
-	// -----------------------------------------------------------------
-    // Builder
-    // -----------------------------------------------------------------
-	/**
-	 * 
-	 * @param data
-	 */
-	public Vertex(T data){
-		this.data = data;
-		triples = new ArrayList<Triple<T>>();
-		distance = Integer.MAX_VALUE;
-	}
-	// -----------------------------------------------------------------
-    // Methods for add ...
-    // -----------------------------------------------------------------
-	/**
-	 * 
-	 * @param name
-	 * @param weight
-	 * @param vertex
-	 */
-	public void addTriple(int weight, Vertex<T> vertex){
-		Triple<T> triple = new Triple<T>(weight, vertex);
-//		if(!(hashTriples.containsKey(nombre))){
-			triples.add(triple);
-				
-//		}
-	}
+	private int index;
 	
-	// -----------------------------------------------------------------
-    // Methods Atributes
-    // -----------------------------------------------------------------
+	private int color;
 	
+	private Vertex<T> pred;
 	
-	@Override
-	public int compareTo(Vertex<T> other) {
-		
-		return this.distance-other.distance;
+	public Vertex(T value) {
+		this.value=value;
+		pred=null;
+		color=WHITE;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public T getdata(){
-		return data;
+
+	public T getValue() {
+		return value;
 	}
-	/**
-	 * 
-	 * @param data
-	 */
-	public void setdata(T data){
-		this.data = data;
+
+	public void setValue(T value) {
+		this.value = value;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public int getDiscovered() {
-		return discovered;
+
+	public double getD() {
+		return d;
 	}
-	/**
-	 * 
-	 * @param discovered
-	 */
-	public void setDiscovered(int discovered) {
-		this.discovered = discovered;
+
+	public void setD(double d) {
+		this.d = d;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public int getEnded() {
-		return ended;
+
+	public int getF() {
+		return f;
 	}
-	/**
-	 * 
-	 * @param ended
-	 */
-	public void setEnded(int ended) {
-		this.ended = ended;
+
+	public void setF(int f) {
+		this.f = f;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public String getColor() {
+
+	public int getColor() {
 		return color;
 	}
-	/**
-	 * 
-	 * @param color
-	 */
-	public void setColor(String color) {
+
+	public void setColor(int color) {
 		this.color = color;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public int getDistance() {
-		return distance;
+
+	public Vertex<T> getPred() {
+		return pred;
 	}
-	/**
-	 * 
-	 * @param distance
-	 */
-	public void setDistance(int distance) {
-		this.distance = distance;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public Vertex<T> getPredecessor() {
-		return predecessor;
-	}
-	/**
-	 * 
-	 * @param predecessor
-	 */
-	public void setPredecessor(Vertex<T> predecessor) {
-		this.predecessor = predecessor;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Triple<T>> getTriples() {
-		return triples;
-	}
-	/**
-	 * 
-	 * @param triples
-	 */
-	public void setTriples(ArrayList<Triple<T>> triples) {
-		this.triples = triples;
+
+	public void setPred(Vertex<T> pred) {
+		this.pred = pred;
 	}
 	
+	public int getIndex() {
+		return this.index;
+	}
+	
+	public void setIndex(int index) {
+		this.index=index;
+	}
+
+	@Override
+	public int compareTo(Vertex<T> vertex) {
+		return Double.compare(d, vertex.d);
+	}
 	
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="icesi.vip.alien.alien.MenuController">
+  <tabs>
+    <Tab fx:id="shortPathTab" text="Shortest paths">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <BorderPane fx:id="shortPathPane" layoutX="8.0" prefHeight="370.0" prefWidth="591.0">
+                     <top>
+                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextField fx:id="one" prefHeight="25.0" prefWidth="109.0" />
+                              <TextField fx:id="two" prefHeight="25.0" prefWidth="92.0" />
+                              <Button mnemonicParsing="false" onAction="#dijkstraButton" text="Dijkstra" />
+                              <Separator prefHeight="0.0" prefWidth="73.0" />
+                              <Button mnemonicParsing="false" onAction="#flodyButton" text="floyd warshall" />
+                           </children>
+                        </HBox>
+                     </top>
+                     <left>
+                        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextField fx:id="distanceText" layoutX="26.0" layoutY="34.0" />
+                           </children>
+                        </Pane>
+                     </left>
+                     <center>
+                        <ScrollPane fx:id="floydScrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="389.0" />
+                          </content>
+                        </ScrollPane>
+                     </center>
+                  </BorderPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Minimum spanning trees">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+      <Tab text="Max flow">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
