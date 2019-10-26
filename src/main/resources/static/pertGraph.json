@@ -1,0 +1,92 @@
+[
+    {
+        "id": 0,
+        "name": "START",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 0,
+            "param2": 0.00001
+        },
+        "successors": [1,2,3]
+    },
+    {
+        "id": 1,
+        "name": "A",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 2,
+            "param2": 0.00001
+        },
+        "successors": [ 4,6]
+    },
+    {
+        "id": 2,
+        "name": "B",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 6,
+            "param2": 0.00001
+        },
+        "successors": [7]
+    },
+    {
+        "id": 3,
+        "name": "C",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 4,
+            "param2": 0.00001
+        },
+        "successors": [5]
+    },
+    {
+        "id": 4,
+        "name": "D",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 3,
+            "param2": 0.00001
+        },
+        "successors": [7]
+    },
+    {
+        "id": 5,
+        "name": "E",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 5,
+            "param2": 0.00001
+        },
+        "successors": [7]
+    },
+    {
+        "id": 6,
+        "name": "F",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 4,
+            "param2": 0.00001
+        },
+        "successors": [8]
+    },
+    {
+        "id": 7,
+        "name": "G",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 2,
+            "param2": 0.00001
+        },
+        "successors": [8]
+    },
+    {
+        "id": 8,
+        "name": "END",
+        "distribution": {
+            "distributionType": "NORMAL",
+            "param1": 0,
+            "param2": 0.00001
+        },
+        "successors": []
+    }
+]

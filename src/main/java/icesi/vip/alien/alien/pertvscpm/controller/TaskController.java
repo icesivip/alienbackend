@@ -27,7 +27,7 @@ import icesi.vip.alien.alien.pertvscpm.services.TaskService;
 @RestController
 public class TaskController
 {
-	private final Logger LOG = LoggerFactory.getLogger(TaskRepositoryImp.class);
+//	private final Logger LOG = LoggerFactory.getLogger(TaskRepositoryImp.class);
 
 	@Autowired
 	TaskService service;
@@ -42,8 +42,8 @@ public class TaskController
 	@GetMapping(value = "/sample")
 	public List<Task> loadSampleTasks()
 	{
-
-		return service.loadSampleTaks();
+		
+		return service.loadSampleTaks("classpath:static/graph.txt");
 	}
 
 	@PostMapping(value = "/add")
@@ -60,12 +60,12 @@ public class TaskController
 	@PostMapping(value = "/pert/{scenarios}")
 	public Map<Integer, List<Task>> pert(@RequestBody List<Task> taskList, @PathVariable("scenarios") int scenarios)
 	{
-		List<Task> activities = service.loadPertSampleTasks();
-//		List<Task> activities = service.buildGraph(taskList);
-		Map<Integer, List<Task>> simulatedScenarios = service.generateScenarios(activities, scenarios);
+
+		Map<Integer, List<Task>> simulatedScenarios = service.generateScenarios(taskList, scenarios);
 
 		for (int i=0;i<scenarios;i++)
 		{
+		
 			service.executePERTCPM(i);
 		}
 

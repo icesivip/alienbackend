@@ -1,0 +1,57 @@
+[
+    {
+        "id": 0,
+        "name": "START",
+        "duration": 0.0,
+        "successors": [1,2,3]
+    },
+    {
+        "id": 1,
+        "name": "A",
+        "duration": 2.0,
+        "earliestStart": null,
+        "successors": [ 4,6]
+    },
+    {
+        "id": 2,
+        "name": "B",
+        "duration": 6.0,
+        "successors": [7]
+    },
+    {
+        "id": 3,
+        "name": "C",
+        "duration": 4.0,
+        "successors": [5]
+    },
+    {
+        "id": 4,
+        "name": "D",
+        "duration": 3.0,
+        "successors": [7]
+    },
+    {
+        "id": 5,
+        "name": "E",
+        "duration": 5.0,
+        "successors": [7]
+    },
+    {
+        "id": 6,
+        "name": "F",
+        "duration": 4.0,
+        "successors": [8]
+    },
+    {
+        "id": 7,
+        "name": "G",
+        "duration": 2.0,
+        "successors": [8]
+    },
+    {
+        "id": 8,
+        "name": "END",
+        "duration": 0.0,
+        "successors": []
+    }
+]

@@ -46,14 +46,16 @@ public interface TaskService
 	/**
 	 * Loads a sample set of tasks defined in a text file in the static resource
 	 * folder <br>
-	 * <b>Pre:</b> The file already exists and contains a connected graph with a set
-	 * of tasks that allows the execution of the CPM<br>
+	 * <b>Pre:</b> The selected file's structure match the requirements to upload
+	 * the definition of the tasks<br>
 	 * <b>Post:</b> Every task already existing and stored is removed and the new
 	 * set of tasks is stored in the task repository
 	 * 
+	 * @param fileUrl
+	 * 
 	 * @return the list of tasks with the respective predecessors and successors
 	 */
-	public List<Task> loadSampleTaks();
+	public List<Task> loadSampleTaks(String fileUrl);
 
 	/**
 	 * @param task
@@ -121,8 +123,10 @@ public interface TaskService
 	 */
 	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios);
 
-	List<Task> loadPertSampleTasks();
+	List<Task> loadPertSampleTasks(String fileUrl);
 
 	List<Task> executePERTCPM(int scenarioId);
+
+	List<Task> findScenarioByid(int id);
 
 }

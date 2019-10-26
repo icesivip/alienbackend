@@ -43,10 +43,10 @@ public class TaskRepositoryImp implements TaskRepository
 	}
 
 	@Override
-	public List<Task> loadTasksFromFile()
+	public List<Task> loadTasksFromFile(String fileUrl)
 	{
 		tasks.clear();
-		Resource graph = resourceLoader.getResource("classpath:static/graph.txt");
+		Resource graph = resourceLoader.getResource(fileUrl);
 		
 		
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(graph.getInputStream())))
@@ -94,10 +94,10 @@ public class TaskRepositoryImp implements TaskRepository
 		}
 
 	@Override
-	public List<Task> loadPertTasksFromFile()
+	public List<Task> loadPertTasksFromFile(String fileUrl)
 	{
 		tasks.clear();
-		Resource graph = resourceLoader.getResource("classpath:static/pertGraph.txt");
+		Resource graph = resourceLoader.getResource(fileUrl);
 		
 		
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(graph.getInputStream())))
@@ -194,6 +194,18 @@ public class TaskRepositoryImp implements TaskRepository
 	public List<Task> addScenario(int scenarioId, List<Task> scenario)
 	{
 		return scenarios.put(scenarioId, scenario);
+	}
+	
+	@Override
+	public Map<Integer,List<Task>> getAllScenarios()
+	{
+		return scenarios;
+	}
+
+	@Override
+	public void clearAllTasks()
+	{
+		tasks.clear();
 	}
 
 }

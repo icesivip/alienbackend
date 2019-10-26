@@ -23,6 +23,8 @@ public class TaskDistribution
 
 	private Double param2;
 
+	private double param3;
+
 	public TaskDistribution()
 	{
 
@@ -81,6 +83,20 @@ public class TaskDistribution
 	public void setParam2(Double param2)
 	{
 		this.param2 = param2;
+	}
+
+	public double getParam3()
+	{
+		// TODO Auto-generated method stub
+		return param3;
+	}
+
+	/**
+	 * @param param3 the param3 to set
+	 */
+	public void setParam3(double param3)
+	{
+		this.param3 = param3;
 	}
 
 	@Override
