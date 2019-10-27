@@ -2,8 +2,7 @@ const Url = "http://localhost:8080/tasks";
 
 /* Global var for counter */
 var lastId = 0;
-var lastName = "";
-var lastDuration = 0.0;
+var taskList = [];
 
 $(document).ready(function() {
   var table = $("#tasksTable").dataTable({
@@ -78,7 +77,6 @@ function delTask() {
 }
 
 function loadTasks(data) {
-  // event.preventDefault();
 
   data.forEach(toLoad => {
     var taskId = toLoad.id;
@@ -87,9 +85,9 @@ function loadTasks(data) {
     var taskSuccessors = "";
     toLoad.successors.forEach(suc => {
       if (taskSuccessors.length > 0) {
-        taskSuccessors += "," + suc;
+        taskSuccessors += "," + suc.successor.id;
       } else {
-        taskSuccessors += suc;
+        taskSuccessors += suc.successor.id;
       }
     });
 
@@ -114,53 +112,13 @@ function loadTasks(data) {
           '"><tr>'
       ]);
     lastId++;
-    lastName = taskName;
-    lastDuration = taskDuration;
   });
 }
 
 function submitTasks() {
   event.preventDefault();
 
-  var data = new FormData(document.getElementById("tasksForm"));
-  var taskList = [];
-
-  for (var i = 0; i < lastId; i++) {
-    var currentTask = {
-      id: i,
-      name: data.get("task" + i + "Name"),
-      duration: parseFloat(data.get("task" + i + "Duration")),
-      predecessors: [],
-      successors: []
-    };
-    taskList.push(currentTask);
-  }
-
-  for (var i = 0; i < lastId; i++) {
-    var taskSuccessors = data.get("task" + i + "Successors");
-    if (taskSuccessors != null && taskSuccessors != "") {
-      var sucIds = data.get("task" + i + "Successors").split(",");
-      sucIds.forEach(suc => {
-        var transition = {
-          type: "FS",
-          predecesor: {
-            id: taskList[i].id,
-            name: taskList[i].name,
-            duration: taskList[i].duration
-          },
-          successor: {
-            id: taskList[suc].id,
-            name: taskList[suc].name,
-            duration: taskList[suc].duration
-          }
-        };
-        taskList[i].successors.push(transition);
-        taskList[suc].predecessors.push(transition);
-      });
-    }
-  }
-  console.log("created the transitions");
-  console.log(taskList);
+  readFormData();
 
   var addTasksUrl = Url + "/add";
   $.ajax({
@@ -214,6 +172,7 @@ document
   .getElementById("upload-file-form")
   .addEventListener("submit", function(e) {
     e.preventDefault();
+  
     var file = document.getElementById("fileUpload").files[0];
 
     urlFile = window.URL.createObjectURL(file);
@@ -228,18 +187,81 @@ document
       }
     );
 
-    //   $.ajax({
-    //     url: urlFile
-    //   }).then(
-    //     function(data) {
-    //       console.log(data);
-    //     },
-    //     function(error) {
-    //       alert("Failed to process request.");
-    //       console.log(error);
-    //     }
-    //   );
     $("#uploadModal").modal("hide");
     $("body").removeClass("modal-open");
     $(".modal-backdrop").remove();
   });
+
+function saveProblem() {
+  if (taskList.length == 0) {
+    readFormData();
+  }
+  console.log(taskList);
+  var objectData = taskList;
+  console.log(objectData);
+  exportToJson(objectData);
+}
+
+function exportToJson(objectData) {
+  console.log(objectData);
+  let filename = "cpm_problem.json";
+  let contentType = "application/json;charset=utf-8;";
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    var blob = new Blob(
+      [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+      { type: contentType }
+    );
+    navigator.msSaveOrOpenBlob(blob, filename);
+  } else {
+    var a = document.createElement("a");
+    a.download = filename;
+    a.href =
+      "data:" +
+      contentType +
+      "," +
+      encodeURIComponent(JSON.stringify(objectData));
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+
+function readFormData() {
+  var data = new FormData(document.getElementById("tasksForm"));
+
+  for (var i = 0; i < lastId; i++) {
+    var currentTask = {
+      id: i,
+      name: data.get("task" + i + "Name"),
+      duration: parseFloat(data.get("task" + i + "Duration")),
+      predecessors: [],
+      successors: []
+    };
+    taskList.push(currentTask);
+  }
+
+  for (var i = 0; i < lastId; i++) {
+    var taskSuccessors = data.get("task" + i + "Successors");
+    if (taskSuccessors != null && taskSuccessors != "") {
+      var sucIds = data.get("task" + i + "Successors").split(",");
+      sucIds.forEach(suc => {
+        var transition = {
+          type: "FS",
+          predecesor: {
+            id: taskList[i].id,
+            name: taskList[i].name,
+            duration: taskList[i].duration
+          },
+          successor: {
+            id: taskList[suc].id,
+            name: taskList[suc].name,
+            duration: taskList[suc].duration
+          }
+        };
+        taskList[i].successors.push(transition);
+        taskList[suc].predecessors.push(transition);
+      });
+    }
+  }
+}
