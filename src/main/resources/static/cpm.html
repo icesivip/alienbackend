@@ -9,7 +9,7 @@
   <meta name="description" content="On this page you can define the tasks">
   <meta name="author" content="Julio Cesar Campaz">
 
-  <title>VIP Alien - CPM</title>
+  <title>CPM</title>
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  
+
   <!-- Custom styles for this page -->
 
   <link href="vendor/datatables/jquery.dataTables.min.css" rel="stylesheet">
@@ -195,20 +195,23 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Critical Path Method</h1>
+          <h1 class="h1 text-center">Critical Path Method</h1>
           <p class="mb-4">CPM (Critical Path method) is used to determine the total duration of a whole project based on
-            the activities.</p>
+            the activities duration, and the relationships between them.</p>
 
           <!-- Data Tables for the task definition -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">TASKS </h6>
+              <div>
+
+              </div>
             </div>
             <div class="card-body">
               <form id="tasksForm">
                 <div class="table-responsive">
-                  <table class="table table-bordered display" id="tasksTable" width="100%" cellspacing="0">
-                    <thead>
+                  <table class="table table-bordered" id="tasksTable">
+                    <thead class="text-white bg-primary">
                       <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -216,26 +219,16 @@
                         <th>successors</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <th colspan="1" class="text-center">
+                    <tfoot class="bg-primary">
+                      <th colspan="4" class="text-center">
+                        <button onclick="addTask()" class="btn btn-primary">
+                          Add
+                        </button>
+                        <button onclick="delTask()" class="btn btn-primary">
+                          Remove
+                        </button>
                         <button onclick="submitTasks()" class="btn btn-primary">
                           submit
-                        </button>
-                      </th>
-                      <th colspan="1">
-                        <!-- <button onclick="loadTasks()" class="btn btn-primary">
-                            Load Sample tasks
-                        </button> -->
-
-                      </th>
-                      <th colspan="1" class="text-center">
-                        <button onclick="addTask()" class="btn btn-primary">
-                          Add tasks
-                        </button>
-                      </th>
-                      <th colspan="1" class="text-center">
-                        <button onclick="delTask()" class="btn btn-primary">
-                          Remove Tasks
                         </button>
                       </th>
                     </tfoot>
@@ -248,14 +241,16 @@
           </div>
           <!--data tables for the CPM-->
 
+          <hr>
+          <h2 class="text-center">Critical Path found</h2>
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Critical path Method </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table id="CPMTable" class="table table-bordered" width="100%" cellspacing="0">
-                  <thead>
+                <table id="CPMTable" class="table table-bordered">
+                  <thead class="text-white bg-primary">
                     <tr>
                       <th>ID</th>
                       <th>Name</th>

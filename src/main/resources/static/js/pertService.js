@@ -6,6 +6,8 @@ var taskList = [];
 
 var lastId = 0;
 
+var totalScenarios;
+
 $(document).ready(function() {
   var table = $("#tasksTable").dataTable({
     select: true
@@ -19,15 +21,30 @@ $(document).ready(function() {
       $(this).addClass("selected");
     }
   });
-
-  $(".dropdown-menu a").click(function() {
-    var selText = $(this).text();
-    $(this)
-      .parents(".btn-group")
-      .find(".dropdown-toggle")
-      .html(selText + ' <span class="caret"></span>');
-  });
 });
+
+document
+  .getElementById("upload-file-form")
+  .addEventListener("submit", function(e) {
+    e.preventDefault();
+    var file = document.getElementById("fileUpload").files[0];
+
+    urlFile = window.URL.createObjectURL(file);
+    $.ajax({
+      url: urlFile
+    }).then(
+      function(data) {
+        loadTasks(data);
+        
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    $("#uploadModal").modal("hide");
+    $("body").removeClass("modal-open");
+    $(".modal-backdrop").remove();
+  });
 
 function addPertTask() {
   event.preventDefault();
@@ -52,7 +69,7 @@ function addPertTask() {
         'param1" min="0" max="any" step="0.01" value="0"></tr><tr><input type="number" class="form-control" name="task' +
         lastId +
         'param2" min="0" max="any" step="0.01" value="0"></tr>'
-	]);
+    ]);
   lastId++;
 }
 
@@ -69,7 +86,13 @@ function delTask() {
 }
 
 function loadTasks(data) {
-  data.forEach(toLoad => {
+  if(data.scenarios!=null)
+  {
+    totalScenarios=data.scenarios;
+    $("scenarios").val(totalScenarios);
+
+  }
+  data.tasks.forEach(toLoad => {
     var taskId = toLoad.id;
     var taskName = toLoad.name;
     var taskSuccessors = "";
@@ -83,9 +106,9 @@ function loadTasks(data) {
 
     toLoad.successors.forEach(suc => {
       if (taskSuccessors.length > 0) {
-        taskSuccessors += "," + suc;
+        taskSuccessors += "," + suc.successor.id;
       } else {
-        taskSuccessors += suc;
+        taskSuccessors += suc.successor.id;
       }
     });
 
@@ -123,9 +146,138 @@ function loadTasks(data) {
 }
 
 function submitPertTasks() {
+  
   event.preventDefault();
+  readFormData();
 
+  var pertTasksUrl = Url + "/pert/" + totalScenarios;
+  $.ajax({
+    url: pertTasksUrl,
+    type: "POST",
+    data: JSON.stringify(taskList),
+    contentType: "application/json"
+  }).then(data => {
+    displayChart(data);
+  });
+}
+
+function displayChart(data) {
+  var myChart = null;
+  var durations = [];
+
+  for (var i = 0; i < totalScenarios; i++) {
+    var totalDuration = 0.0;
+    data[i].forEach(task => {
+      if (task.isCritical == true) {
+        totalDuration += task.duration;
+      }
+    });
+    durations.push(totalDuration);
+  }
+
+  var taskNames = [];
+  taskList.forEach(task => taskNames.push(task.name));
+
+  var ctx = document.getElementById("chart-area");
+  if (myChart != null) {
+    myChart.destroy();
+  }
+
+  var chartOptions = {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 25,
+        bottom: 0
+      }
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: false
+          },
+          gridLines: {
+            borderDash: [1, 2],
+            zeroLineColor: "rgba(0,0,0,1)"
+          }
+        }
+      ],
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: false
+          },
+          type: "linear",
+          position: "bottom",
+          gridLines: {
+            borderDash: [1, 2],
+            zeroLineColor: "rgba(0,0,0,1)"
+          }
+        }
+      ]
+    },
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      titleMarginBottom: 10,
+      titleFontColor: "#6e707e",
+      titleFontSize: 14,
+      borderColor: "#dddfeb",
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      intersect: false,
+      mode: "index",
+      caretPadding: 10
+    }
+  };
+
+  console.log(taskNames);
+
+  console.log(durations);
+
+  myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: taskNames,
+      datasets: [
+        {
+          label: "Durations",
+          backgroundColor: "rgba(78, 115, 223, 0.05)",
+          borderColor: "rgba(78, 115, 223, 1)",
+          pointBackgroundColor: "rgba(78, 115, 223, 1)",
+          pointBorderColor: "rgba(78, 115, 223, 1)",
+          pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+          pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+          data: durations
+        }
+      ]
+    },
+    options: chartOptions
+  });
+}
+
+function saveProblem() {
+
+  if ((taskList.length == 0)) {
+    readFormData();
+  }
+  console.log("the total number of scenarios is: "+totalScenarios);
+  console.log(taskList);
+  var objectData= {tasks:taskList,scenarios:totalScenarios}
+  console.log(objectData);
+  exportToJson(objectData);
+}
+
+function readFormData() {
+  
   var data = new FormData(document.getElementById("tasksForm"));
+  
+  totalScenarios = data.get("scenarios");
 
   for (var i = 0; i < lastId; i++) {
     var currentTask = {
@@ -143,6 +295,7 @@ function submitPertTasks() {
       successors: []
     };
     taskList.push(currentTask);
+    console.log('added '+currentTask.name);
   }
 
   for (var i = 0; i < lastId; i++) {
@@ -180,50 +333,32 @@ function submitPertTasks() {
       });
     }
   }
-
-  var totalScenarios = data.get("scenarios");
-
-  var pertTasksUrl = Url + "/pert/" + totalScenarios;
-  $.ajax({
-    url: pertTasksUrl,
-    type: "POST",
-    data: JSON.stringify(taskList),
-    contentType: "application/json"
-  }).then(response => {
-    console.log(response);
-  });
+  totalScenarios = data.get("scenarios");
+  console.log('the number of scenarios is set to '+totalScenarios);
 }
 
-document
-  .getElementById("upload-file-form")
-  .addEventListener("submit", function(e) {
-    e.preventDefault();
-    var file = document.getElementById("fileUpload").files[0];
+function exportToJson(objectData) {
 
-    urlFile = window.URL.createObjectURL(file);
-    $.ajax({
-      url: urlFile
-    }).then(
-      function(data) {
-        loadTasks(data);
-      },
-      function(error) {
-        console.log(error);
-      }
+  console.log(objectData);
+  let filename = "pert_problem.json";
+  let contentType = "application/json;charset=utf-8;";
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    var blob = new Blob(
+      [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+      { type: contentType }
     );
-
-    //   $.ajax({
-    //     url: urlFile
-    //   }).then(
-    //     function(data) {
-    //       console.log(data);
-    //     },
-    //     function(error) {
-    //       alert("Failed to process request.");
-    //       console.log(error);
-    //     }
-    //   );
-    $("#uploadModal").modal("hide");
-    $("body").removeClass("modal-open");
-    $(".modal-backdrop").remove();
-  });
+    navigator.msSaveOrOpenBlob(blob, filename);
+  } else {
+    var a = document.createElement("a");
+    a.download = filename;
+    a.href =
+      "data:" +
+      contentType +
+      "," +
+      encodeURIComponent(JSON.stringify(objectData));
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
