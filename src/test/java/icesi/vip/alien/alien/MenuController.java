@@ -7,29 +7,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class MenuController {
 
 	@FXML
-	private TextField two;
-	
-	@FXML
-	private TextField one;
-	
-	@FXML
-	private ScrollPane floydScrollPane;
-	   
-    @FXML
-    private BorderPane shortPathPane;
+    private TextField one;
 
     @FXML
-    private TextField distanceText;
+    private Label distanceText;
+
+    @FXML
+    private TextField two;
+
+    @FXML
+    private ScrollPane floydScrollPane;
 
     @FXML
     private Tab shortPathTab;
@@ -38,7 +35,7 @@ public class MenuController {
     
     @FXML
     private void initialize() throws IOException {
-    	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt", true);
+    	
     }
     
     @FXML
@@ -52,7 +49,7 @@ public class MenuController {
     }
 
     @FXML
-    void flodyButton(ActionEvent event) {
+    void floydButton(ActionEvent event) {
     	GridPane gridPaneOne = new GridPane();
     	gridPaneOne.setPadding(new Insets(20));
     	floydScrollPane.setContent(gridPaneOne);
@@ -75,6 +72,21 @@ public class MenuController {
 					}
 				}
 			}
+    }
+    
+    @FXML
+    void graph1(ActionEvent event) throws IOException {
+    	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt", true);
+    }
+
+    @FXML
+    void graph2(ActionEvent event) throws IOException {
+    	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case2.txt", true);
+    }
+
+    @FXML
+    void graph3(ActionEvent event) throws IOException {
+    	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case3.txt", true);
     }
 
 }

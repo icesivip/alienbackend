@@ -1,54 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="icesi.vip.alien.alien.MenuController">
-  <tabs>
-    <Tab fx:id="shortPathTab" text="Shortest paths">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <BorderPane fx:id="shortPathPane" layoutX="8.0" prefHeight="370.0" prefWidth="591.0">
-                     <top>
-                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TextField fx:id="one" prefHeight="25.0" prefWidth="109.0" />
-                              <TextField fx:id="two" prefHeight="25.0" prefWidth="92.0" />
-                              <Button mnemonicParsing="false" onAction="#dijkstraButton" text="Dijkstra" />
-                              <Separator prefHeight="0.0" prefWidth="73.0" />
-                              <Button mnemonicParsing="false" onAction="#flodyButton" text="floyd warshall" />
-                           </children>
-                        </HBox>
-                     </top>
-                     <left>
-                        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TextField fx:id="distanceText" layoutX="26.0" layoutY="34.0" />
-                           </children>
-                        </Pane>
-                     </left>
-                     <center>
-                        <ScrollPane fx:id="floydScrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="389.0" />
-                          </content>
-                        </ScrollPane>
-                     </center>
-                  </BorderPane>
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Minimum spanning trees">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-      <Tab text="Max flow">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-  </tabs>
-</TabPane>
+
+<StackPane prefHeight="700.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icesi.vip.alien.alien.MenuController">
+   <children>
+      <BorderPane prefHeight="669.0" prefWidth="901.0">
+         <center>
+            <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1367.0" stylesheets="@CSS/dark-theme.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                  <Tab fx:id="shortPathTab" text="Shortest paths">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <ScrollPane fx:id="floydScrollPane" layoutX="-3.0" layoutY="7.0" prefHeight="466.0" prefWidth="946.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="470.0" prefWidth="810.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </Pane>
+                           </center>
+                           <top>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fitHeight="178.0" fitWidth="532.0" onMouseClicked="#graph1" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@imgs/1.jpeg" />
+                                             </image>
+                                          </ImageView>
+                                          <Separator prefHeight="146.0" prefWidth="100.0" />
+                                          <ImageView fitHeight="174.0" fitWidth="320.0" onMouseClicked="#graph2" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@imgs/2.jpeg" />
+                                             </image>
+                                          </ImageView>
+                                          <Separator prefHeight="150.0" prefWidth="133.0" />
+                                          <ImageView fitHeight="193.0" fitWidth="397.0" onMouseClicked="#graph3" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@imgs/3.jpeg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Since">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="one" prefHeight="25.0" prefWidth="109.0" />
+                                          <Separator prefHeight="22.0" prefWidth="31.0" />
+                                          <Label text="To">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="two" prefHeight="25.0" prefWidth="92.0" />
+                                          <Separator prefHeight="26.0" prefWidth="29.0" />
+                                          <Button mnemonicParsing="false" onAction="#dijkstraButton" text="Dijkstra" />
+                                          <Separator prefHeight="28.0" prefWidth="37.0" />
+                                          <Button mnemonicParsing="false" onAction="#floydButton" text="floyd warshall" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </top>
+                           <left>
+                              <VBox alignment="CENTER" prefHeight="467.0" prefWidth="153.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="Distance:">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="distanceText" text="0000">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </left>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+                <Tab text="Minimum spanning trees">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                  <Tab text="Max flow">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>
