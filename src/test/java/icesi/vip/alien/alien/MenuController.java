@@ -6,11 +6,14 @@ import icesi.vip.alien.networks.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -74,19 +77,29 @@ public class MenuController {
 			}
     }
     
+    
     @FXML
-    void graph1(ActionEvent event) throws IOException {
+    void graph1(MouseEvent event) throws IOException {
     	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case1.txt", true);
+    	 Alert a = new Alert(AlertType.INFORMATION);
+ 		a.setContentText("El Grafo 1 ha sido selecionado");
+ 		a.show();
     }
 
     @FXML
-    void graph2(ActionEvent event) throws IOException {
+    void graph2(MouseEvent event) throws IOException {
     	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case2.txt", true);
+    	 Alert a = new Alert(AlertType.INFORMATION);
+  		a.setContentText("El Grafo 2 ha sido selecionado");
+  		a.show();
     }
 
     @FXML
-    void graph3(ActionEvent event) throws IOException {
+    void graph3(MouseEvent event) throws IOException {
     	 graph = new AdjListGraph<>("src/main/java/icesi/vip/alien/networks/test.cases/case3.txt", true);
+    	 Alert a = new Alert(AlertType.INFORMATION);
+  		a.setContentText("El Grafo 3 ha sido selecionado");
+  		a.show();
     }
 
 }
