@@ -660,6 +660,7 @@
             $.ajax({
                 url: "https://viptest1.herokuapp.com/graphicalMethod" + string
             }).then(function (data) {
+                
                 $(".cover").toggle(400);
                 console.log(data);
                 var constraints = data.constraints;
