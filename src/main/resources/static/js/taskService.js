@@ -29,7 +29,7 @@ function addTask() {
       '<tr><input required placeholder="Type the task name" type="text" name="task' +
         lastId +
         'Name" class="form-control"></tr>',
-      '<tr><input type="number" class="form-control" name="task' +
+      '<tr><input type="number" class="form-control col-3" name="task' +
         lastId +
         'Duration" min="0" max="any" value=0 step="0.01"><tr>',
       '<tr><input required placeholder="Type the task Successors" type="text" name="task' +
@@ -47,33 +47,14 @@ function delTask() {
   $(this).addClass("selected");
 
   var toDel = table.row(".selected").data();
-  if (data != null) {
     console.log(toDel[0]);
-
-    var delTaskUrl = Url + "/delete/" + toDel[0];
-
-    console.log(delTaskUrl);
-
-    $.ajax({
-      url: delTaskUrl,
-      type: "DELETE",
-      data: JSON.stringify(toDel),
-      contentType: "application/json"
-    }).then(
-      function(data) {
-        console.log(data);
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
 
     $("#tasksTable")
       .DataTable()
       .row(".selected")
       .remove()
       .draw(false);
-  }
+  
 }
 
 function loadTasks(data) {
@@ -117,7 +98,7 @@ function loadTasks(data) {
 
 function submitTasks() {
   event.preventDefault();
-
+  taskList=[];
   readFormData();
 
   var addTasksUrl = Url + "/add";
@@ -131,7 +112,11 @@ function submitTasks() {
       displayCPMData(data);
     },
     function(error) {
-      console.log(error);
+
+      var errorMessage=error.responseJSON.status+' '+error.responseJSON.message;
+      document.getElementById('fileLoadErrorMessage').innerHTML=errorMessage;
+      $('#fileLoadError').show();
+    
     }
   );
 }
@@ -141,18 +126,19 @@ function displayCPMData(data) {
     .dataTable()
     .fnClearTable();
 
-  data.forEach(toLoad => {
-    var taskId = toLoad.id;
-    var taskName = toLoad.name;
-    var taskDuration = toLoad.duration;
-    var es = toLoad.earliestStart;
-    var ef = toLoad.earliestFinish;
-    var ls = toLoad.latestStart;
-    var lf = toLoad.latestFinish;
-    var slack = toLoad.slack;
-    var critical = toLoad.isCritical;
-
-    $("#CPMTable")
+    var totalTime=0;
+    data.forEach(toLoad => {
+      var taskId = toLoad.id;
+      var taskName = toLoad.name;
+      var taskDuration = toLoad.duration;
+      var es = toLoad.earliestStart;
+      var ef = toLoad.earliestFinish;
+      var ls = toLoad.latestStart;
+      var lf = toLoad.latestFinish;
+      var slack = toLoad.slack;
+      var critical = toLoad.isCritical;
+      
+      $("#CPMTable")
       .dataTable()
       .fnAddData([
         taskId,
@@ -165,7 +151,13 @@ function displayCPMData(data) {
         slack,
         critical
       ]);
-  });
+      if (toLoad.isCritical==true)
+      {
+        totalTime+=toLoad.duration
+      }
+
+    });
+    document.getElementById("totalProjectTime").innerHTML=totalTime;
 }
 
 document
@@ -184,6 +176,8 @@ document
       },
       function(error) {
         console.log(error);
+        document.getElementById('fileLoadErrorMessage').innerHTML=error;
+        $('#fileLoadError').show();
       }
     );
 
@@ -228,8 +222,8 @@ function exportToJson(objectData) {
 }
 
 function readFormData() {
-  var data = new FormData(document.getElementById("tasksForm"));
 
+  var data = new FormData(document.getElementById("tasksForm"));
   for (var i = 0; i < lastId; i++) {
     var currentTask = {
       id: i,
@@ -243,6 +237,8 @@ function readFormData() {
 
   for (var i = 0; i < lastId; i++) {
     var taskSuccessors = data.get("task" + i + "Successors");
+    console.log('the successors of ' +taskList[i].name+' are');
+    console.log(taskSuccessors);
     if (taskSuccessors != null && taskSuccessors != "") {
       var sucIds = data.get("task" + i + "Successors").split(",");
       sucIds.forEach(suc => {
@@ -261,7 +257,10 @@ function readFormData() {
         };
         taskList[i].successors.push(transition);
         taskList[suc].predecessors.push(transition);
+        console.log('added the transition');
+        console.log(transition);
       });
     }
   }
+  console.log(taskList);
 }

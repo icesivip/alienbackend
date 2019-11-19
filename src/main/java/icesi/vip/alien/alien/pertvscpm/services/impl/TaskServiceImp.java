@@ -275,17 +275,25 @@ public class TaskServiceImp implements TaskService
 				break;
 			}
 
-			double[] durations = distribution.sample(numberOfScenarios);
 
-			for (int i = 0; i < durations.length; i++)
+			for (int i = 0; i < numberOfScenarios; i++)
 			{
+				double duration = distribution.sample();
+				
+				while (duration<0)
+				{
+					duration= distribution.sample();
+				}
 				List<Task> scenario = repo.findScenarioById(i);
-				Task taskScenario = new Task(task.getId(), task.getName(), durations[i]);
+				
+				Task taskScenario = new Task(task.getId(), task.getName(), duration);
+				
 				if (scenario == null)
 				{
 					scenario = new ArrayList<Task>(tasks.size());
 					repo.addScenario(i, scenario);
 				}
+				
 				scenario.add(taskScenario);
 			}
 		}

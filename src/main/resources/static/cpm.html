@@ -155,8 +155,8 @@
                 <i class="fas fa-upload"></i>
               </button>
               <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
-                  Save Problem
-                  <i class="far fa-save"></i>
+                Save Problem
+                <i class="far fa-save"></i>
               </button>
             </div>
           </form>
@@ -200,10 +200,46 @@
 
           <!-- Page Heading -->
           <h1 class="h1 text-center">Critical Path Method</h1>
-          <p class="mb-4">CPM (Critical Path method) is used to determine the total duration of a whole project based on
-            the activities duration, and the relationships between them.</p>
 
-          <!-- Data Tables for the task definition -->
+          <!-- Card Describing the purpose of the method -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">CPM (Critical Path method)</h6>
+            </div>
+            <div class="card-body">
+              this method is used to determine the total duration of a whole project based on
+              the activities duration, and the relationships between them
+            </div>
+          </div>
+
+          <!--Card showing the total time of the project  -->
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">The Total Duration of the
+                      project is</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProjectTime"></div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="fileLoadError" class="alert alert-danger alert-dismissible fade show" role="alert" hidden>
+            <h6 id="fileLoadErrorMessage"> </h6>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span >&times;</span>
+            </button>
+          </div>
+
+
+          <!-- Data Tables for the definition of the task  -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">TASKS </h6>
@@ -246,7 +282,7 @@
           <!--data tables for the CPM-->
 
           <hr>
-          <h2 class="text-center">Critical Path found</h2>
+          <h2 class="text-center">Problem Solution</h2>
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Critical path Method </h6>
@@ -273,6 +309,7 @@
               </div>
             </div>
           </div>
+
 
         </div>
         <!-- /.container-fluid -->

@@ -23,7 +23,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -133,7 +132,7 @@
     <!-- End of Sidebar -->
 
 
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -158,8 +157,8 @@
                 <i class="fas fa-upload"></i>
               </button>
               <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
-                  Save Problem
-                  <i class="far fa-save"></i>
+                Save Problem
+                <i class="far fa-save"></i>
               </button>
             </div>
           </form>
@@ -201,12 +200,61 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h1 text-center">PERT Method</h1>
-          <p class="mb-4">PERT (Program Evaluation and Review Techniques) is used to estimate the total duration of a
-            whole project based on the activities using different probability distributions to estimate the possible
-            variation of the tasks duration.</p>
+          <h1 class="h1 text-center">PERT</h1>
 
-          <!-- DataTales Example -->
+          <!-- Card Describing the purpose of the method -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">PERT (Program Evaluation and Review Techniques)</h6>
+            </div>
+            <div class="card-body">
+              this method is used to estimate the total duration of a
+              whole project based on the activities using different probability distributions to estimate the possible
+              variation of the tasks duration
+            </div>
+          </div>
+
+          <!--Card showing the total time of the project  -->
+          <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">The Total Duration of the
+                        project is</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProjectTime"></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--Card showing the total time of the project  -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">The probability for the
+                        duration is</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProjectProbability"></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Datatables with the task definition -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">TASKS </h6>
@@ -217,26 +265,26 @@
                   <table class="table table-bordered display" id="tasksTable">
                     <thead class="text-white bg-primary">
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>successors</th>
-                        <th>Distribution</th>
-                        <th>Parameters</th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">successors</th>
+                        <th class="text-center">Distribution</th>
+                        <th class="text-center">Parameters</th>
                       </tr>
                     </thead>
                     <tfoot class=" bg-primary">
                       <th colspan="4" class="text-center">
-                        <button onclick="addPertTask()" class="btn btn-primary">
+                        <button onclick="addPertTask()" class="btn btn-info">
                           Add
                         </button>
-                        <button onclick="delTask()" class="btn btn-primary">
+                        <button onclick="delTask()" class="btn btn-info">
                           Remove
                         </button>
-                        <button onclick="submitPertTasks()" class="btn btn-primary">
+                        <button onclick="submitPertTasks()" class="btn btn-danger">
                           submit
                         </button>
                       </th>
-                      <th colspan="1" class="text-center">
+                      <th colspan="1"class="text-center">
                         <input id="scenarios" name="scenarios" type="number" class="form-control" min="1" max="any"
                           placeholder="number of scenarios" step="1">
                       </th>

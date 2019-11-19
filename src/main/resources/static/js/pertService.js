@@ -35,7 +35,6 @@ document
     }).then(
       function(data) {
         loadTasks(data);
-        
       },
       function(error) {
         console.log(error);
@@ -53,22 +52,24 @@ function addPertTask() {
     .dataTable()
     .fnAddData([
       lastId,
-      '<tr><input required placeholder="task name" type="text" name="task' +
+      '<input required placeholder="task name" type="text" name="task' +
         lastId +
-        'Name" class="form-control"></tr>',
-      '<tr><input placeholder="task Successors" type="text" name="task' +
+        'Name" class="form-control">',
+      '<input placeholder="task Successors" type="text" name="task' +
         lastId +
-        'Successor" class="form-control"></tr>',
-      '<tr><select class="browser-default custom-select" id="task' +
+        'Successor" class="form-control">',
+      '<select class="browser-default custom-select" id="task' +
         lastId +
         'distribution" name="task' +
         lastId +
-        'distribution">\n<option>NORMAL</option>\n<option>BETA</option>\n<option>LOG NORMAL</option>\n<option>UNIFORM</option>\n<option>TRIANGULAR</option></select><tr>',
-      '<tr><input type="number" class="form-control" name="task' +
+        'distribution">\n<option>Normal</option>\n<option>Beta</option>\n<option>Log Normal</option>\n<option>Uniform</option>\n<option>Triangular</option></select>',
+      '<div class="row justify-content-md-center"><input type="number" class="form-control col-md-3 ml-1" name="task' +
         lastId +
-        'param1" min="0" max="any" step="0.01" value="0"></tr><tr><input type="number" class="form-control" name="task' +
+        'param1" min="0" max="any" step="0.01" placeholder="param 1"><input type="number" class="form-control col-md-4 ml-1" name="task' +
         lastId +
-        'param2" min="0" max="any" step="0.01" value="0"></tr>'
+        'param2" min="0" max="any" step="0.01" placeholder="param 2"><input type="number" class="form-control col-md-4 ml-1" name="task' +
+        lastId +
+        'param3" min="0" max="any" step="0.01" placeholder="param 3"></div>'
     ]);
   lastId++;
 }
@@ -86,11 +87,9 @@ function delTask() {
 }
 
 function loadTasks(data) {
-  if(data.scenarios!=null)
-  {
-    totalScenarios=data.scenarios;
-    $("scenarios").val(totalScenarios);
-
+  if (data.scenarios != null) {
+    totalScenarios = data.scenarios;
+    document.getElementById("scenarios").innerHTML=totalScenarios;
   }
   data.tasks.forEach(toLoad => {
     var taskId = toLoad.id;
@@ -99,11 +98,19 @@ function loadTasks(data) {
     var taskDistType = toLoad.distribution.distributionType;
     var taskDistParam1 = toLoad.distribution.param1;
     var taskDistParam2 = toLoad.distribution.param2;
-    var taskDistParam3;
-    if (taskDistType) {
-      taskDistParam3 == toLoad.distribution.param3;
-    }
-
+    var taskDistParam3 = toLoad.distribution.param3;    
+    var colParams = '<div class="row justify-content-md-center"><input type="number" class="form-control col-md-4" name="task' +
+    taskId +
+    'param1" min="0" max="any" step="0.01" value="' +
+    taskDistParam1 +
+    '"><input type="number" class="form-control col-md-3 ml-1 mr-1" name="task' +
+    taskId +
+    'param2" min="0" max="any" step="0.01" value="' +
+    taskDistParam2 +
+    '"><input type="number" class="form-control col-md-3" name="task' +
+    taskId +
+    'param3" min="0" max="any" step="0.01" value="0"></div></div>';
+    
     toLoad.successors.forEach(suc => {
       if (taskSuccessors.length > 0) {
         taskSuccessors += "," + suc.successor.id;
@@ -116,37 +123,28 @@ function loadTasks(data) {
       .dataTable()
       .fnAddData([
         taskId,
-        '<tr><input type="text" name="task' +
+        '<input type="text" name="task' +
           taskId +
           'Name" class="form-control" value="' +
           taskName +
-          '"><tr>',
-        '<tr><input placeholder="successors" type="text" name="task' +
+          '">',
+        '<input placeholder="successors" type="text" name="task' +
           taskId +
           'Successors" class="form-control" value="' +
           taskSuccessors +
-          '"><tr>',
-        '<tr><select class="browser-default custom-select" name="task' +
+          '">',
+        '<select class="browser-default custom-select" name="task' +
           taskId +
           'distribution" id="task' +
           taskId +
-          'distribution">\n<option selected>Normal</option>\n<option>Beta</option>\n<option>Log Normal</option>\n<option>Uniform</option>\n</select><tr>',
-        '<tr><input type="number" class="form-control" name="task' +
-          taskId +
-          'param1" min="0" max="any" step="0.01" value="' +
-          taskDistParam1 +
-          '"></tr><tr><input type="number" class="form-control" name="task' +
-          taskId +
-          'param2" min="0" max="any" step="0.01" value="' +
-          taskDistParam2 +
-          '"></tr>'
+          'distribution">\n<option selected>Normal</option>\n<option>Beta</option>\n<option>Log Normal</option>\n<option>Uniform</option>\n<option>Triangular</option></select>',
+        colParams        
       ]);
     lastId++;
   });
 }
 
 function submitPertTasks() {
-  
   event.preventDefault();
   readFormData();
 
@@ -262,21 +260,19 @@ function displayChart(data) {
 }
 
 function saveProblem() {
-
-  if ((taskList.length == 0)) {
+  if (taskList.length == 0) {
     readFormData();
   }
-  console.log("the total number of scenarios is: "+totalScenarios);
+  console.log("the total number of scenarios is: " + totalScenarios);
   console.log(taskList);
-  var objectData= {tasks:taskList,scenarios:totalScenarios}
+  var objectData = { tasks: taskList, scenarios: totalScenarios };
   console.log(objectData);
   exportToJson(objectData);
 }
 
 function readFormData() {
-  
   var data = new FormData(document.getElementById("tasksForm"));
-  
+
   totalScenarios = data.get("scenarios");
 
   for (var i = 0; i < lastId; i++) {
@@ -295,7 +291,7 @@ function readFormData() {
       successors: []
     };
     taskList.push(currentTask);
-    console.log('added '+currentTask.name);
+    console.log("added " + currentTask.name);
   }
 
   for (var i = 0; i < lastId; i++) {
@@ -334,11 +330,10 @@ function readFormData() {
     }
   }
   totalScenarios = data.get("scenarios");
-  console.log('the number of scenarios is set to '+totalScenarios);
+  console.log("the number of scenarios is set to " + totalScenarios);
 }
 
 function exportToJson(objectData) {
-
   console.log(objectData);
   let filename = "pert_problem.json";
   let contentType = "application/json;charset=utf-8;";
