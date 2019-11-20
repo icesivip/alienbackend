@@ -75,7 +75,6 @@ public class TaskRepositoryImp implements TaskRepository
 						Task taskSuccessor = findById(Integer.parseInt(successorId));
 						Transition edge = new Transition(taskPredecessor, taskSuccessor);
 						taskPredecessor.getSuccessors().add(edge);
-//						taskSuccessor.getPredecessors().add(edge);
 					}
 				}
 				

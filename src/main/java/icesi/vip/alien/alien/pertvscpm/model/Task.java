@@ -301,7 +301,7 @@ public class Task
 	@Override
 	public String toString()
 	{
-		return "Task [id=" + id + " name: " + name + "]";
+		return "[id=" + id + " name: " + name + "]";
 	}
 
 	@Override

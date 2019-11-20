@@ -22,81 +22,92 @@ import icesi.vip.alien.alien.pertvscpm.services.TaskService;
 @SpringBootTest
 public class AlienApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+//	@Test
+//	public void contextLoads() {
+//	}
 
 
 	@Autowired
 	TaskService service;
 
-	List<Task> tasks;
+	private List<Task> tasks;
 	
-	Task start;
-	
-	Task finish;
-	
-	Map<Integer, Double>expectedEs;
-
-	Map<Integer, Double> expectedLs;
-	
-	Map<Integer, Boolean> expectedIsCritical;
+	private Task start;
+	private Task finish;
+	private Map<Integer, Double>expectedEs;
+	private Map<Integer, Double> expectedLs;
+	private Map<Integer, Boolean> expectedIsCritical;
 	
 	@Before
 	public void init()
 	{
-		expectedEs = new HashMap<Integer, Double>(); 
+		initCPM();
+			
+	}
+	
+	private void initCPM()
+	{
+expectedEs = new HashMap<Integer, Double>(); 
 		
 		expectedLs = new HashMap<Integer, Double>();
 		
 		expectedIsCritical= new HashMap<Integer, Boolean>();
 		
-		start = new Task(1, "START", 0.0);
-		expectedEs.put(1, 0.0);
-		expectedLs.put(1, 0.0);
-		expectedIsCritical.put(1, true);
+		start = new Task(0, "START", 0.0);
+		service.add(start);
+		expectedEs.put(0, 0.0);
+		expectedLs.put(0, 0.0);
+		expectedIsCritical.put(0, true);
 		
-		Task taskA = new Task(2, "A", 2.0);
+		Task taskA = new Task(1, "A", 2.0);
+		service.add(taskA);
+		expectedEs.put(1, 0.0);
+		expectedLs.put(1, 4.0);
+		expectedIsCritical.put(1, false);
+		
+		Task taskB = new Task(2, "B", 6.0);
+		service.add(taskB);
 		expectedEs.put(2, 0.0);
-		expectedLs.put(2, 4.0);
+		expectedLs.put(2, 3.0);
 		expectedIsCritical.put(2, false);
 		
-		Task taskB = new Task(3, "B", 6.0);
+		Task taskC = new Task(3, "C", 4.0);
+		service.add(taskC);
 		expectedEs.put(3, 0.0);
-		expectedLs.put(3, 3.0);
-		expectedIsCritical.put(3, false);
-		
-		Task taskC = new Task(4, "C", 4.0);
-		expectedEs.put(4, 0.0);
-		expectedLs.put(4, 0.0);
-		expectedIsCritical.put(4, true);
+		expectedLs.put(3, 0.0);
+		expectedIsCritical.put(3, true);
 		
 		
-		Task taskD = new Task(5, "D", 3.0);
-		expectedEs.put(5, 2.0);
-		expectedLs.put(5, 6.0);
-		expectedIsCritical.put(5, false);
+		Task taskD = new Task(4, "D", 3.0);
+		service.add(taskD);
+		expectedEs.put(4, 2.0);
+		expectedLs.put(4, 6.0);
+		expectedIsCritical.put(4, false);
 		
-		Task taskE = new Task(6, "E", 5.0);
-		expectedEs.put(6, 4.0);
-		expectedLs.put(6, 4.0);
-		expectedIsCritical.put(6, true);
+		Task taskE = new Task(5, "E", 5.0);
+		service.add(taskE);
+		expectedEs.put(5, 4.0);
+		expectedLs.put(5, 4.0);
+		expectedIsCritical.put(5, true);
 		
-		Task taskF = new Task(7, "F", 4.0);
-		expectedEs.put(7, 2.0);
-		expectedLs.put(7, 7.0);
-		expectedIsCritical.put(7, false);
+		Task taskF = new Task(6, "F", 4.0);
+		service.add(taskF);
+		expectedEs.put(6, 2.0);
+		expectedLs.put(6, 7.0);
+		expectedIsCritical.put(6, false);
 		
-		Task taskG = new Task(8, "G", 2.0);
-		expectedEs.put(8, 9.0);
-		expectedLs.put(8, 9.0);
+		Task taskG = new Task(7, "G", 2.0);
+		service.add(taskG);
+		expectedEs.put(7, 9.0);
+		expectedLs.put(7, 9.0);
+		expectedIsCritical.put(7, true);
+		
+		
+		finish = new Task(8, "END", 0.0);
+		service.add(finish);
+		expectedEs.put(8, 11.0);
+		expectedLs.put(8, 11.0);
 		expectedIsCritical.put(8, true);
-		
-		
-		finish = new Task(9, "END", 0.0);
-		expectedEs.put(9, 11.0);
-		expectedLs.put(9, 11.0);
-		expectedIsCritical.put(9, true);
 		
 		Transition edge = new Transition(start, taskA);
 		
@@ -144,37 +155,18 @@ public class AlienApplicationTests {
 		finish.getPredecessors().add(edge);
 
 		tasks = Arrays.asList(start, taskA, taskB, taskC, taskD, taskE, taskF, taskG, finish);
-	}
-	
-	
-	@Test
-	public void testEarliestTimes()
-	{
 
-		service.computeEarliestTimes(tasks, start);
-
-		tasks.forEach( t-> {
-			assertThat(t.getEarliestStart()).isEqualTo(expectedEs.get(t.getId()));
-		});
-
+		
 	}
-	
-	@Test
-	public void testLatestTimes()
-	{
-		service.computeEarliestTimes(tasks, start);
-		service.computeLatestTimesAndSlack(tasks, finish);
-		tasks.forEach( t-> {
-			assertThat(t.getLatestStart()).isEqualTo(expectedLs.get(t.getId()));
-		});
-	}
-	
+
 	@Test
 	public void testCPM()
 	{
 		List<Task> criticalPath =service.executeCPM(tasks, start, finish);
 		
 		criticalPath.forEach(t->{
+			assertThat(t.getEarliestStart()).isEqualTo(expectedEs.get(t.getId()));
+			assertThat(t.getLatestStart()).isEqualTo(expectedLs.get(t.getId()));
 			assertThat(t.getIsCritical()).isEqualTo(expectedIsCritical.get(t.getId()));
 		});
 	}
