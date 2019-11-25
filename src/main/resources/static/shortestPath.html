@@ -28,6 +28,7 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
@@ -69,6 +70,20 @@
             display: none;
         }
     </style>
+    <style type="text/css">
+        #mynetwork {
+          width: 300;
+          height: 500px;
+          border: 1px solid lightgray;
+          background:#d1d1d1;
+        }
+        label{
+            font-weight: 2;
+        }
+        p {
+          max-width:600px;
+        }
+      </style>
 </head>
 
 <body id="page-top">
@@ -299,7 +314,7 @@
                                             style="width: 8%; height: 100%;" scope="col">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="text-center">...</span>
+                                                <span class="text-white text-center">...</span>
                                             </a>
                                             <!-- Dropdown - Resize Information -->
                                             
@@ -404,6 +419,8 @@
                     <h2 class="text-center">Results</h2>
                     <hr>
                    
+                    <div id="mynetwork"></div>
+                   
                 </div>
             </div>
         </div>
@@ -453,6 +470,54 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        // create an array with nodes
+        var nodes = [
+          {id: 1, label: 'Node 1',font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}}, //{id: 1, label: 'Node 1', font: {strokeWidth: 3, strokeColor: 'white'}},
+          {id: 2, label: 'Node 2',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 3, label: 'Node 3',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 4, label: 'Node 4',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 5, label: 'Node 5',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 6, label: 'Node 6',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 7, label: 'Node 7',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+          {id: 8, label: 'Node 8',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
+        ];
+      
+        // create an array with edges
+        var edges = [
+          {from: 1, to: 2, arrows: 'to', width: 2, length: 200, label: '4'}, //{from: 1, to: 2, label: 'edgeLabel', font: {strokeWidth: 2, strokeColor : '#00ff00'}},
+          {from: 1, to: 3,  arrows: 'to', width: 2, length: 200, label: '2',color: "red"},
+          {from: 2, to: 3,  arrows: 'to', width: 2, length: 200, label: '5'},
+          {from: 2, to: 4,  arrows: 'to', width: 2, length: 200, label: '6'},
+          {from: 2, to: 5,  arrows: 'to', width: 2, length: 200, label: '4'},
+          {from: 3, to: 4, arrows: 'to', width: 2, length: 200, label: '10'},
+          {from: 3, to: 6, arrows: 'to', width: 2, length: 200, label: '3',color: "red"},
+          {from: 4, to: 6, arrows: 'to', width: 2, length: 200, label: '7'},
+          {from: 4, to: 5,  arrows: 'to', width: 2, length: 200, label: '5'},
+          {from: 5, to: 6,  arrows: 'to', width: 2, length: 200, label: '2'},
+          {from: 5, to: 7, arrows: 'to', width: 2, length: 200, label: '8'},
+          {from: 5, to: 8,  arrows: 'to', width: 2, length: 200, label: '15'},
+          {from: 6, to: 7,  arrows: 'to', width: 2, length: 200, label: '10'},
+          {from: 6, to: 8,  arrows: 'to', width: 2, length: 200, label: '7',color: "red"},
+          {from: 7, to: 8,  arrows: 'to', width: 2, length: 200, label: '4'},
+         
+        ];
+      
+        // create a network
+        var container = document.getElementById('mynetwork');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {
+          nodes : {
+           // shape: 'dot',
+            size: 10
+          }
+        };
+        var network = new vis.Network(container, data, options);
+      </script>
+      
     <script>
         var varCount = 2;
         var consCount = 1;
