@@ -19,8 +19,8 @@ public class CraftResponse {
 		this.distributions = new ArrayList<>();
 		for(FacilityDistribution dist : distributions.keySet()) {
 			int[][]out=dist.outputDistribution();
-			Relocation.printArray(out);
-			System.out.println();
+//			Relocation.printArray(out);
+//			System.out.println();
 			this.distributions.add(new DistributionResult(out, distributions.get(dist)));
 		}
 		
