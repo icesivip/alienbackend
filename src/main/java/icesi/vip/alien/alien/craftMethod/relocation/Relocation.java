@@ -216,7 +216,15 @@ public class Relocation {
 
 			} else {
 				// easy case
-				throw new Exception("Not yet implemented");
+				for (int i = 0; i < toSwap.length; i++) {
+					for (int j = 0; j < toSwap[0].length; j++) {
+						if(toSwap[i][j]==area1) {
+							toSwap[i][j]=area2;
+						}else if(toSwap[i][j]==area2) {
+							toSwap[i][j]=area1;
+						}
+					}
+				}
 			}
 
 		} else {
