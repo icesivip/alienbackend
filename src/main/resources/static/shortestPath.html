@@ -471,8 +471,41 @@
         </div>
     </div>
     <script type="text/javascript">
+
+    function generateGraph(matrix){
+        var nodes = [];
+
+        for(let i=0; i<matrix.length; i++){
+            nodes[i] =  {id: i, label: 'Node '+(i+1),font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}};
+        }
+
+        var edges = [];
+        var count = 0;
+        for(let i=0; i<matrix.length;i++){
+
+            for(let j=0; j<matrix[i].length;j++){
+                var cur = matrix[i][j];
+                if(cur!=''){
+                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 200, label: cur};
+                    count++;
+                }
+            }
+        }
+        var container = document.getElementById('mynetwork');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {
+          nodes : {
+           // shape: 'dot',
+            size: 10
+          }
+        };
+        var network = new vis.Network(container, data, options);
+    }
         // create an array with nodes
-        var nodes = [
+        /*var nodes = [
           {id: 1, label: 'Node 1',font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}}, //{id: 1, label: 'Node 1', font: {strokeWidth: 3, strokeColor: 'white'}},
           {id: 2, label: 'Node 2',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
           {id: 3, label: 'Node 3',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
@@ -515,10 +548,7 @@
             size: 10
           }
         };
-        var network = new vis.Network(container, data, options);
-      </script>
-      
-    <script>
+        var network = new vis.Network(container, data, options);*/
 
         function getTableData(){
             const adyacentMatrix = document.getElementById("tableData");
@@ -535,7 +565,7 @@
                 }
             
             }
-            
+            generateGraph(matrix);
         }
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
