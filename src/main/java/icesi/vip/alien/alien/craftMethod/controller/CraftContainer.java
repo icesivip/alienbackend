@@ -47,20 +47,18 @@ public class CraftContainer {
 		
 		Map<FacilityDistribution,Double>result= f.CraftAlgorithmFull(this.maxSwapAttempts, false);
 		
-		Map<int[][],Double> transform= new HashMap<int[][], Double>();
+
 		
-		int[][]minD=null;
+		FacilityDistribution minD=null;
 		double minC=Double.POSITIVE_INFINITY;
 		for(FacilityDistribution d : result.keySet()) {
-			int[][] output=f.outputDistribution();
 			if( result.get(d)<=minC) {
-				minD=output;
+				minD=d;
 				minC=result.get(d);
 			}
-			transform.put(output, result.get(d));
 		}
 		
-		CraftResponse cr=new CraftResponse(transform, minC, minD);
+		CraftResponse cr=new CraftResponse(result, minC, minD);
 		return cr;
 		
 		
