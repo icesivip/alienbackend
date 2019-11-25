@@ -225,6 +225,8 @@ public class Relocation {
 						}
 					}
 				}
+				
+				return toSwap;
 			}
 
 		} else {
