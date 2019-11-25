@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
+import icesi.vip.alien.alien.craftMethod.controller.CraftContainer;
+import icesi.vip.alien.alien.craftMethod.controller.CraftResponse;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
 import icesi.vip.alien.alien.neosServer.FileUtils;
@@ -121,6 +124,13 @@ public class AlienController {
 
 		return new GraphicalMethodContainer(m);
 
+	}
+	
+	
+	@CrossOrigin
+	@RequestMapping(value="/craft", method=RequestMethod.POST)
+	public CraftResponse craftMethod(@RequestBody CraftContainer container) throws Exception {
+		return container.compute();
 	}
 	
 	
