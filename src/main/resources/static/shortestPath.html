@@ -73,7 +73,7 @@
     <style type="text/css">
         #mynetwork {
           width: 300;
-          height: 500px;
+          height: 400px;
           border: 1px solid lightgray;
           background:#d1d1d1;
         }
@@ -412,9 +412,6 @@
 
                         </div>
 
-
-                    </form>
-
                     <hr>
                     <h2 class="text-center">Results</h2>
                     <hr>
@@ -486,7 +483,7 @@
             for(let j=0; j<matrix[i].length;j++){
                 var cur = matrix[i][j];
                 if(cur!=''){
-                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 200, label: cur};
+                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 400, label: cur};
                     count++;
                 }
             }
