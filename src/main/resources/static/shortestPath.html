@@ -83,6 +83,9 @@
         p {
           max-width:600px;
         }
+        #separator{
+            height: 60px;
+        }
       </style>
 </head>
 
@@ -309,36 +312,8 @@
                                         <th class="text-center" scope="col">2</th>
                                         <th class="text-center" scope="col">3</th>
                                         <th class="text-center" scope="col">4</th>
-                                        
-                                        <th id="colMaker" class="text-center nav-item dropdown no-arrow"
-                                            style="width: 8%; height: 100%;" scope="col">
-                                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="text-white text-center">...</span>
-                                            </a>
-                                            <!-- Dropdown - Resize Information -->
                                             
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                                aria-labelledby="userDropdown">
-                                                <h6 class="dropdown-header">
-                                                    Number of periods:
-                                                </h6>
-                                                <input class="form-control border-0 dropdown-item" id="tamPeriods"
-                                                    min="4" type="number" placeholder="# Periods">
-                                                <div class="dropdown-divider"></div>
-                                                
-                                                <input class="form-control border-0 btn btn-outline-info"
-                                                    id="resizePeriods" type="button" name="resizePeriods" value="Resize"
-                                                    onclick="resize()">
-
-                                                <input class="form-control border-0 btn btn-outline-info"
-                                                    id="resizePeriodsByOne" type="button" name="resizePeriodsByOne" value="Add only one"
-                                                    onclick="addColumn()">
-                                                <input class="form-control border-0 btn btn-outline-info"
-                                                    id="removePeriodsByOne" type="button" name="removePeriodsByOne" value="Remove only one"
-                                                    onclick="removeColumn()">
-                                           
-                                            </div>
+                                            
                                         </th>
                                        
                                     </tr>
@@ -407,17 +382,44 @@
                         <br>
                         <div class="row text-center">
                             <div class="col text-center"><button type="submit"
-                                    class="btn btn-outline-success expand" onclick="getTableData()">Solve</button>
+                                    class="btn btn-outline-success expand" onclick="">Add node</button>
                             </div>
-
+                        </div>
+                        <div class="row text-center">
+                            <div class="col text-center"><button type="submit"
+                                    class="btn btn-outline-success expand" onclick="getTableData()">Generate graph</button>
+                            </div>
+                        </div>
+                        <div id="separator"></div>
+                        <div class="row text-center">
+                            <div class="col text-center"> Source<input id="from" class="border-0"
+                                type="number" min="0" style="width: 100%">
+                            </div>
+                            <div class="col text-center"><button type="submit"
+                                class="btn btn-outline-success expand" onclick="showDijkstra()">Solve with Dijkstra</button>
+                             </div>
                         </div>
 
                     <hr>
                     <h2 class="text-center">Results</h2>
-                    <hr>
-                   
+                                       
                     <div id="mynetwork"></div>
-                   
+                    <div class="col text-center"><button type="submit"
+                        class="btn btn-outline-success expand" onclick="nextStep()">Next</button>
+                    </div>
+                    <div id="separator"></div>
+
+                    <div id="separator"><h2 class="text-center">Path</h2></div>
+                        <div class="row text-center">
+                            <div class="col text-center"> Destiny<input id="destiny" class="border-0"
+                                type="number" min="0" style="width: 100%">
+                            </div>
+                            <div class="col text-center"><button type="submit"
+                                class="btn btn-outline-success expand" onclick="getPath()">Show path</button>
+                             </div>
+                        </div>
+                        <div id="separator"></div>
+                        <div id="separator"><h2 class="text-center">Distance:</h2> <h2 class="text-center" id="distance"></h2></div>
                 </div>
             </div>
         </div>
@@ -468,86 +470,7 @@
         </div>
     </div>
     <script type="text/javascript">
-
-    function generateGraph(matrix){
-        var nodes = [];
-
-        for(let i=0; i<matrix.length; i++){
-            nodes[i] =  {id: i, label: 'Node '+(i+1),font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}};
-        }
-
-        var edges = [];
-        var count = 0;
-        for(let i=0; i<matrix.length;i++){
-
-            for(let j=0; j<matrix[i].length;j++){
-                var cur = matrix[i][j];
-                if(cur!=''){
-                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 400, label: cur};
-                    count++;
-                }
-            }
-        }
-        var container = document.getElementById('mynetwork');
-        var data = {
-          nodes: nodes,
-          edges: edges
-        };
-        var options = {
-          nodes : {
-           // shape: 'dot',
-            size: 10
-          }
-        };
-        var network = new vis.Network(container, data, options);
-    }
-        // create an array with nodes
-        /*var nodes = [
-          {id: 1, label: 'Node 1',font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}}, //{id: 1, label: 'Node 1', font: {strokeWidth: 3, strokeColor: 'white'}},
-          {id: 2, label: 'Node 2',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 3, label: 'Node 3',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 4, label: 'Node 4',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 5, label: 'Node 5',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 6, label: 'Node 6',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 7, label: 'Node 7',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-          {id: 8, label: 'Node 8',font: {size: 12,strokeWidth: 2, strokeColor: 'silver'}},
-        ];
-      
-        // create an array with edges
-        var edges = [
-          {from: 1, to: 2, arrows: 'to', width: 2, length: 200, label: '4'}, //{from: 1, to: 2, label: 'edgeLabel', font: {strokeWidth: 2, strokeColor : '#00ff00'}},
-          {from: 1, to: 3,  arrows: 'to', width: 2, length: 200, label: '2',color: "red"},
-          {from: 2, to: 3,  arrows: 'to', width: 2, length: 200, label: '5'},
-          {from: 2, to: 4,  arrows: 'to', width: 2, length: 200, label: '6'},
-          {from: 2, to: 5,  arrows: 'to', width: 2, length: 200, label: '4'},
-          {from: 3, to: 4, arrows: 'to', width: 2, length: 200, label: '10'},
-          {from: 3, to: 6, arrows: 'to', width: 2, length: 200, label: '3',color: "red"},
-          {from: 4, to: 6, arrows: 'to', width: 2, length: 200, label: '7'},
-          {from: 4, to: 5,  arrows: 'to', width: 2, length: 200, label: '5'},
-          {from: 5, to: 6,  arrows: 'to', width: 2, length: 200, label: '2'},
-          {from: 5, to: 7, arrows: 'to', width: 2, length: 200, label: '8'},
-          {from: 5, to: 8,  arrows: 'to', width: 2, length: 200, label: '15'},
-          {from: 6, to: 7,  arrows: 'to', width: 2, length: 200, label: '10'},
-          {from: 6, to: 8,  arrows: 'to', width: 2, length: 200, label: '7',color: "red"},
-          {from: 7, to: 8,  arrows: 'to', width: 2, length: 200, label: '4'},
-         
-        ];
-      
-        // create a network
-        var container = document.getElementById('mynetwork');
-        var data = {
-          nodes: nodes,
-          edges: edges
-        };
-        var options = {
-          nodes : {
-           // shape: 'dot',
-            size: 10
-          }
-        };
-        var network = new vis.Network(container, data, options);*/
-
-        function getTableData(){
+     function getTableData(){
             const adyacentMatrix = document.getElementById("tableData");
             var matrix = [];
             var counter = 1;
@@ -564,41 +487,155 @@
             }
             generateGraph(matrix);
         }
+        var nodes, edges, network;
+    
+    function generateGraph(matrix){
+        nodes = new vis.DataSet();
+        edges = new vis.DataSet();
+        for(let i=0; i<matrix.length; i++){
+            nodes.add({id: i, label: 'Node '+i, color: "white",font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}});
+        }
+        var count = 0;
+        for(let i=0; i<matrix.length;i++){
 
-        function solveDijkstra() {
-            var request = new Array(1);
-            var url="";
-            request =constructRequestCommon();
+            for(let j=0; j<matrix[i].length;j++){
+                var cur = matrix[i][j];
+                if(cur!=''){
+                    edges.add({id: count,from:i, to:j , arrows: 'to', width: 2, length: 400, label: cur, color: "blue"});
+                    count++;
+                }
+            }
+        }
+        var container = document.getElementById('mynetwork');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {
+          nodes : {
+            size: 10
+          }
+        };
+        
+        network = new vis.Network(container, data, options);
+        solveDijkstra();
+    }
+
+       var path;
+       var pos = 0;
+        function showDijkstra(){
+            resetGraph();
+            pos = 0;
+            nextStep();
+        }
+        function nextStep(){
+            var actual = path[pos].split(',');
+            var a = actual[0];
+            var edgeID = actual[1];
+            var b = actual[2];
+            var valid = actual[3];
+
+            try {
+                var edge = edges.get(parseInt(edgeID, 10));
+                var w = edge.label;
+                edge.color = 'red';
+                edges.update(edge);
+                
+                var nodeA = nodes.get(parseInt(a, 10));
+                nodeA.color ={background: 'blue'};
+                nodes.update(nodeA);
+                var nodeB = nodes.get(parseInt(b, 10));
+                nodeB.color ={background: 'gray'};
+                nodes.update(nodeB);
+            }
+            catch (err) {
+                alert(err);
+            }
+            pos++;
+        }
+        function showPath(data){
+            resetGraph();
+            var arr = data.split('-');
+            
+            for(let i=0; i<arr.length-1; i++){
+                var actual = arr[i].split(',');
+                var a = actual[0];
+                var edgeID = actual[1];
+                var b = actual[2]; 
+                console.log(a+" "+edgeID+" "+b );
+                try {
+                var edge = edges.get(parseInt(edgeID, 10));
+                var w = edge.label;
+                edge.color = '#645E4F';
+                edges.update(edge);
+                
+                var nodeA = nodes.get(parseInt(a, 10));
+                nodeA.color ={background: '#FCCE78'};
+                nodes.update(nodeA);
+                var nodeB = nodes.get(parseInt(b, 10));
+                nodeB.color ={background: '#FCCE78'};
+                nodes.update(nodeB);
+            }
+            catch (err) {
+                alert(err);
+            }
+            }
+            
+            document.getElementById("distance").innerHTML = arr[arr.length-1];
+        }
+        function resetGraph(){
+            for(let i=0; i<nodes.length;i++){
+                var nodeA = nodes.get(i);
+                nodeA.color ={background: 'white'};
+                nodes.update(nodeA);
+            }
+            for(let i=0; i<edges.length;i++){
+                var edge = edges.get(i);
+                var w = edge.label;
+                edge.color = 'blue';
+                edges.update(edge);
+            }
+        }
+        function getPath(){
+            var request = constructRequestCommon();
+            //var url="";
             //url ="http://localhost:8080/shortestPath";
-            url ="https://icesiviptest.herokuapp.com/shortestPath";     
-            var contador=0;
-            if(request!=null){
-                  $.ajax({
-                      url: url + request
-                  }).then(function (data) {
-                      list = data.vertices;
-                      if(!all){
-                          addData(data);                            
-                       }else{
-                          addDataAll(tec[contador],data);
-                          contador++;                           
-                      }
-                  }, function (error) {
-                      alert(error)
-                      $(".cover").toggle(400);
-                      console.log(error);
-                  })
-
-              }
-
+            //url ="https://icesiviptest.herokuapp.com/shortestPath";  
+            $.ajax({
+                url: "http://localhost:8080/getShortestPath" + request+"&destiny="+ document.getElementById('destiny').value.toLowerCase()
+            }).then(function (data) {
+                  showPath(data);
+            }, function (error) {
+                   alert(error)
+                $(".cover").toggle(400);
+                console.log(error);
+             })
         }
 
+        function solveDijkstra() {
+            var request = constructRequestCommon();
+            //var url="";
+            //url ="http://localhost:8080/shortestPath";
+            //url ="https://icesiviptest.herokuapp.com/shortestPath";  
+            $.ajax({
+                url: "http://localhost:8080/shortestPath" + request
+            }).then(function (data) {
+                   path = data.split('-');
+                   pos = 0; 
+            }, function (error) {
+                   alert(error)
+                $(".cover").toggle(400);
+                console.log(error);
+             })
+        }
+    
         function constructRequestCommon(){
             rows = "";
             cols = "";
             graph = "";
             const adyacentMatrix = document.getElementById("tableData");
             var counter = 1;
+            var count2 = 0;
             for(let i=2; i<adyacentMatrix.rows.length;i++){
                 const cellsOfRow = adyacentMatrix.rows[i].getElementsByTagName('td');
                 for(let j=0;j<cellsOfRow.length;j++){
@@ -606,15 +643,18 @@
                     rows = ""+cellsOfRow.length;
                     cols = ""+cellsOfRow.length;
                     const val = document.getElementById(o).value.toLowerCase();
-                    if(val!='')
+                    if(val=='')
                         graph = graph + "0-";
-                    else
-                    graph = graph + val + "-";
-                    counter++;
+                    else{
+                        graph = graph + val + "," + count2 +"-";
+                       count2++;
+                    }
+                     counter++;
                 }
             
             }
-            return "?rows=" + rows + "&cols=" + cols + "&graph=" + graph;
+            const from =document.getElementById('from').value.toLowerCase();
+            return "?rows=" + rows + "&cols=" + cols + "&graph=" + graph+"&from=" + from;
         }
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>

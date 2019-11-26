@@ -82,7 +82,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 	}
 
 	@Override
-	public void addEdge(T x, T y, double w) {
+	public void addEdge(T x, T y, double w, int id) {
 		if (weighted) {
 			Vertex<T> from = searchVertex(x);
 			Vertex<T> to = searchVertex(y);

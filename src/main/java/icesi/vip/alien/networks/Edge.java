@@ -3,6 +3,7 @@ package icesi.vip.alien.networks;
 public class Edge<T> implements Comparable<Edge<T>>{
 
 	private double weight;
+	private int id;
 	private Edge residual;
     private long flow, cost;
     private long capacity, originalCost;
@@ -53,6 +54,10 @@ public class Edge<T> implements Comparable<Edge<T>>{
 		this.weight = weight;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public Vertex<T> getSource() {
 		return source;
 	}
@@ -64,6 +69,10 @@ public class Edge<T> implements Comparable<Edge<T>>{
 	@Override
 	public int compareTo(Edge<T> o) {
 		return Double.compare(weight, o.weight);
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }	

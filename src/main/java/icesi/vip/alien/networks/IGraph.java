@@ -18,7 +18,7 @@ public interface IGraph<T> {
 
 	public void addEdge(T x, T y);
 	
-	public void addEdge(T x, T y, double w);
+	public void addEdge(T x, T y, double w, int id);
 	
 	//modificados los 3 m�todos de arriba
 	

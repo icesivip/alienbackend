@@ -58,7 +58,7 @@ public   class AdjListGraph<T> implements IGraph<T> {
 				Double weight = Double.parseDouble(parts[i]);
 				if(weight!=-1) {
 					addVertex((T) i);
-					addEdge((T)node, (T)i, weight);
+					addEdge((T)node, (T)i, weight, 0);
 				}
 			}
 
@@ -193,24 +193,26 @@ public   class AdjListGraph<T> implements IGraph<T> {
 	}
 
 	public void addEdge(AdjVertex<T> from, AdjVertex<T> to) {
-		addEdge(from, to, 1D);
+		addEdge(from, to, 1D, 0);
 	}
 
 	@Override
-	public void addEdge(T x, T y, double w) {
+	public void addEdge(T x, T y, double w, int id) {
 		if (weighted) {
 			AdjVertex<T> from = searchVertex(x);
 			AdjVertex<T> to = searchVertex(y);
-			addEdge(from, to, w);
+			addEdge(from, to, w, id);
 		}
 	}
 
-	public void addEdge(AdjVertex<T> from, AdjVertex<T> to, double w) {
+	public void addEdge(AdjVertex<T> from, AdjVertex<T> to, double w, int id) {
 		if (from != null && to != null) {
 			Edge<T> edge = new Edge<T>(from, to, w);
+			edge.setId(id);
 			from.getAdjList().add(edge);
 			if (!isDirected()) {
 				edge = new Edge<T>(to, from, w);
+				edge.setId(id);
 				to.getAdjList().add(edge);
 			}
 			numberOfEdges++;
@@ -389,19 +391,19 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		s.setD(0);
 	}
 
-	public void dijkstra(Vertex<T> x) {
+	public String dijkstra(Vertex<T> x) {
+		String graph = "";
 		AdjVertex<T> s = (AdjVertex<T>) x;
 		initSingleSource(s);
 		PriorityQueue<AdjVertex<T>> queue = new PriorityQueue<>();
 		queue.add(s);
 		while (!queue.isEmpty()) {
 			AdjVertex<T> u = queue.poll();
-
 			for (Edge<T> e : u.getAdjList()) {
 
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				double weight = e.getWeight();
-
+				graph += u.getValue()+","+e.getId()+","+v.getValue()+",";
 				// relax(u,v,weight)
 				double distanceFromU = u.getD() + weight;
 				if (distanceFromU < v.getD()) {
@@ -409,10 +411,12 @@ public   class AdjListGraph<T> implements IGraph<T> {
 					v.setD(distanceFromU);
 					v.setPred(u);
 					queue.add(v);
-
-				}
+					graph+= "1-";
+				}else
+					graph+= "0-";
 			}
 		}
+		return graph;
 	}
 
 	public double[][] floydwarshall() {
