@@ -32,7 +32,10 @@
 <!-- Custom styles for this template-->
 <link href='css/sb-admin-2.min.css' rel='stylesheet'>
 
-<script src="https://d3js.org/d3.v3.min.js"></script>
+<link href='https://visjs.github.io/vis-network/dist/vis-network.min.css' rel='stylesheet'
+	type='text/css'>
+<script
+	src='https://visjs.github.io/vis-network/dist/vis-network.min.js'></script>
 
 <script
 	src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
@@ -52,19 +55,6 @@
             -moz-appearance: textfield;
         }
 
-		.node circle {
-			fill: #fff;
-	  		stroke: steelblue;
-	  		stroke-width: 3px;
-		}
-
-		.node text { font: 12px sans-serif; }
-
-		.link {
-	  		fill: none;
-	  		stroke: #ccc;
-	 		stroke-width: 2px;
-		}
 
     </style>
 
@@ -276,7 +266,6 @@
 												<option name="Lot for Lot">Lot for Lot</option>
 												<option name="Economic Order Quantity">Economic Order Quantity</option>
 												<option  name="Periods Of Suply">Periods Of Suply</option>
-												<option name="Period Order Quantity">Period Order Quantity</option>
 												<option name="Least Unit Cost">Least Unit Cost</option>
 												<option name="Least Total Cost">Least Total Cost</option>
 											</select>
@@ -306,7 +295,7 @@
 						<div class="input-group-append mb-2 flex-nowrap justify-content-center">
 							<input class="col-sm-11 btn btn-outline-primary expand" id="paintTree" type="button" name="paintTree" value="Show product tree">
 						</div>
-						<svg width="0" height="0"></svg>
+						<div id="viewTree"></div>
 				</div>
 				<div>
 					<table id='tableInformation'
@@ -679,7 +668,6 @@
 			+ "<option name='Lot for Lot'>Lot for Lot</option>"
 			+ "<option name='Economic Order Quantity'>Economic Order Quantity</option>"
 			+ "<option name='Periods Of Suply'>Periods Of Suply</option>"
-			+ "<option name='Period Order Quantity'>Period Order Quantity</option>"
 			+ "<option name='Least Unit Cost'>Least Unit Cost</option>"
 			+ "<option name='Least Total Cost'>Least Total Cost</option></select></td></tr>");
 
@@ -900,119 +888,43 @@
 
 		var nodesProducts;
 		var edgesProducts;
-
-		
+		var nodesNames;
 
 		function run(){
 			nodesProducts = [];
 			edgesProducts = [];
-
-
-
-			run2(products[0])
+			nodesNames = [];
+			var i = 0;
+			nodesNames.push(products[0].name);
+			nodesProducts.push({id: i, label: products[0].name + ' (' + products[0].amount[0] + ')', font: {size:12, strokeWidth: 1, strokeColor: 'silver'}});
+			i++;
+			run2(products[0], i);
 		}
 
-		function run2(product){
-			nodesProducts.push(product.name)
+		function run2(product, i){
 			product.subProducts.forEach(element => {
-				nodesProducts.push(element)
-				edgesProducts.push({starts: product.name, ends:element.name})
-				run2(element)
+				nodesNames.push(element.name);
+				nodesProducts.push({id: i, label: element.name + ' (' + element.amount[0] + ')', font: {size:12, strokeWidth: 1, strokeColor: 'silver'}});
+				edgesProducts.push({from: nodesNames.indexOf(product.name), to:i, width: 2, length: 400});
+				i++;
+				run2(element);
 			});
-
 		}
 
 		function paintTree(){
-			//run();
+			run();
 			//console.log(arbor);
-			var treeData = [
-				{
-					"name": "Top Level",
-					"parent": "null",
-					"children": [
-						{
-							"name": "Level 2: A",
-							"parent": "Top Level",
-							"children": [
-								{
-									"name": "Son of A",
-									"parent": "Level 2: A"
-								},
-								{
-									"name": "Daughter of A",
-									"parent": "Level 2: A"
-								}
-							]
-						},
-						{
-							"name": "Level 2: B",
-							"parent": "Top Level"
-						}
-					]
+			var container = document.getElementById("viewTree");
+			var dataTree = {
+				nodes: nodesProducts,
+				edges: edgesProducts
+			};
+			var options = {
+				nodes: {
+					size: 20
 				}
-			];
-			var margin = {top: 40, right: 120, bottom: 20, left: 120},
-				width = 500 - margin.right - margin.left,
-				height = 300 - margin.top - margin.bottom;
-	
-			var i = 0;
-
-			var tree = d3.layout.tree().size([height, width]);
-
-			var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x, d.y]; });
-
-			var svg = d3.select("svg")
-				.attr("width", width + margin.right + margin.left)
-				.attr("height", height + margin.top + margin.bottom)
-  				.append("g")
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-			root = treeData[0];
-  
-			update(i, tree, diagonal, svg, root);
-			console.log("end");
-		}
-
-		function update(i, tree, diagonal, svg, root){
-			// Compute the new tree layout.
-			var nodes = tree.nodes(root).reverse(),
-				links = tree.links(nodes);
-
-			// Normalize for fixed-depth.
-			nodes.forEach(function (d) { d.y = d.depth * 100; });
-
-			// Declare the nodes…
-			var node = svg.selectAll("g.node")
-				.data(nodes, function (d) { return d.id || (d.id = ++i); });
-
-			// Enter the nodes.
-			var nodeEnter = node.enter().append("g")
-				.attr("class", "node")
-				.attr("transform", function (d) {
-					return "translate(" + d.x + "," + d.y + ")";
-				});
-
-			nodeEnter.append("circle")
-				.attr("r", 10)
-				.style("fill", "#fff");
-
-			nodeEnter.append("text")
-				.attr("y", function (d) {
-					return d.children || d._children ? -18 : 18;
-				})
-				.attr("dy", ".35em")
-				.attr("text-anchor", "middle")
-				.text(function (d) { return d.name; })
-				.style("fill-opacity", 1);
-
-			// Declare the links…
-			var link = svg.selectAll("path.link")
-				.data(links, function (d) { return d.target.id; });
-
-			// Enter the links.
-			link.enter().insert("path", "g")
-				.attr("class", "link")
-				.attr("d", diagonal);
+			};
+			var paintTree = new vis.Network(container, dataTree, options);
 		}
 
 		function resize(e) {
