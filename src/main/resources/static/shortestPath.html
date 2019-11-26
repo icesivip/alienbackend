@@ -486,7 +486,7 @@
             for(let j=0; j<matrix[i].length;j++){
                 var cur = matrix[i][j];
                 if(cur!=''){
-                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 200, label: cur};
+                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 400, label: cur};
                     count++;
                 }
             }
@@ -566,6 +566,58 @@
             
             }
             generateGraph(matrix);
+        }
+
+        function solveDijkstra() {
+            var request = new Array(1);
+            var url="";
+            request =constructRequestCommon();
+            //url ="http://localhost:8080/shortestPath";
+            url ="https://icesiviptest.herokuapp.com/shortestPath";     
+            var contador=0;
+            if(request!=null){
+                  $.ajax({
+                      url: url + request
+                  }).then(function (data) {
+                      list = data.vertices;
+                      if(!all){
+                          addData(data);                            
+                       }else{
+                          addDataAll(tec[contador],data);
+                          contador++;                           
+                      }
+                  }, function (error) {
+                      alert(error)
+                      $(".cover").toggle(400);
+                      console.log(error);
+                  })
+
+              }
+
+        }
+
+        function constructRequestCommon(){
+            rows = "";
+            cols = "";
+            graph = "";
+            const adyacentMatrix = document.getElementById("tableData");
+            var counter = 1;
+            for(let i=2; i<adyacentMatrix.rows.length;i++){
+                const cellsOfRow = adyacentMatrix.rows[i].getElementsByTagName('td');
+                for(let j=0;j<cellsOfRow.length;j++){
+                    var o = 'gross'+counter;
+                    rows = ""+cellsOfRow.length;
+                    cols = ""+cellsOfRow.length;
+                    const val = document.getElementById(o).value.toLowerCase();
+                    if(val!='')
+                        graph = graph + "0-";
+                    else
+                    graph = graph + val + "-";
+                    counter++;
+                }
+            
+            }
+            return "?rows=" + rows + "&cols=" + cols + "&graph=" + graph;
         }
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>

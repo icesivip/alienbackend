@@ -187,7 +187,57 @@ public class AlienController {
 
 	}
 	
+	@CrossOrigin
+	@RequestMapping("/shortestPath")
+	public AdjListGraph<Integer> buildGraph(
 
+			@RequestParam(value = "graph", defaultValue = "1") String graph,
+			@RequestParam(value = "rows", defaultValue = "1") String rows,
+			@RequestParam(value = "cols", required = true) String cols,
+		//	@RequestParam(value = "levelCode", required = true) String levelCode,
+		//	@RequestParam(value = "initialInventory", required = true) String initialInventory,
+		//	@RequestParam(value = "leadTime", defaultValue = "1") String leadTime,
+		//	@RequestParam(value = "securityStock", defaultValue = "1") String securityStock,
+		//	@RequestParam(value = "costArticle", defaultValue = "1") String articleCost,
+		//	@RequestParam(value = "maintenanceCost", defaultValue = "1") String maintenanceCost,
+		//	@RequestParam(value = "orderingCost", defaultValue = "1") String orderingCost,
+		//	@RequestParam(value = "lotSizingRule", defaultValue = "1") String lotSizingRule,
+		//	@RequestParam(value = "periodicity", defaultValue = "1") String periodicity,
+		//	@RequestParam(value = "TPeriodOFSupply", defaultValue = "1") String TPeriodOFSupply) throws Exception {
+
+		
+		try {
+
+			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			String[] arr = graph.split("-");
+			int n = Integer.ParseInt(rows);
+			int m = Integer.ParseInt(cols);
+			int k = 0;
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < m; j++) {
+					long weight =  Integer.parseInt(arr[k]);
+					if(weight != 0)
+						g.addEdge(i, j,weight);
+					k++;
+				}
+			}
+			scheduledReceptions = scheduledReceptions.substring(0, scheduledReceptions.length() - 1);
+			grossRequeriment = grossRequeriment.substring(0, grossRequeriment.length() - 1);
+
+			String[] gross = grossRequeriment.split("-");
+			String[] schedules = scheduledReceptions.split("-");
+			for (int i = 0; i < gross.length; i++) {
+				MPS.addBruteRequirement(Integer.parseInt(gross[i]));
+				MPS.addScheduleReception(Integer.parseInt(schedules[i]));
+			}
+
+			return g;
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+	}
+	
 	@CrossOrigin
 	@RequestMapping("/master")
 	public MasterPlanSchedule solucion(
