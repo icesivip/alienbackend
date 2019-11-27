@@ -278,7 +278,41 @@ public class AlienController {
 		}
 
 	}
-	
+	@CrossOrigin
+	@RequestMapping("/mstKruskal")
+	public String mstKruskal(
+
+			@RequestParam(value = "rows", defaultValue = "1") String rows,
+			@RequestParam(value = "cols", defaultValue = "1") String cols,
+			@RequestParam(value = "graph", defaultValue = "1") String graph)throws Exception{
+		
+		try {
+			
+			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			String[] arr = graph.split("-");
+			int n = Integer.parseInt(rows);
+			int m = Integer.parseInt(cols);
+			int k = 0;
+			for(int i = 0; i < n; i++) g.addVertex(i);
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < m; j++) {
+					String[] arr2 = arr[k].split(",");
+					long weight =  Integer.parseInt(arr2[0]);
+					if(weight != 0) {
+						g.addEdge(i, j,weight, Integer.parseInt(arr2[1]));
+					}
+					k++;
+				}
+			}
+		
+			String ans = g.kruskal();
+			return ans;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+	}
 	
 	
 	@CrossOrigin

@@ -475,8 +475,8 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public ArrayList<Edge<T>> kruskal() { // Adapted from
-											// www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
+	public String kruskal() { // Adapted from
+		String ans = "";					// www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 		ArrayList<Edge<T>> result = new ArrayList<>(); // Tnis will store the resultant MST
 		int e = 0; // An index variable, used for result[]
 		int i = 0; // An index variable, used for sorted edges
@@ -493,15 +493,17 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		i = 0; // Index used to pick next edge
 
 		// Number of edges to be taken is equal to V-1
-		while (e < vertices.size() - 1 && i < edges.size()) {
+		while (i < edges.size()) {
 			// Step 2: Pick the smallest edge. And increment
 			// the index for next iteration
 			Edge<T> edge = edges.get(i);
 			i++;
-
+			int source = (int) edge.getSource().getValue();
+			int destination = (int) edge.getDestination().getValue();
 			int x = uf.find(getIndexOf(edge.getSource()));
 			int y = uf.find(getIndexOf(edge.getDestination()));
-
+			
+			ans+=source+","+edge.getId()+","+destination+"-";
 			// If including this edge does't cause cycle,
 			// include it in result and increment the index
 			// of result for next edge
@@ -509,10 +511,13 @@ public   class AdjListGraph<T> implements IGraph<T> {
 				result.add(edge);
 				e++;
 				uf.union(x, y);
+				ans+="1-";
+			}else {
+				ans+="0-";
 			}
 			// Else discard the edge
 		}
-		return result;
+		return ans;
 	}
 
 	public ArrayList<Edge<T>> getEdges() {

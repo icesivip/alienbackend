@@ -306,7 +306,7 @@
                                     <tr class="bg-primary">
                                         <th colspan="6" scope="col" class="text-center-light">Adjacency Matrix</th>
                                     </tr>
-                                    <tr id="periodsHeader" class="bg-primary">
+                                    <tr id="nodesHeader" class="bg-primary">
                                         <th scope="col">Node</th>
                                         <th class="text-center" scope="col">1</th>
                                         <th class="text-center" scope="col">2</th>
@@ -319,7 +319,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <tr><th class="bg-primary text-light" scope="row">1</th>
+                                        <tr id="nodesCells"><th class="bg-primary text-light" scope="row">1</th>
                                         <td style="width: 8%; height: 100%;"><input id="gross1" class="border-0"
                                                 type="number" min="0" style="width: 100%">
                                         </td>
@@ -382,7 +382,7 @@
                         <br>
                         <div class="row text-center">
                             <div class="col text-center"><button type="submit"
-                                    class="btn btn-outline-success expand" onclick="">Add node</button>
+                                    class="btn btn-outline-success expand" onclick="addColumn(4)">Add node</button>
                             </div>
                         </div>
                         <div class="row text-center">
@@ -470,8 +470,24 @@
         </div>
     </div>
     <script type="text/javascript">
+
+    function addColumn(colCount){
+        
+            var dataColSize = document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].childElementCount;
+            var actualPeriods = 0;
+            actualPeriods = parseInt(document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[1].getElementsByTagName('th')[(dataColSize - 2)].innerHTML);
+    
+                var toBeAdded = 1;
+                //Span del mps mayor (value + 2)
+                document.getElementById('tableData').childNodes[1].getElementsByTagName('tr')[0].getElementsByTagName('th')[0].colSpan = toBeAdded + actualPeriods + 2;
+                //Recorrer cada fila y add una td
+                $("#nodesHeader").append("<th class='text-center' scope='col'>" + (actualPeriods + 2) + "</th>")
+                $("#nodesCells").append("<td style='width: 8%; height: 100%;'><input id='gross" + (actualPeriods + 1) + "' class='border-0' type='number' min='0' style='width: 100%''></td>");
+                    
+        }
      function getTableData(){
             const adyacentMatrix = document.getElementById("tableData");
+           
             var matrix = [];
             var counter = 1;
             for(let i=2; i<adyacentMatrix.rows.length;i++){

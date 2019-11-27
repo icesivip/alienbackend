@@ -424,8 +424,7 @@
                 <div id="mygraph"></div>
                 <hr>
                 <div>
-                    <input type="button" class="btn btn-outline-info " id="btn-prim" value="Prim" />
-                    <input type="button" class="btn btn-outline-info" id="btn-kruskal" value="Kruskal" />
+                    <input type="button" class="btn btn-outline-info" id="next" onclick="nextStep()" value="Next" />
                    </div>
                 <h2 class="text-center">Tree</h2>
                 <hr>  
@@ -491,7 +490,7 @@
         </div>
     </div>
     <script>
-       function getTableData(){
+         function getTableData(){
             const adyacentMatrix = document.getElementById("tableData");
             var matrix = [];
             var counter = 1;
@@ -508,22 +507,21 @@
             }
             generateGraph(matrix);
         }
-
-        function generateGraph(matrix){
-        var nodes = [];
-
+        var nodes, edges, network;
+    
+    function generateGraph(matrix){
+        nodes = new vis.DataSet();
+        edges = new vis.DataSet();
         for(let i=0; i<matrix.length; i++){
-            nodes[i] =  {id: i, label: 'Node '+(i+1),font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}};
+            nodes.add({id: i, label: 'Node '+i, color: "white",font: {size: 12, strokeWidth: 2, strokeColor: 'silver'}});
         }
-
-        var edges = [];
         var count = 0;
         for(let i=0; i<matrix.length;i++){
 
             for(let j=0; j<matrix[i].length;j++){
                 var cur = matrix[i][j];
                 if(cur!=''){
-                    edges[count] = {from:i, to:j , arrows: 'to', width: 2, length: 400, label: cur};
+                    edges.add({id: count,from:i, to:j , arrows: 'none', width: 2, length: 400, label: cur, color: "blue"});
                     count++;
                 }
             }
@@ -535,13 +533,108 @@
         };
         var options = {
           nodes : {
-           // shape: 'dot',
             size: 10
           }
         };
-        var network = new vis.Network(container, data, options);
-    }
+        
+        network = new vis.Network(container, data, options);
+        getPath();
+     }
 
+       var path;
+       var pos = 0;
+        
+        function nextStep(){
+            var actual = path[pos].split(',');
+            var a; 
+            var edgeID; 
+            var b;
+            console.log(actual);
+            if(actual.length==1){
+                var act2 = path[pos-1].split(',');
+                a = act2[0];
+                edgeID = act2[1];
+                b = act2[2];
+                if(actual[0]=="1"){
+                    var edge = edges.get(parseInt(edgeID, 10));
+                    var w = edge.label;
+                    edge.color = 'red';
+                    edges.update(edge);
+                }
+            }else{
+                a = actual[0];
+                edgeID = actual[1];
+                b = actual[2];
+                try {
+                    var edge = edges.get(parseInt(edgeID, 10));
+                    var w = edge.label;
+                    edge.color = 'gray';
+                    edges.update(edge);
+
+                }
+                catch (err) {
+                   alert(err);
+                }
+            }
+            pos++;
+        }
+       
+        function resetGraph(){
+            for(let i=0; i<nodes.length;i++){
+                var nodeA = nodes.get(i);
+                nodeA.color ={background: 'white'};
+                nodes.update(nodeA);
+            }
+            for(let i=0; i<edges.length;i++){
+                var edge = edges.get(i);
+                var w = edge.label;
+                edge.color = 'blue';
+                edges.update(edge);
+            }
+        }
+        function getPath(){
+            var request = constructRequestCommon();
+            //var url="";
+            //url ="http://localhost:8080/shortestPath";
+            //url ="https://icesiviptest.herokuapp.com/shortestPath";  
+            $.ajax({
+                url: "http://localhost:8080/mstKruskal" + request
+            }).then(function (data) {
+                  path = data.split('-');
+                  console.log(data);
+            }, function (error) {
+                   alert(error)
+                $(".cover").toggle(400);
+                console.log(error);
+             })
+        }
+    
+        function constructRequestCommon(){
+            rows = "";
+            cols = "";
+            graph = "";
+            const adyacentMatrix = document.getElementById("tableData");
+            var counter = 1;
+            var count2 = 0;
+            for(let i=2; i<adyacentMatrix.rows.length;i++){
+                const cellsOfRow = adyacentMatrix.rows[i].getElementsByTagName('td');
+                for(let j=0;j<cellsOfRow.length;j++){
+                    var o = 'gross'+counter;
+                    rows = ""+cellsOfRow.length;
+                    cols = ""+cellsOfRow.length;
+                    const val = document.getElementById(o).value.toLowerCase();
+                    if(val=='')
+                        graph = graph + "0-";
+                    else{
+                        graph = graph + val + "," + count2 +"-";
+                       count2++;
+                    }
+                     counter++;
+                }
+            
+            }
+            return "?rows=" + rows + "&cols=" + cols + "&graph=" + graph;
+        }
     </script>
 
     <script type="text/javascript">
