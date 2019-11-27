@@ -25,7 +25,7 @@ public class FacilityDistribution {
 	private double unitCost=1;
 	private Map<Integer,Map<Integer,Integer>> fromTo;
 	
-	public static final int EMPTY_LABEL=0;
+
 	
 	public FacilityDistribution(int[][]distribution) {
 		this.distribution=new LabelMap(distribution);
@@ -153,7 +153,7 @@ public class FacilityDistribution {
 		Set<Integer>set=new HashSet<>();
 		for (int i = 0; i < this.distribution.map.length; i++) {
 			for (int j = 0; j <  this.distribution.map[0].length; j++) {
-				if(!set.contains(this.distribution.map[i][j].value) && this.distribution.map[i][j].value!=FacilityDistribution.EMPTY_LABEL ) {
+				if(!set.contains(this.distribution.map[i][j].value)) {
 					set.add(this.distribution.map[i][j].value);
 				}
 			}
