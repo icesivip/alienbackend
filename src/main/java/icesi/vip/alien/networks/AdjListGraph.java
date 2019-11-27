@@ -11,15 +11,43 @@ import java.util.Queue;
 
 public   class AdjListGraph<T> implements IGraph<T> {
 
+	/**
+	 * This attribute determines whether or not this graph is directed or undirected.
+	 */
 	private boolean directed;
+	
+	/**
+	 * This attribute determines whether or not this graph is weighter or not.
+	 */
 	private boolean weighted;
+	
+	/**
+	 * This attribute represents the number of vertices of this graph.
+	 */
 	private int numberOfVertices;
+	
+	/**
+	 * This attribute represents the number of edges of this graph.
+	 */
 	private int numberOfEdges;
+	
+	/**
+	 * The list of vertices of the graph.
+	 */
 	private List<Vertex<T>> vertices;
+	
+	/**
+	 * This map helps to obtain the adjacency vertex of a given one in order to facilitate the information management.
+	 */
 	private HashMap<T, AdjVertex<T>> map;
 	
 	
 	
+	/**
+	 * This function initializes a new adjacency list graph.
+	 * @param directed This attribute determines whether or not this graph is directed or undirected.
+	 * @param weighted This attribute determines whether or not this graph is weighted or not.
+	 */
 	public AdjListGraph(boolean directed, boolean weighted) {
 		this.directed = directed;
 		this.weighted = weighted;
@@ -31,6 +59,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#addVertex(java.lang.Object)
+	 * This function is responsible of adding a new vertex into the current graph.
+	 */
 	@Override
 	public void addVertex(T value) {
 		if (!isInGraph(value)) {
@@ -42,6 +74,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#addEdge(java.lang.Object, java.lang.Object)
+	 * This function is responsible of adding a new edge in the graph.
+	 */
 	@Override
 	public void addEdge(T x, T y) {
 		AdjVertex<T> from = searchVertex(x);
@@ -49,10 +85,19 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		addEdge(from, to);
 	}
 
+	/**
+	 * This function is responsible of adding a new edge into the current graph.
+	 * @param from The vertex from where the edge comes from.
+	 * @param to The vertex to where the edge is directed.
+	 */
 	public void addEdge(AdjVertex<T> from, AdjVertex<T> to) {
 		addEdge(from, to, 1D, 0);
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#addEdge(java.lang.Object, java.lang.Object, double, int)
+	 * This function is responsible of adding a new edge into the current graph.
+	 */
 	@Override
 	public void addEdge(T x, T y, double w, int id) {
 		if (weighted) {
@@ -62,6 +107,13 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	/**
+	 * This function is responsible of adding a new edge into the current graph, with weight included.
+	 * @param from The vertex from where the edge comes from.
+	 * @param to The vertex to where the edge is directed.
+	 * @param w The weight of the edge to be added.
+	 * @param id The id of the edge to be added.
+	 */
 	public void addEdge(AdjVertex<T> from, AdjVertex<T> to, double w, int id) {
 		if (from != null && to != null) {
 			Edge<T> edge = new Edge<T>(from, to, w);
@@ -77,6 +129,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 
 	}
 
+	/**
+	 * This function is responsible of removing an existing vertex from the graph.
+	 * @param v The vertex to be added to the graph.
+	 */
 	public void removeVertex(Vertex<T> v) {
 		for (int i = 0; i < vertices.size(); i++) {
 			removeEdge(vertices.get(i), v);
@@ -89,12 +145,21 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		numberOfVertices--;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#removeVertex(java.lang.Object)
+	 * This function is responsible of removing a vertex from the current graph.
+	 */
 	public void removeVertex(T v) {
 		if (isInGraph(v)) {
 			removeVertex(searchVertex(v));
 		}
 	}
 
+	/**
+	 * This function is responsible of removing an existing edge from the current graph.
+	 * @param x The vertex from where the edge comes from.
+	 * @param y The vertex to where the edge goes to.
+	 */
 	public void removeEdge(Vertex<T> x, Vertex<T> y) {
 		AdjVertex<T> from = (AdjVertex<T>) x;
 		AdjVertex<T> to = (AdjVertex<T>) y;
@@ -113,12 +178,20 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		numberOfEdges--;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#removeEdge(java.lang.Object, java.lang.Object)
+	 * This function is responsible of removing an existing edge from the graph.
+	 */
 	public void removeEdge(T x, T y) {
 		if (isInGraph(x) && isInGraph(y)) {
 			removeEdge(searchVertex(x), searchVertex(y));
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#getNeighbors(icesi.vip.alien.networks.Vertex)
+	 * This function is responsible for getting all adjacent vertices of a given vertex.
+	 */
 	public List<Vertex<T>> getNeighbors(Vertex<T> x) {
 		List<Vertex<T>> neigh = new ArrayList<>();
 		AdjVertex<T> from = (AdjVertex<T>) x;
@@ -129,14 +202,26 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return neigh;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#areAdjacent(icesi.vip.alien.networks.Vertex, icesi.vip.alien.networks.Vertex)}
+	 * This function determines whether or not two given vertices are adjacent.
+	 */
 	public boolean areAdjacent(Vertex<T> x, Vertex<T> y) {
 		return getNeighbors(x).contains(y);
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#isInGraph(java.lang.Object)
+	 * This function determines whether or not a given vertex is part of the current graph.
+	 */
 	public boolean isInGraph(T value) {
 		return searchVertex(value) != null;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#getEdgeWeight(icesi.vip.alien.networks.Vertex, icesi.vip.alien.networks.Vertex)
+	 * This function obtains the weight of an edge which contains two given vertices.
+	 */
 	public double getEdgeWeight(Vertex<T> x, Vertex<T> y) {
 		double w = 0;
 		if (isInGraph(x.getValue()) && isInGraph(y.getValue())) {
@@ -149,6 +234,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return w;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#setEdgeWeight(icesi.vip.alien.networks.Vertex, icesi.vip.alien.networks.Vertex, double)
+	 * This function modifies the edge weight of a given edge.
+	 */
 	public void setEdgeWeight(Vertex<T> x, Vertex<T> y, double w) {
 		if (isInGraph(x.getValue()) && isInGraph(y.getValue()) && weighted) {
 			AdjVertex<T> from = (AdjVertex<T>) x;
@@ -165,10 +254,20 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	/**
+	 * This function searches for the adjacency vertex of a given vertex, given only the value of the vertex.
+	 * @param value The value of the vertex to be searched.
+	 * @return The adjacency vertex that corresponds to the searched value.
+	 */
 	public AdjVertex<T> searchVertex(T value) {
 		return map.get(value);
 	}
 
+	/**
+	 * This function is responsible of obtaining the index in the list of vertices of a given vertex.
+	 * @param v The vertex to be searched.
+	 * @return The index of the given vertex in the list of vertices.
+	 */
 	public int getIndexOf(Vertex<T> v) {
 		int index = -1;
 		boolean searching = true;
@@ -181,6 +280,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return index;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#bfs(icesi.vip.alien.networks.Vertex)
+	 * This function does a bfs from a given source vertex.
+	 */
 	public void bfs(Vertex<T> x) {
 		AdjVertex<T> s = (AdjVertex<T>) x;
 		for (Vertex<T> u : vertices) {
@@ -208,6 +311,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#dfs()
+	 * This function does a bfs from a given source vertex.
+	 */
 	public int dfs() {
 		int components = 0;
 		for (Vertex<T> u : vertices) {
@@ -224,6 +331,12 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return components;
 	}
 
+	/**
+	 * This function is the recursive implementation of the dfs responsible of visiting the vertices in the correct order or a dfs algorithm.
+	 * @param u The node that the algorithm is currently standing on.
+	 * @param time Thr current accumulated time in the algorithm.
+	 * @return
+	 */
 	private int dfsVisit(AdjVertex<T> u, int time) {
 		time++;
 		u.setD(time);
@@ -244,6 +357,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 	 
 		
 
+	/**
+	 * This function initializes everything that is required for the single source shortest paths solution.
+	 * @param s The given source vertex.
+	 */
 	private void initSingleSource(AdjVertex<T> s) {
 		for (Vertex<T> u : vertices) {
 			u.setD(INF);
@@ -252,6 +369,11 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		s.setD(0);
 	}
 
+	/**
+	 * This function executes Dijkstra's algorithm.
+	 * @param x The source vertex.
+	 * @return A string representing the steps taken to solve the problem.
+	 */
 	public String dijkstra(Vertex<T> x) {
 		String graph = "";
 		AdjVertex<T> s = (AdjVertex<T>) x;
@@ -280,6 +402,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return graph;
 	}
 
+	/**
+	 * This function executes Floyd Warshall's algorithm.
+	 * @return A matrix of doubles representing the distances between every pair of nodes.
+	 */
 	public double[][] floydwarshall() {
 		double[][] weights = getWeightsMatrix();
 		for (int k = 0; k < vertices.size(); k++) {
@@ -292,6 +418,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return weights;
 	}
 
+	/**
+	 * This function builds a weights matrix from the adjacency list graph.
+	 * @return The weigths matrix.
+	 */
 	private double[][] getWeightsMatrix() {
 		double[][] weights = new double[vertices.size()][vertices.size()];
 		for (int i = 0; i < weights.length; i++) {
@@ -309,6 +439,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return weights;
 	}
 
+	/**
+	 * This function executes prim's algorithm.
+	 * @param s The source vertex.
+	 */
 	public void prim(Vertex<T> s) {
 		AdjVertex<T> r = (AdjVertex<T>) s;
 		for (Vertex<T> u : vertices) {
@@ -336,6 +470,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	/**
+	 * This function executes Kruskal's algorithm.
+	 * @return A string representing the steps taken to solve the minimum spanning tree problem.
+	 */
 	public String kruskal() { // Adapted from
 		String ans = "";					// www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 		ArrayList<Edge<T>> result = new ArrayList<>(); // Tnis will store the resultant MST
@@ -383,6 +521,10 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return ans;
 	}
 
+	/**
+	 * This function obtains the list of edges of the graph.
+	 * @return The list of edges.
+	 */
 	public ArrayList<Edge<T>> getEdges() {
 		ArrayList<Edge<T>> edges = new ArrayList<>();
 		for (int i = 0; i < vertices.size(); i++) {
@@ -394,22 +536,42 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		return edges;
 	}
 	
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#getVertices()
+	 * This function obtains the list of vertices of the graph.
+	 */
 	public List<Vertex<T>> getVertices() {
 		return vertices;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#getNumberOfVertices()
+	 * This function obtains the number of vertices of the graph.
+	 */
 	public int getNumberOfVertices() {
 		return numberOfVertices;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#getNumberOfEdges()
+	 * This function obtains the number of edges of the graph.
+	 */
 	public int getNumberOfEdges() {
 		return numberOfEdges;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#isDirected()
+	 * This function return the directed attribute.
+	 */
 	public boolean isDirected() {
 		return directed;
 	}
 
+	/* (non-Javadoc)
+	 * @see icesi.vip.alien.networks.IGraph#isWeighted()
+	 * This function returns the weighted attribute.
+	 */
 	public boolean isWeighted() {
 		return weighted;
 	}
