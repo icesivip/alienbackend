@@ -224,16 +224,20 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public void dfs() {
+	public int dfs() {
+		int components =0;
 		for (Vertex<T> u : vertices) {
 			u.setColor(Vertex.WHITE);
 			u.setPred(null);
 		}
 		int time = 0;
 		for (Vertex<T> u : vertices) {
-			if (u.getColor() == Vertex.WHITE)
+			if (u.getColor() == Vertex.WHITE) {
 				time = dfsVisit(u, time);
+				components++;
+			}
 		}
+		return components;
 	}
 
 	private int dfsVisit(Vertex<T> u, int time) {

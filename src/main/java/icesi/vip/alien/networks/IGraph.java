@@ -42,6 +42,6 @@ public interface IGraph<T> {
 	
 	public void bfs(Vertex<T> s);
 	
-	public void dfs();
+	public int dfs();
 	
 }

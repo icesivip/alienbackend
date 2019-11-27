@@ -351,16 +351,20 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public void dfs() {
+	public int dfs() {
+		int components = 0;
 		for (Vertex<T> u : vertices) {
 			u.setColor(Vertex.WHITE);
 			u.setPred(null);
 		}
 		int time = 0;
 		for (Vertex<T> u : vertices) {
-			if (u.getColor() == Vertex.WHITE)
+			if (u.getColor() == Vertex.WHITE) {
 				time = dfsVisit((AdjVertex<T>) u, time);
+				components++;
+			}
 		}
+		return components;
 	}
 
 	private int dfsVisit(AdjVertex<T> u, int time) {
@@ -489,7 +493,7 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		Collections.sort(edges);
 
 		UnionFind uf = new UnionFind(vertices.size());
-
+		double sum=0;
 		i = 0; // Index used to pick next edge
 
 		// Number of edges to be taken is equal to V-1
@@ -512,11 +516,13 @@ public   class AdjListGraph<T> implements IGraph<T> {
 				e++;
 				uf.union(x, y);
 				ans+="1-";
+				sum+=edge.getWeight();
 			}else {
 				ans+="0-";
 			}
 			// Else discard the edge
 		}
+		ans+=""+sum;
 		return ans;
 	}
 
