@@ -13,12 +13,15 @@ import org.junit.jupiter.api.Test;
 
 import model.*;
 
-
 class AdjListGraphTest {
 	/**
-	 * graph implemented as adjacency list
+	 * graph of integers implemented as adjacency list
 	 */
-	private AdjListGraph<Integer> graph;
+	private AdjListGraph<Integer> graphOne;
+	/**
+	 * graph of string implemented as adjacency list
+	 */
+	private AdjListGraph<String> graphTwo;
 	/**
 	 * List of graphs that will be used to test the algorithms
 	 */
@@ -40,7 +43,7 @@ class AdjListGraphTest {
 			int edges = in.nextInt();
 
 			
-			graph = new AdjListGraph(false,true);
+			AdjListGraph<Integer> graph = new AdjListGraph(false,true);
 			for (int i = 0; i < vertex; i++) {
 				graph.addVertex(i);
 			}
@@ -55,6 +58,113 @@ class AdjListGraphTest {
 			
 		}	
 	}
+	/**
+	 * This scenery is responsible of initializing a graph which vertices are strings that represent cities
+	 * The edges, in the other hand, represent the cost of travelling from one city to another.
+	 */
+	public void stage2() {
+		//vertices
+		graphTwo = new AdjListGraph<>(false, true);
+		graphTwo.addVertex("Boston");
+		graphTwo.addVertex("Nueva York");
+		graphTwo.addVertex("Chicago");
+		graphTwo.addVertex("Dallas");
+		graphTwo.addVertex("Denver");
+		graphTwo.addVertex("San Francisco");
+		graphTwo.addVertex("Los Angeles");
+		// Edges
+		graphTwo.addEdge("San Francisco", "Los Angeles", 400,0);
+		graphTwo.addEdge("San Francisco", "Denver", 1000,1);
+		graphTwo.addEdge("San Francisco", "Chicago", 1500,2);
+		graphTwo.addEdge("Los Angeles", "Chicago", 1400,3);
+		graphTwo.addEdge("Los Angeles", "Dallas", 1100,4);
+		graphTwo.addEdge("Denver", "Chicago", 500,5);
+		graphTwo.addEdge("Denver", "Dallas", 600,6);
+		graphTwo.addEdge("Dallas", "Chicago", 800,7);
+		graphTwo.addEdge("Dallas", "Nueva York", 1200,8);
+		graphTwo.addEdge("Chicago", "Nueva York", 700,9);
+		graphTwo.addEdge("Boston", "Nueva York", 300,10);
+		graphTwo.addEdge("Boston", "Chicago", 900,11);
+	}
+	/**
+	 * This scenery is responsible of initializing an undirected graph.
+	 */
+	public void stage3() {
+		graphOne = new AdjListGraph<Integer>(false, true);
+		graphOne.addVertex(1);
+		graphOne.addVertex(2);
+		graphOne.addVertex(4);
+		graphOne.addVertex(5);
+		graphOne.addVertex(7);
+	}
+	/**
+	 * This scenery is responsible of initializing a directed graph.
+	 */
+	public void stage4() {
+		graphOne = new AdjListGraph<Integer>(true, true);
+		graphOne.addVertex(1);
+		graphOne.addVertex(2);
+		graphOne.addVertex(4);
+		graphOne.addVertex(5);
+		graphOne.addVertex(7);
+		
+	}
+	/**
+	 * This function is responsible of testing the add vertex functionality of the graph.
+	 */
+
+	@Test
+	public void testAddVertex() {
+		// Test 1
+		graphOne = new AdjListGraph<Integer>(false, true);
+		graphOne.addVertex(1);
+		assertTrue(graphOne.isInGraph(1));
+		assertTrue(graphOne.getVertices().size() == 1);
+
+		// Test 2
+		stage3();
+		graphOne.addVertex(3);
+		assertTrue(graphOne.isInGraph(3));
+		assertTrue(graphOne.getVertices().size() == 6);
+
+		// Test 3
+		stage3();
+		graphOne.addVertex(4);
+		assertTrue(graphOne.isInGraph(1));
+		assertTrue(graphOne.isInGraph(2));
+		assertTrue(graphOne.isInGraph(4));
+		assertTrue(graphOne.getVertices().size() == 5);
+	}
+	/**
+	 * 	This function tests the add edge functionality of the graph.
+	 */
+	@Test
+	public void testAddEdge() {
+		// Test 1
+		stage4();
+		graphOne.addEdge(5, 7, 3,0);
+		assertTrue(graphOne.searchVertex(5).isAdjacent(graphOne.searchVertex(7)));
+		assertTrue(graphOne.searchVertex(5).findEdge(graphOne.searchVertex(7)).getWeight() == 3);
+		assertTrue(graphOne.searchVertex(7).findEdge(graphOne.searchVertex(5)) == null);
+
+		// Test 2
+		stage3();
+		graphOne.addEdge(5, 7, 3,0);
+		assertTrue(graphOne.searchVertex(5).isAdjacent(graphOne.searchVertex(7)));
+		assertTrue(graphOne.searchVertex(5).findEdge(graphOne.searchVertex(7)).getWeight() == 3);
+		assertTrue(graphOne.searchVertex(7).findEdge(graphOne.searchVertex(5)) != null);
+
+		// Test 3
+		stage2();
+		graphTwo.addVertex("Medellin");
+		graphTwo.addVertex("Cali");
+		graphTwo.addEdge("Medellin", "Cali", 1500,0);
+		assertTrue(graphTwo.searchVertex("Medellin").isAdjacent(graphTwo.searchVertex("Cali")));
+		assertTrue(graphTwo.searchVertex("Medellin").findEdge(graphTwo.searchVertex("Cali")).getWeight() == 1500);
+		assertTrue(graphTwo.searchVertex("Cali").findEdge(graphTwo.searchVertex("Medellin")) != null);
+
+	}
+	
 	/**
 	 * This function is responsible for testing the kruskal algorithm implemented with an adjacency list graph.
 	 * The test is done by running the algorithm on many graphs that are present in the list of graphs initialized in stage 1.
@@ -103,7 +213,27 @@ class AdjListGraphTest {
 		}
 		assertTrue("DFS algorithm doesn't work", valid);
 	}
-	
+	/**
+	 * This function is responsible of testing Dijkstra's algorithm.
+	 * The results that the algorithm must return are known previously.
+	 */
+	@Test
+	public void testDijkstra() {
+		stage2();
+		// Test 1
+		graphTwo.dijkstra(graphTwo.searchVertex("Dallas"));
+		assertTrue(graphTwo.searchVertex("Boston").getD() == 1500);
 
+		// Test 2
+
+		graphTwo.dijkstra(graphTwo.searchVertex("San Francisco"));
+		assertTrue(graphTwo.searchVertex("Dallas").getD() == 1500);
+
+		// Test 3
+		graphTwo.dijkstra(graphTwo.searchVertex("Chicago"));
+		assertTrue(graphTwo.searchVertex("Los Angeles").getD() == 1400);
+
+		
+	}
 }
 

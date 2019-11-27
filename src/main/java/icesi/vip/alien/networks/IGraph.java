@@ -12,8 +12,7 @@ public interface IGraph<T> {
 	
 	public boolean isWeighted();
 	
-	//Deberia pedirse como par�metreo el Value
-	//PREGUNTAR SI SE DEBERIA TENER EL M�TODO QUE RECIBA UN VERTEX COMO PAR�METRO
+	
 	public void addVertex(T value);
 
 	public void addEdge(T x, T y);

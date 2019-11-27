@@ -1,6 +1,5 @@
 package icesi.vip.alien.networks;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,15 +15,9 @@ public   class AdjListGraph<T> implements IGraph<T> {
 	private boolean weighted;
 	private int numberOfVertices;
 	private int numberOfEdges;
-	private int n, s, t;
-	private  long maxFlow;
-	private long minCost;
-	private boolean[] minCut;
 	private List<Vertex<T>> vertices;
 	private HashMap<T, AdjVertex<T>> map;
-	private int visitedToken = 1;
-	private int[] visited;
-	private boolean solved;
+	
 	
 	
 	public AdjListGraph(boolean directed, boolean weighted) {
@@ -35,145 +28,9 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		vertices = new LinkedList<Vertex<T>>();
 		map = new HashMap<>();
 	}
-	public AdjListGraph(String path, boolean directed) throws IOException {
-		this.directed = directed;
-		this.weighted = true;
-		numberOfVertices = 0;
-		numberOfEdges = getNumberOfEdges();
-		vertices = new ArrayList<Vertex<T>>();
-		map = new HashMap<>();
-		File file = new File(path);
-		FileReader reader = new FileReader(file);
-		BufferedReader in = new BufferedReader(reader);
-		Integer node = 0;
-		String line = in.readLine();
-		while(line!=null) {
-			
-			addVertex((T) node);
-
-			
-			String[] parts = line.split(";");
-
-			for (Integer i = 0; i < parts.length; i++) {
-				Double weight = Double.parseDouble(parts[i]);
-				if(weight!=-1) {
-					addVertex((T) i);
-					addEdge((T)node, (T)i, weight, 0);
-				}
-			}
-
-			line = in.readLine();
-			node++;
-		}
-		reader.close();
-		in.close();
-	}
 	
-	public void networkFlowSolverBase(int n, int s, int t) {
-	    this.n = n;
-	    this.s = s;
-	    this.t = t;
-	    minCut = new boolean[n];
-	    visited = new int[n];
-	  }
 	
-	/*public void addEdge(Ver from, T to, long capacity) {
-	    if (capacity < 0) throw new IllegalArgumentException("Capacity < 0");
-	    Edge e1 = new Edge(from, to, capacity);
-	    Edge e2 = new Edge(to, from, 0);
-	    e1.residual = e2;
-	    e2.residual = e1;
-	    graph[from].add(e1);
-	    graph[to].add(e2);
-	  }
-
-	  /** Cost variant of {@link #addEdge(int, int, int)} for min-cost max-flow */
-	/*  public void addEdge(int from, int to, long capacity, long cost) {
-	    Edge e1 = new Edge(from, to, capacity, cost);
-	    Edge e2 = new Edge(to, from, 0, -cost);
-	    e1.residual = e2;
-	    e2.residual = e1;
-	    graph[from].add(e1);
-	    graph[to].add(e2);
-	  }*/
-
-	  // Marks node 'i' as visited.
-	  public void visit(int i) {
-	    visited[i] = visitedToken;
-	  }
-
-	  // Returns whether or not node 'i' has been visited.
-	  public boolean visited(int i) {
-	    return visited[i] == visitedToken;
-	  }
-
-	  // Resets all nodes as unvisited. This is especially useful to do
-	  // between iterations of finding augmenting paths, O(1)
-	  public void markAllNodesAsUnvisited() {
-	    visitedToken++;
-	  }
-
-	  /**
-	   * Returns the graph after the solver has been executed. This allow you to inspect the {@link
-	   * Edge#flow} compared to the {@link Edge#capacity} in each edge. This is useful if you want to
-	   * figure out which edges were used during the max flow.
-	   */
-	 // public List<Edge>[] getGraph() {
-	 //   execute();
-	    //return graph;
-	 // }
-
-	  // Returns the maximum flow from the source to the sink.
-	  public long getMaxFlow() {
-	    execute();
-	    return maxFlow;
-	  }
-
-	  // Returns the min cost from the source to the sink.
-	  // NOTE: This method only applies to min-cost max-flow algorithms.
-	  public long getMinCost() {
-	    execute();
-	    return minCost;
-	  }
-
-	  // Returns the min-cut of this flow network in which the nodes on the "left side"
-	  // of the cut with the source are marked as true and those on the "right side"
-	  // of the cut with the sink are marked as false.
-	  public boolean[] getMinCut() {
-	    execute();
-	    return minCut;
-	  }
-
-	  // Wrapper method that ensures we only call solve() once
-	  private void execute() {
-	    if (solved) return;
-	    solved = true;
-	    //solve();
-	  }
-
-	  // Method to implement which solves the network flow problem.
-	  //public abstract void solve();
 	
-	public List<Vertex<T>> getVertices() {
-		return vertices;
-	}
-
-	public int getNumberOfVertices() {
-		return numberOfVertices;
-	}
-
-	public int getNumberOfEdges() {
-		return numberOfEdges;
-	}
-
-	public boolean isDirected() {
-		return directed;
-	}
-
-	public boolean isWeighted() {
-		return weighted;
-	}
-
 	@Override
 	public void addVertex(T value) {
 		if (!isInGraph(value)) {
@@ -536,5 +393,26 @@ public   class AdjListGraph<T> implements IGraph<T> {
 		}
 		return edges;
 	}
+	
+	public List<Vertex<T>> getVertices() {
+		return vertices;
+	}
+
+	public int getNumberOfVertices() {
+		return numberOfVertices;
+	}
+
+	public int getNumberOfEdges() {
+		return numberOfEdges;
+	}
+
+	public boolean isDirected() {
+		return directed;
+	}
+
+	public boolean isWeighted() {
+		return weighted;
+	}
+
 
 }
