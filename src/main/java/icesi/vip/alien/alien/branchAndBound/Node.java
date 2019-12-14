@@ -2,9 +2,8 @@ package icesi.vip.alien.alien.branchAndBound;
 
 import java.util.ArrayList;
 
-import model.Model;
-import model.Solution;
-import solver.integer.branch_and_bound.BranchAndBound.ModelNode;
+import icesi.vip.alien.alien.branchAndBound.BranchAndBound.ModelNode;
+
 
 public class Node {
 

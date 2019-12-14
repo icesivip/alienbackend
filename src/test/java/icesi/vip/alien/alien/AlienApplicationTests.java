@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +171,9 @@ expectedEs = new HashMap<Integer, Double>();
 			assertThat(t.getLatestStart()).isEqualTo(expectedLs.get(t.getId()));
 			assertThat(t.getIsCritical()).isEqualTo(expectedIsCritical.get(t.getId()));
 		});
+	}
+	public void contextLoads() {
+		
 	}
 
 }
