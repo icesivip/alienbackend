@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="icesi.vip.alien.alien.pertvscpm.repositories" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/repositories" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="331" width="316" x="-255" y="-294"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="icesi.vip.alien.alien.pertvscpm.controller" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/controller" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="293" width="257" x="-846" y="-1302"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="icesi.vip.alien.alien.pertvscpm.services" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/services" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="419" width="394" x="-927" y="-940"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="icesi.vip.alien.alien.pertvscpm.model" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/model" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="847" width="914" x="-398" y="-1313"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="5" language="java" name="icesi.vip.alien.alien.pertvscpm.repositories.impl" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/repositories/impl" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="394" width="293" x="238" y="-333"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="6" language="java" name="icesi.vip.alien.alien.pertvscpm.services.impl" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/services/impl" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="613" width="417" x="-944" y="-449"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="7" language="java" name="icesi.vip.alien.alien.pertvscpm.model.Task" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/model/Task.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="383" y="-877"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="icesi.vip.alien.alien.pertvscpm.model.Transition" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/model/Transition.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-273" y="-1123"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="icesi.vip.alien.alien.pertvscpm.model.TaskDistribution" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/model/TaskDistribution.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="18" y="-670"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="10" language="java" name="icesi.vip.alien.alien.pertvscpm.model.DistributionType" 
+    project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/model/DistributionType.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-296" y="-671"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="11" language="java" name="icesi.vip.alien.alien.pertvscpm.repositories.impl.TaskRepositoryImp" 
+    project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/repositories/impl/TaskRepositoryImp.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="382" y="-117"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="12" language="java" name="icesi.vip.alien.alien.pertvscpm.repositories.TaskRepository" 
+    project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/repositories/TaskRepository.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-87" y="-117"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="13" language="java" name="icesi.vip.alien.alien.pertvscpm.services.TaskService" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/services/TaskService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-728" y="-695"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="icesi.vip.alien.alien.pertvscpm.services.impl.TaskServiceImp" 
+    project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/services/impl/TaskServiceImp.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-736" y="-117"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="icesi.vip.alien.alien.pertvscpm.controller.TaskController" project="alienbackend" 
+    file="/alienbackend/src/main/java/icesi/vip/alien/alien/pertvscpm/controller/TaskController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-720" y="-1135"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <realization id="16">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <association id="17">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="18" name="tasks">        
+        <position height="0" width="0" x="-13" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-13" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="20">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <association id="21">    
+    <bendpoint x="275" y="-669"/>    
+    <bendpoint x="229" y="-669"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="22" name="distribution">        
+        <position height="0" width="0" x="-484" y="-264"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-484" y="-264"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="25" name="service">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <bendpoint x="-273" y="-899"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="28" name="Successors">        
+        <position height="0" width="0" x="-403" y="-259"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-403" y="-259"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="30">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="31" name="repo">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="32" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <bendpoint x="-212" y="-983"/>    
+    <bendpoint x="-212" y="-919"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="34" name="predecesor">        
+        <position height="0" width="0" x="-497" y="-264"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="1">        
+        <position height="16" width="23" x="226" y="-920"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
+    <bendpoint x="289" y="-1039"/>    
+    <bendpoint x="257" y="-1039"/>    
+    <bendpoint x="90" y="-1040"/>    
+    <bendpoint x="-172" y="-1040"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="37" name="predecessors">        
+        <position height="0" width="0" x="-403" y="-259"/>      
+      </attribute>      
+      <multiplicity id="38" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-403" y="-259"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="40" name="distributionType">        
+        <position height="0" width="0" x="-452" y="-415"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-452" y="-415"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="42">    
+    <bendpoint x="82" y="-1122"/>    
+    <bendpoint x="283" y="-1122"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="43" name="succesor">        
+        <position height="0" width="0" x="-497" y="-264"/>      
+      </attribute>      
+      <multiplicity id="44" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-497" y="-264"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

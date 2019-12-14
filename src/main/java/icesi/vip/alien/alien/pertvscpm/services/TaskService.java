@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
-import icesi.vip.alien.alien.pertvscpm.services.impl.TaskServiceImp.DistributionType;
 
 /**
  * @author jcampaz
@@ -47,14 +46,16 @@ public interface TaskService
 	/**
 	 * Loads a sample set of tasks defined in a text file in the static resource
 	 * folder <br>
-	 * <b>Pre:</b> The file already exists and contains a connected graph with a set
-	 * of tasks that allows the execution of the CPM<br>
+	 * <b>Pre:</b> The selected file's structure match the requirements to upload
+	 * the definition of the tasks<br>
 	 * <b>Post:</b> Every task already existing and stored is removed and the new
 	 * set of tasks is stored in the task repository
 	 * 
+	 * @param fileUrl
+	 * 
 	 * @return the list of tasks with the respective predecessors and successors
 	 */
-	public List<Task> loadSampleTaks();
+	public List<Task> loadSampleTaks(String fileUrl);
 
 	/**
 	 * @param task
@@ -110,27 +111,23 @@ public interface TaskService
 	List<Task> executeCPM(List<Task> tasks, Task start, Task finish);
 
 	/**
-	 * Creates a determined number of scenarios using a probability distribution,
-	 * and the parameters of the distribution<br>
+	 * Creates a determined number of scenarios where the duration of a task is
+	 * computed using its probability distribution and parameters, to extract a
+	 * sample value of the probability<br>
 	 * 
 	 * @param tasks     the list with the tasks and precedences that will be used to
 	 *                  generate every scenario
 	 * @param scenarios is the total number of scenarios that will be generated
-	 * @param distType  - The real distribution type that will be used to generate
-	 *                  the variation of the task duration, it can be:
-	 *                  <ul>
-	 *                  Normal <br>
-	 *                  Log_Normal <br>
-	 *                  Beta <br>
-	 *                  Uniform
-	 *                  </ul>
-	 * @param param1    - is the first parameter needed to generate the variation
-	 *                  from the distribution type
-	 * @param param2    - is the second parameter needed to generate the variation
-	 *                  from the distribution type
+	 * 
 	 * @return return the set of scenarios with the randomly generated durations
+	 * @throws Exception When there is a problem generating the sample with the params for the distribution
 	 */
-	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios, double param1, double param2,
-			DistributionType distType);
+	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios) throws Exception;
+
+	List<Task> loadPertSampleTasks(String fileUrl);
+
+	List<Task> executePERTCPM(int scenarioId);
+
+	List<Task> findScenarioByid(int id);
 
 }

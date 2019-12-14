@@ -1,20 +1,34 @@
 package icesi.vip.alien.alien.pertvscpm.repositories;
 
 import java.util.List;
+import java.util.Map;
 
 import icesi.vip.alien.alien.pertvscpm.model.Task;
 
 public interface TaskRepository
 {
 
-	public List<Task> findAll();
+	List<Task> findAll();
 
-	public List<Task> loadTasksFromFile();
+	Task findById(int id);
 
-	public Task findById(int id);
+	Task save(Task task);
 
-	public Task save(Task task);
+	Task delete(Task task);
+	
+	List<Task> loadTasksFromFile(String fileUrl);
 
-	public Task delete(Task task);
+	List<Task> loadPertTasksFromFile(String fileUrl);
+
+	List<Task> findScenarioById(int id);
+
+	Map<Integer,List<Task>> initScenarios(int numberOfScenarios);
+
+	List<Task> addScenario(int scenarioId, List<Task> scenario);
+
+	Map<Integer, List<Task>> getAllScenarios();
+
+	void clearAllTasks();
+
 
 }
