@@ -37,7 +37,7 @@ document
         loadTasks(data);
       },
       function(error) {
-        console.log(error);
+        console.log(error); 
       }
     );
     $("#uploadModal").modal("hide");
@@ -109,7 +109,9 @@ function loadTasks(data) {
     taskDistParam2 +
     '"><input type="number" class="form-control col-md-3" name="task' +
     taskId +
-    'param3" min="0" max="any" step="0.01" value="0"></div></div>';
+    'param3" min="0" max="any" step="0.01" value="' +
+    taskDistParam3 +
+    '"></div></div>';
     
     toLoad.successors.forEach(suc => {
       if (taskSuccessors.length > 0) {
@@ -144,7 +146,8 @@ function loadTasks(data) {
   });
 }
 
-function submitPertTasks() {
+function submitPertTasks() 
+{
   event.preventDefault();
   readFormData();
 
@@ -154,40 +157,64 @@ function submitPertTasks() {
     type: "POST",
     data: JSON.stringify(taskList),
     contentType: "application/json"
-  }).then(data => {
-     displayChart(data);
+  }).then( function (data)
+   {
+    document.getElementById('FeedBack').innerHTML='Pert evaluated successfully';
+    $('#FeedBack').addClass('alert-success show');
+    displayChart(data);
+  }, function(error)
+  {
+    console.log(error);
+    var errorMessage='There are problems defining the tasks:\n';
+    var errors=error.responseJSON.message.replace('The task','\n The task');
+    $('#FeedBack').addClass('alert-danger show');
+    document.getElementById('FeedBack').innerHTML=errorMessage;
   });
 }
 
+
 function displayChart(data) {
   var myBarChart = null;
-  var durations = [];
-
-  for (var i = 0; i < totalScenarios; i++) {
-    var totalDuration = 0.0;
-    data[i].forEach(task => {
-      if (task.isCritical == true) {
-        totalDuration += task.duration;
-      }
-    });
-    durations.push(totalDuration);
-  }
-
+  var frequencies =[];
   var taskNames = [];
-  taskList.forEach(task => taskNames.push(task.name));
+  var durations =[];
+  
+  taskList.forEach(task =>{
+    taskNames.push(task.name);
+  });
+  
+  
+  for (var i = 0; i <taskList.length; i++) 
+  {
+    var criticalCount = 0.0;
+
+    console.log('task '+i);
+    for(var j=0;j< totalScenarios;j++)
+    {
+      var iterated=data[j][i];
+      if (iterated.isCritical)
+      {
+        criticalCount++;
+      }
+    }
+    var frequency=(criticalCount/totalScenarios)*100;
+    frequencies.push(frequency);
+
+  }
+  
 
   var ctx = document.getElementById("histogram");
   myBarChart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: durations,
+      labels: taskNames,
       datasets: [
         {
-          label: "Duration",
+          label: "Frequency",
           backgroundColor: "#4e73df",
           hoverBackgroundColor: "#2e59d9",
           borderColor: "#4e73df",
-          data: durations
+          data: frequencies
         }
       ]
     },
@@ -212,7 +239,7 @@ function displayChart(data) {
               drawBorder: false
             },
             ticks: {
-              maxTicksLimit: 6
+              maxTicksLimit: totalScenarios
             },
             maxBarThickness: 25
           }
@@ -221,7 +248,7 @@ function displayChart(data) {
           {
             ticks: {
               min: 0,
-              max: 20,
+              max: 100,
               maxTicksLimit: 5,
               padding: 10,
               // Include a dollar sign in the ticks
@@ -258,7 +285,7 @@ function displayChart(data) {
           label: function(tooltipItem, chart) {
             var datasetLabel =
               chart.datasets[tooltipItem.datasetIndex].label || "";
-            return datasetLabel + ": $" + number_format(tooltipItem.yLabel);
+            return datasetLabel + ": " + number_format(tooltipItem.yLabel)+"%";
           }
         }
       }
@@ -292,13 +319,13 @@ function readFormData() {
           .value.replace(" ", "_")
           .toUpperCase(),
         param1: data.get("task" + i + "param1"),
-        param2: data.get("task" + i + "param2")
+        param2: data.get("task" + i + "param2"),
+        param3: data.get("task" + i + "param3")
       },
       predecessors: [],
       successors: []
     };
     taskList.push(currentTask);
-    console.log("added " + currentTask.name);
   }
 
   for (var i = 0; i < lastId; i++) {
@@ -316,7 +343,8 @@ function readFormData() {
                 .replace(" ", "_")
                 .toUpperCase(),
               param1: taskList[i].distribution.param1,
-              param2: taskList[i].distribution.param2
+              param2: taskList[i].distribution.param2,
+              param3: taskList[i].distribution.param3,
             }
           },
           successor: {
@@ -327,7 +355,8 @@ function readFormData() {
                 suc
               ].distribution.distributionType.toUpperCase(),
               param1: taskList[suc].distribution.param1,
-              param2: taskList[suc].distribution.param2
+              param2: taskList[suc].distribution.param2,
+              param3: taskList[suc].distribution.param3
             }
           }
         };
@@ -338,6 +367,9 @@ function readFormData() {
   }
   totalScenarios = data.get("scenarios");
   console.log("the number of scenarios is set to " + totalScenarios);
+  console.log("And the list of tasks is ");
+  console.log(taskList);
+  
 }
 
 function exportToJson(objectData) {

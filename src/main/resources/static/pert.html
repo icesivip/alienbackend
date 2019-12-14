@@ -223,6 +223,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">The Total Duration of the
                         project is</div>
+                        11.3
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProjectTime"></div>
                     </div>
                     <div class="col-auto">
@@ -242,6 +243,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">The probability for the
                         duration is</div>
+                        43%
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProjectProbability"></div>
                     </div>
                     <div class="col-auto">
@@ -295,29 +297,30 @@
                 </div>
               </form>
             </div>
+          </div>
 
             <hr>
-
-            <h2 class="text-center">Problem Solution</h2>
-
+            <h1 class="h1 font-weight-bold text-center">Problem Solution</h1>
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <div class="card-body">
-                  <div class="chart-bar">
-                    <canvas id="histogram" width="400" height="device-height"></canvas>
-                  </div>
-
-                </div>
+                <h4 class="m-0 font-weight-bold text-primary">Critical Frequencies histogram</h4>
               </div>
+              <alert id="FeedBack" class="alert" role="alert"></alert>
+              <div class="card-body">
+                The frequencies histogram describes the proportion of scenarios where the task was critical over the total in the simulation
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="histogram" width="400" height="device-height"></canvas>
+                </div>
+              </div>  
             </div>
           </div>
-        </div>
-
 
 
         <!-- /.container-fluid -->
-
       </div>
+
       <!-- End of Main Content -->
 
       <!-- Footer -->
@@ -329,7 +332,7 @@
         </div>
       </footer>
       <!-- End of Footer -->
-
+      
     </div>
     <!-- End of Content Wrapper -->
 

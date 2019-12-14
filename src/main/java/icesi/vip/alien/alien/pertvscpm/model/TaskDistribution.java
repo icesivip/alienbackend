@@ -12,7 +12,7 @@ public class TaskDistribution
 	 * task duration, it can be:
 	 * <ul>
 	 * Normal <br>
-	 * Log_Normal <br>
+	 * Log_Normal <br>-
 	 * Beta <br>
 	 * Uniform
 	 * </ul>
@@ -23,7 +23,7 @@ public class TaskDistribution
 
 	private Double param2;
 
-	private double param3;
+	private Double param3;
 
 	public TaskDistribution()
 	{

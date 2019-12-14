@@ -55,14 +55,13 @@ public class TaskController
 	}
 
 	@PostMapping(value = "/pert/{scenarios}")
-	public Map<Integer, List<Task>> pert(@RequestBody List<Task> taskList, @PathVariable("scenarios") int scenarios)
+	public Map<Integer, List<Task>> pert(@RequestBody List<Task> taskList, @PathVariable("scenarios") int scenarios) throws Exception
 	{
 
 		Map<Integer, List<Task>> simulatedScenarios = service.generateScenarios(taskList, scenarios);
 
 		for (int i=0;i<scenarios;i++)
-		{
-		
+		{		
 			service.executePERTCPM(i);
 		}
 

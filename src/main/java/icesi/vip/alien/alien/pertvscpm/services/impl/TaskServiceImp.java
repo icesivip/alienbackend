@@ -12,6 +12,7 @@ import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.TriangularDistribution;
 import org.apache.commons.math3.distribution.UniformRealDistribution;
+import org.apache.commons.math3.exception.MathIllegalNumberException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,67 +237,92 @@ public class TaskServiceImp implements TaskService
 	}
 
 	@Override
-	public Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int numberOfScenarios)
+	public Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int numberOfScenarios) throws Exception
 	{
 		Map<Integer, List<Task>> scenarios = repo.initScenarios(numberOfScenarios);
 
 		AbstractRealDistribution distribution = null;
-
+		boolean error = false;
+		String errorMessage = "";
 		for (Task task : tasks)
 		{
+
 			TaskDistribution taskDist = task.getDistribution();
 
-			switch (taskDist.getDistributionType())
+			try
 			{
+				switch (taskDist.getDistributionType())
+				{
 
-			case NORMAL:
-				distribution = new NormalDistribution(taskDist.getParam1(), taskDist.getParam2());
-				break;
+				case NORMAL:
+					distribution = new NormalDistribution(taskDist.getParam1(), taskDist.getParam2());
+					break;
 
-			case BETA:
-				distribution = new BetaDistribution(taskDist.getParam1(), taskDist.getParam2());
-				break;
+				case BETA:
+					distribution = new BetaDistribution(taskDist.getParam1(), taskDist.getParam2());
+					break;
 
-			case LOG_NORMAL:
-				distribution = new LogNormalDistribution(taskDist.getParam1(), taskDist.getParam2());
-				break;
+				case LOG_NORMAL:
+					distribution = new LogNormalDistribution(taskDist.getParam1(), taskDist.getParam2());
+					break;
 
-			case UNIFORM:
-				distribution = new UniformRealDistribution(taskDist.getParam1(), taskDist.getParam2());
-				break;
+				case UNIFORM:
+					distribution = new UniformRealDistribution(taskDist.getParam1(), taskDist.getParam2());
+					break;
 
-			case TRIANGULAR:
-				distribution = new TriangularDistribution(taskDist.getParam1(), taskDist.getParam2(),
-						taskDist.getParam3());
-				break;
+				case TRIANGULAR:
+					distribution = new TriangularDistribution(taskDist.getParam1(), taskDist.getParam2(),
+							taskDist.getParam3());
+					break;
 
-			default:
-				distribution = new NormalDistribution();
-				break;
+				default:
+					distribution = new NormalDistribution();
+					break;
+				}
+
 			}
+			catch (MathIllegalNumberException e)
+			{
+				if (!error)
+					error = true;
+				
+				errorMessage += "For the task " + task.getName() + " have the following problem with the distribution: "
+						+ e.getMessage();
 
+			}
 
 			for (int i = 0; i < numberOfScenarios; i++)
 			{
-				double duration = distribution.sample();
-				
-				while (duration<0)
+				try
 				{
-					duration= distribution.sample();
+
+					double duration = distribution.sample();
+
+					while (duration < 0)
+					{
+						duration = distribution.sample();
+					}
+					List<Task> scenario = repo.findScenarioById(i);
+
+					Task taskScenario = new Task(task.getId(), task.getName(), duration);
+
+					if (scenario == null)
+					{
+						scenario = new ArrayList<Task>(tasks.size());
+						repo.addScenario(i, scenario);
+					}
+
+					scenario.add(taskScenario);
 				}
-				List<Task> scenario = repo.findScenarioById(i);
-				
-				Task taskScenario = new Task(task.getId(), task.getName(), duration);
-				
-				if (scenario == null)
+				catch (NullPointerException e)
 				{
-					scenario = new ArrayList<Task>(tasks.size());
-					repo.addScenario(i, scenario);
+					continue;
 				}
-				
-				scenario.add(taskScenario);
 			}
 		}
+
+		if (error)
+			throw new Exception(errorMessage);
 
 		for (Task task : tasks)
 		{
@@ -383,7 +409,7 @@ public class TaskServiceImp implements TaskService
 		while (taskQueue.peek() != null)
 		{
 			Task cursor = taskQueue.poll();
-			double minSuccessorDuration = getMinScenarioSuccessorLS(scenarioId,cursor.getSuccessors());
+			double minSuccessorDuration = getMinScenarioSuccessorLS(scenarioId, cursor.getSuccessors());
 			cursor.setLatestFinish(minSuccessorDuration);
 			cursor.setLatestStart(minSuccessorDuration - cursor.getDuration());
 			cursor.setSlack(cursor.getLatestFinish() - cursor.getEarliestFinish());
@@ -402,14 +428,14 @@ public class TaskServiceImp implements TaskService
 		if (minTask.getLatestFinish() != null)
 			min = minTask.getLatestFinish() - minTask.getDuration();
 		else
-			min = getMinScenarioSuccessorLS(scenarioId,minTask.getSuccessors());
+			min = getMinScenarioSuccessorLS(scenarioId, minTask.getSuccessors());
 
 		for (int i = 0; i < sucessors.size(); i++)
 		{
 			Task cursor = scenario.get(sucessors.get(i).getSuccessor().getId());
 			double minCursor = 0.0;
 			if (cursor.getLatestFinish() == null)
-				minCursor = getMinScenarioSuccessorLS(scenarioId,cursor.getSuccessors()) - cursor.getDuration();
+				minCursor = getMinScenarioSuccessorLS(scenarioId, cursor.getSuccessors()) - cursor.getDuration();
 			else
 				minCursor = cursor.getLatestFinish() - cursor.getDuration();
 			min = (minCursor < min) ? minCursor : min;
@@ -453,7 +479,7 @@ public class TaskServiceImp implements TaskService
 
 	private double getMaxScenarioPredecesorES(int scenarioId, List<Transition> predecessors)
 	{
-		List<Task> scenario =repo.findScenarioById(scenarioId);
+		List<Task> scenario = repo.findScenarioById(scenarioId);
 		Task maxTask = scenario.get(predecessors.get(0).getPredecesor().getId());
 
 		double max = maxTask.getEarliestStart() + maxTask.getDuration();

@@ -120,8 +120,9 @@ public interface TaskService
 	 * @param scenarios is the total number of scenarios that will be generated
 	 * 
 	 * @return return the set of scenarios with the randomly generated durations
+	 * @throws Exception When there is a problem generating the sample with the params for the distribution
 	 */
-	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios);
+	Map<Integer, List<Task>> generateScenarios(List<Task> tasks, int scenarios) throws Exception;
 
 	List<Task> loadPertSampleTasks(String fileUrl);
 
