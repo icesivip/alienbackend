@@ -136,70 +136,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th><div class="input-group">
-                                        <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
-                                            data-target="#upload">
-                                            Upload
-                                            <i class="fas fa-upload"></i>
-                                        </button>
-                                        <button class="btn btn-outline-primary nav-button" type="button" onclick="saveProblem()">
-                                            Save
-                                            <i class="far fa-save"></i>
-                                        </button>
-                                    </div></th>
-                                    <th><div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                            aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div></th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                    <div class="modal fade" id="upload" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form id="upload-form">
-                                <div class="modal-body">
-                                    <p>
-                                        Here you have to select a previously saved problem in .json format. Make
-                                        sure the file has not
-                                        been modified or there are going to be problems in the upload process.
-                                    </p>
-
-                                    <div class="form-group">
-                                        <label for="exampleFormControlFile1">Choose File</label>
-                                        <input type="file" class="form-control-file" id="fileUpload" accept=".json"
-                                            required>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                    <button type="input" class="btn btn-primary" onclick="importJson(fileUpload)">Upload</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">

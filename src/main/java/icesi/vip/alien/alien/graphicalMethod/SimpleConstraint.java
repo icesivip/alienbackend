@@ -1,6 +1,6 @@
 package icesi.vip.alien.alien.graphicalMethod;
 
-import model.Constraint;
+import icesi.vip.alien.modelLP.Constraint;
 
 public class SimpleConstraint {
 	private double xValue;

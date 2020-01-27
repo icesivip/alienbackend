@@ -1,9 +1,11 @@
 package icesi.vip.alien.alien;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import icesi.vip.alien.alien.branchAndBound.BranchAndBoundContainer;
+import icesi.vip.alien.alien.craftMethod.controller.CraftContainer;
+import icesi.vip.alien.alien.craftMethod.controller.CraftResponse;
 import icesi.vip.alien.alien.graphicalMethod.GraphicalMethodContainer;
 import icesi.vip.alien.alien.interiorPoint.InteriorPointContainer;
 import icesi.vip.alien.alien.neosServer.FileUtils;
@@ -21,12 +25,8 @@ import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 import icesi.vip.alien.materialRequirementPlanning.MaterialRequirementsPlanning;
+import icesi.vip.alien.modelLP.Model;
 import lombok.extern.log4j.Log4j2;
-import model.Constraint;
-import model.Model;
-import model.Solution;
-import model.Variable;
-import solver.interior_point.BarrierMethod;
 
 @RestController
 @Log4j2
@@ -44,12 +44,7 @@ public class AlienController {
 		String[] equas = equations.split("n");
 		Simplex simplex = new Simplex(opti, equas);
 		if (iteration.equals("F")) {
-			double[][] finalFinal = null;
-			double[][] sig = simplex.nextIteration();
-			while (!sig.equals(finalFinal)) {
-				finalFinal = sig;
-				sig = simplex.nextIteration();
-			}
+			simplex.solve(null);
 		} else {
 			for (int i = 0; i < Integer.parseInt(iteration); i++) {
 				simplex.nextIteration();
@@ -129,6 +124,13 @@ public class AlienController {
 
 		return new GraphicalMethodContainer(m);
 
+	}
+	
+	
+	@CrossOrigin
+	@RequestMapping(value="/craft", method=RequestMethod.POST)
+	public CraftResponse craftMethod(@RequestBody CraftContainer container) throws Exception {
+		return container.compute();
 	}
 	
 	

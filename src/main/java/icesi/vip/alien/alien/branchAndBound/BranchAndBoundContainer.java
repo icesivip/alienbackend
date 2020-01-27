@@ -1,18 +1,14 @@
 package icesi.vip.alien.alien.branchAndBound;
 
-import model.Model;
-import model.Solution;
-import solver.integer.branch_and_bound.BranchAndBound;
-import solver.integer.branch_and_bound.BranchAndBound.ModelNode;
-import solver.interior_point.BarrierMethod;
+import icesi.vip.alien.alien.branchAndBound.BranchAndBound.ModelNode;
+import icesi.vip.alien.alien.interiorPoint.BarrierMethod;
+import icesi.vip.alien.modelLP.Model;
+import icesi.vip.alien.modelLP.Solution;
 
 public class BranchAndBoundContainer {
-	
 	private Node solutionTree;
 	private Solution.ExportSolution optimalSolution;
-	
 	public BranchAndBoundContainer(Model m) {
-
 		try {
 			BarrierMethod bm=new BarrierMethod();
 			
@@ -23,16 +19,10 @@ public class BranchAndBoundContainer {
 			System.out.println(st.left);
 			System.out.println(st.right);
 			solutionTree=new Node(st);
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
-		
 	}
-
 	public Node getSolutionTree() {
 		return solutionTree;
 	}
@@ -40,10 +30,4 @@ public class BranchAndBoundContainer {
 	public Solution.ExportSolution getOptimalSolution() {
 		return optimalSolution;
 	}
-	
-	
-	
-	
-	
-
 }

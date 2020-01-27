@@ -62,14 +62,34 @@
 			<version>1.16.16</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.16</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+    		<groupId>gov.nist.math</groupId>
+    		<artifactId>jama</artifactId>
+    		<version>1.0.3</version>
+		</dependency>
+		
+<!-- 
 		<dependency>
 			<groupId>LPMODEL</groupId>
 			<artifactId>LPMODEL</artifactId>
 			<version>0.0.6</version>
 		</dependency>
-	</dependencies>
+ -->	
 
+ 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+		 <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.2</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

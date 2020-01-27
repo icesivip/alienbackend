@@ -1,11 +1,10 @@
 package icesi.vip.alien.alien.interiorPoint;
 
 import java.util.ArrayList;
+
+import icesi.vip.alien.alien.graphicalMethod.GraphicalMethod;
 import icesi.vip.alien.alien.graphicalMethod.SimpleConstraint;
-import model.*;
-import model.Solution;
-import solver.graphical_method.GraphicalMethod;
-import solver.interior_point.BarrierMethod;
+import icesi.vip.alien.modelLP.*;
 
 public class InteriorPointContainer {
 
