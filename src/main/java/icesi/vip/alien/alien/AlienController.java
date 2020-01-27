@@ -341,9 +341,9 @@ public class AlienController {
 			}
 		}
 
-		System.out.println(paramProgramDelivery);
-		System.out.println(paramRqB);
-		System.out.println(paramRqBDates);
+//		System.out.println(paramProgramDelivery);
+//		System.out.println(paramRqB);
+//		System.out.println(paramRqBDates);
 
 		String[] programDelivery = paramProgramDelivery.split("-");
 		String[] reqBrutos = paramRqB.split(";");
@@ -402,7 +402,7 @@ public class AlienController {
 		}
 
 		for (int i = 0; i < fatherId.length; i++) {
-			System.out.println(maestro.get(i));
+//			System.out.println(maestro.get(i));
 			int amount_1 = !amount[i].equals("") ? Integer.parseInt(amount[i]) : 0;
 			mrp.addProduct(id[i], name[i], fatherId[i], amount_1, lotSizingRule[i], Integer.parseInt(leadTime[i]), Integer.parseInt(initialInv[i]), 
 					Integer.parseInt(securiInv[i]), Double.parseDouble(articleCost[i]), Double.parseDouble(orderingCost[i]), Double.parseDouble(maintenanceCost[i]), 

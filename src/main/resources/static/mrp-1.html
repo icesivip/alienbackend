@@ -5,10 +5,9 @@
 <head>
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<meta name='viewport'
-	content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+
 <meta name='description' content=''>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
@@ -16,6 +15,8 @@
 	href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans"
 	rel="stylesheet">
 <script type="text/javascript" src="dist/vis.js"></script>
+
+
 <link rel="stylesheet" href="estilos.css">
 <link href="dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 
@@ -31,12 +32,31 @@
 <!-- Custom styles for this template-->
 <link href='css/sb-admin-2.min.css' rel='stylesheet'>
 
+<link href='https://visjs.github.io/vis-network/dist/vis-network.min.css' rel='stylesheet'
+	type='text/css'>
+<script
+	src='https://visjs.github.io/vis-network/dist/vis-network.min.js'></script>
+
 <script
 	src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
 <script
 	src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+
+	<style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+
+    </style>
 
 </head>
 <body id='page-top'>
@@ -228,12 +248,11 @@
 										<td style='width: 9%; height: 100%;'><input
 											class='form-control border-0'
 											style='width: 100%' id='iCostOrdering'></td>
-										<td style='width: %; height: 100%;'>	
+										<td style='width: 9%; height: 100%;'>	
 											<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>
 												<option name="Lot for Lot">Lot for Lot</option>
 												<option name="Economic Order Quantity">Economic Order Quantity</option>
 												<option  name="Periods Of Suply">Periods Of Suply</option>
-												<option name="Period Order Quantity">Period Order Quantity</option>
 												<option name="Least Unit Cost">Least Unit Cost</option>
 												<option name="Least Total Cost">Least Total Cost</option>
 											</select>
@@ -252,55 +271,28 @@
 								<option name="Daily">Daily</option>
 							</select>
 						</div>
-						<div class='text-white' class='form-control form-control-user'>
-							<div class='form-group row'>
-								<div class='col-sm-6'>
-									<a onclick='addConstraint()'
-										class='btn btn-success btn-user btn-block'> <i
-										class='fab fa-fw'></i> ADD PRODUCT
-									</a>
-								</div>
-								<div class='col-sm-6'>
-									<a onclick='removeConstraint()'
-										class='btn btn-danger btn-user btn-block'> <i
-										class='fab fa-fw'></i> REMOVE PRODUCT
-									</a>
-								</div>
-							</div>
-							<hr>
-							<input type='submit' class='btn btn-primary btn-user btn-block'
-								value='CREATE MRP'>
-								<hr>
-							<div class="contenedora">
-								<article>
-									<button id="btn-abrir-popup"
-										class="btn btn-success btn-user btn-block"
-										onclick='pintarArbol()'>SHOW PRODUCT TREE</button>
-								</article>
-								<hr>
-								<div class='overlay' id="overlay">
-									<div class="popup" id="popup">
-										<a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i
-											class="fas fa-times"></i></a>
-										<div id="mynetwork" class="mynetwork"></div>
-
-									</div>
-								</div>
-
-							</div>
-
+						<br>
+						<div class="input-group-append mb-2 flex-nowrap justify-content-center">
+							<input class="col-sm-5 btn btn-outline-primary expand " id="addConstraint" type="button" name="addConstraint" value="Add product"><div class="col-sm-1"> </div>
+							<input class="col-sm-5 btn btn-outline-danger expand" id="removeConstraint" type="button" name="removeConstraint" value="Remove product">
 						</div>
+						<div class="input-group-append mb-2 flex-nowrap justify-content-center">
+							<input class="col-sm-11 btn btn-outline-success expand" id="createMrp" type="submit" name="createMrp" value="Create MRP">
+						</div>
+						<div class="input-group-append mb-2 flex-nowrap justify-content-center">
+							<input class="col-sm-11 btn btn-outline-primary expand" id="paintTree" type="button" name="paintTree" value="Show product tree">
+						</div>
+						<div id="viewTree"></div>
 				</div>
 				<div>
-
 					<table id='tableInformation'
 						class='table-responsive table text-dark'>
 						<thead>
 							<tr class='bg-primary'>
-								<th colspan='12' scope='col' class='text-center'
+								<th colspan='12' scope='col' id='MRPtableHeader' class='text-center'
 									style='color: #FFF'>MRP</th>
 							</tr>
-							<tr class='bg-primary' id='headerPeriods'>
+							<tr class='bg-primary headerPeriodsProduct' id='headerPeriods'>
 								<th scope='col' class='contenedor' style='color: #FFF'
 									id='periodsHeader'></th>
 								<th scope='col' style='color: #FFF' class='text-center'>1</th>
@@ -313,6 +305,36 @@
 								<th scope='col' style='color: #FFF' class='text-center'>8</th>
 								<th scope='col' style='color: #FFF' class='text-center'>9</th>
 								<th scope='col' style='color: #FFF' class='text-center'>10</th>
+								<th id="colMaker" class="text-center nav-item dropdown no-arrow"
+                                            style="width: 8%; height: 100%;" scope="col">
+                                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="text-center">...</span>
+                                            </a>
+                                            <!-- Dropdown - Resize Information -->
+                                            
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                                <h6 class="dropdown-header">
+                                                    Number of periods:
+                                                </h6>
+                                                <input class="form-control border-0 dropdown-item" id="newSizePeriods"
+                                                    min="4" type="number" placeholder="# Periods">
+                                                <div class="dropdown-divider"></div>
+                                                
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriods" type="button" name="resizePeriods" value="Resize"
+                                                    onclick="resize(this)">
+
+                                                <!--<input class="form-control border-0 btn btn-outline-info"
+                                                    id="resizePeriodsByOne" type="button" name="resizePeriodsByOne" value="Add only one"
+                                                    onclick="addColumn(this)">
+                                                <input class="form-control border-0 btn btn-outline-info"
+                                                    id="removePeriodsByOne" type="button" name="removePeriodsByOne" value="Remove only one"
+                                                    onclick="removeColumn(this)">-->
+                                           
+                                            </div>
+                                        </th>
 								<!-- <th><a class="nav-link dropdown-toggle" href="#"
 									id="userDropdown" role="button" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false"> <span
@@ -333,168 +355,208 @@
 						</thead>
 						<tbody class='bodyInformation'>
 							<tr class='iGrossRequeriments' id='grossAdd'>
-								<td class='iGross'><class ='bg-primary' scope='row'
-										style='color:#000'>Gross Requeriments
+								<td class='iGross bg-primary' scope='row'
+										style='color:#FFF'>Gross Requeriments
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id='g0'></td></td>
 							</tr>
 							<tr class='iSchedule' id='scheduleAdd'>
-								<td class='iSched'><class ='bg-primary' scope='row'
-										style='color:#000'>Scheduled Receptions
+								<td class='iSched bg-primary' scope='row'
+										style='color:#FFF'>Scheduled Receptions
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td>
 									<td style='width: 9%; height: 100%;'><input
-										class='form-control border-0' type='number' min='0'
+										class='border-0' type='number' min='0'
 										style='width: 100%' id="j0"></td></td>
 							</tr>
 							<tr class='AvailableInv' id= 'availableInvAdd'>
-								<td class='iAvaila'><class ='bg-primary' style='color:#000'>Available
+								<td class='iAvaila bg-primary' style='color:#FFF'>Available
 									Inventory Programmed
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td>
-									<td style='width: 9%; height: 100%;'><type
-											='number' min='0' style='width: 100%' id="b0"></td></td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td>
+									<td style='width: 9%; height: 100%;'>
+										<type='number' min='0' style='width: 100%' id='b0'>
+									</td></td>
 							</tr>
-							<tr class='netRequirements'>
-								<td class='iNetR'><class ='bg-primary' scope='row'
-										style='color:#000'> Net requirements
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="n0"></td></td>
+							<tr class='netRequirements' id='netReqAdd'>
+								<td class='iNetR bg-primary' scope='row'
+										style='color:#FFF'> Net requirements
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='n0'>
+										</td></td>
 							</tr>
-							<tr class='receptionsPlanned'>
-								<td class='iReception'><class ='bg-primary' scope='row'
-										style='color:#000'>Receptions of planned orders
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="r0"></td></td>
+							<tr class='receptionsPlanned' id='recepPOAdd'>
+								<td class='iReception bg-primary' scope='row'
+										style='color:#FFF'>Receptions of planned orders
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='r0'>
+										</td></td>
 							</tr>
-							<tr class='ReleasePlanned'>
-								<td class='iRelease'><class ='bg-primary' scope='row'
-										style='color:#000'>Release of planned orders
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td>
-									<td style='width: 9%; height: 100%;'><type ='text' min='0'
-											style='width: 100%' id="p0"></td></td>
+							<tr class='ReleasePlanned' id='relPOAdd'>
+								<td class='iRelease bg-primary' scope='row'
+										style='color:#FFF'>Release of planned orders
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td>
+										<td style='width: 9%; height: 100%;'>
+											<type='number' min='0' style='width: 100%' id='p0'>
+										</td></td>
 							</tr>
 						</tbody>
 					</table>
@@ -567,36 +629,69 @@
 
 
 	<script>
-	var globaladd = 1;
+		var globaladd = 1;
+
+		$(document).ready(function() {
+			$('[name="addConstraint"]').click(addConstraint);
+			$('[name="removeConstraint"]').click(removeConstraint);
+			$('[name="paintTree"]').click(paintTree);
+		});
+
         document.getElementById('user').addEventListener('submit', function (e) {
             e.preventDefault();
             solveModel();
         });
-	
+
 		function addConstraint() {
-            console.log('Added contraint');
+			console.log(products);
+			var resizeCommand = document.getElementById("colMaker");
+			var pHeader = document.getElementById("headerPeriods");
+			resizeCommand.parentNode.removeChild(resizeCommand);
+
+			var amountPeriods = pHeader.lastElementChild.textContent;
+
 		   $('#tableData').append("<tr class='inputss'><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCodi'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iNomb'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iInve'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iSecu'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='text' min='0' style='width: 100%' id= 'iElem'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iCant'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id= 'iLead'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostArticle'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iMaintenance'><td style='width: 9%; height: 100%;'><input class='form-control border-0' style='width: 100%' id= 'iCostOrdering'></td><td style='width: 100%; height: 100%;'>"
 			+ "<select class='form-control border-0' type='number' min='0' style='width: 100%' id='iLotSizingRule'>"
 			+ "<option name='Lot for Lot'>Lot for Lot</option>"
 			+ "<option name='Economic Order Quantity'>Economic Order Quantity</option>"
 			+ "<option name='Periods Of Suply'>Periods Of Suply</option>"
-			+ "<option name='Period Order Quantity'>Period Order Quantity</option>"
 			+ "<option name='Least Unit Cost'>Least Unit Cost</option>"
 			+ "<option name='Least Total Cost'>Least Total Cost</option></select></td></tr>");
 
-			$('#tableInformation').append("<tr class='bg-primary'><th scope='col' style = 'color:#FFF' class = 'contenedor' id = 'Producto" + globaladd + "'></th><th scope='col' style = 'color:#FFF' class = 'text-center'>1</th><th scope='col' style = 'color:#FFF' class = 'text-center'>2</th><th scope='col' style = 'color:#FFF' class = 'text-center'>3</th><th scope='col' style = 'color:#FFF' class = 'text-center'>4</th><th scope='col' style = 'color:#FFF' class = 'text-center'>5</th><th scope='col' style = 'color:#FFF' class = 'text-center'>6</th><th scope='col' style = 'color:#FFF' class = 'text-center'>7</th><th scope='col' style = 'color:#FFF' class = 'text-center'>8</th><th scope='col' style = 'color:#FFF' class = 'text-center'>9</th><th scope='col' style = 'color:#FFF' class = 'text-center'>10</th></tr>");
+			$('#tableInformation').append("<tr class='bg-primary headerPeriodsProduct'  id = 'Producto" + globaladd + "'><th scope='col' style = 'color:#FFF' class = 'contenedor'></th></tr>");
+			$('#tableInformation').append("<tr class = 'iGrossRequeriments' id = 'Producto" + globaladd + "GR'>"
+									+ "<td class = 'iGross bg-primary' scope='row' style = 'color:#FFF'>Gross Requeriments</td></tr>");
+			$('#tableInformation').append("<tr class = 'iSchedule' id = 'Producto" + globaladd + "SR'>"
+									+ "<td class = 'iSched bg-primary' scope='row' style = 'color:#FFF'>Scheduled Receptions</td></tr>");
+			$('#tableInformation').append("<tr class = 'AvailableInv' id = 'Producto" + globaladd + "AIP'>"
+									+ "<td class = 'iAvaila bg-primary' scope='row' style = 'color:#FFF'>Available Inventory Programmed</td></tr>");
+			$('#tableInformation').append("<tr class = 'netRequirements' id = 'Producto" + globaladd + "NR'>"
+									+ "<td class = 'iNetR bg-primary' scope='row' style = 'color:#FFF'>Net requirements</td></tr>");
+			$('#tableInformation').append("<tr class = 'receptionsPlanned' id = 'Producto" + globaladd + "RecPO'>"
+									+ "<td class = 'iReception bg-primary' scope='row' style = 'color:#FFF'>Receptions of planned orders</td></tr>");
+			$('#tableInformation').append("<tr class = 'ReleasePlanned' id = 'Producto" + globaladd + "RelPO'>"
+									+ "<td class = 'iRelease bg-primary' scope='row' style = 'color:#FFF'>Release of planned orders</td></tr>");
+
 			
-			$('#tableInformation').append("<tr class = 'iGrossRequeriments'><td class = 'iGross'><class='bg-primary' scope='row' style = 'color:#000'>Gross Requeriments<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'g" + globaladd +"'></td></td></tr><tr class = 'iSchedule'><td class = 'iSched'><class='bg-primary' scope='row' style = 'color:#000'>Scheduled Receptions<td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td><td style='width: 9%; height: 100%;'><input class='form-control border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td></td></tr><tr class = 'AvailableInv'><td class = 'iAvaila'><class='bg-primary' scope='row' style = 'color:#000'>Available Inventory Programmed<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%'  id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'b" + globaladd +"'></td></td></tr><tr class = 'netRequirements'><td class = 'iNetR'><class='bg-primary' scope='row' style = 'color:#000'>Net requirements <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'n" + globaladd +"'></td></td></tr><tr class = 'receptionsPlanned'><td class = 'iReception'><class='bg-primary' scope='row' style = 'color:#000'>Receptions of planned orders<td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'r" + globaladd +"'></td></td></tr><tr class= 'ReleasePlanned'><td class = 'iRelease'><class='bg-primary' scope='row' style = 'color:#000'>Release of planned orders <td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td><td style='width: 9%; height: 100%;'><type='number' min='0' style='width: 100%' id = 'p" + globaladd +"'></td></td></tr>");
+			for(var i = 1; i <= amountPeriods; i++){
+				$('#Producto'+globaladd).append("<th scope='col' style = 'color:#FFF' class = 'text-center'>" + i + "</th>");
+				$('#Producto'+globaladd+'GR').append("<td style='width: 9%, height: 100%'><type='number' min='0' style='width: 9%' id = 'g" + globaladd +"'></td>");
+				$('#Producto'+globaladd+'SR').append("<td style='width: 9%'><input class='border-0' type='number' min='0' style='width: 100%' id = 'j" + globaladd + "'></td>");
+				$('#Producto'+globaladd+'AIP').append("<td style='width: 9%, height: 100%'><type ='number' min='0' style='width: 9%' id = 'b" + globaladd +"'></td>");
+				$('#Producto'+globaladd+'NR').append("<td style='width: 9%, height: 100%'><type ='number' min='0' style='width: 9%' id = 'n" + globaladd +"'></td>");
+				$('#Producto'+globaladd+'RecPO').append("<td style='width: 9%, height: 100%'><type ='number' min='0' style='width: 9%' id = 'r" + globaladd +"'></td>");
+				$('#Producto'+globaladd+'RelPO').append("<td style='width: 9%, height: 100%'><type ='number' min='0' style='width: 9%' id = 'p" + globaladd +"'></td>");
+			}
+			pHeader.appendChild(resizeCommand)
+
 			globaladd++;
         }
 
         function removeConstraint() {
             var n = $('.inputss').length;
-            console.log(n);
             if (n > 1) {
-                console.log('Removed contraint');
                 $('.inputss').last().remove();
-                $('.contenedor').last().remove();
+                $('.headerPeriodsProduct').last().remove();
                 $('.bg-primary').last().remove();
                 $('.iGrossRequeriments').last().remove();
                 $('.iSchedule').last().remove();
@@ -604,20 +699,19 @@
                 $('.netRequirements').last().remove();
                 $('.receptionsPlanned').last().remove();
                 $('.ReleasePlanned').last().remove();
-            }
+				globaladd--;
+			}
         }
 		
         function getScheduledReceptions(){
             var tableDat = document.getElementById('tableData').childNodes[document.getElementById('tableData').childElementCount+1];
             var cellsOfRow = '';
             var dataOfTable = [];
-            console.log('llega');
             cellsOfRow = tableDat.getElementsByTagName('tr');
             cells = cellsOfRow[1].getElementsByTagName('td');
             for(var j = 0; j < cells.length; j++){
                 dataOfTable.push(cells[j].childNodes[0].value);
             }
-            console.log(dataOfTable);
         }
 		
         function constructRequestString() {
@@ -634,7 +728,7 @@
 			orderingCost = "";
 			lotSizingRule = "";
 			periodicity = $('#periodicity').val();
-			date = "10";
+			date = document.getElementById("resizePeriods").parentNode.parentNode.parentNode.childElementCount - 2;
 			
 			$(".inputss").each(function(index){
 				id += $(this).find("#iCodi").val()+";";
@@ -708,98 +802,24 @@
 			+ '&lotSizingRule=' + lotSizingRule + '&programDelivery=' + scheduledReceptions + "&rqB=" + rqb + '&rqBDates=' + rqbDate
 			+ '&periodicity=' + periodicity;
         }
-        
-		function pintarArbol() {
-        	
-			var nodes;
-        	
-			nodes = new vis.DataSet([]);
-        	
-        	for (var i = 0; i < productos.length; i++) {
-        			nodes.add([
-        			{id: i, label: productos[i].name + "  (" + productos[i].amount + ")"}
-					]);
-        	}	
-			//		{id: i, label: productos[i].name + "  (" + productos[i].amount + ")", title: "Name: " + productos[i].name + "<br>ID: " + productos[i].id + "<br>Amount: " + productos[i].amount}
-				//	]);
-        	//}
-		
-        	var edges;
-        	
-        	edges = new vis.DataSet ([]);
-        	
-        	for (var i = 0; i < productos.length; i++) {
-        		
-        		var nombrePadre = productos[i].name;
-        		
-        		for (var k = i+1; k < productos.length; k++) {
-        			        			
-        			var nombreHijo = productos[k].fatherName;
-        			
-        			if (nombrePadre === nombreHijo) {
-        				
-        				edges.add([
-        					{from: i, to: k}
-        				]);
-        			}
-        		}
-        	}
-        	
-        	var container = document.getElementById('mynetwork');
-        	var data = {
-        	    nodes: nodes,
-        	    edges: edges
-        	};
-        	
-        	var options = {
-        			layout: {
-        	            hierarchical: {
-        	                direction: "UD",
-        	                sortMethod: "directed"
-        	            }
-        	        }
-        	};
-        	
-        	var network = new vis.Network(container, data, options);     	
-        	
-        }
-		
-	 	/* function resize() {
-			
-			var pHeader = document.getElementById("periodsHeader");
-			var aux = 10;
-			
-			for (var i = 0; i < 20; i++) {
-				$("#headerPeriods").append("<th class='text-center' scope='col' style= 'color: #FFF'>" + (aux + i + 1) + "</th>");
-				$("#grossAdd").append("<td style='width: 9%; height: 100%;'><input id='g0' class='form-control border-0' type='number' min='0' style='width: 100%''></td>");
-				
-			}
-			
-		} */
-		
-        var productos;
+
+        var products;
         
         function solveModel(){
             $('.cover').toggle(400);
 			var a = $('.iAvaila').parent("tr").find("td").find("#b0").length;
             var request = constructRequestString();
             $.ajax({
-                        //url: 'http://localhost:8080/pruebaMRP' + request
-                        url: "https://icesiviptest.herokuapp.com/pruebaMRP" + request
+                        //url: 'https://icesiviptest.herokuapp.com/pruebaMRP' + request
+                        url: "http://localhost:8080/pruebaMRP" + request
                     }).then(function (data) {
                      $('.cover').toggle(400);
-                        console.log('Funciona');
-                        console.log(data);
 						
 						products = data.roots;
-
-						console.log(products);
 
 						var tableIndex = 0;
 
 						for(var i = 0; i < products.length; i++){
-
-							console.log(products[i]);
 
 							$('.iGross').parent("tr").find("td").find("#g"+tableIndex).each(function(indexa) {
 								$(this).text(products[i].mps.bruteRequirements[indexa]);
@@ -844,13 +864,126 @@
 							}
 
 						}
-					
+					console.log(products);
                     }, function (error) {
                         alert(error)
                         $('.cover').toggle(400);
                         console.log(error);
                         console.log('no funciona');
                     })
+        }
+
+		var nodesProducts;
+		var edgesProducts;
+		var nodesNames;
+
+		function run(){
+			nodesProducts = [];
+			edgesProducts = [];
+			nodesNames = [];
+			var i = 0;
+			nodesNames.push(products[0].name);
+			nodesProducts.push({id: i, label: products[0].name + ' (' + products[0].amount[0] + ')', font: {size:12, strokeWidth: 1, strokeColor: 'silver'}});
+			i++;
+			run2(products[0], i);
+		}
+
+		function run2(product, i){
+			product.subProducts.forEach(element => {
+				nodesNames.push(element.name);
+				nodesProducts.push({id: i, label: element.name + ' (' + element.amount[0] + ')', font: {size:12, strokeWidth: 1, strokeColor: 'silver'}});
+				edgesProducts.push({from: nodesNames.indexOf(product.name), to:i, width: 2, length: 400});
+				i++;
+				run2(element);
+			});
+		}
+
+		function paintTree(){
+			run();
+			//console.log(arbor);
+			var container = document.getElementById("viewTree");
+			var dataTree = {
+				nodes: nodesProducts,
+				edges: edgesProducts
+			};
+			var options = {
+				nodes: {
+					size: 20
+				}
+			};
+			var paintTree = new vis.Network(container, dataTree, options);
+		}
+
+		function resize(e) {
+			var amountPeriods = e.parentNode.parentNode.parentNode.childElementCount - 2;
+			console.log(amountPeriods);
+			if($('#newSizePeriods').val() > amountPeriods){
+				var newSize = $('#newSizePeriods').val();
+				$('#MRPtableHeader')[0].colSpan = parseInt(newSize, 10) + 2;
+				var resizeCommand = document.getElementById("colMaker");
+				var pHeader = document.getElementById("headerPeriods");
+				resizeCommand.parentNode.removeChild(resizeCommand);
+				for(var i = amountPeriods+1; i <= newSize; i++){
+					$("#headerPeriods").append("<th scope='col' style='color: #FFF' class='text-center'>" + i + "</th>");
+					$("#grossAdd").append("<td style='width: 9%; height: 100%;'><input "
+										+ "class='border-0' type='number' min='0'"
+										+ "style='width: 100%' id='g0'></td></td>");
+					$("#scheduleAdd").append("<td style='width: 9%; height: 100%;'><input "
+										+ "class='border-0' type='number' min='0'"
+										+ "style='width: 100%' id='j0'></td></td>");
+					$("#availableInvAdd").append("<td style='width: 9%; height: 100%;'><type"
+											+ "='number' min='0' style='width: 100%' id='b0'></td></td>");
+					$("#netReqAdd").append("<td style='width: 9%; height: 100%;'><type ='text' min='0'"
+											+ "style='width: 100%' id='n0'></td></td>");
+					$("#recepPOAdd").append("<td style='width: 9%; height: 100%;'><type ='text' min='0'"
+											+ "style='width: 100%' id='r0'></td></td>");
+					$("#relPOAdd").append("<td style='width: 9%; height: 100%;'><type ='text' min='0'"
+											+ "style='width: 100%' id='p0'></td></td>");
+					for(var k = 1; k < globaladd; k++){
+						$("#Producto" + k).append("<th scope='col' style='color: #FFF' class='text-center'>" + i + "</th>");
+						$("#Producto"+ k + "GR").append("<td style='width: 9%; height: 100%;'><type ='number' min='0' "
+										+ "style='width: 100%' id='g" + k + "'></td></td>");
+						$("#Producto"+ k + "SR").append("<td style='width: 9%; height: 100%;'><input "
+										+ "class='border-0' type='number' min='0'"
+										+ "style='width: 100%' id='j" + k + "'></td></td>");
+						$("#Producto"+ k + "AIP").append("<td style='width: 9%; height: 100%;'><type ='number' min='0' "
+										+ "style='width: 100%' id='b" + k + "'></td></td>");
+						$("#Producto"+ k + "NR").append("<td style='width: 9%; height: 100%;'><type ='number' min='0' "
+										+ "style='width: 100%' id='n" + k + "'></td></td>");
+						$("#Producto"+ k + "RecPO").append("<td style='width: 9%; height: 100%;'><type ='number' min='0' "
+										+ "style='width: 100%' id='r" + k + "'></td></td>");
+						$("#Producto"+ k + "RelPO").append("<td style='width: 9%; height: 100%;'><type ='number' min='0' "
+										+ "style='width: 100%' id='p" + k + "'></td></td>");
+					}
+				}
+				pHeader.appendChild(resizeCommand);
+			}else if($('#newSizePeriods').val() < amountPeriods){
+				var newSize = $('#newSizePeriods').val();
+				$('#MRPtableHeader')[0].colSpan = parseInt(newSize, 10) + 2;
+				var resizeCommand = document.getElementById("colMaker");
+				var pHeader = document.getElementById("headerPeriods");
+				resizeCommand.parentNode.removeChild(resizeCommand);
+				for(var i = amountPeriods; i > newSize; i--){
+					document.getElementById("headerPeriods").removeChild(document.getElementById("headerPeriods").lastElementChild);
+					document.getElementById("grossAdd").removeChild(document.getElementById("grossAdd").lastElementChild);
+					document.getElementById("scheduleAdd").removeChild(document.getElementById("scheduleAdd").lastElementChild);
+					document.getElementById("availableInvAdd").removeChild(document.getElementById("availableInvAdd").lastElementChild);
+					document.getElementById("netReqAdd").removeChild(document.getElementById("netReqAdd").lastElementChild);
+					document.getElementById("recepPOAdd").removeChild(document.getElementById("recepPOAdd").lastElementChild);
+					document.getElementById("relPOAdd").removeChild(document.getElementById("relPOAdd").lastElementChild);
+					for(var k = 1; k < globaladd; k++){
+						document.getElementById("Producto" + k).removeChild(document.getElementById("Producto" + k).lastElementChild);
+						document.getElementById("Producto"+ k + "GR").removeChild(document.getElementById("Producto"+ k + "GR").lastElementChild);
+						document.getElementById("Producto"+ k + "SR").removeChild(document.getElementById("Producto"+ k + "SR").lastElementChild);
+						document.getElementById("Producto"+ k + "AIP").removeChild(document.getElementById("Producto"+ k + "AIP").lastElementChild);
+						document.getElementById("Producto"+ k + "NR").removeChild(document.getElementById("Producto"+ k + "NR").lastElementChild);
+						document.getElementById("Producto"+ k + "RecPO").removeChild(document.getElementById("Producto"+ k + "RecPO").lastElementChild);
+						document.getElementById("Producto"+ k + "RelPO").removeChild(document.getElementById("Producto"+ k + "RelPO").lastElementChild);
+					}
+				}
+				pHeader.appendChild(resizeCommand);
+			}
+			
         }
         
     </script>

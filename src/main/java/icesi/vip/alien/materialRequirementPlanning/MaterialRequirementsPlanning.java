@@ -32,11 +32,9 @@ public class MaterialRequirementsPlanning {
 			roots.put(id, product);
 		}else {
 			Product father = search(fatherId);
-			System.out.println(father);
 			Product product = new Product(id, name, father, amount, lotSizingMethod, leadTime, initialStock, securityStock, costArticle, 
 					preparationCost, maintenanceCost, periodicity, TPeriodOFSupply, scheduledReceptions);
 			father.insertProduct(product);
-			System.out.println(father.getSubProducts().size());
 			
 		}
 		
