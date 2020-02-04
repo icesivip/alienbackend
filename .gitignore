@@ -24,9 +24,8 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+
 /bin/
 /.metadata/
 
 ~$STRUCTIVO CONSTRUCCION RESTFUL API CON SPRING.docx
-
-src/main/resources/static/mps.html

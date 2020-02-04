@@ -2,8 +2,11 @@ package icesi.vip.alien.materialRequirementPlanning;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Queue;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import icesi.vip.alien.masterPlan.MasterPlanSchedule;
 
 /**
  * Entity that represents a product
@@ -12,34 +15,27 @@ import java.util.Queue;
  */
 
 public class Product {
-
-	// Constantes
-	public static String TIME_IN_WEEKS = "Weeks";
-	public static String TIME_IN_DAYS = "Days";
-	public static String TIME_IN_HOURS = "Hours";
-	public static String TIME_IN_MONTHS = "Months";
-	public static String TIME_IN_YEARS = "Years";
 	
 	// Atributos
 	/**
 	 * Product's name
 	 */
 	private String name;
-	
-	/**
-	 * Time to make a product
-	 */
-	private int leadTime;
+//	
+//	/**
+//	 * Time to make a product
+//	 */
+//	private int leadTime;
 	
 	/**
 	 * Amount of products necessary to build one
 	 */
-	private int amount;
-
-	/**
-	 * Unit in which the production time is manage
-	 */
-	private String timeUnit;
+	private ArrayList<Integer> amounts;
+//
+//	/**
+//	 * Unit in which the production time is manage
+//	 */
+//	private String timeUnit;
 
 	/**
 	 * Subproducts of this product 
@@ -49,34 +45,120 @@ public class Product {
 	/**
 	 * 
 	 */
-	private Product father;
-	
-	private String fatherName;
+	@JsonIgnore
+	private ArrayList<Product> fathers;
 	
 	/**
 	 * 
 	 */
 	private String id;
 	
-	/**
-	 * 
-	 */
-	private int securityInv;
+	private MasterPlanSchedule mps;
 	
-	/**
-	 * 
-	 */
-	private int initialInv;
+	public Product (String id, String name, ArrayList<Product> fathers, ArrayList<Integer> amounts, String lotSizingMethod, int leadTime, int initialStock, int securityStock, 
+			double costArticle, double preparationCost, double maintenanceCost, String periodicity, int TPeriodOFSupply, ArrayList<Integer> scheduledReceptions) {
+		
+		this.name = name;
+		this.id = id;
+		this.amounts = amounts;
+		this.fathers = fathers;
+		this.mps = new MasterPlanSchedule(lotSizingMethod, leadTime, initialStock, securityStock, id, name,
+				costArticle, preparationCost, maintenanceCost, periodicity, TPeriodOFSupply);
+		this.mps.setBruteRequirements(calculateBruteRequirements());
+		this.mps.setScheduledReceptions(scheduledReceptions);
+		this.mps.createMPS();
+		subProducts = new ArrayList<Product>();
+		
+	}
 	
-	/**
-	 * 
-	 */
-	private ArrayList<Integer> buyingOrder;
+	public Product (String id, String name, Product father, int amount, String lotSizingMethod, int leadTime, int initialStock, int securityStock, 
+			double costArticle, double preparationCost, double maintenanceCost, String periodicity, int TPeriodOFSupply, ArrayList<Integer> scheduledReceptions) {
+		
+		this.name = name;
+		this.id = id;
+		this.amounts = new ArrayList<Integer>();
+		this.fathers = new ArrayList<Product>();
+		addFatherWithAmount(father, amount);
+		this.mps = new MasterPlanSchedule(lotSizingMethod, leadTime, initialStock, securityStock, id, name,
+				costArticle, preparationCost, maintenanceCost, periodicity, TPeriodOFSupply);
+		this.mps.setBruteRequirements(calculateBruteRequirements());
+		this.mps.setScheduledReceptions(scheduledReceptions);
+		this.mps.createMPS();
+		subProducts = new ArrayList<Product>();
+		
+	}
 	
-	/**
-	 * 
-	 */
-	private Hashtable<String, Integer> programDelivery;
+	public Product (String id, String name, String lotSizingMethod, int leadTime, int initialStock, int securityStock, 
+			double costArticle, double preparationCost, double maintenanceCost, String periodicity, int TPeriodOFSupply, 
+			ArrayList<Integer> bruteRequirements, ArrayList<Integer> scheduledReceptions) {
+		
+		this.name = name;
+		this.id = id;
+		this.amounts = new ArrayList<Integer>();
+		this.amounts.add(1);
+		this.mps = new MasterPlanSchedule(lotSizingMethod, leadTime, initialStock, securityStock, id, name,
+				costArticle, preparationCost, maintenanceCost, periodicity, TPeriodOFSupply);
+		this.mps.setBruteRequirements(bruteRequirements);
+		this.mps.setScheduledReceptions(scheduledReceptions);
+		this.mps.createMPS();
+		subProducts = new ArrayList<Product>();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<Integer> calculateBruteRequirements(){
+		ArrayList<Integer> bruteRequirements = null;
+		for(int k = 0; k < fathers.size(); k++) {
+			bruteRequirements = (ArrayList<Integer>) fathers.get(k).mps.getReleasedPlanOrders().clone();
+			for(int i = 0; i < bruteRequirements.size(); i++) {
+				bruteRequirements.set(i, bruteRequirements.get(i)*amounts.get(k));
+			}			
+		}
+		return bruteRequirements;
+	}
+	
+	public void addFatherWithAmount(Product father, int amount) {
+		this.fathers.add(father);
+		this.amounts.add(amount);
+	}
+	
+//	/**
+//	 * Creates a product
+//	 * @param name Is the name's product
+//	 * @param productionTime It's the time it takes to produce this product
+//	 * @param amount It's the amount of this product that is needed to create the parent product
+//	 * @param timeUnit It's the time's unit in which the product is produced
+//	 */
+//	public Product(Product father, String id, String name, int leadTime, int amount) {
+//		
+//		this.name = name;
+//		this.id = id;
+//		this.leadTime = leadTime;
+//		this.amount = amount;
+//		this.father = father;
+//		
+//		subProducts = new ArrayList<>();
+//		
+//	}
+//
+//	/**
+//	 * Creates a product
+//	 * @param name Is the name's product
+//	 * @param productionTime It's the time it takes to produce this product
+//	 * @param amount It's the amount of this product that is needed to create the parent product
+//	 * @param timeUnit It's the time's unit in which the product is produced
+//	 * @param subProducts They are the products "children" of this product
+//	 */
+//	public Product(Product father, String id, String name, int leadTime, int amount, ArrayList<Product> subProducts) {
+//		
+//		this.id = id;
+//		this.father = father;
+//		this.name = name;
+//		this.leadTime = leadTime;
+//		this.amount = amount;
+//		
+//		this.subProducts = subProducts;
+//	}
 	
 	/**
 	 * This method is responsible for inserting a subproduct to the container
@@ -93,7 +175,7 @@ public class Product {
 	 */
 	public Product search(String id) {
 		
-		if (this.name.equals(id)) {
+		if (this.id.equals(id)) {
 			return this;
 		} else {
 			for (int i = 0; i < subProducts.size(); i++) {
@@ -112,7 +194,7 @@ public class Product {
 	 * @return True if is a leaf, False if is not a leaf
 	 */
 	public boolean leaf() {
-		return subProducts == null;
+		return subProducts == null || subProducts.isEmpty();
 	}
 
 	/**
@@ -131,52 +213,53 @@ public class Product {
 		this.name = name;
 	}
 
+//	/**
+//	 * 
+//	 * @return
+//	 */
+//	public int getLeadTime() {
+//		return this.leadTime;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param productionTime
+//	 */
+//	public void setLeadTime(int leadTime) {
+//		this.leadTime = leadTime;
+//	}
+
 	/**
 	 * 
 	 * @return
 	 */
-	public int getLeadTime() {
-		return this.leadTime;
-	}
-
-	/**
-	 * 
-	 * @param productionTime
-	 */
-	public void setLeadTime(int leadTime) {
-		this.leadTime = leadTime;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public int getAmount() {
-		return this.amount;
+	public ArrayList<Integer> getAmount() {
+		return this.amounts;
 	}
 
 	/**
 	 * 
 	 * @param amount
 	 */
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setAmount(ArrayList<Integer> amounts) {
+		this.amounts = amounts;
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public String darFather() {
-		return father.getName();
+	@JsonIgnore
+	public ArrayList<Product> getFather() {
+		return fathers;
 	}
 
 	/**
 	 * 
 	 * @param father
-	 */
-	public void setFather(Product father) {
-		this.father = father;
+	 */	
+	public void setFather(ArrayList<Product> father) {
+		this.fathers = father;
 	}
 	
 	/**
@@ -203,21 +286,21 @@ public class Product {
 		return this.subProducts;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Integer> getBuyingOrder() {
-		return buyingOrder;
-	}
-
-	/**
-	 * 
-	 * @param buyingOrder
-	 */
-	public void setBuyingOrder(ArrayList<Integer> buyingOrder) {
-		this.buyingOrder = buyingOrder;
-	}
+//	/**
+//	 * 
+//	 * @return
+//	 */
+//	public ArrayList<Integer> getBuyingOrder() {
+//		return buyingOrder;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param buyingOrder
+//	 */
+//	public void setBuyingOrder(ArrayList<Integer> buyingOrder) {
+//		this.buyingOrder = buyingOrder;
+//	}
 
 	/**
 	 * This method is responsible for returning the toString of each elementos inside the container
@@ -245,29 +328,29 @@ public class Product {
 		this.subProducts = subProducts;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String getTimeUnit() {
-		return this.timeUnit;
-	}
-
-	/**
-	 * 
-	 * @param timeUnit
-	 */
-	public void setTimeUnit(String timeUnit) {
-		this.timeUnit = timeUnit;
-	}
-	
-	public String getFatherName() {
-		return fatherName;
-	}
-
-	public void setFatherName(String fatherName) {
-		this.fatherName = fatherName;
-	}
+//	/**
+//	 * 
+//	 * @return
+//	 */
+//	public String getTimeUnit() {
+//		return this.timeUnit;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param timeUnit
+//	 */
+//	public void setTimeUnit(String timeUnit) {
+//		this.timeUnit = timeUnit;
+//	}
+//	
+//	public String getFatherName() {
+//		return fatherName;
+//	}
+//
+//	public void setFatherName(String fatherName) {
+//		this.fatherName = fatherName;
+//	}
 
 	/**
 	 * 
@@ -330,12 +413,9 @@ public class Product {
 		Queue<Product> queue = new ArrayDeque<>();
 
 		queue.add(this);
-
 		while (!queue.isEmpty()) {
 			Product aux = null;
-
 			aux = queue.poll();
-
 			products.add(aux);
 
 			for (int i = 0; aux.getSubProducts() != null && i < aux.getSubProducts().size(); i++) {
@@ -346,93 +426,40 @@ public class Product {
 
 	}
 	
-	public int getSecurityInv() {
-		return securityInv;
-	}
-
-	public void setSecurityInv(int securityInv) {
-		this.securityInv = securityInv;
-	}
-
-	public int getInitialInv() {
-		return initialInv;
-	}
-
-	public void setInitialInv(int initialInv) {
-		this.initialInv = initialInv;
-	}
-
-	public Hashtable<String, Integer> getProgramDelivery() {
-		return programDelivery;
-	}
-
-	public void setProgramDelivery(Hashtable<String, Integer> programDelivery) {
-		this.programDelivery = programDelivery;
-	}
-
-	
-	public Product (Product father, String fatherName ,String id, String name, int leadTime, int amount, int initialInv, int securiInv) {
-		
-		this.name = name;
-		this.id = id;
-		this.leadTime = leadTime;
-		this.amount = amount;
-		this.father = father;
-		this.initialInv = initialInv;
-		this.securityInv = securiInv;
-		this.fatherName = fatherName;
-		this.programDelivery = new Hashtable<>();
-		
-		subProducts = new ArrayList<>();
-		
+	public MasterPlanSchedule getMPS() {
+		return mps;
 	}
 	
-	public void insertProgramDelivery (String date, int programDelivery) {
-		this.programDelivery.put(date, programDelivery);
-	}
-	
-	
-	/**
-	 * Creates a product
-	 * @param name Is the name's product
-	 * @param productionTime It's the time it takes to produce this product
-	 * @param amount It's the amount of this product that is needed to create the parent product
-	 * @param timeUnit It's the time's unit in which the product is produced
-	 */
-	public Product(Product father, String id, String name, int leadTime, int amount) {
-		
-		this.name = name;
-		this.id = id;
-		this.leadTime = leadTime;
-		this.amount = amount;
-		this.father = father;
-		
-		subProducts = new ArrayList<>();
-		
-	}
-
-	/**
-	 * Creates a product
-	 * @param name Is the name's product
-	 * @param productionTime It's the time it takes to produce this product
-	 * @param amount It's the amount of this product that is needed to create the parent product
-	 * @param timeUnit It's the time's unit in which the product is produced
-	 * @param subProducts They are the products "children" of this product
-	 */
-	public Product(Product father, String id, String name, int leadTime, int amount, ArrayList<Product> subProducts) {
-		
-		this.id = id;
-		this.father = father;
-		this.name = name;
-		this.leadTime = leadTime;
-		this.amount = amount;
-		
-		this.subProducts = subProducts;
-	}
+//	public int getSecurityInv() {
+//		return securityInv;
+//	}
+//
+//	public void setSecurityInv(int securityInv) {
+//		this.securityInv = securityInv;
+//	}
+//
+//	public int getInitialInv() {
+//		return initialInv;
+//	}
+//
+//	public void setInitialInv(int initialInv) {
+//		this.initialInv = initialInv;
+//	}
+//
+//	public Hashtable<String, Integer> getProgramDelivery() {
+//		return programDelivery;
+//	}
+//
+//	public void setProgramDelivery(Hashtable<String, Integer> programDelivery) {
+//		this.programDelivery = programDelivery;
+//	}
+//
+//	public void insertProgramDelivery (String date, int programDelivery) {
+//		this.programDelivery.put(date, programDelivery);
+//	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "[ " + name + "," + id + " ]";
 	}
 
