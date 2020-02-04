@@ -24,6 +24,8 @@ import icesi.vip.alien.alien.neosServer.NeosJob;
 import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
+import icesi.vip.alien.materialRequirementPlanning.MRP;
+import icesi.vip.alien.networks.*;
 import icesi.vip.alien.materialRequirementPlanning.MaterialRequirementsPlanning;
 import icesi.vip.alien.modelLP.Model;
 import lombok.extern.log4j.Log4j2;
@@ -241,7 +243,134 @@ public class AlienController {
 		return new BranchAndBoundContainer(m);
 
 	}
+	
+	@CrossOrigin
+	@RequestMapping("/shortestPath")
+	public String buildGraph(
 
+			@RequestParam(value = "rows", defaultValue = "1") String rows,
+			@RequestParam(value = "cols", defaultValue = "1") String cols,
+			@RequestParam(value = "graph", defaultValue = "1") String graph,
+			@RequestParam(value = "destiny", defaultValue = "-1") String destiny,
+			@RequestParam(value = "from", required = true, defaultValue = "0") String from)throws Exception{
+		
+		try {
+			
+			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			String[] arr = graph.split("-");
+			int n = Integer.parseInt(rows);
+			int m = Integer.parseInt(cols);
+			int k = 0;
+			for(int i = 0; i < n; i++) g.addVertex(i);
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < m; j++) {
+					String[] arr2 = arr[k].split(",");
+					long weight =  Integer.parseInt(arr2[0]);
+					if(weight != 0) {
+						g.addEdge(i, j,weight, Integer.parseInt(arr2[1]));
+					}
+					k++;
+				}
+			}
+			int source = Integer.parseInt(from);
+			String ans = "";
+			ans= g.dijkstra(g.getVertices().get(source));
+			/*Vertex<Integer> curr = g.getVertices().get(to);
+			while(curr!=null) {
+				ans+=""+curr.getValue()+"-";
+				curr = curr.getPred();
+			}*/
+			return ans;
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+	}
+	
+	@CrossOrigin
+	@RequestMapping("/getShortestPath")
+	public String getPath(
+
+			@RequestParam(value = "rows", defaultValue = "1") String rows,
+			@RequestParam(value = "cols", defaultValue = "1") String cols,
+			@RequestParam(value = "graph", defaultValue = "1") String graph,
+			@RequestParam(value = "from", required = true, defaultValue = "0") String from,
+			@RequestParam(value = "destiny", defaultValue = "-1") String destiny)throws Exception{
+		
+		try {
+			
+			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			String[] arr = graph.split("-");
+			int n = Integer.parseInt(rows);
+			int m = Integer.parseInt(cols);
+			int k = 0;
+			for(int i = 0; i < n; i++) g.addVertex(i);
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < m; j++) {
+					String[] arr2 = arr[k].split(",");
+					long weight =  Integer.parseInt(arr2[0]);
+					if(weight != 0) {
+						g.addEdge(i, j,weight, Integer.parseInt(arr2[1]));
+					}
+					k++;
+				}
+			}
+			int source = Integer.parseInt(from);
+			String ans = "";
+			g.dijkstra(g.getVertices().get(source));
+			Vertex<Integer> dest =  g.getVertices().get(Integer.parseInt(destiny));
+			Vertex<Integer> curr = g.getVertices().get(Integer.parseInt(destiny));
+			while(curr.getPred()!=null) {
+				AdjVertex<Integer> y = g.searchVertex(curr.getValue());
+				AdjVertex<Integer> x = g.searchVertex(curr.getPred().getValue());
+				Edge<Integer> e = x.findEdge(y);
+				ans+=""+curr.getPred().getValue()+","+ e.getId()+","+curr.getValue()+"-";
+				curr = curr.getPred();
+			}
+			ans+=String.valueOf(dest.getD());
+			return ans;
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+	}
+	@CrossOrigin
+	@RequestMapping("/mstKruskal")
+	public String mstKruskal(
+
+			@RequestParam(value = "rows", defaultValue = "1") String rows,
+			@RequestParam(value = "cols", defaultValue = "1") String cols,
+			@RequestParam(value = "graph", defaultValue = "1") String graph)throws Exception{
+		
+		try {
+			
+			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			String[] arr = graph.split("-");
+			int n = Integer.parseInt(rows);
+			int m = Integer.parseInt(cols);
+			int k = 0;
+			for(int i = 0; i < n; i++) g.addVertex(i);
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < m; j++) {
+					String[] arr2 = arr[k].split(",");
+					long weight =  Integer.parseInt(arr2[0]);
+					if(weight != 0) {
+						g.addEdge(i, j,weight, Integer.parseInt(arr2[1]));
+					}
+					k++;
+				}
+			}
+		
+			String ans = g.kruskal();
+			return ans;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+	}
+	
+	
 	@CrossOrigin
 	@RequestMapping(value="/master",method=RequestMethod.GET)
 	public MasterPlanSchedule solucion(
