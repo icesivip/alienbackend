@@ -7,9 +7,7 @@ package icesi.vip.alien.alien.simplexMethod;
  */
 
 import Jama.Matrix;
-import icesi.vip.alien.modelLP.Model;
-import icesi.vip.alien.modelLP.Solution;
-import icesi.vip.alien.modelLP.Variable;
+import icesi.vip.alien.modelLP.*;
 
 import java.util.ArrayList;
 import java.util.logging.Level;

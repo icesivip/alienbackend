@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.deser.BuilderBasedDeserializer;
 
-
 public class Simplex implements Solver {
 	/**
 	 * The M represents the coeficient of the artifical variables in the objective
@@ -208,7 +207,7 @@ public class Simplex implements Solver {
 	 * @return Rounded value with the desired format
 	 */
 	public static double roundDouble(double d) {
-		if(Math.abs(d)<0.0001)
+		if(Math.abs(d)<0.0000001)
 			return 0;
 		DecimalFormatSymbols separadoresPersonalizados = new DecimalFormatSymbols();
 		separadoresPersonalizados.setDecimalSeparator('.');
@@ -745,8 +744,8 @@ public class Simplex implements Solver {
 				 try {
 					if(solution.getVariableValue(model.getVariableAt(i)) == 0) {
 						 if(model.getType().equals(model.MAXIMIZE))
-							 reducedCosts[i] = intervals[i][1];
-						 else reducedCosts[i] = -intervals[i][0];
+							 reducedCosts[i] = roundDouble(intervals[i][1]);
+						 else reducedCosts[i] = -roundDouble(intervals[i][0]);
 					 } else reducedCosts[i] = 0;
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -801,7 +800,11 @@ public class Simplex implements Solver {
 		if(theta!= null) {
 		double[] thetaCopy = new double[theta.length];
 		for (int i = 0; i < thetaCopy.length; i++) {
+			if(theta[i]!= Double.POSITIVE_INFINITY && theta[i]!= Double.NEGATIVE_INFINITY)
 			thetaCopy[i] = roundDouble(theta[i]);
+			else if(theta[i]== Double.POSITIVE_INFINITY)
+				thetaCopy[i] = Double.MAX_VALUE;
+			else thetaCopy[i] = -Double.MAX_VALUE;
 		}
 		return thetaCopy;
 		} else return null;
