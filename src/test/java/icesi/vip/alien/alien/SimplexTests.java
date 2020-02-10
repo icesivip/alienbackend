@@ -112,6 +112,27 @@ public class SimplexTests {
 			}	
 		}	
 
+		public void setupScenarioMonster() {
+			
+			try {
+				simplex = new Simplex("MAXIMIZE", new String[] { "1 Z -14 X1 -20 X2 0 X3 0 X4 = 0",
+						"0 Z 0 X1 0 X2 8 X3 8 X4 = 1",
+						"0 Z 14 X1 20 X2 -8 X3 -8 X4 <= 0",
+						"0 Z 25 X1 42 X2 -11 X3 -15 X4 <= 0",
+						"0 Z 8 X1 30 X2 -14 X3 -12 X4 <= 0",
+						"0 Z 25 X1 8 X2 -12 X3 -13 X4 <= 0",
+						"0 Z 40 X1 22 X2 -11 X3 -18 X4 <= 0",
+						"0 Z 24 X1 30 X2 -18 X3 -20 X4 <= 0",
+						"0 Z 1 X1 0 X2 0 X3 0 X4 >= 0.00001",
+						"0 Z 0 X1 1 X2 0 X3 0 X4 >= 0.00001",
+						"0 Z 0 X1 0 X2 1 X3 0 X4 >= 0.00001",
+						"0 Z 0 X1 0 X2 0 X3 1 X4 >= 0.00001"});
+			} catch (Exception e) {
+				fail();
+				e.printStackTrace();
+			}	
+		}
+		
 		@Test
 		public void stepByStepTestNormal() {
 			setupScenarioNormal();
@@ -303,7 +324,7 @@ public class SimplexTests {
 			assertEquals(sA.getShadowPrice(), new double[][] {{1, 2, 0}});
 			double[] exp = simplex.getReducedCosts();
 			double[] real = new double[] {4, 0, 0};//-4, 0, 0
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < exp.length; i++) {
 			assertTrue(exp[i]== real[i]);
 			}
 		}
@@ -327,9 +348,78 @@ public class SimplexTests {
 			assertEquals(sA.getShadowPrice(), new double[][] {{11, 9}});
 			double[] exp = simplex.getReducedCosts();
 			double[] real = new double[] {0, 66, 0, 42}; //0, -66, 0, -42
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < exp.length; i++) {
 			assertTrue(exp[i]== real[i]);
 			}
 		}
 		
+		@Test
+		public void sensitivityA3() {
+			setupScenarioBigM();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.nextIteration();
+			simplex.buildAnalysis();
+			simplex.getIntervals();
+			SensivilityAnalysis sA = simplex.getAnalysis();
+			double [][] interDCons = new double[][] {{0.25, Double.MAX_VALUE},
+													{2, 10},
+													{3.33333, 0.4}};
+			double [][] interDFO = new double[][] {{Double.MAX_VALUE, 1},
+													{1, Double.MAX_VALUE}};
+													
+			assertEquals(sA.getIntervalsDConstraints(), simplex.roundMatrix(interDCons));
+			assertEquals(sA.getIntervalsDFO(), interDFO);
+			assertEquals(sA.getShadowPrice(), new double[][] {{0, 0.5, 1.5}});
+			double[] exp = simplex.getReducedCosts();
+			double[] real = new double[] {0, 0};
+			for (int i = 0; i < exp.length; i++) {
+			System.out.println("fuck" + exp[i]);
+			assertTrue(exp[i]== real[i]);
+			}
+		}
+		
+		@Test
+		public void sensitivityA4() {
+			setupScenarioMonster();
+			while(simplex.getMessageSol() == null)
+			simplex.nextIteration();
+			simplex.buildAnalysis();
+			simplex.getIntervals();
+			SensivilityAnalysis sA = simplex.getAnalysis();
+			double [][] interDCons = new double[][] {{0.99940533, Double.MAX_VALUE},
+													{0.00842, Double.MAX_VALUE},
+													{0.46847, 0.01936},
+													{0.62525, Double.MAX_VALUE},
+													{0.31419, Double.MAX_VALUE},
+													{1.26753, 0.10824},
+													{0.87125, Double.MAX_VALUE},
+													{Double.MAX_VALUE, 0.04711},
+													{Double.MAX_VALUE, 0.01658},
+													{0, 0.12498},
+													{Double.MAX_VALUE, 0.12498}};
+//			interDCons = simplex.roundMatrix(interDCons);
+//			double [][] interCExp = sA.getIntervalsDConstraints();
+			
+			double [][] interDFO = new double[][] {{2.09523, 22.36363},
+													{12.3, 3.52},
+													{Double.MAX_VALUE, 2.28672},
+													{2.28672, Double.MAX_VALUE}};
+//						for (int i = 0; i < interDCons.length; i++) {
+//							for (int j = 0; j < interDCons[0].length; j++) {
+//								System.out.println("coge" + interCExp[i][j]);
+//								System.out.println("coge" + interDCons[i][j]);
+//								
+//								assertTrue(interDCons[i][j]== interCExp[i][j]);
+//							}
+//						}					
+			assertEquals(sA.getIntervalsDConstraints(), simplex.roundMatrix(interDCons));
+			assertEquals(sA.getIntervalsDFO(), simplex.roundMatrix(interDFO));
+			assertEquals(sA.getShadowPrice(), simplex.roundMatrix(new double[][] {{0.99159, 0, 0.43539, 0, 0, 0.07787, 0, 0, 0, -2.28672, 0}}));
+			double[] exp = simplex.getReducedCosts();
+			double[] real = new double[] {0, 0, 0, 0};
+			for (int i = 0; i < real.length; i++) {
+			assertTrue(exp[i]== real[i]);
+			}
+		}
 }
