@@ -24,7 +24,6 @@ import icesi.vip.alien.alien.neosServer.NeosJob;
 import icesi.vip.alien.alien.neosServer.NeosJobXml;
 import icesi.vip.alien.alien.simplexMethod.Simplex;
 import icesi.vip.alien.masterPlan.MasterPlanSchedule;
-import icesi.vip.alien.materialRequirementPlanning.MRP;
 import icesi.vip.alien.networks.*;
 import icesi.vip.alien.materialRequirementPlanning.MaterialRequirementsPlanning;
 import icesi.vip.alien.modelLP.Model;
