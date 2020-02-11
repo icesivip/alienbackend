@@ -62,6 +62,7 @@ public class SensivilityAnalysis {
 	
     String buildEquationsConstraints() {
         StringBuilder equations = new StringBuilder("<html><body>");
+        StringBuilder equationsToShow = new StringBuilder("<html><body>");
              try {
 //                  equations.append("Z = ");
 //            equations.append(solution.getObjectiveFunctionValue() + " ");
@@ -73,32 +74,41 @@ public class SensivilityAnalysis {
 //            equations.append("<br>");
              int x = 0;
             for (int i = 1; i < finalM.getRowDimension(); i++) {
-                if(i>1)
+                if(i>1) {
                 equations.append("<br>");
-               
+                equationsToShow.append("<br>");
+                }
 //               while(solution.getVariableValue(modeloS.getVariableAt(x)) == 0)
 //                   x++;
 //                for (int y = 0; y < base.length; y++) {
 				x = base[i - 1];
 				Variable var = modeloS.getVariableAt(x);
 				equations.append(var.getName() + " = ");
-				equations.append(Simplex.roundDouble(solution.getVariableValue(var)) + " ");
+				equations.append(solution.getVariableValue(var) + " ");
+				equationsToShow.append(var.getName() + " = ");
+				equationsToShow.append(Simplex.roundDouble(solution.getVariableValue(var)) + " ");
 				for (int j = 0; j < posSlacks.size(); j++) {
-					if (finalM.getArray()[i][posSlacks.get(j)] < 0)
-						equations.append(
+					if (finalM.getArray()[i][posSlacks.get(j)] < 0) {
+						equations.append(finalM.getArray()[i][posSlacks.get(j)] + " D" + (j + 1) + " ");
+						equationsToShow.append(
 								Simplex.roundDouble(finalM.getArray()[i][posSlacks.get(j)]) + " D" + (j + 1) + " ");
-					else
-						equations.append("+" + Simplex.roundDouble(finalM.getArray()[i][posSlacks.get(j)]) + " D"
+					}
+					else {
+						equations.append("+" + finalM.getArray()[i][posSlacks.get(j)] + " D"
 								+ (j + 1) + " ");
+						equationsToShow.append("+" + Simplex.roundDouble(finalM.getArray()[i][posSlacks.get(j)]) + " D"
+								+ (j + 1) + " ");
+					}
 				}
 				x++;
 			}
 //                }
             equations.append("</body></html>");
+            equationsToShow.append("</body></html>");
             } catch (Exception ex) {
                     Logger.getLogger(Simplex.class.getName()).log(Level.SEVERE, null, ex);
                 }  
-             equationsConstraints = equations.toString();
+             equationsConstraints = equationsToShow.toString();
         return equations.toString();
 }
     public double[][] getIntervalsDConstraints() {
@@ -203,6 +213,7 @@ public class SensivilityAnalysis {
 	}
 
 	String buildEquationsFO() {
+		StringBuilder equationsToShow = new StringBuilder("<html><body>");
         StringBuilder equations = new StringBuilder("<html><body>");
              try {
              int x = 0;
@@ -213,10 +224,13 @@ public class SensivilityAnalysis {
                    if(x==modeloS.getVariableCount())
                    break;
                    
-                   if(i>1)
-                equations.append("<br>");
+                   if(i>1) {
+                	   equations.append("<br>");
+                	   equationsToShow.append("<br>");
+                   }
                Variable var = modeloS.getVariableAt(x);
                     equations.append(var.getName()+" = ");
+                    equationsToShow.append(var.getName()+" = ");
                     for (int j = 0; j < finalM.getRowDimension(); j++) {
                         if(j==0){
                             String constant;
@@ -229,27 +243,36 @@ public class SensivilityAnalysis {
 //                            else if(var.getName().startsWith("E"))
 //                            	continue;
 //                            else
-						constant = Simplex.roundDouble(finalM.get(j, x)) + " ";
+						constant = finalM.get(j, x) + " ";
 						equations.append(constant);
-
+						equationsToShow.append(Simplex.roundDouble(finalM.get(j, x))+ " ");
 					} else if (modeloS.getVariableAt(base[j - 1]).getName().startsWith("X")) {
-						if (finalM.get(j, x) < 0)
-							equations.append(Simplex.roundDouble(finalM.get(j, x)) + " D"
+						if (finalM.get(j, x) < 0) {
+							equations.append(finalM.get(j, x) + " D"
 									+ (modeloS.getVariableAt(base[j - 1]).getName().charAt(1)) + " ");
-						else
-							equations.append("+" + Simplex.roundDouble(finalM.get(j, x)) + " D"
+							equationsToShow.append(Simplex.roundDouble(finalM.get(j, x)) + " D"
 									+ (modeloS.getVariableAt(base[j - 1]).getName().charAt(1)) + " ");
+						}
+						else {
+							equations.append("+" + finalM.get(j, x) + " D"
+									+ (modeloS.getVariableAt(base[j - 1]).getName().charAt(1)) + " ");
+							equationsToShow.append("+" + Simplex.roundDouble(finalM.get(j, x)) + " D"
+									+ (modeloS.getVariableAt(base[j - 1]).getName().charAt(1)) + " ");
+						}
 					}
 				}
-				if (var.getName().startsWith("X"))
+				if (var.getName().startsWith("X")) {
 					equations.append("-1 D" + (x + 1) + " ");
+					equationsToShow.append("-1 D" + (x + 1) + " ");
+				}
 				x++;
 			}
 			equations.append("</body></html>");
+			equationsToShow.append("</body></html>");
 		} catch (Exception ex) {
 			Logger.getLogger(Simplex.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		equationsFO = equations.toString();
+		equationsFO = equationsToShow.toString();
 		return equations.toString();
 	}
 
