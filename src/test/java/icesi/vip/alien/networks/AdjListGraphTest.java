@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class AdjListGraphTest {
+public class AdjListGraphTest {
 	/**
 	 * graph of integers implemented as adjacency list
 	 */
@@ -170,7 +170,7 @@ class AdjListGraphTest {
 	 * @throws IOException
 	 */
 	@Test
-	void testKruskal() throws IOException {
+	public void testKruskal() throws IOException {
 		stage1();
 		File file = new File("src\\test\\java\\icesi\\vip\\alien\\networks\\cases\\kruskal_output.txt");
 		FileReader reader = new FileReader(file);
@@ -195,7 +195,7 @@ class AdjListGraphTest {
 	 * @throws IOException
 	 */
 	@Test
-	void testDFS() throws IOException {
+	public void testDFS() throws IOException {
 		stage1();
 		File file = new File("src\\test\\java\\icesi\\vip\\alien\\networks\\cases\\DFS_output.txt");
 		FileReader reader = new FileReader(file);
