@@ -1,6 +1,6 @@
 package icesi.vip.alien.networks;
 
-public class Edge<T> implements Comparable<Edge<T>>{
+public class Edge<T extends Integer> implements Comparable<Edge<T >>{
 
 	private double weight;
 	private int id;

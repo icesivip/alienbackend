@@ -1,6 +1,6 @@
 package icesi.vip.alien.networks;
 
-public class Vertex<T> implements Comparable<Vertex<T>>{
+public class Vertex<T extends Integer> implements Comparable<Vertex<T>>{
 
 	public static final int WHITE = 0;
 	public static final int GRAY = 1;

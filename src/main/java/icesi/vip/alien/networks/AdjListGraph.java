@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public   class AdjListGraph<T> implements IGraph<T> {
+public   class AdjListGraph<T extends Integer > implements IGraph<T > {
 
 	/**
 	 * This attribute determines whether or not this graph is directed or undirected.

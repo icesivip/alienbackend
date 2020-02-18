@@ -2,7 +2,7 @@ package icesi.vip.alien.networks;
 
 import java.util.*;
 
-public class AdjMatrixGraph<T> implements IGraph<T> {
+public class AdjMatrixGraph<T extends Integer> implements IGraph<T> {
 
 	private boolean directed;
 	private boolean weighted;
