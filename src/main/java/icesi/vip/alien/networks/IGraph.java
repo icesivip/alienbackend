@@ -2,7 +2,7 @@ package icesi.vip.alien.networks;
 
 import java.util.List;
 
-public interface IGraph<T> {
+public interface IGraph<T extends Integer> {
 	
 	public static final int INF = Integer.MAX_VALUE;
 

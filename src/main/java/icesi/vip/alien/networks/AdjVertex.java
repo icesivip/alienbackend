@@ -3,7 +3,7 @@ package icesi.vip.alien.networks;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AdjVertex<T> extends Vertex<T> {
+public class AdjVertex<T extends Integer> extends Vertex<T> {
 
 	private List<Edge <T>> adjList;
 	
