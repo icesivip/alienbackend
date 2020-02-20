@@ -255,7 +255,7 @@ public class AlienController {
 		
 		try {
 			
-			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			AdjListGraph<Integer> g = new AdjListGraph<Integer>(true, true);
 			String[] arr = graph.split("-");
 			int n = Integer.parseInt(rows);
 			int m = Integer.parseInt(cols);
@@ -343,7 +343,7 @@ public class AlienController {
 		
 		try {
 			
-			AdjListGraph<Integer> g = new AdjListGraph<>(true, true);
+			AdjListGraph<Integer> g = new AdjListGraph<Integer>(true, true);
 			String[] arr = graph.split("-");
 			int n = Integer.parseInt(rows);
 			int m = Integer.parseInt(cols);
