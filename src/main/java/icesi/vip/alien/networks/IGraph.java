@@ -2,45 +2,44 @@ package icesi.vip.alien.networks;
 
 import java.util.List;
 
-public interface IGraph<T extends Integer> {
+public interface IGraph<Integer> {
 	
-	public static final int INF = Integer.MAX_VALUE;
+	public double INF = Double.POSITIVE_INFINITY;
 
-	public List<Vertex<T>> getVertices();
+	public List<Vertex<Integer>> getVertices();
 	
 	public boolean isDirected();
 	
 	public boolean isWeighted();
-	
-	
-	public void addVertex(T value);
 
-	public void addEdge(T x, T y);
 	
-	public void addEdge(T x, T y, double w, int id);
+	public void addVertex(Integer value);
+
+	public void addEdge(Integer x, Integer y);
 	
-	//modificados los 3 m�todos de arriba
-	
-	public void removeVertex(T v);
-	
-	public void removeEdge(T x, T y);
-	
-	public List<Vertex<T>> getNeighbors(Vertex<T> x);
-	
+	public void addEdge(Integer x, Integer y, double w, int id);
+
+
+	public void removeVertex(Integer v);
+
+	public void removeEdge(Integer x, Integer y);
+
+	public List<Vertex<Integer>> getNeighbors(Vertex<Integer> x);
+
 	public int getNumberOfVertices();
-	
+
 	public int getNumberOfEdges();
-	
-	public boolean areAdjacent(Vertex<T> x, Vertex<T> y);
-	
-	public boolean isInGraph(T value);
-	
-	public double getEdgeWeight(Vertex<T> x, Vertex<T> y);
-	
-	public void setEdgeWeight(Vertex<T> x, Vertex<T> y, double w);
-	
-	public void bfs(Vertex<T> s);
-	
+
+	public boolean areAdjacent(Vertex<Integer> x, Vertex<Integer> y);
+
+	public boolean isInGraph(Integer value);
+
+	public double getEdgeWeight(Vertex<Integer> x, Vertex<Integer> y);
+
+	public void setEdgeWeight(Vertex<Integer> x, Vertex<Integer> y, double w);
+
+	public void bfs(Vertex<Integer> s);
+
 	public int dfs();
-	
+
 }
