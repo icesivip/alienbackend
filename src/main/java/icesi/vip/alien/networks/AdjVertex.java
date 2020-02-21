@@ -3,20 +3,20 @@ package icesi.vip.alien.networks;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AdjVertex<T extends Integer> extends Vertex<T> {
+public class AdjVertex<Integer> extends Vertex<Integer> {
 
-	private List<Edge <T>> adjList;
+	private List<Edge <Integer>> adjList;
 	
-	public AdjVertex(T value) {
+	public AdjVertex(Integer value) {
 		super(value);
-		adjList= new LinkedList<Edge<T>>();
+		adjList= new LinkedList<Edge<Integer>>();
 	}
 	
-	public List<Edge<T>> getAdjList(){
+	public List<Edge<Integer>> getAdjList(){
 		return adjList;
 	}
 	
-	public boolean isAdjacent(AdjVertex<T> vertex) {
+	public boolean isAdjacent(AdjVertex<Integer> vertex) {
 		for(int i = 0; i<adjList.size(); i++) {
 			if (adjList.get(i).getDestination()==vertex)
 				return true;
@@ -24,7 +24,7 @@ public class AdjVertex<T extends Integer> extends Vertex<T> {
 		return false;
 	}
 	
-	public Edge<T> findEdge(AdjVertex<T> vertex){
+	public Edge<Integer> findEdge(AdjVertex<Integer> vertex){
 		for (int i=0; i<adjList.size(); i++) {
 			if (adjList.get(i).getDestination()==vertex)
 				return adjList.get(i);
