@@ -595,7 +595,7 @@
             //url ="http://localhost:8080/shortestPath";
             //url ="https://icesiviptest.herokuapp.com/shortestPath";  
             $.ajax({
-                url: "http://localhost:8080/mstKruskal" + request
+                url: "https://icesiviptest.herokuapp.com/mstKruskal" + request
             }).then(function (data) {
                   path = data.split('-');
                   console.log(data);
@@ -721,7 +721,7 @@
             "Selection: " + params.nodes;
         });
       }
-      */
+      
       var directionInput = document.getElementById("direction");
       var btnUD = document.getElementById("btn-UD");
       btnUD.onclick = function() {
@@ -746,7 +746,7 @@
       
       window.addEventListener("load", () => {
         draw();
-      });
+      });*/
       </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

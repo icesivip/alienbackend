@@ -615,7 +615,7 @@
             //url ="http://localhost:8080/shortestPath";
             //url ="https://icesiviptest.herokuapp.com/shortestPath";  
             $.ajax({
-                url: "http://localhost:8080/getShortestPath" + request+"&destiny="+ document.getElementById('destiny').value.toLowerCase()
+                url: "https://icesiviptest.herokuapp.com/getShortestPath" + request+"&destiny="+ document.getElementById('destiny').value.toLowerCase()
             }).then(function (data) {
                   showPath(data);
             }, function (error) {
@@ -631,7 +631,7 @@
             //url ="http://localhost:8080/shortestPath";
             //url ="https://icesiviptest.herokuapp.com/shortestPath";  
             $.ajax({
-                url: "http://localhost:8080/shortestPath" + request
+                url: "https://icesiviptest.herokuapp.com/shortestPath" + request
             }).then(function (data) {
                    path = data.split('-');
                    pos = 0; 
