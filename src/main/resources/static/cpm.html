@@ -52,13 +52,6 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-project-diagram"></i>
-          <span>Home</span></a>
-      </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -76,11 +69,11 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Programs</h6>
-            <a class="collapse-item" href="simple-linear.html">SIMPLE LINEAR</a>
-            <a class="collapse-item" href="interiorPoint.html">INTERIOR POINT</a>
-            <a class="collapse-item" href="graphicalMethod.html">GRAPHICAL METHOD</a>
-            <a class="collapse-item" href="branchAndBound.html">BRANCH & BOUND</a>
-            <a class="collapse-item" href="homeSimplex.html">SIMPLEX METHOD </a>
+            <a class="collapse-item" href="interiorPoint.html">Interior Point</a>
+            <a class="collapse-item" href="graphicalMethod.html">Graphical Method</a>
+            <a class="collapse-item" href="branchAndBound.html">Branch & Bound</a>
+            <a class="collapse-item" href="homeSimplex.html">Simplex Algorithm </a>
+            <a class="collapse-item" href="neos_server_integration_ampl.html">NEOS Server</a>
           </div>
         </div>
       </li>
@@ -101,23 +94,38 @@
           </div>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNet" aria-expanded="true"
+          aria-controls="collapseNet">
+          <i class="fas fa-project-diagram"></i>
+          <span> Networks </span>
+        </a>
+        <div id="collapseNet" class="collapse" aria-labelledby="headingNet" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Programs</h6>
+            <!-- cambiar href -->
+            <a class="collapse-item" href="shortestPath.html">SHORTEST PATH</a>
+            <a class="collapse-item" href="mst.html">MST</a>
+            <a class="collapse-item" href="mfp.html">MFP</a>
+          </div>
+        </div>
+      </li>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-          aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>CPM vs PERT</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
-          aria-expanded="true">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">components</h6>
-            <a class="collapse-item active" href="cpm.html">CPM</a>
+            <a class="collapse-item" href="cpm.html">CPM</a>
             <a class="collapse-item" href="pert.html">PERT</a>
           </div>
         </div>
       </li>
+
 
 
 
