@@ -1290,7 +1290,7 @@
                     $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                   }
                   if (theta != null) {
-                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + toInfinity(theta[index - 1]) + "</td>");
                   }
 
                 }
@@ -1384,7 +1384,7 @@
                     $("#resultTable tbody").find("#row" + index).append("<td>" + actualMatrix[index][j] + "</td>");
                   }
                   if (theta != null) {
-                    $("#resultTable tbody").find("#row" + index).append("<td>" + theta[index - 1] + "</td>");
+                    $("#resultTable tbody").find("#row" + index).append("<td>" + toInfinity(theta[index - 1]) + "</td>");
                   }
 
                 }
